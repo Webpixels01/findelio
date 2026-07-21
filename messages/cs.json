@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Najděte firmy, které mluví vaším jazykem",
+    "description": "Vícejazyčný firemní adresář ve Švýcarsku. Vyhledávejte podle jazyka, oboru, kantonu a města."
+  },
+  "Header": {
+    "home": "Domovská stránka Findelio",
+    "navigation": "Hlavní navigace",
+    "findCompanies": "Najít firmy",
+    "registerCompany": "Přidat firmu",
+    "login": "Přihlášení",
+    "selectLanguage": "Vybrat jazyk",
+    "menu": "Otevřít nabídku",
+    "dashboard": "Dashboard"
+  },
+  "Home": {
+    "eyebrow": "Vícejazyčné firmy ve Švýcarsku",
+    "title": "Najděte firmy, které mluví vaším jazykem.",
+    "description": "Vyhledávejte podle jazyka, oboru a lokality a najděte vhodné firmy ve svém okolí.",
+    "howTitle": "Jak Findelio funguje",
+    "howDescription": "Ke správné firmě ve třech jednoduchých krocích.",
+    "step1Title": "Vyberte jazyk",
+    "step1Text": "Zvolte jazyk, ve kterém chcete komunikovat.",
+    "step2Title": "Obor a lokalita",
+    "step2Text": "Upřesněte hledání podle oboru, kantonu a města.",
+    "step3Title": "Najděte vhodnou firmu",
+    "step3Text": "Porovnejte profily a kontaktujte firmu přímo.",
+    "ctaTitle": "Mluví vaše firma více jazyky?",
+    "ctaText": "Vytvořte profil a nechte se najít správnými zákazníky.",
+    "ctaButton": "Přidat firmu"
+  },
+  "Search": {
+    "language": "Jazyk",
+    "allLanguages": "Všechny jazyky",
+    "industry": "Obor",
+    "allIndustries": "Všechny obory",
+    "canton": "Kanton",
+    "allCantons": "Všechny kantony",
+    "location": "Město",
+    "locationPlaceholder": "Město nebo PSČ",
+    "submit": "Najít firmy"
+  },
+  "Results": {
+    "eyebrow": "Vyhledávání firem",
+    "title": "Vhodné firmy",
+    "count": "Nalezené firmy: {count}",
+    "noResults": "Pro zvolené filtry nebyly nalezeny žádné firmy.",
+    "clearFilters": "Zrušit filtry",
+    "details": "Zobrazit profil",
+    "verified": "Ověřeno"
+  },
+  "Company": {
+    "back": "Zpět na vyhledávání",
+    "about": "O firmě",
+    "contact": "Kontakt",
+    "website": "Web",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "address": "Adresa",
+    "languages": "Mluvené jazyky",
+    "industry": "Obor",
+    "verified": "Ověřená firma",
+    "openingHours": "Otevírací doba",
+    "gallery": "Galerie",
+    "closed": "Zavřeno",
+    "weekdays": {
+      "1": "Pondělí",
+      "2": "Úterý",
+      "3": "Středa",
+      "4": "Čtvrtek",
+      "5": "Pátek",
+      "6": "Sobota",
+      "7": "Neděle"
+    }
+  },
+  "Register": {
+    "eyebrow": "Přidat firmu",
+    "title": "Zviditelněte svou firmu.",
+    "description": "Zadejte nejdůležitější údaje. Před zveřejněním bude profil zkontrolován.",
+    "companyName": "Název firmy",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Web",
+    "industry": "Obor",
+    "canton": "Kanton",
+    "city": "Město",
+    "languages": "Mluvené jazyky",
+    "descriptionLabel": "Popis firmy",
+    "choose": "Vyberte možnost",
+    "note": "Tato verze zatím neukládá data trvale. Formulář již ukazuje plánovaný postup.",
+    "submit": "Odeslat profil",
+    "successTitle": "Děkujeme za váš profil.",
+    "successText": "Údaje byly v této ukázce úspěšně ověřeny. Databáze bude připojena v dalším kroku.",
+    "newEntry": "Přidat další firmu"
+  },
+  "Login": {
+    "eyebrow": "Firemní zóna",
+    "title": "Přihlášení do Findelio",
+    "description": "Přihlaste se a spravujte své firmy a záznamy.",
+    "email": "E-mail",
+    "password": "Heslo",
+    "submit": "Přihlásit se",
+    "loading": "Přihlašování …",
+    "note": "Vaše přihlašovací údaje jsou bezpečně ověřovány přes Directus.",
+    "errorFallback": "E-mailová adresa nebo heslo nejsou správné.",
+    "serverError": "Přihlášení nyní nelze zpracovat.",
+    "connectionError": "Připojení k serveru se nezdařilo."
+  },
+  "Dashboard": {
+    "eyebrow": "Firemní zóna",
+    "title": "Dashboard",
+    "welcome": "Vítejte, {name}.",
+    "description": "Zde můžete spravovat své firmy, záznamy a členy týmu.",
+    "accountTitle": "Váš účet",
+    "email": "E-mail",
+    "role": "Role",
+    "status": "Stav",
+    "active": "Aktivní",
+    "unknown": "Neuvedeno",
+    "logout": "Odhlásit se",
+    "logoutLoading": "Odhlašování …",
+    "organizationsEyebrow": "Správa firem",
+    "organizationsTitle": "Vaše organizace",
+    "organizationsDescription": "Zde vidíte všechny organizace, ve kterých máte aktivní členství, a jejich firemní profily.",
+    "noOrganizationsTitle": "Nebyla nalezena žádná aktivní organizace",
+    "noOrganizationsDescription": "Váš uživatelský účet momentálně není přiřazen k žádné aktivní organizaci. Zkontrolujte členství v Directusu nebo kontaktujte administrátora.",
+    "organizationLabel": "Organizace",
+    "membershipRole": "Role člena",
+    "organizationStatus": "Stav organizace",
+    "listings": "Firemní profily",
+    "listingsCount": "Počet záznamů: {count}",
+    "listingsTitle": "Přiřazené firemní profily",
+    "noListings": "Pro tuto organizaci zatím nebyl vytvořen žádný firemní profil.",
+    "locationUnknown": "Místo není uvedeno",
+    "viewListing": "Zobrazit veřejný profil",
+    "roleValues": {
+      "owner": "Vlastník",
+      "admin": "Administrátor",
+      "editor": "Editor"
+    },
+    "statusValues": {
+      "active": "Aktivní",
+      "inactive": "Neaktivní",
+      "draft": "Koncept",
+      "review": "Ke kontrole",
+      "published": "Publikováno",
+      "rejected": "Zamítnuto",
+      "suspended": "Pozastaveno",
+      "archived": "Archivováno"
+    },
+    "navigation": {
+      "label": "Navigace dashboardu",
+      "overview": "Přehled",
+      "organizations": "Organizace",
+      "listings": "Firemní profily",
+      "team": "Tým"
+    },
+    "summary": {
+      "organizations": "Organizace",
+      "listings": "Firemní profily",
+      "published": "Publikováno"
+    },
+    "listingsPage": {
+      "eyebrow": "Firemní profily",
+      "title": "Vaše firemní profily",
+      "description": "Zde najdete všechny profily vašich aktivních organizací a jejich aktuální stav zveřejnění.",
+      "emptyTitle": "Zatím žádné firemní profily",
+      "emptyDescription": "Pro vaše aktivní organizace zatím nebyl vytvořen žádný firemní profil.",
+      "notPublic": "Tento profil zatím není veřejně viditelný.",
+      "editListing": "Upravit"
+    },
+    "teamPage": {
+      "eyebrow": "Správa týmu",
+      "title": "Tým",
+      "description": "Zde se spravují členové a role vašich organizací.",
+      "nextStepTitle": "Správa týmu bude dalším krokem",
+      "nextStepDescription": "Momentálně vidíte svá vlastní aktivní členství. Pozvánky a správu dalších členů týmu bezpečně doplníme v dalším kroku.",
+      "yourMemberships": "Vaše aktivní členství"
+    },
+    "overviewOrganizationsTitle": "Přehled organizací",
+    "overviewOrganizationsLink": "Zobrazit všechny organizace",
+    "organizationListingsLink": "Zobrazit firemní profily"
+  },
+  "Footer": {
+    "tagline": "Findelio spojuje lidi s firmami, které mluví jejich jazykem.",
+    "directory": "Adresář",
+    "findCompanies": "Najít firmy",
+    "registerCompany": "Přidat firmu",
+    "legal": "Právní informace",
+    "imprint": "Impresum",
+    "privacy": "Ochrana soukromí",
+    "copyright": "Všechna práva vyhrazena."
+  },
+  "Legal": {
+    "imprintTitle": "Impresum",
+    "imprintText": "Před zveřejněním doplňte úplné údaje provozovatele podle švýcarského práva.",
+    "privacyTitle": "Ochrana osobních údajů",
+    "privacyText": "Před zveřejněním doplňte úplné zásady ochrany osobních údajů včetně hostingu, formulářů, analytiky a služeb třetích stran."
+  },
+  "ListingEditor": {
+    "eyebrow": "Upravit firemní profil",
+    "title": "Upravit {name}",
+    "description": "Aktualizujte údaje firemního profilu. Změny můžete uložit jako koncept nebo odeslat ke kontrole.",
+    "back": "Zpět na firemní profily",
+    "sections": {
+      "general": "Základní údaje a popis",
+      "contact": "Kontaktní údaje",
+      "address": "Adresa a viditelnost",
+      "workflow": "Stav zveřejnění"
+    },
+    "fields": {
+      "name": "Název firmy",
+      "shortDescription": "Krátký popis",
+      "description": "Popis",
+      "publicEmail": "Veřejný e-mail",
+      "phone": "Telefon",
+      "website": "Webová stránka",
+      "street": "Ulice a číslo",
+      "postalCode": "PSČ",
+      "city": "Město",
+      "canton": "Kanton",
+      "addressVisibility": "Zobrazení adresy",
+      "status": "Uložit jako"
+    },
+    "addressVisibility": {
+      "full": "Zobrazit úplnou adresu",
+      "city": "Zobrazit pouze město a kanton",
+      "hidden": "Skrýt adresu"
+    },
+    "statusValues": {
+      "draft": "Koncept",
+      "review": "Ke kontrole",
+      "published": "Zveřejněno",
+      "rejected": "Zamítnuto",
+      "suspended": "Pozastaveno",
+      "archived": "Archivováno",
+      "active": "Aktivní",
+      "inactive": "Neaktivní"
+    },
+    "currentStatus": "Aktuální stav",
+    "statusHint": "Profily odeslané ke kontrole mohou být následně zkontrolovány a zveřejněny.",
+    "save": "Uložit změny",
+    "saving": "Ukládání …",
+    "saved": "Změny byly uloženy.",
+    "errors": {
+      "invalid_data": "Zkontrolujte zadané údaje.",
+      "unauthorized": "Vaše relace vypršela. Přihlaste se znovu.",
+      "forbidden": "Tento firemní profil nemůžete upravovat.",
+      "not_found": "Firemní profil nebyl nalezen.",
+      "save_failed": "Změny se nepodařilo uložit.",
+      "network": "Připojení k serveru selhalo."
+    }
+  }
+}

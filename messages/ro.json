@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Găsește companii care vorbesc limba ta",
+    "description": "Directorul multilingv de companii din Elveția. Caută după limbă, domeniu, canton și localitate."
+  },
+  "Header": {
+    "home": "Pagina principală Findelio",
+    "navigation": "Navigare principală",
+    "findCompanies": "Găsește companii",
+    "registerCompany": "Adaugă compania",
+    "login": "Autentificare",
+    "selectLanguage": "Selectează limba",
+    "menu": "Deschide meniul",
+    "dashboard": "Panou de control"
+  },
+  "Home": {
+    "eyebrow": "Companii multilingve în Elveția",
+    "title": "Găsește companii care vorbesc limba ta.",
+    "description": "Caută după limbă, domeniu și locație și găsește companii potrivite în apropiere.",
+    "howTitle": "Cum funcționează Findelio",
+    "howDescription": "Trei pași simpli către compania potrivită.",
+    "step1Title": "Alege limba",
+    "step1Text": "Selectează limba în care dorești să primești consultanță.",
+    "step2Title": "Domeniu și locație",
+    "step2Text": "Restrânge căutarea după domeniu, canton și localitate.",
+    "step3Title": "Găsește compania potrivită",
+    "step3Text": "Compară profilurile și contactează direct compania.",
+    "ctaTitle": "Compania ta vorbește mai multe limbi?",
+    "ctaText": "Creează un profil și fii găsit de clienții potriviți.",
+    "ctaButton": "Adaugă compania"
+  },
+  "Search": {
+    "language": "Limbă",
+    "allLanguages": "Toate limbile",
+    "industry": "Domeniu",
+    "allIndustries": "Toate domeniile",
+    "canton": "Canton",
+    "allCantons": "Toate cantoanele",
+    "location": "Localitate",
+    "locationPlaceholder": "Localitate sau cod poștal",
+    "submit": "Găsește companii"
+  },
+  "Results": {
+    "eyebrow": "Căutare companii",
+    "title": "Companii potrivite",
+    "count": "Companii găsite: {count}",
+    "noResults": "Nu au fost găsite companii pentru filtrele selectate.",
+    "clearFilters": "Șterge filtrele",
+    "details": "Vezi profilul",
+    "verified": "Verificată"
+  },
+  "Company": {
+    "back": "Înapoi la căutare",
+    "about": "Despre companie",
+    "contact": "Contact",
+    "website": "Website",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "address": "Adresă",
+    "languages": "Limbi vorbite",
+    "industry": "Domeniu",
+    "verified": "Companie verificată",
+    "openingHours": "Program de funcționare",
+    "gallery": "Galerie",
+    "closed": "Închis",
+    "weekdays": {
+      "1": "Luni",
+      "2": "Marți",
+      "3": "Miercuri",
+      "4": "Joi",
+      "5": "Vineri",
+      "6": "Sâmbătă",
+      "7": "Duminică"
+    }
+  },
+  "Register": {
+    "eyebrow": "Adaugă compania",
+    "title": "Fă-ți compania vizibilă.",
+    "description": "Introdu datele principale. Profilul va fi verificat înainte de publicare.",
+    "companyName": "Numele companiei",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Website",
+    "industry": "Domeniu",
+    "canton": "Canton",
+    "city": "Localitate",
+    "languages": "Limbi vorbite",
+    "descriptionLabel": "Descrierea companiei",
+    "choose": "Selectează",
+    "note": "Această versiune nu salvează încă datele permanent. Formularul prezintă deja fluxul planificat.",
+    "submit": "Trimite profilul",
+    "successTitle": "Îți mulțumim pentru înregistrare.",
+    "successText": "Datele au fost validate cu succes în această demonstrație. Baza de date va fi conectată în etapa următoare.",
+    "newEntry": "Adaugă altă companie"
+  },
+  "Login": {
+    "eyebrow": "Zona pentru companii",
+    "title": "Autentificare în Findelio",
+    "description": "Autentifică-te pentru a administra companiile și listările tale.",
+    "email": "E-mail",
+    "password": "Parolă",
+    "submit": "Autentificare",
+    "loading": "Se autentifică …",
+    "note": "Datele tale sunt verificate în siguranță prin Directus.",
+    "errorFallback": "Adresa de e-mail sau parola este incorectă.",
+    "serverError": "Autentificarea nu poate fi procesată momentan.",
+    "connectionError": "Conexiunea la server a eșuat."
+  },
+  "Dashboard": {
+    "eyebrow": "Zona pentru companii",
+    "title": "Panou de control",
+    "welcome": "Bine ai venit, {name}.",
+    "description": "Aici îți poți administra companiile, listările și membrii echipei.",
+    "accountTitle": "Contul tău",
+    "email": "E-mail",
+    "role": "Rol",
+    "status": "Stare",
+    "active": "Activ",
+    "unknown": "Nespecificat",
+    "logout": "Deconectare",
+    "logoutLoading": "Se deconectează …",
+    "organizationsEyebrow": "Administrarea firmelor",
+    "organizationsTitle": "Organizațiile tale",
+    "organizationsDescription": "Aici vezi toate organizațiile în care ai un statut de membru activ și profilurile de firmă asociate.",
+    "noOrganizationsTitle": "Nu a fost găsită nicio organizație activă",
+    "noOrganizationsDescription": "Contul tău nu este asociat momentan niciunei organizații active. Verifică apartenența în Directus sau contactează un administrator.",
+    "organizationLabel": "Organizație",
+    "membershipRole": "Rol în organizație",
+    "organizationStatus": "Starea organizației",
+    "listings": "Profiluri de firmă",
+    "listingsCount": "Înregistrări: {count}",
+    "listingsTitle": "Profiluri de firmă asociate",
+    "noListings": "Pentru această organizație nu a fost creat încă niciun profil de firmă.",
+    "locationUnknown": "Locația nu este specificată",
+    "viewListing": "Vezi profilul public",
+    "roleValues": {
+      "owner": "Proprietar",
+      "admin": "Administrator",
+      "editor": "Editor"
+    },
+    "statusValues": {
+      "active": "Activă",
+      "inactive": "Inactivă",
+      "draft": "Ciornă",
+      "review": "În verificare",
+      "published": "Publicat",
+      "rejected": "Respins",
+      "suspended": "Suspendat",
+      "archived": "Arhivat"
+    },
+    "navigation": {
+      "label": "Navigarea panoului",
+      "overview": "Prezentare generală",
+      "organizations": "Organizații",
+      "listings": "Profiluri de firmă",
+      "team": "Echipă"
+    },
+    "summary": {
+      "organizations": "Organizații",
+      "listings": "Profiluri de firmă",
+      "published": "Publicate"
+    },
+    "listingsPage": {
+      "eyebrow": "Profiluri de firmă",
+      "title": "Profilurile tale de firmă",
+      "description": "Aici găsești toate profilurile organizațiilor active și starea lor curentă de publicare.",
+      "emptyTitle": "Nu există încă profiluri de firmă",
+      "emptyDescription": "Nu a fost creat încă niciun profil de firmă pentru organizațiile tale active.",
+      "notPublic": "Acest profil nu este încă vizibil public.",
+      "editListing": "Editează"
+    },
+    "teamPage": {
+      "eyebrow": "Administrarea echipei",
+      "title": "Echipă",
+      "description": "Aici vor fi administrați membrii și rolurile organizațiilor tale.",
+      "nextStepTitle": "Administrarea echipei este următorul pas",
+      "nextStepDescription": "Momentan vezi propriile apartenențe active. Invitațiile și administrarea altor membri vor fi adăugate în siguranță în pasul următor.",
+      "yourMemberships": "Apartenențele tale active"
+    },
+    "overviewOrganizationsTitle": "Prezentarea organizațiilor",
+    "overviewOrganizationsLink": "Vezi toate organizațiile",
+    "organizationListingsLink": "Vezi profilurile de firmă"
+  },
+  "Footer": {
+    "tagline": "Findelio conectează oamenii cu firme care vorbesc limba lor.",
+    "directory": "Director",
+    "findCompanies": "Găsește companii",
+    "registerCompany": "Adaugă compania",
+    "legal": "Informații juridice",
+    "imprint": "Date legale",
+    "privacy": "Confidențialitate",
+    "copyright": "Toate drepturile rezervate."
+  },
+  "Legal": {
+    "imprintTitle": "Date legale",
+    "imprintText": "Înainte de publicare, adaugă datele complete ale operatorului cerute de legislația elvețiană.",
+    "privacyTitle": "Politica de confidențialitate",
+    "privacyText": "Înainte de publicare, adaugă o politică completă privind găzduirea, formularele, analiza și serviciile terților."
+  },
+  "ListingEditor": {
+    "eyebrow": "Editează profilul firmei",
+    "title": "Editează {name}",
+    "description": "Actualizează datele profilului firmei. Modificările pot fi salvate ca schiță sau trimise pentru verificare.",
+    "back": "Înapoi la profilurile firmelor",
+    "sections": {
+      "general": "Date de bază și descriere",
+      "contact": "Date de contact",
+      "address": "Adresă și vizibilitate",
+      "workflow": "Starea publicării"
+    },
+    "fields": {
+      "name": "Numele firmei",
+      "shortDescription": "Descriere scurtă",
+      "description": "Descriere",
+      "publicEmail": "E-mail public",
+      "phone": "Telefon",
+      "website": "Site web",
+      "street": "Strada și numărul",
+      "postalCode": "Cod poștal",
+      "city": "Localitate",
+      "canton": "Canton",
+      "addressVisibility": "Vizibilitatea adresei",
+      "status": "Salvează ca"
+    },
+    "addressVisibility": {
+      "full": "Afișează adresa completă",
+      "city": "Afișează doar localitatea și cantonul",
+      "hidden": "Ascunde adresa"
+    },
+    "statusValues": {
+      "draft": "Schiță",
+      "review": "Pentru verificare",
+      "published": "Publicat",
+      "rejected": "Respins",
+      "suspended": "Suspendat",
+      "archived": "Arhivat",
+      "active": "Activ",
+      "inactive": "Inactiv"
+    },
+    "currentStatus": "Starea actuală",
+    "statusHint": "Profilurile trimise pentru verificare pot fi apoi verificate și publicate.",
+    "save": "Salvează modificările",
+    "saving": "Se salvează …",
+    "saved": "Modificările au fost salvate.",
+    "errors": {
+      "invalid_data": "Verifică datele introduse.",
+      "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
+      "forbidden": "Nu ai permisiunea de a edita acest profil de firmă.",
+      "not_found": "Profilul firmei nu a fost găsit.",
+      "save_failed": "Modificările nu au putut fi salvate.",
+      "network": "Conexiunea la server a eșuat."
+    }
+  }
+}

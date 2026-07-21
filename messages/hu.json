@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Találjon az Ön nyelvén beszélő vállalkozásokat",
+    "description": "Svájc többnyelvű cégjegyzéke. Keresés nyelv, ágazat, kanton és település szerint."
+  },
+  "Header": {
+    "home": "Findelio kezdőlap",
+    "navigation": "Fő navigáció",
+    "findCompanies": "Cégek keresése",
+    "registerCompany": "Cég hozzáadása",
+    "login": "Bejelentkezés",
+    "selectLanguage": "Nyelv kiválasztása",
+    "menu": "Menü megnyitása",
+    "dashboard": "Vezérlőpult"
+  },
+  "Home": {
+    "eyebrow": "Többnyelvű vállalkozások Svájcban",
+    "title": "Találjon az Ön nyelvén beszélő vállalkozásokat.",
+    "description": "Keressen nyelv, ágazat és hely szerint, és találja meg a megfelelő céget a közelében.",
+    "howTitle": "Így működik a Findelio",
+    "howDescription": "Három egyszerű lépés a megfelelő céghez.",
+    "step1Title": "Nyelv kiválasztása",
+    "step1Text": "Válassza ki, milyen nyelven szeretne tanácsot kapni.",
+    "step2Title": "Ágazat és hely",
+    "step2Text": "Szűkítse a keresést ágazat, kanton és település szerint.",
+    "step3Title": "Megfelelő cég megtalálása",
+    "step3Text": "Hasonlítsa össze a profilokat és lépjen kapcsolatba közvetlenül.",
+    "ctaTitle": "Több nyelven beszél a cége?",
+    "ctaText": "Hozzon létre profilt, hogy a megfelelő ügyfelek megtalálják.",
+    "ctaButton": "Cég hozzáadása"
+  },
+  "Search": {
+    "language": "Nyelv",
+    "allLanguages": "Minden nyelv",
+    "industry": "Ágazat",
+    "allIndustries": "Minden ágazat",
+    "canton": "Kanton",
+    "allCantons": "Minden kanton",
+    "location": "Település",
+    "locationPlaceholder": "Település vagy irányítószám",
+    "submit": "Cégek keresése"
+  },
+  "Results": {
+    "eyebrow": "Cégkeresés",
+    "title": "Megfelelő vállalkozások",
+    "count": "Találatok száma: {count}",
+    "noResults": "A kiválasztott szűrőkkel nem található vállalkozás.",
+    "clearFilters": "Szűrők törlése",
+    "details": "Profil megtekintése",
+    "verified": "Ellenőrzött"
+  },
+  "Company": {
+    "back": "Vissza a kereséshez",
+    "about": "A vállalkozásról",
+    "contact": "Kapcsolat",
+    "website": "Weboldal",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "address": "Cím",
+    "languages": "Beszélt nyelvek",
+    "industry": "Ágazat",
+    "verified": "Ellenőrzött vállalkozás",
+    "openingHours": "Nyitvatartás",
+    "gallery": "Galéria",
+    "closed": "Zárva",
+    "weekdays": {
+      "1": "Hétfő",
+      "2": "Kedd",
+      "3": "Szerda",
+      "4": "Csütörtök",
+      "5": "Péntek",
+      "6": "Szombat",
+      "7": "Vasárnap"
+    }
+  },
+  "Register": {
+    "eyebrow": "Cég hozzáadása",
+    "title": "Tegye láthatóvá vállalkozását.",
+    "description": "Adja meg a legfontosabb adatokat. A profilt közzététel előtt ellenőrizzük.",
+    "companyName": "Cégnév",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Weboldal",
+    "industry": "Ágazat",
+    "canton": "Kanton",
+    "city": "Település",
+    "languages": "Beszélt nyelvek",
+    "descriptionLabel": "Cégleírás",
+    "choose": "Kérjük, válasszon",
+    "note": "Ez a verzió még nem tárol adatokat tartósan. Az űrlap már mutatja a tervezett folyamatot.",
+    "submit": "Profil beküldése",
+    "successTitle": "Köszönjük a beküldést.",
+    "successText": "Az adatok ellenőrzése ebben a demóban sikeres volt. Az adatbázis a következő fejlesztési lépésben kapcsolódik.",
+    "newEntry": "Újabb cég hozzáadása"
+  },
+  "Login": {
+    "eyebrow": "Céges felület",
+    "title": "Bejelentkezés a Findelióba",
+    "description": "Jelentkezzen be cégei és bejegyzései kezeléséhez.",
+    "email": "E-mail",
+    "password": "Jelszó",
+    "submit": "Bejelentkezés",
+    "loading": "Bejelentkezés …",
+    "note": "A bejelentkezési adatait a Directus biztonságosan ellenőrzi.",
+    "errorFallback": "Az e-mail-cím vagy a jelszó helytelen.",
+    "serverError": "A bejelentkezés jelenleg nem dolgozható fel.",
+    "connectionError": "Nem sikerült kapcsolódni a szerverhez."
+  },
+  "Dashboard": {
+    "eyebrow": "Céges felület",
+    "title": "Vezérlőpult",
+    "welcome": "Üdvözöljük, {name}.",
+    "description": "Itt kezelheti cégeit, bejegyzéseit és csapattagjait.",
+    "accountTitle": "Az Ön fiókja",
+    "email": "E-mail",
+    "role": "Szerepkör",
+    "status": "Állapot",
+    "active": "Aktív",
+    "unknown": "Nincs megadva",
+    "logout": "Kijelentkezés",
+    "logoutLoading": "Kijelentkezés …",
+    "organizationsEyebrow": "Cégkezelés",
+    "organizationsTitle": "Szervezeteid",
+    "organizationsDescription": "Itt láthatod azokat a szervezeteket, amelyekben aktív tagságod van, valamint a hozzájuk tartozó cégprofilokat.",
+    "noOrganizationsTitle": "Nem található aktív szervezet",
+    "noOrganizationsDescription": "A felhasználói fiókod jelenleg nincs aktív szervezethez rendelve. Ellenőrizd a tagságot a Directusban, vagy fordulj egy rendszergazdához.",
+    "organizationLabel": "Szervezet",
+    "membershipRole": "Tagsági szerepkör",
+    "organizationStatus": "Szervezet állapota",
+    "listings": "Cégprofilok",
+    "listingsCount": "Bejegyzések száma: {count}",
+    "listingsTitle": "Kapcsolódó cégprofilok",
+    "noListings": "Ehhez a szervezethez még nem tartozik cégprofil.",
+    "locationUnknown": "Hely nincs megadva",
+    "viewListing": "Nyilvános adatlap megtekintése",
+    "roleValues": {
+      "owner": "Tulajdonos",
+      "admin": "Rendszergazda",
+      "editor": "Szerkesztő"
+    },
+    "statusValues": {
+      "active": "Aktív",
+      "inactive": "Inaktív",
+      "draft": "Piszkozat",
+      "review": "Ellenőrzés alatt",
+      "published": "Közzétéve",
+      "rejected": "Elutasítva",
+      "suspended": "Felfüggesztve",
+      "archived": "Archiválva"
+    },
+    "navigation": {
+      "label": "Vezérlőpult navigáció",
+      "overview": "Áttekintés",
+      "organizations": "Szervezetek",
+      "listings": "Cégprofilok",
+      "team": "Csapat"
+    },
+    "summary": {
+      "organizations": "Szervezetek",
+      "listings": "Cégprofilok",
+      "published": "Közzétéve"
+    },
+    "listingsPage": {
+      "eyebrow": "Cégprofilok",
+      "title": "Az Ön cégprofiljai",
+      "description": "Itt találja aktív szervezetei összes profilját és azok aktuális közzétételi állapotát.",
+      "emptyTitle": "Még nincsenek cégprofilok",
+      "emptyDescription": "Aktív szervezeteihez még nem készült cégprofil.",
+      "notPublic": "Ez a profil még nem látható nyilvánosan.",
+      "editListing": "Szerkesztés"
+    },
+    "teamPage": {
+      "eyebrow": "Csapatkezelés",
+      "title": "Csapat",
+      "description": "Itt kezelhetők a szervezetek tagjai és szerepkörei.",
+      "nextStepTitle": "A csapatkezelés következik",
+      "nextStepDescription": "Jelenleg a saját aktív tagságait látja. A meghívásokat és további csapattagok kezelését a következő lépésben biztonságosan hozzáadjuk.",
+      "yourMemberships": "Az Ön aktív tagságai"
+    },
+    "overviewOrganizationsTitle": "Szervezetek áttekintése",
+    "overviewOrganizationsLink": "Összes szervezet megtekintése",
+    "organizationListingsLink": "Cégprofilok megtekintése"
+  },
+  "Footer": {
+    "tagline": "A Findelio összeköti az embereket az általuk beszélt nyelven kommunikáló cégekkel.",
+    "directory": "Cégjegyzék",
+    "findCompanies": "Cégek keresése",
+    "registerCompany": "Cég hozzáadása",
+    "legal": "Jogi információk",
+    "imprint": "Impresszum",
+    "privacy": "Adatvédelem",
+    "copyright": "Minden jog fenntartva."
+  },
+  "Legal": {
+    "imprintTitle": "Impresszum",
+    "imprintText": "Közzététel előtt adja meg az üzemeltető teljes, svájci jog szerinti adatait.",
+    "privacyTitle": "Adatvédelmi nyilatkozat",
+    "privacyText": "Közzététel előtt egészítse ki a teljes adatvédelmi nyilatkozatot, beleértve a tárhelyet, űrlapokat, elemzést és külső szolgáltatásokat."
+  },
+  "ListingEditor": {
+    "eyebrow": "Cégprofil szerkesztése",
+    "title": "{name} szerkesztése",
+    "description": "Frissítsd a cégprofil adatait. A módosítások piszkozatként menthetők vagy ellenőrzésre küldhetők.",
+    "back": "Vissza a cégprofilokhoz",
+    "sections": {
+      "general": "Alapadatok és leírás",
+      "contact": "Kapcsolati adatok",
+      "address": "Cím és láthatóság",
+      "workflow": "Közzétételi állapot"
+    },
+    "fields": {
+      "name": "Cégnév",
+      "shortDescription": "Rövid leírás",
+      "description": "Leírás",
+      "publicEmail": "Nyilvános e-mail",
+      "phone": "Telefon",
+      "website": "Weboldal",
+      "street": "Utca és házszám",
+      "postalCode": "Irányítószám",
+      "city": "Település",
+      "canton": "Kanton",
+      "addressVisibility": "Cím megjelenítése",
+      "status": "Mentés másként"
+    },
+    "addressVisibility": {
+      "full": "Teljes cím megjelenítése",
+      "city": "Csak a település és a kanton megjelenítése",
+      "hidden": "Cím elrejtése"
+    },
+    "statusValues": {
+      "draft": "Piszkozat",
+      "review": "Ellenőrzésre",
+      "published": "Közzétéve",
+      "rejected": "Elutasítva",
+      "suspended": "Felfüggesztve",
+      "archived": "Archiválva",
+      "active": "Aktív",
+      "inactive": "Inaktív"
+    },
+    "currentStatus": "Jelenlegi állapot",
+    "statusHint": "Az ellenőrzésre küldött profilokat ezután ellenőrizni és közzétenni lehet.",
+    "save": "Módosítások mentése",
+    "saving": "Mentés …",
+    "saved": "A módosítások mentve.",
+    "errors": {
+      "invalid_data": "Ellenőrizd a megadott adatokat.",
+      "unauthorized": "A munkamenet lejárt. Jelentkezz be újra.",
+      "forbidden": "Nincs jogosultságod ennek a cégprofilnak a szerkesztéséhez.",
+      "not_found": "A cégprofil nem található.",
+      "save_failed": "A módosításokat nem sikerült menteni.",
+      "network": "Nem sikerült kapcsolódni a szerverhez."
+    }
+  }
+}

@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Znajdź firmy, które mówią w Twoim języku",
+    "description": "Wielojęzyczny katalog firm w Szwajcarii. Wyszukuj według języka, branży, kantonu i miejscowości."
+  },
+  "Header": {
+    "home": "Strona główna Findelio",
+    "navigation": "Nawigacja główna",
+    "findCompanies": "Znajdź firmy",
+    "registerCompany": "Dodaj firmę",
+    "login": "Logowanie",
+    "selectLanguage": "Wybierz język",
+    "menu": "Otwórz menu",
+    "dashboard": "Panel"
+  },
+  "Home": {
+    "eyebrow": "Wielojęzyczne firmy w Szwajcarii",
+    "title": "Znajdź firmy, które mówią w Twoim języku.",
+    "description": "Szukaj według języka, branży i lokalizacji, aby znaleźć odpowiednią firmę w pobliżu.",
+    "howTitle": "Jak działa Findelio",
+    "howDescription": "Trzy proste kroki do odpowiedniej firmy.",
+    "step1Title": "Wybierz język",
+    "step1Text": "Wybierz język, w którym chcesz otrzymać poradę.",
+    "step2Title": "Branża i lokalizacja",
+    "step2Text": "Zawęź wyszukiwanie według branży, kantonu i miejscowości.",
+    "step3Title": "Znajdź odpowiednią firmę",
+    "step3Text": "Porównaj profile i skontaktuj się bezpośrednio.",
+    "ctaTitle": "Twoja firma mówi w kilku językach?",
+    "ctaText": "Utwórz profil i daj się znaleźć właściwym klientom.",
+    "ctaButton": "Dodaj firmę"
+  },
+  "Search": {
+    "language": "Język",
+    "allLanguages": "Wszystkie języki",
+    "industry": "Branża",
+    "allIndustries": "Wszystkie branże",
+    "canton": "Kanton",
+    "allCantons": "Wszystkie kantony",
+    "location": "Miejscowość",
+    "locationPlaceholder": "Miejscowość lub kod pocztowy",
+    "submit": "Znajdź firmy"
+  },
+  "Results": {
+    "eyebrow": "Wyszukiwanie firm",
+    "title": "Pasujące firmy",
+    "count": "Liczba znalezionych firm: {count}",
+    "noResults": "Nie znaleziono firm dla wybranych filtrów.",
+    "clearFilters": "Wyczyść filtry",
+    "details": "Zobacz profil",
+    "verified": "Zweryfikowana"
+  },
+  "Company": {
+    "back": "Powrót do wyszukiwania",
+    "about": "O firmie",
+    "contact": "Kontakt",
+    "website": "Strona internetowa",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "address": "Adres",
+    "languages": "Obsługiwane języki",
+    "industry": "Branża",
+    "verified": "Zweryfikowana firma",
+    "openingHours": "Godziny otwarcia",
+    "gallery": "Galeria",
+    "closed": "Zamknięte",
+    "weekdays": {
+      "1": "Poniedziałek",
+      "2": "Wtorek",
+      "3": "Środa",
+      "4": "Czwartek",
+      "5": "Piątek",
+      "6": "Sobota",
+      "7": "Niedziela"
+    }
+  },
+  "Register": {
+    "eyebrow": "Dodaj firmę",
+    "title": "Zwiększ widoczność swojej firmy.",
+    "description": "Wprowadź najważniejsze dane. Profil zostanie sprawdzony przed publikacją.",
+    "companyName": "Nazwa firmy",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Strona internetowa",
+    "industry": "Branża",
+    "canton": "Kanton",
+    "city": "Miejscowość",
+    "languages": "Obsługiwane języki",
+    "descriptionLabel": "Opis firmy",
+    "choose": "Wybierz",
+    "note": "Ta wersja nie zapisuje jeszcze danych na stałe. Formularz pokazuje już planowany proces.",
+    "submit": "Wyślij profil",
+    "successTitle": "Dziękujemy za zgłoszenie.",
+    "successText": "Dane zostały poprawnie sprawdzone w wersji demonstracyjnej. Integracja z bazą danych nastąpi w kolejnym etapie.",
+    "newEntry": "Dodaj kolejną firmę"
+  },
+  "Login": {
+    "eyebrow": "Strefa firmowa",
+    "title": "Zaloguj się do Findelio",
+    "description": "Zaloguj się, aby zarządzać firmami i wpisami.",
+    "email": "E-mail",
+    "password": "Hasło",
+    "submit": "Zaloguj się",
+    "loading": "Logowanie …",
+    "note": "Dane logowania są bezpiecznie weryfikowane przez Directus.",
+    "errorFallback": "Adres e-mail lub hasło są nieprawidłowe.",
+    "serverError": "Logowanie nie może być teraz przetworzone.",
+    "connectionError": "Połączenie z serwerem nie powiodło się."
+  },
+  "Dashboard": {
+    "eyebrow": "Strefa firmowa",
+    "title": "Panel",
+    "welcome": "Witaj, {name}.",
+    "description": "Tutaj możesz zarządzać firmami, wpisami i członkami zespołu.",
+    "accountTitle": "Twoje konto",
+    "email": "E-mail",
+    "role": "Rola",
+    "status": "Status",
+    "active": "Aktywny",
+    "unknown": "Nie podano",
+    "logout": "Wyloguj się",
+    "logoutLoading": "Wylogowywanie …",
+    "organizationsEyebrow": "Zarządzanie firmami",
+    "organizationsTitle": "Twoje organizacje",
+    "organizationsDescription": "Tutaj widzisz wszystkie organizacje, w których masz aktywne członkostwo, oraz powiązane profile firm.",
+    "noOrganizationsTitle": "Nie znaleziono aktywnej organizacji",
+    "noOrganizationsDescription": "Twoje konto użytkownika nie jest obecnie przypisane do żadnej aktywnej organizacji. Sprawdź członkostwo w Directusie lub skontaktuj się z administratorem.",
+    "organizationLabel": "Organizacja",
+    "membershipRole": "Rola członka",
+    "organizationStatus": "Status organizacji",
+    "listings": "Profile firm",
+    "listingsCount": "Liczba wpisów: {count}",
+    "listingsTitle": "Powiązane profile firm",
+    "noListings": "Dla tej organizacji nie utworzono jeszcze profilu firmy.",
+    "locationUnknown": "Nie podano lokalizacji",
+    "viewListing": "Zobacz publiczny wpis",
+    "roleValues": {
+      "owner": "Właściciel",
+      "admin": "Administrator",
+      "editor": "Edytor"
+    },
+    "statusValues": {
+      "active": "Aktywna",
+      "inactive": "Nieaktywna",
+      "draft": "Szkic",
+      "review": "Do weryfikacji",
+      "published": "Opublikowany",
+      "rejected": "Odrzucony",
+      "suspended": "Zawieszony",
+      "archived": "Zarchiwizowany"
+    },
+    "navigation": {
+      "label": "Nawigacja panelu",
+      "overview": "Przegląd",
+      "organizations": "Organizacje",
+      "listings": "Profile firm",
+      "team": "Zespół"
+    },
+    "summary": {
+      "organizations": "Organizacje",
+      "listings": "Profile firm",
+      "published": "Opublikowane"
+    },
+    "listingsPage": {
+      "eyebrow": "Profile firm",
+      "title": "Twoje profile firm",
+      "description": "Tutaj znajdziesz wszystkie profile aktywnych organizacji i ich aktualny status publikacji.",
+      "emptyTitle": "Brak profili firm",
+      "emptyDescription": "Dla aktywnych organizacji nie utworzono jeszcze żadnego profilu firmy.",
+      "notPublic": "Ten profil nie jest jeszcze publicznie widoczny.",
+      "editListing": "Edytuj"
+    },
+    "teamPage": {
+      "eyebrow": "Zarządzanie zespołem",
+      "title": "Zespół",
+      "description": "Tutaj będą zarządzani członkowie i role w organizacjach.",
+      "nextStepTitle": "Zarządzanie zespołem to kolejny krok",
+      "nextStepDescription": "Obecnie widzisz własne aktywne członkostwa. Zaproszenia i zarządzanie kolejnymi członkami zespołu dodamy bezpiecznie w następnym kroku.",
+      "yourMemberships": "Twoje aktywne członkostwa"
+    },
+    "overviewOrganizationsTitle": "Przegląd organizacji",
+    "overviewOrganizationsLink": "Pokaż wszystkie organizacje",
+    "organizationListingsLink": "Pokaż profile firm"
+  },
+  "Footer": {
+    "tagline": "Findelio łączy ludzi z firmami, które mówią w ich języku.",
+    "directory": "Katalog",
+    "findCompanies": "Znajdź firmy",
+    "registerCompany": "Dodaj firmę",
+    "legal": "Informacje prawne",
+    "imprint": "Dane firmy",
+    "privacy": "Prywatność",
+    "copyright": "Wszelkie prawa zastrzeżone."
+  },
+  "Legal": {
+    "imprintTitle": "Dane firmy",
+    "imprintText": "Przed publikacją uzupełnij pełne dane operatora wymagane przez prawo szwajcarskie.",
+    "privacyTitle": "Polityka prywatności",
+    "privacyText": "Przed publikacją dodaj pełną politykę prywatności dotyczącą hostingu, formularzy, analityki i usług zewnętrznych."
+  },
+  "ListingEditor": {
+    "eyebrow": "Edytuj profil firmy",
+    "title": "Edytuj {name}",
+    "description": "Zaktualizuj dane profilu firmy. Zmiany można zapisać jako wersję roboczą lub wysłać do weryfikacji.",
+    "back": "Wróć do profili firm",
+    "sections": {
+      "general": "Dane podstawowe i opis",
+      "contact": "Dane kontaktowe",
+      "address": "Adres i widoczność",
+      "workflow": "Status publikacji"
+    },
+    "fields": {
+      "name": "Nazwa firmy",
+      "shortDescription": "Krótki opis",
+      "description": "Opis",
+      "publicEmail": "Publiczny e-mail",
+      "phone": "Telefon",
+      "website": "Strona internetowa",
+      "street": "Ulica i numer",
+      "postalCode": "Kod pocztowy",
+      "city": "Miejscowość",
+      "canton": "Kanton",
+      "addressVisibility": "Widoczność adresu",
+      "status": "Zapisz jako"
+    },
+    "addressVisibility": {
+      "full": "Pokaż pełny adres",
+      "city": "Pokaż tylko miejscowość i kanton",
+      "hidden": "Ukryj adres"
+    },
+    "statusValues": {
+      "draft": "Wersja robocza",
+      "review": "Do weryfikacji",
+      "published": "Opublikowany",
+      "rejected": "Odrzucony",
+      "suspended": "Zawieszony",
+      "archived": "Zarchiwizowany",
+      "active": "Aktywny",
+      "inactive": "Nieaktywny"
+    },
+    "currentStatus": "Aktualny status",
+    "statusHint": "Profile wysłane do weryfikacji mogą zostać sprawdzone i opublikowane.",
+    "save": "Zapisz zmiany",
+    "saving": "Zapisywanie …",
+    "saved": "Zmiany zostały zapisane.",
+    "errors": {
+      "invalid_data": "Sprawdź wprowadzone dane.",
+      "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "Nie masz uprawnień do edycji tego profilu firmy.",
+      "not_found": "Nie znaleziono profilu firmy.",
+      "save_failed": "Nie udało się zapisać zmian.",
+      "network": "Nie udało się połączyć z serwerem."
+    }
+  }
+}

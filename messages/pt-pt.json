@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Encontre empresas que falam a sua língua",
+    "description": "O diretório empresarial multilingue da Suíça. Pesquise por língua, setor, cantão e localidade."
+  },
+  "Header": {
+    "home": "Página inicial da Findelio",
+    "navigation": "Navegação principal",
+    "findCompanies": "Encontrar empresas",
+    "registerCompany": "Registar empresa",
+    "login": "Iniciar sessão",
+    "selectLanguage": "Selecionar idioma",
+    "menu": "Abrir menu",
+    "dashboard": "Painel"
+  },
+  "Home": {
+    "eyebrow": "Empresas multilingues na Suíça",
+    "title": "Encontre empresas que falam a sua língua.",
+    "description": "Pesquise por língua, setor e localização e encontre empresas adequadas perto de si.",
+    "howTitle": "Como funciona a Findelio",
+    "howDescription": "Três passos simples para encontrar a empresa certa.",
+    "step1Title": "Escolher a língua",
+    "step1Text": "Selecione a língua em que pretende ser atendido.",
+    "step2Title": "Setor e localização",
+    "step2Text": "Refine a pesquisa por setor, cantão e localidade.",
+    "step3Title": "Encontrar a empresa certa",
+    "step3Text": "Compare perfis e entre em contacto diretamente.",
+    "ctaTitle": "A sua empresa fala várias línguas?",
+    "ctaText": "Crie um perfil e seja encontrado pelos clientes certos.",
+    "ctaButton": "Registar empresa"
+  },
+  "Search": {
+    "language": "Língua",
+    "allLanguages": "Todas as línguas",
+    "industry": "Setor",
+    "allIndustries": "Todos os setores",
+    "canton": "Cantão",
+    "allCantons": "Todos os cantões",
+    "location": "Localidade",
+    "locationPlaceholder": "Localidade ou código postal",
+    "submit": "Encontrar empresas"
+  },
+  "Results": {
+    "eyebrow": "Pesquisa de empresas",
+    "title": "Empresas correspondentes",
+    "count": "Empresas encontradas: {count}",
+    "noResults": "Não foram encontradas empresas para estes filtros.",
+    "clearFilters": "Limpar filtros",
+    "details": "Ver perfil",
+    "verified": "Verificada"
+  },
+  "Company": {
+    "back": "Voltar à pesquisa",
+    "about": "Sobre a empresa",
+    "contact": "Contacto",
+    "website": "Website",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "address": "Morada",
+    "languages": "Línguas faladas",
+    "industry": "Setor",
+    "verified": "Empresa verificada",
+    "openingHours": "Horário de funcionamento",
+    "gallery": "Galeria",
+    "closed": "Fechado",
+    "weekdays": {
+      "1": "Segunda-feira",
+      "2": "Terça-feira",
+      "3": "Quarta-feira",
+      "4": "Quinta-feira",
+      "5": "Sexta-feira",
+      "6": "Sábado",
+      "7": "Domingo"
+    }
+  },
+  "Register": {
+    "eyebrow": "Registar empresa",
+    "title": "Dê visibilidade à sua empresa.",
+    "description": "Introduza os dados principais. O perfil será verificado antes da publicação.",
+    "companyName": "Nome da empresa",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "website": "Website",
+    "industry": "Setor",
+    "canton": "Cantão",
+    "city": "Localidade",
+    "languages": "Línguas faladas",
+    "descriptionLabel": "Descrição da empresa",
+    "choose": "Selecione",
+    "note": "Esta versão ainda não guarda dados de forma permanente. O formulário já mostra o processo previsto.",
+    "submit": "Enviar perfil",
+    "successTitle": "Obrigado pelo seu registo.",
+    "successText": "Os dados foram validados com sucesso nesta demonstração. A base de dados será ligada no próximo passo.",
+    "newEntry": "Adicionar outra empresa"
+  },
+  "Login": {
+    "eyebrow": "Área empresarial",
+    "title": "Iniciar sessão na Findelio",
+    "description": "Inicie sessão para gerir as suas empresas e os respetivos registos.",
+    "email": "E-mail",
+    "password": "Palavra-passe",
+    "submit": "Iniciar sessão",
+    "loading": "A iniciar sessão …",
+    "note": "Os seus dados são verificados de forma segura através do Directus.",
+    "errorFallback": "O e-mail ou a palavra-passe estão incorretos.",
+    "serverError": "Não foi possível processar o início de sessão neste momento.",
+    "connectionError": "A ligação ao servidor falhou."
+  },
+  "Dashboard": {
+    "eyebrow": "Área empresarial",
+    "title": "Painel",
+    "welcome": "Bem-vindo, {name}.",
+    "description": "Aqui pode gerir as suas empresas, registos e membros da equipa.",
+    "accountTitle": "A sua conta",
+    "email": "E-mail",
+    "role": "Função",
+    "status": "Estado",
+    "active": "Ativo",
+    "unknown": "Não indicado",
+    "logout": "Terminar sessão",
+    "logoutLoading": "A terminar sessão …",
+    "organizationsEyebrow": "Gestão empresarial",
+    "organizationsTitle": "As suas organizações",
+    "organizationsDescription": "Aqui pode ver todas as organizações em que possui uma associação ativa e os respetivos perfis empresariais.",
+    "noOrganizationsTitle": "Nenhuma organização ativa encontrada",
+    "noOrganizationsDescription": "A sua conta de utilizador não está atualmente associada a nenhuma organização ativa. Verifique a associação no Directus ou contacte um administrador.",
+    "organizationLabel": "Organização",
+    "membershipRole": "Função do membro",
+    "organizationStatus": "Estado da organização",
+    "listings": "Perfis empresariais",
+    "listingsCount": "Registos: {count}",
+    "listingsTitle": "Perfis empresariais associados",
+    "noListings": "Ainda não existe nenhum perfil empresarial para esta organização.",
+    "locationUnknown": "Localização não indicada",
+    "viewListing": "Ver perfil público",
+    "roleValues": {
+      "owner": "Proprietário",
+      "admin": "Administrador",
+      "editor": "Editor"
+    },
+    "statusValues": {
+      "active": "Ativa",
+      "inactive": "Inativa",
+      "draft": "Rascunho",
+      "review": "Em análise",
+      "published": "Publicado",
+      "rejected": "Rejeitado",
+      "suspended": "Suspenso",
+      "archived": "Arquivado"
+    },
+    "navigation": {
+      "label": "Navegação do painel",
+      "overview": "Visão geral",
+      "organizations": "Organizações",
+      "listings": "Perfis empresariais",
+      "team": "Equipa"
+    },
+    "summary": {
+      "organizations": "Organizações",
+      "listings": "Perfis empresariais",
+      "published": "Publicados"
+    },
+    "listingsPage": {
+      "eyebrow": "Perfis empresariais",
+      "title": "Os seus perfis empresariais",
+      "description": "Aqui encontra todos os perfis das suas organizações ativas e o respetivo estado de publicação.",
+      "emptyTitle": "Ainda não existem perfis empresariais",
+      "emptyDescription": "Ainda não foi criado nenhum perfil empresarial para as suas organizações ativas.",
+      "notPublic": "Este perfil ainda não está visível publicamente.",
+      "editListing": "Editar"
+    },
+    "teamPage": {
+      "eyebrow": "Gestão da equipa",
+      "title": "Equipa",
+      "description": "Aqui serão geridos os membros e as funções das suas organizações.",
+      "nextStepTitle": "A gestão da equipa é o próximo passo",
+      "nextStepDescription": "Atualmente vê as suas próprias associações ativas. Os convites e a gestão de outros membros serão adicionados com segurança no próximo passo.",
+      "yourMemberships": "As suas associações ativas"
+    },
+    "overviewOrganizationsTitle": "Visão geral das organizações",
+    "overviewOrganizationsLink": "Ver todas as organizações",
+    "organizationListingsLink": "Ver perfis empresariais"
+  },
+  "Footer": {
+    "tagline": "A Findelio liga pessoas a empresas que falam a sua língua.",
+    "directory": "Diretório",
+    "findCompanies": "Encontrar empresas",
+    "registerCompany": "Registar empresa",
+    "legal": "Informação legal",
+    "imprint": "Ficha técnica",
+    "privacy": "Privacidade",
+    "copyright": "Todos os direitos reservados."
+  },
+  "Legal": {
+    "imprintTitle": "Ficha técnica",
+    "imprintText": "Antes da publicação, adicione os dados completos do operador exigidos pela legislação suíça.",
+    "privacyTitle": "Política de privacidade",
+    "privacyText": "Antes da publicação, adicione uma política de privacidade completa sobre alojamento, formulários, análise e serviços de terceiros."
+  },
+  "ListingEditor": {
+    "eyebrow": "Editar perfil da empresa",
+    "title": "Editar {name}",
+    "description": "Atualiza os dados do perfil da empresa. As alterações podem ser guardadas como rascunho ou enviadas para revisão.",
+    "back": "Voltar aos perfis de empresa",
+    "sections": {
+      "general": "Dados principais e descrição",
+      "contact": "Dados de contacto",
+      "address": "Morada e visibilidade",
+      "workflow": "Estado de publicação"
+    },
+    "fields": {
+      "name": "Nome da empresa",
+      "shortDescription": "Descrição curta",
+      "description": "Descrição",
+      "publicEmail": "E-mail público",
+      "phone": "Telefone",
+      "website": "Website",
+      "street": "Rua e número",
+      "postalCode": "Código postal",
+      "city": "Localidade",
+      "canton": "Cantão",
+      "addressVisibility": "Visibilidade da morada",
+      "status": "Guardar como"
+    },
+    "addressVisibility": {
+      "full": "Mostrar morada completa",
+      "city": "Mostrar apenas localidade e cantão",
+      "hidden": "Ocultar morada"
+    },
+    "statusValues": {
+      "draft": "Rascunho",
+      "review": "Para revisão",
+      "published": "Publicado",
+      "rejected": "Rejeitado",
+      "suspended": "Suspenso",
+      "archived": "Arquivado",
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "currentStatus": "Estado atual",
+    "statusHint": "Os perfis enviados para revisão podem depois ser verificados e publicados.",
+    "save": "Guardar alterações",
+    "saving": "A guardar …",
+    "saved": "As alterações foram guardadas.",
+    "errors": {
+      "invalid_data": "Verifica os dados introduzidos.",
+      "unauthorized": "A tua sessão expirou. Inicia sessão novamente.",
+      "forbidden": "Não tens permissão para editar este perfil de empresa.",
+      "not_found": "O perfil da empresa não foi encontrado.",
+      "save_failed": "Não foi possível guardar as alterações.",
+      "network": "A ligação ao servidor falhou."
+    }
+  }
+}

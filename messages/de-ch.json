@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Unternehmen finden, die deine Sprache sprechen",
+    "description": "Das mehrsprachige Firmenverzeichnis der Schweiz. Finde Unternehmen nach Sprache, Branche, Kanton und Ort."
+  },
+  "Header": {
+    "home": "Findelio Startseite",
+    "navigation": "Hauptnavigation",
+    "findCompanies": "Unternehmen finden",
+    "registerCompany": "Firma eintragen",
+    "login": "Login",
+    "selectLanguage": "Sprache auswählen",
+    "menu": "Menü öffnen",
+    "dashboard": "Dashboard"
+  },
+  "Home": {
+    "eyebrow": "Mehrsprachige Unternehmen in der Schweiz",
+    "title": "Finde Unternehmen, die deine Sprache sprechen.",
+    "description": "Suche nach Sprache, Branche und Standort und finde passende Unternehmen in deiner Nähe.",
+    "howTitle": "So funktioniert Findelio",
+    "howDescription": "In drei einfachen Schritten zur passenden Firma.",
+    "step1Title": "Sprache wählen",
+    "step1Text": "Wähle die Sprache, in der du beraten werden möchtest.",
+    "step2Title": "Branche und Ort",
+    "step2Text": "Grenze die Suche nach Branche, Kanton und Ort ein.",
+    "step3Title": "Passende Firma finden",
+    "step3Text": "Vergleiche Einträge und nimm direkt Kontakt auf.",
+    "ctaTitle": "Deine Firma spricht mehrere Sprachen?",
+    "ctaText": "Erstelle einen Eintrag und werde von den richtigen Kundinnen und Kunden gefunden.",
+    "ctaButton": "Firma eintragen"
+  },
+  "Search": {
+    "language": "Sprache",
+    "allLanguages": "Alle Sprachen",
+    "industry": "Branche",
+    "allIndustries": "Alle Branchen",
+    "canton": "Kanton",
+    "allCantons": "Alle Kantone",
+    "location": "Ort",
+    "locationPlaceholder": "Ort oder PLZ",
+    "submit": "Unternehmen finden"
+  },
+  "Results": {
+    "eyebrow": "Firmensuche",
+    "title": "Passende Unternehmen",
+    "count": "{count, plural, =0 {Keine Unternehmen} one {# Unternehmen} other {# Unternehmen}} gefunden",
+    "noResults": "Für diese Filter wurden keine Unternehmen gefunden.",
+    "clearFilters": "Filter zurücksetzen",
+    "details": "Profil ansehen",
+    "verified": "Verifiziert"
+  },
+  "Company": {
+    "back": "Zurück zur Suche",
+    "about": "Über das Unternehmen",
+    "contact": "Kontakt",
+    "website": "Website",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "languages": "Gesprochene Sprachen",
+    "industry": "Branche",
+    "verified": "Verifiziertes Unternehmen",
+    "openingHours": "Öffnungszeiten",
+    "gallery": "Galerie",
+    "closed": "Geschlossen",
+    "weekdays": {
+      "1": "Montag",
+      "2": "Dienstag",
+      "3": "Mittwoch",
+      "4": "Donnerstag",
+      "5": "Freitag",
+      "6": "Samstag",
+      "7": "Sonntag"
+    }
+  },
+  "Register": {
+    "eyebrow": "Firma eintragen",
+    "title": "Mach dein Unternehmen sichtbar.",
+    "description": "Erfasse die wichtigsten Angaben. Vor der Veröffentlichung wird der Eintrag geprüft.",
+    "companyName": "Firmenname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "website": "Website",
+    "industry": "Branche",
+    "canton": "Kanton",
+    "city": "Ort",
+    "languages": "Gesprochene Sprachen",
+    "descriptionLabel": "Firmenbeschreibung",
+    "choose": "Bitte auswählen",
+    "note": "Diese Version speichert noch keine Daten dauerhaft. Das Formular zeigt bereits den geplanten Ablauf.",
+    "submit": "Eintrag einreichen",
+    "successTitle": "Danke für deinen Eintrag.",
+    "successText": "Die Eingaben wurden in dieser Demo erfolgreich geprüft. Die Datenbankanbindung folgt im nächsten Entwicklungsschritt.",
+    "newEntry": "Weiteren Eintrag erfassen"
+  },
+  "Login": {
+    "eyebrow": "Firmenbereich",
+    "title": "Bei Findelio anmelden",
+    "description": "Melde dich an, um deine Unternehmen und Einträge zu verwalten.",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Anmelden",
+    "loading": "Anmeldung läuft …",
+    "note": "Deine Zugangsdaten werden sicher über Directus geprüft.",
+    "errorFallback": "E-Mail-Adresse oder Passwort ist falsch.",
+    "serverError": "Die Anmeldung konnte momentan nicht verarbeitet werden.",
+    "connectionError": "Die Verbindung zum Server ist fehlgeschlagen."
+  },
+  "Dashboard": {
+    "eyebrow": "Firmenbereich",
+    "title": "Dashboard",
+    "welcome": "Willkommen, {name}.",
+    "description": "Hier verwaltest du deine Unternehmen, Einträge und Teammitglieder.",
+    "accountTitle": "Dein Konto",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "status": "Status",
+    "active": "Aktiv",
+    "unknown": "Nicht angegeben",
+    "logout": "Abmelden",
+    "logoutLoading": "Abmeldung läuft …",
+    "organizationsEyebrow": "Unternehmensverwaltung",
+    "organizationsTitle": "Deine Organisationen",
+    "organizationsDescription": "Hier siehst du alle Organisationen, bei denen du als aktives Mitglied hinterlegt bist, sowie die zugehörigen Firmenprofile.",
+    "noOrganizationsTitle": "Keine aktive Organisation gefunden",
+    "noOrganizationsDescription": "Dein Benutzer ist aktuell keiner aktiven Organisation zugeordnet. Prüfe die Mitgliedschaft in Directus oder wende dich an einen Administrator.",
+    "organizationLabel": "Organisation",
+    "membershipRole": "Mitgliedsrolle",
+    "organizationStatus": "Organisationsstatus",
+    "listings": "Firmenprofile",
+    "listingsCount": "{count} Einträge",
+    "listingsTitle": "Zugehörige Firmenprofile",
+    "noListings": "Für diese Organisation ist noch kein Firmenprofil vorhanden.",
+    "locationUnknown": "Ort nicht angegeben",
+    "viewListing": "Öffentlichen Eintrag ansehen",
+    "roleValues": {
+      "owner": "Eigentümer",
+      "admin": "Administrator",
+      "editor": "Bearbeiter"
+    },
+    "statusValues": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "draft": "Entwurf",
+      "review": "Zur Prüfung",
+      "published": "Veröffentlicht",
+      "rejected": "Abgelehnt",
+      "suspended": "Gesperrt",
+      "archived": "Archiviert"
+    },
+    "navigation": {
+      "label": "Dashboard-Navigation",
+      "overview": "Übersicht",
+      "organizations": "Organisationen",
+      "listings": "Firmenprofile",
+      "team": "Team"
+    },
+    "summary": {
+      "organizations": "Organisationen",
+      "listings": "Firmenprofile",
+      "published": "Veröffentlicht"
+    },
+    "listingsPage": {
+      "eyebrow": "Firmenprofile",
+      "title": "Deine Firmenprofile",
+      "description": "Hier findest du alle Einträge deiner aktiven Organisationen und ihren aktuellen Veröffentlichungsstatus.",
+      "emptyTitle": "Noch keine Firmenprofile vorhanden",
+      "emptyDescription": "Für deine aktiven Organisationen wurde noch kein Firmenprofil angelegt.",
+      "notPublic": "Dieser Eintrag ist noch nicht öffentlich sichtbar.",
+      "editListing": "Bearbeiten"
+    },
+    "teamPage": {
+      "eyebrow": "Teamverwaltung",
+      "title": "Team",
+      "description": "Hier werden die Mitglieder und Rollen deiner Organisationen verwaltet.",
+      "nextStepTitle": "Teamverwaltung wird als Nächstes ergänzt",
+      "nextStepDescription": "Aktuell siehst du deine eigenen aktiven Mitgliedschaften. Einladungen und die Verwaltung weiterer Teammitglieder richten wir im nächsten Schritt sicher ein.",
+      "yourMemberships": "Deine aktiven Mitgliedschaften"
+    },
+    "overviewOrganizationsTitle": "Organisationen im Überblick",
+    "overviewOrganizationsLink": "Alle Organisationen anzeigen",
+    "organizationListingsLink": "Firmenprofile anzeigen"
+  },
+  "Footer": {
+    "tagline": "Findelio verbindet Menschen mit Unternehmen, die ihre Sprache sprechen.",
+    "directory": "Verzeichnis",
+    "findCompanies": "Unternehmen finden",
+    "registerCompany": "Firma eintragen",
+    "legal": "Rechtliches",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "copyright": "Alle Rechte vorbehalten."
+  },
+  "Legal": {
+    "imprintTitle": "Impressum",
+    "imprintText": "Bitte ergänze hier vor der Veröffentlichung die vollständigen Angaben des Betreibers gemäss Schweizer Recht.",
+    "privacyTitle": "Datenschutzerklärung",
+    "privacyText": "Bitte ergänze hier vor der Veröffentlichung eine vollständige Datenschutzerklärung, insbesondere zu Hosting, Formularen, Analyse- und Drittanbieterdiensten."
+  },
+  "ListingEditor": {
+    "eyebrow": "Firmenprofil bearbeiten",
+    "title": "{name} bearbeiten",
+    "description": "Aktualisiere die Angaben deines Firmenprofils. Änderungen können als Entwurf gespeichert oder zur Prüfung eingereicht werden.",
+    "back": "Zurück zu den Firmenprofilen",
+    "sections": {
+      "general": "Stammdaten und Beschreibung",
+      "contact": "Kontaktangaben",
+      "address": "Adresse und Sichtbarkeit",
+      "workflow": "Veröffentlichungsstatus"
+    },
+    "fields": {
+      "name": "Firmenname",
+      "shortDescription": "Kurzbeschreibung",
+      "description": "Beschreibung",
+      "publicEmail": "Öffentliche E-Mail",
+      "phone": "Telefon",
+      "website": "Website",
+      "street": "Strasse und Hausnummer",
+      "postalCode": "Postleitzahl",
+      "city": "Ort",
+      "canton": "Kanton",
+      "addressVisibility": "Adressanzeige",
+      "status": "Speichern als"
+    },
+    "addressVisibility": {
+      "full": "Vollständige Adresse anzeigen",
+      "city": "Nur Ort und Kanton anzeigen",
+      "hidden": "Adresse ausblenden"
+    },
+    "statusValues": {
+      "draft": "Entwurf",
+      "review": "Zur Prüfung",
+      "published": "Veröffentlicht",
+      "rejected": "Abgelehnt",
+      "suspended": "Gesperrt",
+      "archived": "Archiviert",
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "currentStatus": "Aktueller Status",
+    "statusHint": "Zur Prüfung eingereichte Profile können anschliessend kontrolliert und veröffentlicht werden.",
+    "save": "Änderungen speichern",
+    "saving": "Wird gespeichert …",
+    "saved": "Die Änderungen wurden gespeichert.",
+    "errors": {
+      "invalid_data": "Bitte prüfe die eingegebenen Daten.",
+      "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "forbidden": "Du darfst dieses Firmenprofil nicht bearbeiten.",
+      "not_found": "Das Firmenprofil wurde nicht gefunden.",
+      "save_failed": "Die Änderungen konnten nicht gespeichert werden.",
+      "network": "Die Verbindung zum Server ist fehlgeschlagen."
+    }
+  }
+}

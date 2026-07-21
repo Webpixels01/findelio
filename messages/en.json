@@ -1,0 +1,254 @@
+{
+  "Metadata": {
+    "title": "Findelio – Find businesses that speak your language",
+    "description": "Switzerland’s multilingual business directory. Find businesses by language, industry, canton and location."
+  },
+  "Header": {
+    "home": "Findelio home",
+    "navigation": "Main navigation",
+    "findCompanies": "Find businesses",
+    "registerCompany": "List a business",
+    "login": "Login",
+    "selectLanguage": "Select language",
+    "menu": "Open menu",
+    "dashboard": "Dashboard"
+  },
+  "Home": {
+    "eyebrow": "Multilingual businesses in Switzerland",
+    "title": "Find businesses that speak your language.",
+    "description": "Search by language, industry and location to find suitable businesses near you.",
+    "howTitle": "How Findelio works",
+    "howDescription": "Find the right business in three simple steps.",
+    "step1Title": "Choose a language",
+    "step1Text": "Select the language in which you would like to receive advice.",
+    "step2Title": "Industry and location",
+    "step2Text": "Narrow the search by industry, canton and location.",
+    "step3Title": "Find the right business",
+    "step3Text": "Compare listings and get in touch directly.",
+    "ctaTitle": "Does your business speak several languages?",
+    "ctaText": "Create a listing and get found by the right customers.",
+    "ctaButton": "List a business"
+  },
+  "Search": {
+    "language": "Language",
+    "allLanguages": "All languages",
+    "industry": "Industry",
+    "allIndustries": "All industries",
+    "canton": "Canton",
+    "allCantons": "All cantons",
+    "location": "Location",
+    "locationPlaceholder": "Town or postcode",
+    "submit": "Find businesses"
+  },
+  "Results": {
+    "eyebrow": "Business search",
+    "title": "Matching businesses",
+    "count": "{count, plural, =0 {No businesses} one {# business} other {# businesses}} found",
+    "noResults": "No businesses were found for these filters.",
+    "clearFilters": "Clear filters",
+    "details": "View profile",
+    "verified": "Verified"
+  },
+  "Company": {
+    "back": "Back to search",
+    "about": "About the business",
+    "contact": "Contact",
+    "website": "Website",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "languages": "Spoken languages",
+    "industry": "Industry",
+    "verified": "Verified business",
+    "openingHours": "Opening hours",
+    "gallery": "Gallery",
+    "closed": "Closed",
+    "weekdays": {
+      "1": "Monday",
+      "2": "Tuesday",
+      "3": "Wednesday",
+      "4": "Thursday",
+      "5": "Friday",
+      "6": "Saturday",
+      "7": "Sunday"
+    }
+  },
+  "Register": {
+    "eyebrow": "List a business",
+    "title": "Make your business visible.",
+    "description": "Enter the key details. The listing will be reviewed before publication.",
+    "companyName": "Business name",
+    "email": "Email",
+    "phone": "Phone",
+    "website": "Website",
+    "industry": "Industry",
+    "canton": "Canton",
+    "city": "Town",
+    "languages": "Spoken languages",
+    "descriptionLabel": "Business description",
+    "choose": "Please choose",
+    "note": "This version does not store data permanently yet. The form already shows the planned workflow.",
+    "submit": "Submit listing",
+    "successTitle": "Thank you for your listing.",
+    "successText": "The details were successfully validated in this demo. Database integration follows in the next development step.",
+    "newEntry": "Add another listing"
+  },
+  "Login": {
+    "eyebrow": "Business area",
+    "title": "Sign in to Findelio",
+    "description": "Sign in to manage your businesses and listings.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "loading": "Signing in …",
+    "note": "Your credentials are securely verified through Directus.",
+    "errorFallback": "The email address or password is incorrect.",
+    "serverError": "Sign-in cannot be processed at the moment.",
+    "connectionError": "The connection to the server failed."
+  },
+  "Dashboard": {
+    "eyebrow": "Business area",
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}.",
+    "description": "Manage your businesses, listings and team members here.",
+    "accountTitle": "Your account",
+    "email": "Email",
+    "role": "Role",
+    "status": "Status",
+    "active": "Active",
+    "unknown": "Not specified",
+    "logout": "Sign out",
+    "logoutLoading": "Signing out …",
+    "organizationsEyebrow": "Business management",
+    "organizationsTitle": "Your organizations",
+    "organizationsDescription": "View all organizations where you have an active membership and their associated business listings.",
+    "noOrganizationsTitle": "No active organization found",
+    "noOrganizationsDescription": "Your user account is not currently assigned to an active organization. Check the membership in Directus or contact an administrator.",
+    "organizationLabel": "Organization",
+    "membershipRole": "Membership role",
+    "organizationStatus": "Organization status",
+    "listings": "Business listings",
+    "listingsCount": "{count} listings",
+    "listingsTitle": "Associated business listings",
+    "noListings": "No business listing has been created for this organization yet.",
+    "locationUnknown": "Location not specified",
+    "viewListing": "View public listing",
+    "roleValues": {
+      "owner": "Owner",
+      "admin": "Administrator",
+      "editor": "Editor"
+    },
+    "statusValues": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "draft": "Draft",
+      "review": "Under review",
+      "published": "Published",
+      "rejected": "Rejected",
+      "suspended": "Suspended",
+      "archived": "Archived"
+    },
+    "navigation": {
+      "label": "Dashboard navigation",
+      "overview": "Overview",
+      "organizations": "Organizations",
+      "listings": "Business listings",
+      "team": "Team"
+    },
+    "summary": {
+      "organizations": "Organizations",
+      "listings": "Business listings",
+      "published": "Published"
+    },
+    "listingsPage": {
+      "eyebrow": "Business listings",
+      "title": "Your business listings",
+      "description": "View all listings belonging to your active organizations and their current publication status.",
+      "emptyTitle": "No business listings yet",
+      "emptyDescription": "No business listing has been created for your active organizations yet.",
+      "notPublic": "This listing is not publicly visible yet.",
+      "editListing": "Edit"
+    },
+    "teamPage": {
+      "eyebrow": "Team management",
+      "title": "Team",
+      "description": "Manage the members and roles of your organizations here.",
+      "nextStepTitle": "Team management is the next step",
+      "nextStepDescription": "You can currently see your own active memberships. Invitations and management of additional team members will be added securely in the next step.",
+      "yourMemberships": "Your active memberships"
+    },
+    "overviewOrganizationsTitle": "Organizations at a glance",
+    "overviewOrganizationsLink": "View all organizations",
+    "organizationListingsLink": "View business listings"
+  },
+  "Footer": {
+    "tagline": "Findelio connects people with businesses that speak their language.",
+    "directory": "Directory",
+    "findCompanies": "Find businesses",
+    "registerCompany": "List a business",
+    "legal": "Legal",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "copyright": "All rights reserved."
+  },
+  "Legal": {
+    "imprintTitle": "Imprint",
+    "imprintText": "Before publication, add the operator’s complete legal details required under Swiss law.",
+    "privacyTitle": "Privacy policy",
+    "privacyText": "Before publication, add a complete privacy policy covering hosting, forms, analytics and third-party services."
+  },
+  "ListingEditor": {
+    "eyebrow": "Edit business profile",
+    "title": "Edit {name}",
+    "description": "Update your business profile. Changes can be saved as a draft or submitted for review.",
+    "back": "Back to business profiles",
+    "sections": {
+      "general": "Business details and description",
+      "contact": "Contact details",
+      "address": "Address and visibility",
+      "workflow": "Publication status"
+    },
+    "fields": {
+      "name": "Business name",
+      "shortDescription": "Short description",
+      "description": "Description",
+      "publicEmail": "Public email",
+      "phone": "Phone",
+      "website": "Website",
+      "street": "Street and number",
+      "postalCode": "Postcode",
+      "city": "City",
+      "canton": "Canton",
+      "addressVisibility": "Address visibility",
+      "status": "Save as"
+    },
+    "addressVisibility": {
+      "full": "Show full address",
+      "city": "Show city and canton only",
+      "hidden": "Hide address"
+    },
+    "statusValues": {
+      "draft": "Draft",
+      "review": "Submit for review",
+      "published": "Published",
+      "rejected": "Rejected",
+      "suspended": "Suspended",
+      "archived": "Archived",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "currentStatus": "Current status",
+    "statusHint": "Profiles submitted for review can then be checked and published.",
+    "save": "Save changes",
+    "saving": "Saving …",
+    "saved": "Your changes have been saved.",
+    "errors": {
+      "invalid_data": "Please check the entered data.",
+      "unauthorized": "Your session has expired. Please sign in again.",
+      "forbidden": "You are not allowed to edit this business profile.",
+      "not_found": "The business profile was not found.",
+      "save_failed": "The changes could not be saved.",
+      "network": "The connection to the server failed."
+    }
+  }
+}
