@@ -6,55 +6,33 @@ import {
   saveAuthTokens,
 } from "@/lib/auth";
 import {
+  createAccountListing,
   DirectusAccountError,
-  type AccountListingEditorUpdate,
-  updateEditableAccountListing,
+  type AccountListingCreate,
 } from "@/lib/directus-account";
 import {
   DirectusAuthError,
-  getDirectusCurrentUser,
   refreshDirectusSession,
 } from "@/lib/directus-auth";
 import { getCantonIdByCode } from "@/lib/directus";
 
 const cantonCodes = new Set([
-  "AG",
-  "AI",
-  "AR",
-  "BE",
-  "BL",
-  "BS",
-  "FR",
-  "GE",
-  "GL",
-  "GR",
-  "JU",
-  "LU",
-  "NE",
-  "NW",
-  "OW",
-  "SG",
-  "SH",
-  "SO",
-  "SZ",
-  "TG",
-  "TI",
-  "UR",
-  "VD",
-  "VS",
-  "ZG",
-  "ZH",
+  "AG", "AI", "AR", "BE", "BL", "BS", "FR", "GE", "GL", "GR", "JU",
+  "LU", "NE", "NW", "OW", "SG", "SH", "SO", "SZ", "TG", "TI", "UR",
+  "VD", "VS", "ZG", "ZH",
 ]);
-
-const statusValues = new Set(["draft", "pending"]);
 const addressVisibilityValues = new Set(["full", "city", "hidden"]);
+const uuidPattern =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+type ValidatedCreateValues = Omit<AccountListingCreate, "canton"> & {
+  canton: string;
+};
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
 
-  if (!origin) {
-    return true;
-  }
+  if (!origin) return true;
 
   const expectedOrigin = new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? request.url,
@@ -76,55 +54,28 @@ function hasValidLength(value: string | null, maximum: number): boolean {
   return value === null || value.length <= maximum;
 }
 
-function relationIds(value: unknown, maximumItems: number): string[] | null {
-  if (!Array.isArray(value) || value.length > maximumItems) {
-    return null;
-  }
-
-  const ids: string[] = [];
-
-  for (const item of value) {
-    if (typeof item !== "string") {
-      return null;
-    }
-
-    const id = item.trim();
-
-    if (!id || id.length > 100) {
-      return null;
-    }
-
-    ids.push(id);
-  }
-
-  return Array.from(new Set(ids));
-}
-
 function normalizeWebsite(value: unknown): string | null {
   const rawValue = stringValue(value);
 
-  if (!rawValue) {
-    return null;
-  }
+  if (!rawValue) return null;
 
   const candidate = /^https?:\/\//i.test(rawValue)
     ? rawValue
     : `https://${rawValue}`;
   const parsedUrl = new URL(candidate);
 
-  if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+  if (!["http:", "https:"].includes(parsedUrl.protocol)) {
     throw new Error("INVALID_WEBSITE");
   }
 
   return parsedUrl.toString();
 }
 
-function validateBody(body: unknown): AccountListingEditorUpdate | null {
-  if (!body || typeof body !== "object") {
-    return null;
-  }
+function validateBody(body: unknown): ValidatedCreateValues | null {
+  if (!body || typeof body !== "object") return null;
 
   const data = body as Record<string, unknown>;
+  const organization = stringValue(data.organization_id);
   const name = stringValue(data.name);
   const shortDescription = optionalString(data.short_description);
   const description = optionalString(data.description);
@@ -134,10 +85,7 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
   const canton = stringValue(data.canton).toUpperCase();
   const publicEmail = optionalString(data.public_email)?.toLowerCase() ?? null;
   const phone = optionalString(data.phone);
-  const status = stringValue(data.status);
   const addressVisibility = stringValue(data.address_visibility);
-  const industryIds = relationIds(data.industry_ids, 100);
-  const spokenLanguageIds = relationIds(data.spoken_language_ids, 100);
 
   let websiteUrl: string | null;
 
@@ -148,14 +96,12 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
   }
 
   if (
+    !uuidPattern.test(organization) ||
     !name ||
     !postalCode ||
     !city ||
     !cantonCodes.has(canton) ||
-    !statusValues.has(status) ||
-    !addressVisibilityValues.has(addressVisibility) ||
-    industryIds === null ||
-    spokenLanguageIds === null
+    !addressVisibilityValues.has(addressVisibility)
   ) {
     return null;
   }
@@ -174,14 +120,12 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
     return null;
   }
 
-  if (
-    publicEmail &&
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(publicEmail)
-  ) {
+  if (publicEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(publicEmail)) {
     return null;
   }
 
   return {
+    organization,
     name,
     short_description: shortDescription,
     description,
@@ -193,19 +137,14 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
     phone,
     website_url: websiteUrl,
     address_visibility:
-      addressVisibility as AccountListingEditorUpdate["address_visibility"],
-    status: status as AccountListingEditorUpdate["status"],
-    industry_ids: industryIds,
-    spoken_language_ids: spokenLanguageIds,
+      addressVisibility as AccountListingCreate["address_visibility"],
   };
 }
 
 async function refreshAccessToken(): Promise<string | null> {
   const refreshToken = await getRefreshToken();
 
-  if (!refreshToken) {
-    return null;
-  }
+  if (!refreshToken) return null;
 
   try {
     const tokens = await refreshDirectusSession(refreshToken);
@@ -217,38 +156,13 @@ async function refreshAccessToken(): Promise<string | null> {
   }
 }
 
-async function updateWithToken(
-  accessToken: string,
-  listingId: string,
-  values: AccountListingEditorUpdate,
-) {
-  const currentUser = await getDirectusCurrentUser(accessToken);
-
-  return updateEditableAccountListing(
-    accessToken,
-    listingId,
-    values,
-    currentUser.id,
-  );
-}
-
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function POST(request: Request) {
   if (!isTrustedOrigin(request)) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
   if (!request.headers.get("content-type")?.includes("application/json")) {
     return NextResponse.json({ error: "invalid_data" }, { status: 415 });
-  }
-
-  const { id } = await params;
-  const listingId = id.trim();
-
-  if (!listingId) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
   let body: unknown;
@@ -271,56 +185,50 @@ export async function PATCH(
     cantonId = await getCantonIdByCode(values.canton);
   } catch (error) {
     console.error("Kanton konnte nicht aufgelöst werden:", error);
-    return NextResponse.json({ error: "save_failed" }, { status: 500 });
+    return NextResponse.json({ error: "create_failed" }, { status: 500 });
   }
 
   if (!cantonId) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
 
-  const updateValues: AccountListingEditorUpdate = {
+  const createValues: AccountListingCreate = {
     ...values,
     canton: cantonId,
   };
 
   let accessToken = await getAccessToken();
 
-  if (!accessToken) {
-    accessToken = await refreshAccessToken();
-  }
+  if (!accessToken) accessToken = await refreshAccessToken();
 
   if (!accessToken) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
   try {
-    const listing = await updateWithToken(accessToken, listingId, updateValues);
+    const listing = await createAccountListing(accessToken, createValues);
 
     return NextResponse.json(
-      { success: true, listing },
-      { headers: { "Cache-Control": "no-store" } },
+      { success: true, listing: { id: listing.id } },
+      { status: 201, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
     if (error instanceof DirectusAccountError && error.status === 401) {
       const refreshedAccessToken = await refreshAccessToken();
 
       if (!refreshedAccessToken) {
-        return NextResponse.json(
-          { error: "unauthorized" },
-          { status: 401 },
-        );
+        return NextResponse.json({ error: "unauthorized" }, { status: 401 });
       }
 
       try {
-        const listing = await updateWithToken(
+        const listing = await createAccountListing(
           refreshedAccessToken,
-          listingId,
-          updateValues,
+          createValues,
         );
 
         return NextResponse.json(
-          { success: true, listing },
-          { headers: { "Cache-Control": "no-store" } },
+          { success: true, listing: { id: listing.id } },
+          { status: 201, headers: { "Cache-Control": "no-store" } },
         );
       } catch (retryError) {
         error = retryError;
@@ -328,32 +236,21 @@ export async function PATCH(
     }
 
     if (error instanceof DirectusAccountError) {
-      if (error.status === 400) {
-        return NextResponse.json(
-          { error: "invalid_selection" },
-          { status: 400 },
-        );
-      }
-
       if (error.status === 403) {
         return NextResponse.json({ error: "forbidden" }, { status: 403 });
       }
 
-      if (error.status === 404) {
-        return NextResponse.json({ error: "not_found" }, { status: 404 });
-      }
-
       console.warn(
-        "Firmenprofil konnte nicht gespeichert werden:",
+        "Firmenprofil konnte nicht erstellt werden:",
         error.code ?? error.status,
       );
     } else if (error instanceof DirectusAuthError) {
       await clearAuthCookies();
       return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     } else {
-      console.error("Firmenprofil konnte nicht gespeichert werden:", error);
+      console.error("Firmenprofil konnte nicht erstellt werden:", error);
     }
 
-    return NextResponse.json({ error: "save_failed" }, { status: 500 });
+    return NextResponse.json({ error: "create_failed" }, { status: 500 });
   }
 }

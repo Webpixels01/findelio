@@ -4,16 +4,18 @@ import ListingEditForm from "@/components/listing-edit-form";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
-import { getEditableAccountListing } from "@/lib/directus-account";
-import { getCantons } from "@/lib/directus";
+import { getEditableAccountListingEditorData } from "@/lib/directus-account";
+import { getCantons, getIndustries, getSpokenLanguages } from "@/lib/directus";
 import { htmlToPlainText } from "@/lib/text";
 
 export default async function EditListingPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: AppLocale; id: string }>;
+  searchParams: Promise<{ created?: string }>;
 }) {
-  const { locale, id } = await params;
+  const [{ locale, id }, query] = await Promise.all([params, searchParams]);
   setRequestLocale(locale);
 
   const [t] = await Promise.all([
@@ -27,17 +29,22 @@ export default async function EditListingPage({
   const accessToken = await getAccessToken();
 
   if (!accessToken) {
-    notFound();
+    return notFound();
   }
 
-  const [listing, cantons] = await Promise.all([
-    getEditableAccountListing(accessToken, id),
-    getCantons(),
-  ]);
+  const [editorData, cantons, industries, spokenLanguages] =
+    await Promise.all([
+      getEditableAccountListingEditorData(accessToken, id),
+      getCantons(),
+      getIndustries(locale),
+      getSpokenLanguages(locale),
+    ]);
 
-  if (!listing) {
-    notFound();
+  if (!editorData) {
+    return notFound();
   }
+
+  const { listing, industryIds, spokenLanguageIds } = editorData;
 
   return (
     <>
@@ -58,6 +65,15 @@ export default async function EditListingPage({
         </p>
       </header>
 
+      {query.created === "1" && (
+        <div
+          className="mt-8 rounded-2xl border border-[#bfe4ca] bg-[#eefaf2] p-4 font-bold text-[#135f30]"
+          role="status"
+        >
+          {t("createdNotice")}
+        </div>
+      )}
+
       <ListingEditForm
         listing={{
           id: listing.id,
@@ -73,8 +89,12 @@ export default async function EditListingPage({
           phone: listing.phone ?? "",
           websiteUrl: listing.website_url ?? "",
           addressVisibility: listing.address_visibility ?? "city",
+          industryIds,
+          spokenLanguageIds,
         }}
         cantons={cantons}
+        industries={industries}
+        spokenLanguages={spokenLanguages}
       />
     </>
   );

@@ -32,7 +32,7 @@ export default async function CompaniesPage({
   };
 
   const [results, t] = await Promise.all([
-    getListings({
+    getListings(locale, {
       language: filters.sprache,
       industry: filters.branche,
       canton: filters.kanton,

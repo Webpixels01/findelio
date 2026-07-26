@@ -139,7 +139,7 @@ export default async function CompanyPage({
 
   setRequestLocale(locale);
 
-  const company = await getListingBySlug(slug);
+  const company = await getListingBySlug(slug, locale);
 
   if (!company) {
     notFound();

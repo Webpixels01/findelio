@@ -55,14 +55,24 @@ export default async function ListingsPage({
 
   return (
     <>
-      <header>
-        <p className="eyebrow">{t("listingsPage.eyebrow")}</p>
-        <h1 className="mt-3 text-4xl font-extrabold tracking-tight">
-          {t("listingsPage.title")}
-        </h1>
-        <p className="mt-4 max-w-3xl text-lg text-[var(--muted)]">
-          {t("listingsPage.description")}
-        </p>
+      <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p className="eyebrow">{t("listingsPage.eyebrow")}</p>
+          <h1 className="mt-3 text-4xl font-extrabold tracking-tight">
+            {t("listingsPage.title")}
+          </h1>
+          <p className="mt-4 max-w-3xl text-lg text-[var(--muted)]">
+            {t("listingsPage.description")}
+          </p>
+        </div>
+
+        <Link
+          href="/dashboard/firmenprofile/neu"
+          locale={locale}
+          className="primary-button h-12 shrink-0 px-6"
+        >
+          {t("listingsPage.createListing")}
+        </Link>
       </header>
 
       {listings.length === 0 ? (
@@ -71,6 +81,13 @@ export default async function ListingsPage({
           <p className="mt-2 text-[var(--muted)]">
             {t("listingsPage.emptyDescription")}
           </p>
+          <Link
+            href="/dashboard/firmenprofile/neu"
+            locale={locale}
+            className="primary-button mt-6 h-11 px-5"
+          >
+            {t("listingsPage.createListing")}
+          </Link>
         </div>
       ) : (
         <div className="mt-8 grid gap-5 md:grid-cols-2">

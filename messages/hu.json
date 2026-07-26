@@ -153,7 +153,8 @@
       "overview": "Áttekintés",
       "organizations": "Szervezetek",
       "listings": "Cégprofilok",
-      "team": "Csapat"
+      "team": "Csapat",
+      "review": "Ellenőrzés"
     },
     "summary": {
       "organizations": "Szervezetek",
@@ -167,7 +168,8 @@
       "emptyTitle": "Még nincsenek cégprofilok",
       "emptyDescription": "Aktív szervezeteihez még nem készült cégprofil.",
       "notPublic": "Ez a profil még nem látható nyilvánosan.",
-      "editListing": "Szerkesztés"
+      "editListing": "Szerkesztés",
+      "createListing": "Új cégprofil"
     },
     "teamPage": {
       "eyebrow": "Csapatkezelés",
@@ -204,6 +206,7 @@
     "back": "Vissza a cégprofilokhoz",
     "sections": {
       "general": "Alapadatok és leírás",
+      "classification": "Ágazatok és nyelvek",
       "contact": "Kapcsolati adatok",
       "address": "Cím és láthatóság",
       "workflow": "Közzétételi állapot"
@@ -212,6 +215,8 @@
       "name": "Cégnév",
       "shortDescription": "Rövid leírás",
       "description": "Leírás",
+      "industries": "Ágazatok",
+      "spokenLanguages": "Beszélt nyelvek",
       "publicEmail": "Nyilvános e-mail",
       "phone": "Telefon",
       "website": "Weboldal",
@@ -220,8 +225,10 @@
       "city": "Település",
       "canton": "Kanton",
       "addressVisibility": "Cím megjelenítése",
-      "status": "Mentés másként"
+      "status": "Állapot"
     },
+    "industryHint": "Válaszd ki az összes ágazatot, amelyben a cég tevékenykedik.",
+    "spokenLanguagesHint": "Válaszd ki az összes nyelvet, amelyen a cég kiszolgálja az ügyfeleket.",
     "addressVisibility": {
       "full": "Teljes cím megjelenítése",
       "city": "Csak a település és a kanton megjelenítése",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Piszkozat",
       "review": "Ellenőrzésre",
+      "pending": "Ellenőrzésre",
       "published": "Közzétéve",
       "rejected": "Elutasítva",
       "suspended": "Felfüggesztve",
@@ -247,8 +255,101 @@
       "unauthorized": "A munkamenet lejárt. Jelentkezz be újra.",
       "forbidden": "Nincs jogosultságod ennek a cégprofilnak a szerkesztéséhez.",
       "not_found": "A cégprofil nem található.",
+      "invalid_selection": "Egy kiválasztott ágazat vagy nyelv érvénytelen. Töltsd újra az oldalt, majd próbáld újra.",
       "save_failed": "A módosításokat nem sikerült menteni.",
       "network": "Nem sikerült kapcsolódni a szerverhez."
+    },
+    "createdNotice": "A cégprofil piszkozatként létrejött. Most folytathatod a szerkesztést."
+  },
+  "ListingCreator": {
+    "eyebrow": "Cégprofil létrehozása",
+    "title": "Új cégprofil létrehozása",
+    "description": "Hozz létre új bejegyzést az egyik aktív szervezetedhez. A profil biztonságosan piszkozatként kerül mentésre.",
+    "back": "Vissza a cégprofilokhoz",
+    "sections": {
+      "organization": "Szervezet",
+      "general": "Alapadatok és leírás",
+      "contact": "Kapcsolati adatok",
+      "address": "Cím és láthatóság"
+    },
+    "fields": {
+      "organization": "Szervezet",
+      "name": "Cégnév",
+      "shortDescription": "Rövid leírás",
+      "description": "Leírás",
+      "publicEmail": "Nyilvános e-mail",
+      "phone": "Telefon",
+      "website": "Weboldal",
+      "street": "Utca és házszám",
+      "postalCode": "Irányítószám",
+      "city": "Település",
+      "canton": "Kanton",
+      "addressVisibility": "Cím megjelenítése"
+    },
+    "organizationHint": "Csak aktív tagsággal rendelkező szervezetek választhatók.",
+    "chooseCanton": "Kanton kiválasztása",
+    "addressVisibility": {
+      "full": "Teljes cím megjelenítése",
+      "city": "Csak a település és a kanton megjelenítése",
+      "hidden": "Cím elrejtése"
+    },
+    "create": "Cégprofil létrehozása",
+    "creating": "Létrehozás …",
+    "noOrganizationsTitle": "Nincs aktív szervezet",
+    "noOrganizationsDescription": "Cégprofil létrehozásához legalább egy aktív szervezeti tagság szükséges.",
+    "errors": {
+      "invalid_data": "Ellenőrizd a megadott adatokat.",
+      "unauthorized": "A munkamenet lejárt. Jelentkezz be újra.",
+      "forbidden": "Ehhez a szervezethez nem hozhatsz létre cégprofilt.",
+      "create_failed": "A cégprofilt nem sikerült létrehozni.",
+      "network": "Nem sikerült kapcsolódni a szerverhez."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Belső ellenőrzés",
+    "title": "Ellenőrzésre váró cégprofilok",
+    "description": "Ellenőrizd az új és módosított cégprofilokat a közzététel előtt.",
+    "emptyTitle": "Nincs függőben lévő ellenőrzés",
+    "emptyDescription": "Jelenleg nincs jóváhagyásra váró cégprofil.",
+    "unknownDate": "Ismeretlen dátum",
+    "unknownOrganization": "Ismeretlen szervezet",
+    "unknownSubmitter": "Ismeretlen felhasználó",
+    "submittedBy": "Beküldte: {name}, {date}",
+    "pending": "Ellenőrzésre vár",
+    "changedFields": "{count, plural, =0 {Nincs módosítás} one {# módosítás} other {# módosítás}}",
+    "detail": {
+      "back": "Vissza az ellenőrzéshez",
+      "eyebrow": "Módosítások ellenőrzése",
+      "changesTitle": "Kért módosítások",
+      "noChanges": "Ehhez a verzióhoz nem találtunk eltérést.",
+      "oldValue": "Jelenleg közzétéve",
+      "newValue": "Kért érték",
+      "emptyValue": "Nincs megadva",
+      "decisionTitle": "Döntés",
+      "decisionDescription": "Hagyd jóvá a módosításokat, vagy elutasítás és felfüggesztés esetén adj meg indokot.",
+      "reasonLabel": "Indoklás",
+      "reasonPlaceholder": "Elutasítás vagy felfüggesztés esetén kötelező",
+      "reasonRequired": "Adj meg legalább három karakteres indoklást.",
+      "actionFailed": "A művelet nem hajtható végre. Próbáld újra.",
+      "processing": "Feldolgozás…",
+      "approve": "Módosítások jóváhagyása",
+      "reject": "Módosítások elutasítása",
+      "suspend": "Bejegyzés felfüggesztése",
+      "fields": {
+        "name": "Cégnév",
+        "short_description": "Rövid leírás",
+        "description": "Leírás",
+        "street": "Utca",
+        "postal_code": "Irányítószám",
+        "city": "Település",
+        "canton": "Kanton",
+        "public_email": "Nyilvános e-mail",
+        "phone": "Telefon",
+        "website_url": "Weboldal",
+        "address_visibility": "Cím megjelenítése",
+        "industry_ids": "Ágazatok",
+        "spoken_language_ids": "Beszélt nyelvek"
+      }
     }
   }
 }

@@ -153,7 +153,8 @@
       "overview": "Prehľad",
       "organizations": "Organizácie",
       "listings": "Firemné profily",
-      "team": "Tím"
+      "team": "Tím",
+      "review": "Kontrola"
     },
     "summary": {
       "organizations": "Organizácie",
@@ -167,7 +168,8 @@
       "emptyTitle": "Zatiaľ žiadne firemné profily",
       "emptyDescription": "Pre vaše aktívne organizácie zatiaľ nebol vytvorený žiadny firemný profil.",
       "notPublic": "Tento profil zatiaľ nie je verejne viditeľný.",
-      "editListing": "Upraviť"
+      "editListing": "Upraviť",
+      "createListing": "Nový profil firmy"
     },
     "teamPage": {
       "eyebrow": "Správa tímu",
@@ -204,6 +206,7 @@
     "back": "Späť na firemné profily",
     "sections": {
       "general": "Základné údaje a popis",
+      "classification": "Odvetvia a jazyky",
       "contact": "Kontaktné údaje",
       "address": "Adresa a viditeľnosť",
       "workflow": "Stav zverejnenia"
@@ -212,6 +215,8 @@
       "name": "Názov firmy",
       "shortDescription": "Krátky popis",
       "description": "Popis",
+      "industries": "Odvetvia",
+      "spokenLanguages": "Používané jazyky",
       "publicEmail": "Verejný e-mail",
       "phone": "Telefón",
       "website": "Webová stránka",
@@ -220,8 +225,10 @@
       "city": "Mesto",
       "canton": "Kantón",
       "addressVisibility": "Zobrazenie adresy",
-      "status": "Uložiť ako"
+      "status": "Stav"
     },
+    "industryHint": "Vyberte všetky odvetvia, v ktorých firma pôsobí.",
+    "spokenLanguagesHint": "Vyberte všetky jazyky, v ktorých firma komunikuje so zákazníkmi.",
     "addressVisibility": {
       "full": "Zobraziť úplnú adresu",
       "city": "Zobraziť iba mesto a kantón",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Koncept",
       "review": "Na kontrolu",
+      "pending": "Na kontrolu",
       "published": "Zverejnené",
       "rejected": "Zamietnuté",
       "suspended": "Pozastavené",
@@ -247,8 +255,101 @@
       "unauthorized": "Vaša relácia vypršala. Prihláste sa znova.",
       "forbidden": "Tento firemný profil nemôžete upravovať.",
       "not_found": "Firemný profil sa nenašiel.",
+      "invalid_selection": "Jedno z vybraných odvetví alebo jazykov je neplatné. Obnovte stránku a skúste to znova.",
       "save_failed": "Zmeny sa nepodarilo uložiť.",
       "network": "Pripojenie k serveru zlyhalo."
+    },
+    "createdNotice": "Profil firmy bol vytvorený ako koncept. Teraz môžeš pokračovať v úpravách."
+  },
+  "ListingCreator": {
+    "eyebrow": "Vytvoriť profil firmy",
+    "title": "Vytvoriť nový profil firmy",
+    "description": "Vytvor nový záznam pre jednu zo svojich aktívnych organizácií. Profil sa bezpečne uloží ako koncept.",
+    "back": "Späť na profily firiem",
+    "sections": {
+      "organization": "Organizácia",
+      "general": "Základné údaje a popis",
+      "contact": "Kontaktné údaje",
+      "address": "Adresa a viditeľnosť"
+    },
+    "fields": {
+      "organization": "Organizácia",
+      "name": "Názov firmy",
+      "shortDescription": "Krátky popis",
+      "description": "Popis",
+      "publicEmail": "Verejný e-mail",
+      "phone": "Telefón",
+      "website": "Webová stránka",
+      "street": "Ulica a číslo",
+      "postalCode": "PSČ",
+      "city": "Mesto",
+      "canton": "Kantón",
+      "addressVisibility": "Zobrazenie adresy"
+    },
+    "organizationHint": "Zobrazujú sa len organizácie s aktívnym členstvom.",
+    "chooseCanton": "Vybrať kantón",
+    "addressVisibility": {
+      "full": "Zobraziť celú adresu",
+      "city": "Zobraziť iba mesto a kantón",
+      "hidden": "Skryť adresu"
+    },
+    "create": "Vytvoriť profil firmy",
+    "creating": "Vytvára sa …",
+    "noOrganizationsTitle": "Nenašla sa aktívna organizácia",
+    "noOrganizationsDescription": "Na vytvorenie profilu firmy potrebuješ aspoň jedno aktívne členstvo v organizácii.",
+    "errors": {
+      "invalid_data": "Skontroluj zadané údaje.",
+      "unauthorized": "Tvoja relácia vypršala. Prihlás sa znova.",
+      "forbidden": "Pre túto organizáciu nemôžeš vytvoriť profil firmy.",
+      "create_failed": "Profil firmy sa nepodarilo vytvoriť.",
+      "network": "Pripojenie k serveru zlyhalo."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Interná kontrola",
+    "title": "Firemné profily na kontrolu",
+    "description": "Skontroluj nové a zmenené firemné profily pred ich zverejnením.",
+    "emptyTitle": "Žiadne otvorené kontroly",
+    "emptyDescription": "Momentálne žiadne firemné profily nečakajú na schválenie.",
+    "unknownDate": "Neznámy dátum",
+    "unknownOrganization": "Neznáma organizácia",
+    "unknownSubmitter": "Neznámy používateľ",
+    "submittedBy": "Odoslal {name} dňa {date}",
+    "pending": "Na kontrolu",
+    "changedFields": "{count, plural, =0 {Žiadne zmeny} one {# zmena} few {# zmeny} other {# zmien}}",
+    "detail": {
+      "back": "Späť na kontrolu",
+      "eyebrow": "Kontrola zmien",
+      "changesTitle": "Požadované zmeny",
+      "noChanges": "Pre túto revíziu neboli zistené žiadne rozdiely.",
+      "oldValue": "Aktuálne zverejnené",
+      "newValue": "Požadované",
+      "emptyValue": "Neuvedené",
+      "decisionTitle": "Rozhodnutie",
+      "decisionDescription": "Schváľ zmeny alebo pri zamietnutí či zablokovaní uveď dôvod.",
+      "reasonLabel": "Dôvod",
+      "reasonPlaceholder": "Povinné pri zamietnutí alebo zablokovaní",
+      "reasonRequired": "Uveď dôvod s minimálne tromi znakmi.",
+      "actionFailed": "Akciu sa nepodarilo vykonať. Skús to znova.",
+      "processing": "Spracováva sa…",
+      "approve": "Schváliť zmeny",
+      "reject": "Zamietnuť zmeny",
+      "suspend": "Zablokovať profil",
+      "fields": {
+        "name": "Názov firmy",
+        "short_description": "Krátky popis",
+        "description": "Popis",
+        "street": "Ulica",
+        "postal_code": "PSČ",
+        "city": "Mesto",
+        "canton": "Kantón",
+        "public_email": "Verejný e-mail",
+        "phone": "Telefón",
+        "website_url": "Webová stránka",
+        "address_visibility": "Zobrazenie adresy",
+        "industry_ids": "Odvetvia",
+        "spoken_language_ids": "Hovorené jazyky"
+      }
     }
   }
 }

@@ -5,7 +5,11 @@ import DashboardNav from "@/components/dashboard-nav";
 import LogoutButton from "@/components/logout-button";
 import SiteHeader from "@/components/site-header";
 import { routing } from "@/i18n/routing";
-import { requireCurrentUser } from "@/lib/auth";
+import { getAccessToken, requireCurrentUser } from "@/lib/auth";
+import {
+  getDirectusCurrentUserPermissions,
+  hasListingReviewAccess,
+} from "@/lib/directus-auth";
 
 export default async function DashboardLayout({
   children,
@@ -27,6 +31,18 @@ export default async function DashboardLayout({
     nextPath: `/${locale}/dashboard`,
   });
 
+  const accessToken = await getAccessToken();
+  let canReviewListings = false;
+
+  if (accessToken) {
+    try {
+      const permissions = await getDirectusCurrentUserPermissions(accessToken);
+      canReviewListings = hasListingReviewAccess(permissions);
+    } catch (error) {
+      console.error("Moderationsrechte konnten nicht geprüft werden:", error);
+    }
+  }
+
   return (
     <>
       <SiteHeader />
@@ -34,7 +50,7 @@ export default async function DashboardLayout({
         <div className="site-container">
           <div className="mb-8 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
             <div className="min-w-0 flex-1">
-              <DashboardNav />
+              <DashboardNav canReviewListings={canReviewListings} />
             </div>
             <LogoutButton />
           </div>

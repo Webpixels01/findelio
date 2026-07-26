@@ -4,81 +4,57 @@ import { FormEvent, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 
-type DirectoryOption = {
-  id: string | number;
+type OrganizationOption = {
+  id: string;
+  name: string;
+};
+
+type CantonOption = {
   code: string;
   name: string;
 };
 
-type ListingEditData = {
-  id: string;
-  name: string;
-  status: string;
-  shortDescription: string;
-  description: string;
-  street: string;
-  postalCode: string;
-  city: string;
-  canton: string;
-  publicEmail: string;
-  phone: string;
-  websiteUrl: string;
-  addressVisibility: "full" | "city" | "hidden";
-  industryIds: string[];
-  spokenLanguageIds: string[];
-};
-
-type SaveResult = {
+type CreateResult = {
   success?: boolean;
   error?: string;
+  listing?: {
+    id?: string;
+  };
 };
 
-export default function ListingEditForm({
-  listing,
+export default function ListingCreateForm({
+  organizations,
   cantons,
-  industries,
-  spokenLanguages,
 }: {
-  listing: ListingEditData;
-  cantons: DirectoryOption[];
-  industries: DirectoryOption[];
-  spokenLanguages: DirectoryOption[];
+  organizations: OrganizationOption[];
+  cantons: CantonOption[];
 }) {
-  const t = useTranslations("ListingEditor");
+  const t = useTranslations("ListingCreator");
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const [notice, setNotice] = useState<
-    | { type: "success"; text: string }
-    | { type: "error"; text: string }
-    | null
-  >(null);
-
-  const editableStatus = ["draft", "pending"].includes(listing.status)
-    ? listing.status
-    : "pending";
+  const [error, setError] = useState<string | null>(null);
 
   function getErrorMessage(code?: string): string {
     const knownCodes = new Set([
       "invalid_data",
       "unauthorized",
       "forbidden",
-      "not_found",
-      "invalid_selection",
-      "save_failed",
+      "create_failed",
     ]);
 
     return knownCodes.has(code ?? "")
       ? t(`errors.${code}`)
-      : t("errors.save_failed");
+      : t("errors.create_failed");
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSaving(true);
-    setNotice(null);
+    setError(null);
 
     const formData = new FormData(event.currentTarget);
     const payload = {
+      organization_id: formData.get("organization_id"),
       name: formData.get("name"),
       short_description: formData.get("short_description"),
       description: formData.get("description"),
@@ -90,32 +66,28 @@ export default function ListingEditForm({
       city: formData.get("city"),
       canton: formData.get("canton"),
       address_visibility: formData.get("address_visibility"),
-      status: formData.get("status"),
-      industry_ids: formData.getAll("industry_ids").map(String),
-      spoken_language_ids: formData
-        .getAll("spoken_language_ids")
-        .map(String),
     };
 
     try {
-      const response = await fetch(`/api/account/listings/${listing.id}`, {
-        method: "PATCH",
+      const response = await fetch("/api/account/listings", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
-      const result = (await response.json()) as SaveResult;
+      const result = (await response.json()) as CreateResult;
 
-      if (!response.ok || !result.success) {
-        setNotice({ type: "error", text: getErrorMessage(result.error) });
+      if (!response.ok || !result.success || !result.listing?.id) {
+        setError(getErrorMessage(result.error));
         return;
       }
 
-      setNotice({ type: "success", text: t("saved") });
-      router.refresh();
+      router.push(
+        `/dashboard/firmenprofile/${result.listing.id}/bearbeiten?created=1`,
+      );
     } catch {
-      setNotice({ type: "error", text: t("errors.network") });
+      setError(t("errors.network"));
     } finally {
       setIsSaving(false);
     }
@@ -123,6 +95,30 @@ export default function ListingEditForm({
 
   return (
     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+      <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
+        <h2 className="text-2xl font-extrabold">{t("sections.organization")}</h2>
+
+        <label className="field-group mt-6">
+          <span className="field-label">{t("fields.organization")}</span>
+          <select
+            className="field-control"
+            name="organization_id"
+            defaultValue={organizations[0]?.id ?? ""}
+            required
+            disabled={isSaving}
+          >
+            {organizations.map((organization) => (
+              <option key={organization.id} value={organization.id}>
+                {organization.name}
+              </option>
+            ))}
+          </select>
+          <span className="text-sm text-[var(--muted)]">
+            {t("organizationHint")}
+          </span>
+        </label>
+      </section>
+
       <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
         <h2 className="text-2xl font-extrabold">{t("sections.general")}</h2>
 
@@ -132,7 +128,6 @@ export default function ListingEditForm({
             <input
               className="field-control"
               name="name"
-              defaultValue={listing.name}
               maxLength={180}
               required
               disabled={isSaving}
@@ -144,7 +139,6 @@ export default function ListingEditForm({
             <textarea
               className="field-control field-textarea min-h-28"
               name="short_description"
-              defaultValue={listing.shortDescription}
               maxLength={500}
               disabled={isSaving}
             />
@@ -155,75 +149,10 @@ export default function ListingEditForm({
             <textarea
               className="field-control field-textarea min-h-56"
               name="description"
-              defaultValue={listing.description}
               maxLength={20000}
               disabled={isSaving}
             />
           </label>
-        </div>
-      </section>
-
-      <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
-        <h2 className="text-2xl font-extrabold">
-          {t("sections.classification")}
-        </h2>
-
-        <div className="mt-6 grid gap-8 lg:grid-cols-2">
-          <fieldset disabled={isSaving}>
-            <legend className="field-label">{t("fields.industries")}</legend>
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              {t("industryHint")}
-            </p>
-
-            <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
-              {industries.map((industry) => (
-                <label
-                  key={String(industry.id)}
-                  className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
-                >
-                  <input
-                    type="checkbox"
-                    name="industry_ids"
-                    value={String(industry.id)}
-                    defaultChecked={listing.industryIds.includes(
-                      String(industry.id),
-                    )}
-                    className="mt-1 size-4 shrink-0 accent-[var(--accent)]"
-                  />
-                  <span className="block font-bold">{industry.name}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          <fieldset disabled={isSaving}>
-            <legend className="field-label">
-              {t("fields.spokenLanguages")}
-            </legend>
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              {t("spokenLanguagesHint")}
-            </p>
-
-            <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
-              {spokenLanguages.map((language) => (
-                <label
-                  key={String(language.id)}
-                  className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
-                >
-                  <input
-                    type="checkbox"
-                    name="spoken_language_ids"
-                    value={String(language.id)}
-                    defaultChecked={listing.spokenLanguageIds.includes(
-                      String(language.id),
-                    )}
-                    className="mt-1 size-4 shrink-0 accent-[var(--accent)]"
-                  />
-                  <span className="block font-bold">{language.name}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
         </div>
       </section>
 
@@ -237,7 +166,6 @@ export default function ListingEditForm({
               className="field-control"
               type="email"
               name="public_email"
-              defaultValue={listing.publicEmail}
               maxLength={254}
               autoComplete="email"
               disabled={isSaving}
@@ -250,7 +178,6 @@ export default function ListingEditForm({
               className="field-control"
               type="tel"
               name="phone"
-              defaultValue={listing.phone}
               maxLength={60}
               autoComplete="tel"
               disabled={isSaving}
@@ -264,7 +191,6 @@ export default function ListingEditForm({
               type="text"
               inputMode="url"
               name="website_url"
-              defaultValue={listing.websiteUrl}
               maxLength={500}
               placeholder="https://"
               autoComplete="url"
@@ -283,7 +209,6 @@ export default function ListingEditForm({
             <input
               className="field-control"
               name="street"
-              defaultValue={listing.street}
               maxLength={200}
               autoComplete="street-address"
               disabled={isSaving}
@@ -295,7 +220,6 @@ export default function ListingEditForm({
             <input
               className="field-control"
               name="postal_code"
-              defaultValue={listing.postalCode}
               maxLength={20}
               autoComplete="postal-code"
               required
@@ -308,7 +232,6 @@ export default function ListingEditForm({
             <input
               className="field-control"
               name="city"
-              defaultValue={listing.city}
               maxLength={120}
               autoComplete="address-level2"
               required
@@ -321,10 +244,13 @@ export default function ListingEditForm({
             <select
               className="field-control"
               name="canton"
-              defaultValue={listing.canton}
+              defaultValue=""
               required
               disabled={isSaving}
             >
+              <option value="" disabled>
+                {t("chooseCanton")}
+              </option>
               {cantons.map((canton) => (
                 <option key={canton.code} value={canton.code}>
                   {canton.code} – {canton.name}
@@ -338,7 +264,7 @@ export default function ListingEditForm({
             <select
               className="field-control"
               name="address_visibility"
-              defaultValue={listing.addressVisibility}
+              defaultValue="city"
               disabled={isSaving}
             >
               <option value="full">{t("addressVisibility.full")}</option>
@@ -349,51 +275,11 @@ export default function ListingEditForm({
         </div>
       </section>
 
-      <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
-        <h2 className="text-2xl font-extrabold">{t("sections.workflow")}</h2>
-
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          <div className="rounded-2xl bg-[var(--surface)] p-5">
-            <p className="text-sm font-bold text-[var(--muted)]">
-              {t("currentStatus")}
-            </p>
-            <p className="mt-2 text-lg font-extrabold">
-              {t.has(`statusValues.${listing.status}`)
-                ? t(`statusValues.${listing.status}`)
-                : listing.status}
-            </p>
-          </div>
-
-          <label className="field-group">
-            <span className="field-label">{t("fields.status")}</span>
-            <select
-              className="field-control"
-              name="status"
-              defaultValue={editableStatus}
-              disabled={isSaving}
-            >
-              <option value="draft">{t("statusValues.draft")}</option>
-              <option value="pending">{t("statusValues.review")}</option>
-            </select>
-            <span className="text-sm text-[var(--muted)]">
-              {t("statusHint")}
-            </span>
-          </label>
-        </div>
-      </section>
-
       <div className="flex flex-col-reverse gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 sm:flex-row sm:items-center sm:justify-between">
         <div aria-live="polite">
-          {notice && (
-            <p
-              className={
-                notice.type === "success"
-                  ? "font-bold text-[#137a3d]"
-                  : "font-bold text-[#b42318]"
-              }
-              role={notice.type === "error" ? "alert" : "status"}
-            >
-              {notice.text}
+          {error && (
+            <p className="font-bold text-[#b42318]" role="alert">
+              {error}
             </p>
           )}
         </div>
@@ -403,7 +289,7 @@ export default function ListingEditForm({
           className="primary-button h-12 px-7"
           disabled={isSaving}
         >
-          {isSaving ? t("saving") : t("save")}
+          {isSaving ? t("creating") : t("create")}
         </button>
       </div>
     </form>

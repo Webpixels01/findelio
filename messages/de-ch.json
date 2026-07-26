@@ -153,7 +153,8 @@
       "overview": "Übersicht",
       "organizations": "Organisationen",
       "listings": "Firmenprofile",
-      "team": "Team"
+      "team": "Team",
+      "review": "Prüfbereich"
     },
     "summary": {
       "organizations": "Organisationen",
@@ -167,7 +168,8 @@
       "emptyTitle": "Noch keine Firmenprofile vorhanden",
       "emptyDescription": "Für deine aktiven Organisationen wurde noch kein Firmenprofil angelegt.",
       "notPublic": "Dieser Eintrag ist noch nicht öffentlich sichtbar.",
-      "editListing": "Bearbeiten"
+      "editListing": "Bearbeiten",
+      "createListing": "Neues Firmenprofil"
     },
     "teamPage": {
       "eyebrow": "Teamverwaltung",
@@ -204,6 +206,7 @@
     "back": "Zurück zu den Firmenprofilen",
     "sections": {
       "general": "Stammdaten und Beschreibung",
+      "classification": "Branchen und Sprachen",
       "contact": "Kontaktangaben",
       "address": "Adresse und Sichtbarkeit",
       "workflow": "Veröffentlichungsstatus"
@@ -212,6 +215,8 @@
       "name": "Firmenname",
       "shortDescription": "Kurzbeschreibung",
       "description": "Beschreibung",
+      "industries": "Branchen",
+      "spokenLanguages": "Gesprochene Sprachen",
       "publicEmail": "Öffentliche E-Mail",
       "phone": "Telefon",
       "website": "Website",
@@ -220,8 +225,10 @@
       "city": "Ort",
       "canton": "Kanton",
       "addressVisibility": "Adressanzeige",
-      "status": "Speichern als"
+      "status": "Status"
     },
+    "industryHint": "Wähle alle Branchen aus, in denen das Unternehmen tätig ist.",
+    "spokenLanguagesHint": "Wähle alle Sprachen aus, in denen das Unternehmen Kunden betreut.",
     "addressVisibility": {
       "full": "Vollständige Adresse anzeigen",
       "city": "Nur Ort und Kanton anzeigen",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Entwurf",
       "review": "Zur Prüfung",
+      "pending": "Zur Prüfung",
       "published": "Veröffentlicht",
       "rejected": "Abgelehnt",
       "suspended": "Gesperrt",
@@ -247,8 +255,101 @@
       "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
       "forbidden": "Du darfst dieses Firmenprofil nicht bearbeiten.",
       "not_found": "Das Firmenprofil wurde nicht gefunden.",
+      "invalid_selection": "Eine ausgewählte Branche oder Sprache ist ungültig. Lade die Seite neu und versuche es erneut.",
       "save_failed": "Die Änderungen konnten nicht gespeichert werden.",
       "network": "Die Verbindung zum Server ist fehlgeschlagen."
+    },
+    "createdNotice": "Das Firmenprofil wurde als Entwurf angelegt. Du kannst die Angaben jetzt weiter bearbeiten."
+  },
+  "ListingCreator": {
+    "eyebrow": "Firmenprofil anlegen",
+    "title": "Neues Firmenprofil anlegen",
+    "description": "Lege einen neuen Eintrag für eine deiner aktiven Organisationen an. Das Profil wird sicher als Entwurf gespeichert.",
+    "back": "Zurück zu den Firmenprofilen",
+    "sections": {
+      "organization": "Organisation",
+      "general": "Stammdaten und Beschreibung",
+      "contact": "Kontaktangaben",
+      "address": "Adresse und Sichtbarkeit"
+    },
+    "fields": {
+      "organization": "Organisation",
+      "name": "Firmenname",
+      "shortDescription": "Kurzbeschreibung",
+      "description": "Beschreibung",
+      "publicEmail": "Öffentliche E-Mail",
+      "phone": "Telefon",
+      "website": "Website",
+      "street": "Strasse und Hausnummer",
+      "postalCode": "Postleitzahl",
+      "city": "Ort",
+      "canton": "Kanton",
+      "addressVisibility": "Adressanzeige"
+    },
+    "organizationHint": "Nur Organisationen mit einer aktiven Mitgliedschaft werden angeboten.",
+    "chooseCanton": "Kanton auswählen",
+    "addressVisibility": {
+      "full": "Vollständige Adresse anzeigen",
+      "city": "Nur Ort und Kanton anzeigen",
+      "hidden": "Adresse ausblenden"
+    },
+    "create": "Firmenprofil anlegen",
+    "creating": "Wird angelegt …",
+    "noOrganizationsTitle": "Keine aktive Organisation gefunden",
+    "noOrganizationsDescription": "Du brauchst mindestens eine aktive Organisationsmitgliedschaft, um ein Firmenprofil anzulegen.",
+    "errors": {
+      "invalid_data": "Bitte prüfe die eingegebenen Daten.",
+      "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "forbidden": "Du darfst für diese Organisation kein Firmenprofil anlegen.",
+      "create_failed": "Das Firmenprofil konnte nicht angelegt werden.",
+      "network": "Die Verbindung zum Server ist fehlgeschlagen."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Interne Prüfung",
+    "title": "Ausstehende Firmenprofile",
+    "description": "Prüfe neue und geänderte Firmenprofile, bevor sie veröffentlicht werden.",
+    "emptyTitle": "Keine offenen Prüfungen",
+    "emptyDescription": "Momentan warten keine Firmenprofile auf deine Freigabe.",
+    "unknownDate": "Datum unbekannt",
+    "unknownOrganization": "Unbekannte Organisation",
+    "unknownSubmitter": "Unbekannter Benutzer",
+    "submittedBy": "Eingereicht von {name} am {date}",
+    "pending": "Zur Prüfung",
+    "changedFields": "{count, plural, =0 {Keine Änderungen} one {# Änderung} other {# Änderungen}}",
+    "detail": {
+      "back": "Zurück zum Prüfbereich",
+      "eyebrow": "Änderungen prüfen",
+      "changesTitle": "Beantragte Änderungen",
+      "noChanges": "Für diese Revision wurden keine Unterschiede erkannt.",
+      "oldValue": "Bisher veröffentlicht",
+      "newValue": "Beantragt",
+      "emptyValue": "Nicht angegeben",
+      "decisionTitle": "Entscheidung",
+      "decisionDescription": "Gib die Änderungen frei oder hinterlege bei Ablehnung beziehungsweise Sperrung eine Begründung.",
+      "reasonLabel": "Begründung",
+      "reasonPlaceholder": "Bei Ablehnung oder Sperrung erforderlich",
+      "reasonRequired": "Bitte gib eine Begründung mit mindestens drei Zeichen ein.",
+      "actionFailed": "Die Aktion konnte nicht ausgeführt werden. Bitte versuche es erneut.",
+      "processing": "Wird verarbeitet …",
+      "approve": "Änderungen freigeben",
+      "reject": "Änderungen ablehnen",
+      "suspend": "Listing sperren",
+      "fields": {
+        "name": "Firmenname",
+        "short_description": "Kurzbeschreibung",
+        "description": "Beschreibung",
+        "street": "Strasse",
+        "postal_code": "Postleitzahl",
+        "city": "Ort",
+        "canton": "Kanton",
+        "public_email": "Öffentliche E-Mail-Adresse",
+        "phone": "Telefon",
+        "website_url": "Website",
+        "address_visibility": "Adressanzeige",
+        "industry_ids": "Branchen",
+        "spoken_language_ids": "Gesprochene Sprachen"
+      }
     }
   }
 }

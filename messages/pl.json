@@ -153,7 +153,8 @@
       "overview": "Przegląd",
       "organizations": "Organizacje",
       "listings": "Profile firm",
-      "team": "Zespół"
+      "team": "Zespół",
+      "review": "Weryfikacja"
     },
     "summary": {
       "organizations": "Organizacje",
@@ -167,7 +168,8 @@
       "emptyTitle": "Brak profili firm",
       "emptyDescription": "Dla aktywnych organizacji nie utworzono jeszcze żadnego profilu firmy.",
       "notPublic": "Ten profil nie jest jeszcze publicznie widoczny.",
-      "editListing": "Edytuj"
+      "editListing": "Edytuj",
+      "createListing": "Nowy profil firmy"
     },
     "teamPage": {
       "eyebrow": "Zarządzanie zespołem",
@@ -204,6 +206,7 @@
     "back": "Wróć do profili firm",
     "sections": {
       "general": "Dane podstawowe i opis",
+      "classification": "Branże i języki",
       "contact": "Dane kontaktowe",
       "address": "Adres i widoczność",
       "workflow": "Status publikacji"
@@ -212,6 +215,8 @@
       "name": "Nazwa firmy",
       "shortDescription": "Krótki opis",
       "description": "Opis",
+      "industries": "Branże",
+      "spokenLanguages": "Używane języki",
       "publicEmail": "Publiczny e-mail",
       "phone": "Telefon",
       "website": "Strona internetowa",
@@ -220,8 +225,10 @@
       "city": "Miejscowość",
       "canton": "Kanton",
       "addressVisibility": "Widoczność adresu",
-      "status": "Zapisz jako"
+      "status": "Status"
     },
+    "industryHint": "Wybierz wszystkie branże, w których działa firma.",
+    "spokenLanguagesHint": "Wybierz wszystkie języki, w których firma obsługuje klientów.",
     "addressVisibility": {
       "full": "Pokaż pełny adres",
       "city": "Pokaż tylko miejscowość i kanton",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Wersja robocza",
       "review": "Do weryfikacji",
+      "pending": "Do weryfikacji",
       "published": "Opublikowany",
       "rejected": "Odrzucony",
       "suspended": "Zawieszony",
@@ -247,8 +255,101 @@
       "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
       "forbidden": "Nie masz uprawnień do edycji tego profilu firmy.",
       "not_found": "Nie znaleziono profilu firmy.",
+      "invalid_selection": "Wybrana branża lub język jest nieprawidłowy. Odśwież stronę i spróbuj ponownie.",
       "save_failed": "Nie udało się zapisać zmian.",
       "network": "Nie udało się połączyć z serwerem."
+    },
+    "createdNotice": "Profil firmy został utworzony jako szkic. Możesz teraz kontynuować edycję."
+  },
+  "ListingCreator": {
+    "eyebrow": "Utwórz profil firmy",
+    "title": "Utwórz nowy profil firmy",
+    "description": "Utwórz nowy wpis dla jednej z aktywnych organizacji. Profil zostanie bezpiecznie zapisany jako szkic.",
+    "back": "Wróć do profili firm",
+    "sections": {
+      "organization": "Organizacja",
+      "general": "Dane podstawowe i opis",
+      "contact": "Dane kontaktowe",
+      "address": "Adres i widoczność"
+    },
+    "fields": {
+      "organization": "Organizacja",
+      "name": "Nazwa firmy",
+      "shortDescription": "Krótki opis",
+      "description": "Opis",
+      "publicEmail": "Publiczny e-mail",
+      "phone": "Telefon",
+      "website": "Strona internetowa",
+      "street": "Ulica i numer",
+      "postalCode": "Kod pocztowy",
+      "city": "Miejscowość",
+      "canton": "Kanton",
+      "addressVisibility": "Widoczność adresu"
+    },
+    "organizationHint": "Dostępne są tylko organizacje z aktywnym członkostwem.",
+    "chooseCanton": "Wybierz kanton",
+    "addressVisibility": {
+      "full": "Pokaż pełny adres",
+      "city": "Pokaż tylko miejscowość i kanton",
+      "hidden": "Ukryj adres"
+    },
+    "create": "Utwórz profil firmy",
+    "creating": "Tworzenie …",
+    "noOrganizationsTitle": "Nie znaleziono aktywnej organizacji",
+    "noOrganizationsDescription": "Aby utworzyć profil firmy, potrzebujesz co najmniej jednego aktywnego członkostwa w organizacji.",
+    "errors": {
+      "invalid_data": "Sprawdź wprowadzone dane.",
+      "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "Nie możesz utworzyć profilu firmy dla tej organizacji.",
+      "create_failed": "Nie udało się utworzyć profilu firmy.",
+      "network": "Połączenie z serwerem nie powiodło się."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Weryfikacja wewnętrzna",
+    "title": "Profile firm do weryfikacji",
+    "description": "Sprawdź nowe i zmienione profile firm przed ich publikacją.",
+    "emptyTitle": "Brak oczekujących weryfikacji",
+    "emptyDescription": "Obecnie żadne profile firm nie oczekują na zatwierdzenie.",
+    "unknownDate": "Nieznana data",
+    "unknownOrganization": "Nieznana organizacja",
+    "unknownSubmitter": "Nieznany użytkownik",
+    "submittedBy": "Przesłane przez {name}, {date}",
+    "pending": "Do weryfikacji",
+    "changedFields": "{count, plural, =0 {Brak zmian} one {# zmiana} few {# zmiany} many {# zmian} other {# zmiany}}",
+    "detail": {
+      "back": "Wróć do weryfikacji",
+      "eyebrow": "Weryfikacja zmian",
+      "changesTitle": "Zgłoszone zmiany",
+      "noChanges": "Nie wykryto różnic dla tej wersji.",
+      "oldValue": "Obecnie opublikowane",
+      "newValue": "Zgłoszone",
+      "emptyValue": "Nie podano",
+      "decisionTitle": "Decyzja",
+      "decisionDescription": "Zatwierdź zmiany albo podaj uzasadnienie odrzucenia lub zablokowania.",
+      "reasonLabel": "Uzasadnienie",
+      "reasonPlaceholder": "Wymagane przy odrzuceniu lub zablokowaniu",
+      "reasonRequired": "Podaj uzasadnienie składające się z co najmniej trzech znaków.",
+      "actionFailed": "Nie udało się wykonać działania. Spróbuj ponownie.",
+      "processing": "Przetwarzanie…",
+      "approve": "Zatwierdź zmiany",
+      "reject": "Odrzuć zmiany",
+      "suspend": "Zablokuj wpis",
+      "fields": {
+        "name": "Nazwa firmy",
+        "short_description": "Krótki opis",
+        "description": "Opis",
+        "street": "Ulica",
+        "postal_code": "Kod pocztowy",
+        "city": "Miejscowość",
+        "canton": "Kanton",
+        "public_email": "Publiczny adres e-mail",
+        "phone": "Telefon",
+        "website_url": "Strona internetowa",
+        "address_visibility": "Widoczność adresu",
+        "industry_ids": "Branże",
+        "spoken_language_ids": "Używane języki"
+      }
     }
   }
 }

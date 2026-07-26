@@ -1,4 +1,5 @@
 import "server-only";
+import type { AppLocale } from "@/i18n/routing";
 
 const directusUrl = process.env.DIRECTUS_URL;
 const directusToken = process.env.DIRECTUS_TOKEN;
@@ -33,12 +34,14 @@ export type Listing = {
   verification_status: string;
   spoken_languages: {
     spoken_languages_id: {
+      id: string;
       code: string;
       name: string;
     };
   }[];
   industries: {
     industries_id: {
+      id: string;
       code: string;
       name: string;
     };
@@ -76,10 +79,10 @@ export type ListingOpeningHour = {
 };
 
 export type DirectoryOption = {
+  id: string | number;
   code: string;
   name: string;
 };
-
 
 export type ListingFilters = {
   language?: string;
@@ -97,6 +100,120 @@ type DirectoryCollection =
   | "industries"
   | "spoken_languages";
 
+type TranslatableDirectoryCollection =
+  | "industries"
+  | "spoken_languages";
+
+const directusLanguageCodes: Record<AppLocale, string> = {
+  "de-ch": "de-CH",
+  en: "en-US",
+  sk: "sk-SK",
+  cs: "cs-CZ",
+  hu: "hu-HU",
+  pl: "pl-PL",
+  ru: "ru-RU",
+  "pt-pt": "pt-PT",
+  ro: "ro-RO",
+};
+
+type DirectoryTranslationRow = {
+  languages_code: unknown;
+  name: string | null;
+};
+
+type TranslatableDirectoryRow = DirectoryOption & {
+  translations?: DirectoryTranslationRow[] | null;
+};
+
+function getRelationCode(value: unknown): string | null {
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  if (value && typeof value === "object" && "code" in value) {
+    const code = value.code;
+
+    if (typeof code === "string" || typeof code === "number") {
+      return String(code);
+    }
+  }
+
+  return null;
+}
+
+async function getDirectoryTranslationMap(
+  collection: TranslatableDirectoryCollection,
+  locale: AppLocale,
+): Promise<Map<string, string>> {
+  const url = new URL(`/items/${collection}`, directusUrl);
+
+  url.searchParams.set(
+    "fields",
+    "id,translations.languages_code,translations.name",
+  );
+  url.searchParams.set("limit", "-1");
+
+  const response = await fetch(url, {
+    headers: directusHeaders,
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+
+    throw new Error(
+      `${collection}-Übersetzungen konnten nicht geladen werden: ${response.status} ${response.statusText} | ${errorBody}`,
+    );
+  }
+
+  const result = (await response.json()) as DirectusResponse<
+    TranslatableDirectoryRow[]
+  >;
+  const languageCode = directusLanguageCodes[locale];
+  const translations = new Map<string, string>();
+
+  for (const row of result.data) {
+    const translation = row.translations?.find(
+      (item) => getRelationCode(item.languages_code) === languageCode,
+    );
+    const name = translation?.name?.trim();
+
+    if (name) {
+      translations.set(String(row.id), name);
+    }
+  }
+
+  return translations;
+}
+
+function localizeListing<T extends Listing>(
+  listing: T,
+  industryNames: Map<string, string>,
+  spokenLanguageNames: Map<string, string>,
+): T {
+  return {
+    ...listing,
+    industries: listing.industries.map((item) => ({
+      ...item,
+      industries_id: {
+        ...item.industries_id,
+        name:
+          industryNames.get(item.industries_id.id) ??
+          item.industries_id.name,
+      },
+    })),
+    spoken_languages: listing.spoken_languages.map((item) => ({
+      ...item,
+      spoken_languages_id: {
+        ...item.spoken_languages_id,
+        name:
+          spokenLanguageNames.get(item.spoken_languages_id.id) ??
+          item.spoken_languages_id.name,
+      },
+    })),
+  } as T;
+}
+
 function cleanValue(value?: string): string | undefined {
   const cleaned = value?.trim();
 
@@ -104,6 +221,7 @@ function cleanValue(value?: string): string | undefined {
 }
 
 export async function getListings(
+  locale: AppLocale,
   filters: ListingFilters = {},
 ): Promise<Listing[]> {
   const fields = [
@@ -118,8 +236,10 @@ export async function getListings(
     "canton.code",
     "canton.name",
     "verification_status",
+    "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
+    "industries.industries_id.id",
     "industries.industries_id.code",
     "industries.industries_id.name",
   ].join(",");
@@ -199,10 +319,15 @@ export async function getListings(
     }),
   );
 
-  const response = await fetch(url, {
-    headers: directusHeaders,
-    cache: "no-store",
-  });
+  const [response, industryNames, spokenLanguageNames] =
+    await Promise.all([
+      fetch(url, {
+        headers: directusHeaders,
+        cache: "no-store",
+      }),
+      getDirectoryTranslationMap("industries", locale),
+      getDirectoryTranslationMap("spoken_languages", locale),
+    ]);
 
   if (!response.ok) {
     throw new Error(
@@ -212,11 +337,14 @@ export async function getListings(
 
   const result = (await response.json()) as DirectusResponse<Listing[]>;
 
-  return result.data;
+  return result.data.map((listing) =>
+    localizeListing(listing, industryNames, spokenLanguageNames),
+  );
 }
 
 export async function getListingBySlug(
   slug: string,
+  locale: AppLocale,
 ): Promise<ListingDetail | null> {
   const fields = [
     "id",
@@ -241,8 +369,10 @@ export async function getListingBySlug(
     "published_at",
     "social_links",
     "address_visibility",
+    "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
+    "industries.industries_id.id",
     "industries.industries_id.code",
     "industries.industries_id.name",
   ].join(",");
@@ -269,10 +399,15 @@ export async function getListingBySlug(
     }),
   );
 
-  const response = await fetch(url, {
-    headers: directusHeaders,
-    cache: "no-store",
-  });
+  const [response, industryNames, spokenLanguageNames] =
+    await Promise.all([
+      fetch(url, {
+        headers: directusHeaders,
+        cache: "no-store",
+      }),
+      getDirectoryTranslationMap("industries", locale),
+      getDirectoryTranslationMap("spoken_languages", locale),
+    ]);
 
   if (!response.ok) {
     throw new Error(
@@ -281,8 +416,11 @@ export async function getListingBySlug(
   }
 
   const result = (await response.json()) as DirectusResponse<ListingDetail[]>;
+  const listing = result.data[0];
 
-  return result.data[0] ?? null;
+  return listing
+    ? localizeListing(listing, industryNames, spokenLanguageNames)
+    : null;
 }
 
 
@@ -363,7 +501,7 @@ async function getDirectoryOptions(
 ): Promise<DirectoryOption[]> {
   const url = new URL(`/items/${collection}`, directusUrl);
 
-  url.searchParams.set("fields", "code,name");
+  url.searchParams.set("fields", "id,code,name");
   url.searchParams.set("sort", "name");
 
   const response = await fetch(url, {
@@ -422,10 +560,37 @@ export async function getCantonIdByCode(
   return result.data[0]?.id ?? null;
 }
 
-export function getIndustries(): Promise<DirectoryOption[]> {
-  return getDirectoryOptions("industries");
+async function getTranslatedDirectoryOptions(
+  collection: TranslatableDirectoryCollection,
+  locale: AppLocale,
+): Promise<DirectoryOption[]> {
+  const [options, translations] = await Promise.all([
+    getDirectoryOptions(collection),
+    getDirectoryTranslationMap(collection, locale),
+  ]);
+
+  return options
+    .map((option) => ({
+      ...option,
+      name: translations.get(String(option.id)) ?? option.name,
+    }))
+    .sort((first, second) =>
+      first.name.localeCompare(
+        second.name,
+        directusLanguageCodes[locale],
+        { sensitivity: "base" },
+      ),
+    );
 }
 
-export function getSpokenLanguages(): Promise<DirectoryOption[]> {
-  return getDirectoryOptions("spoken_languages");
+export function getIndustries(
+  locale: AppLocale,
+): Promise<DirectoryOption[]> {
+  return getTranslatedDirectoryOptions("industries", locale);
+}
+
+export function getSpokenLanguages(
+  locale: AppLocale,
+): Promise<DirectoryOption[]> {
+  return getTranslatedDirectoryOptions("spoken_languages", locale);
 }

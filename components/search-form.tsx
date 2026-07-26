@@ -25,8 +25,8 @@ export default async function SearchForm({
   const t = await getTranslations("Search");
 
   const [languages, industries, cantons] = await Promise.all([
-    getSpokenLanguages(),
-    getIndustries(),
+    getSpokenLanguages(locale),
+    getIndustries(locale),
     getCantons(),
   ]);
 

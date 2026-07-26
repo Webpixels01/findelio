@@ -19,6 +19,17 @@ export type DirectusCurrentUser = {
   } | null;
 };
 
+
+export type DirectusPermissionAccess = {
+  access: "none" | "partial" | "full";
+  fields?: string[];
+};
+
+export type DirectusCurrentUserPermissions = Record<
+  string,
+  Partial<Record<"create" | "read" | "update" | "delete" | "share", DirectusPermissionAccess>>
+>;
+
 type DirectusDataResponse<T> = {
   data?: T;
   errors?: Array<{
@@ -148,4 +159,27 @@ export async function getDirectusCurrentUser(
   });
 
   return readDirectusResponse<DirectusCurrentUser>(response);
+}
+
+export async function getDirectusCurrentUserPermissions(
+  accessToken: string,
+): Promise<DirectusCurrentUserPermissions> {
+  const response = await fetch(new URL("/permissions/me", getDirectusUrl()), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  return readDirectusResponse<DirectusCurrentUserPermissions>(response);
+}
+
+export function hasListingReviewAccess(
+  permissions: DirectusCurrentUserPermissions,
+): boolean {
+  return (
+    permissions.listing_revisions?.read?.access === "full" &&
+    permissions.listing_revisions?.update?.access === "full" &&
+    permissions.listings?.update?.access === "full"
+  );
 }

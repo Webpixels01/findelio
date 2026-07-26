@@ -153,7 +153,8 @@
       "overview": "Visão geral",
       "organizations": "Organizações",
       "listings": "Perfis empresariais",
-      "team": "Equipa"
+      "team": "Equipa",
+      "review": "Revisão"
     },
     "summary": {
       "organizations": "Organizações",
@@ -167,7 +168,8 @@
       "emptyTitle": "Ainda não existem perfis empresariais",
       "emptyDescription": "Ainda não foi criado nenhum perfil empresarial para as suas organizações ativas.",
       "notPublic": "Este perfil ainda não está visível publicamente.",
-      "editListing": "Editar"
+      "editListing": "Editar",
+      "createListing": "Novo perfil de empresa"
     },
     "teamPage": {
       "eyebrow": "Gestão da equipa",
@@ -204,6 +206,7 @@
     "back": "Voltar aos perfis de empresa",
     "sections": {
       "general": "Dados principais e descrição",
+      "classification": "Setores e idiomas",
       "contact": "Dados de contacto",
       "address": "Morada e visibilidade",
       "workflow": "Estado de publicação"
@@ -212,6 +215,8 @@
       "name": "Nome da empresa",
       "shortDescription": "Descrição curta",
       "description": "Descrição",
+      "industries": "Setores",
+      "spokenLanguages": "Idiomas falados",
       "publicEmail": "E-mail público",
       "phone": "Telefone",
       "website": "Website",
@@ -220,8 +225,10 @@
       "city": "Localidade",
       "canton": "Cantão",
       "addressVisibility": "Visibilidade da morada",
-      "status": "Guardar como"
+      "status": "Estado"
     },
+    "industryHint": "Seleciona todos os setores em que a empresa atua.",
+    "spokenLanguagesHint": "Seleciona todos os idiomas em que a empresa atende clientes.",
     "addressVisibility": {
       "full": "Mostrar morada completa",
       "city": "Mostrar apenas localidade e cantão",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Rascunho",
       "review": "Para revisão",
+      "pending": "Para revisão",
       "published": "Publicado",
       "rejected": "Rejeitado",
       "suspended": "Suspenso",
@@ -247,8 +255,101 @@
       "unauthorized": "A tua sessão expirou. Inicia sessão novamente.",
       "forbidden": "Não tens permissão para editar este perfil de empresa.",
       "not_found": "O perfil da empresa não foi encontrado.",
+      "invalid_selection": "Um setor ou idioma selecionado é inválido. Atualiza a página e tenta novamente.",
       "save_failed": "Não foi possível guardar as alterações.",
       "network": "A ligação ao servidor falhou."
+    },
+    "createdNotice": "O perfil de empresa foi criado como rascunho. Podes agora continuar a editá-lo."
+  },
+  "ListingCreator": {
+    "eyebrow": "Criar perfil de empresa",
+    "title": "Criar novo perfil de empresa",
+    "description": "Cria um novo registo para uma das tuas organizações ativas. O perfil é guardado em segurança como rascunho.",
+    "back": "Voltar aos perfis de empresa",
+    "sections": {
+      "organization": "Organização",
+      "general": "Dados principais e descrição",
+      "contact": "Dados de contacto",
+      "address": "Morada e visibilidade"
+    },
+    "fields": {
+      "organization": "Organização",
+      "name": "Nome da empresa",
+      "shortDescription": "Descrição curta",
+      "description": "Descrição",
+      "publicEmail": "E-mail público",
+      "phone": "Telefone",
+      "website": "Website",
+      "street": "Rua e número",
+      "postalCode": "Código postal",
+      "city": "Localidade",
+      "canton": "Cantão",
+      "addressVisibility": "Visibilidade da morada"
+    },
+    "organizationHint": "Só são apresentadas organizações com uma adesão ativa.",
+    "chooseCanton": "Selecionar cantão",
+    "addressVisibility": {
+      "full": "Mostrar morada completa",
+      "city": "Mostrar apenas localidade e cantão",
+      "hidden": "Ocultar morada"
+    },
+    "create": "Criar perfil de empresa",
+    "creating": "A criar …",
+    "noOrganizationsTitle": "Nenhuma organização ativa encontrada",
+    "noOrganizationsDescription": "Precisas de pelo menos uma adesão ativa a uma organização para criar um perfil de empresa.",
+    "errors": {
+      "invalid_data": "Verifica os dados introduzidos.",
+      "unauthorized": "A tua sessão expirou. Inicia sessão novamente.",
+      "forbidden": "Não podes criar um perfil de empresa para esta organização.",
+      "create_failed": "Não foi possível criar o perfil de empresa.",
+      "network": "A ligação ao servidor falhou."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Revisão interna",
+    "title": "Perfis de empresas pendentes",
+    "description": "Revê perfis de empresas novos e alterados antes da publicação.",
+    "emptyTitle": "Sem revisões pendentes",
+    "emptyDescription": "De momento, não existem perfis de empresas a aguardar aprovação.",
+    "unknownDate": "Data desconhecida",
+    "unknownOrganization": "Organização desconhecida",
+    "unknownSubmitter": "Utilizador desconhecido",
+    "submittedBy": "Enviado por {name} em {date}",
+    "pending": "Em revisão",
+    "changedFields": "{count, plural, =0 {Sem alterações} one {# alteração} other {# alterações}}",
+    "detail": {
+      "back": "Voltar à revisão",
+      "eyebrow": "Rever alterações",
+      "changesTitle": "Alterações solicitadas",
+      "noChanges": "Não foram detetadas diferenças nesta revisão.",
+      "oldValue": "Atualmente publicado",
+      "newValue": "Solicitado",
+      "emptyValue": "Não indicado",
+      "decisionTitle": "Decisão",
+      "decisionDescription": "Aprova as alterações ou indica um motivo ao rejeitar ou suspender.",
+      "reasonLabel": "Motivo",
+      "reasonPlaceholder": "Obrigatório para rejeitar ou suspender",
+      "reasonRequired": "Indica um motivo com pelo menos três caracteres.",
+      "actionFailed": "Não foi possível executar a ação. Tenta novamente.",
+      "processing": "A processar…",
+      "approve": "Aprovar alterações",
+      "reject": "Rejeitar alterações",
+      "suspend": "Suspender anúncio",
+      "fields": {
+        "name": "Nome da empresa",
+        "short_description": "Descrição curta",
+        "description": "Descrição",
+        "street": "Rua",
+        "postal_code": "Código postal",
+        "city": "Localidade",
+        "canton": "Cantão",
+        "public_email": "E-mail público",
+        "phone": "Telefone",
+        "website_url": "Website",
+        "address_visibility": "Apresentação da morada",
+        "industry_ids": "Setores",
+        "spoken_language_ids": "Idiomas falados"
+      }
     }
   }
 }

@@ -153,7 +153,8 @@
       "overview": "Prezentare generală",
       "organizations": "Organizații",
       "listings": "Profiluri de firmă",
-      "team": "Echipă"
+      "team": "Echipă",
+      "review": "Verificare"
     },
     "summary": {
       "organizations": "Organizații",
@@ -167,7 +168,8 @@
       "emptyTitle": "Nu există încă profiluri de firmă",
       "emptyDescription": "Nu a fost creat încă niciun profil de firmă pentru organizațiile tale active.",
       "notPublic": "Acest profil nu este încă vizibil public.",
-      "editListing": "Editează"
+      "editListing": "Editează",
+      "createListing": "Profil nou de companie"
     },
     "teamPage": {
       "eyebrow": "Administrarea echipei",
@@ -204,6 +206,7 @@
     "back": "Înapoi la profilurile firmelor",
     "sections": {
       "general": "Date de bază și descriere",
+      "classification": "Domenii și limbi",
       "contact": "Date de contact",
       "address": "Adresă și vizibilitate",
       "workflow": "Starea publicării"
@@ -212,6 +215,8 @@
       "name": "Numele firmei",
       "shortDescription": "Descriere scurtă",
       "description": "Descriere",
+      "industries": "Domenii de activitate",
+      "spokenLanguages": "Limbi vorbite",
       "publicEmail": "E-mail public",
       "phone": "Telefon",
       "website": "Site web",
@@ -220,8 +225,10 @@
       "city": "Localitate",
       "canton": "Canton",
       "addressVisibility": "Vizibilitatea adresei",
-      "status": "Salvează ca"
+      "status": "Stare"
     },
+    "industryHint": "Selectează toate domeniile în care activează firma.",
+    "spokenLanguagesHint": "Selectează toate limbile în care firma deservește clienții.",
     "addressVisibility": {
       "full": "Afișează adresa completă",
       "city": "Afișează doar localitatea și cantonul",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Schiță",
       "review": "Pentru verificare",
+      "pending": "Pentru verificare",
       "published": "Publicat",
       "rejected": "Respins",
       "suspended": "Suspendat",
@@ -247,8 +255,101 @@
       "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
       "forbidden": "Nu ai permisiunea de a edita acest profil de firmă.",
       "not_found": "Profilul firmei nu a fost găsit.",
+      "invalid_selection": "Un domeniu sau o limbă selectată nu este validă. Reîncarcă pagina și încearcă din nou.",
       "save_failed": "Modificările nu au putut fi salvate.",
       "network": "Conexiunea la server a eșuat."
+    },
+    "createdNotice": "Profilul companiei a fost creat ca schiță. Acum poți continua editarea."
+  },
+  "ListingCreator": {
+    "eyebrow": "Creează profil de companie",
+    "title": "Creează un profil nou de companie",
+    "description": "Creează o înregistrare nouă pentru una dintre organizațiile tale active. Profilul este salvat în siguranță ca schiță.",
+    "back": "Înapoi la profilurile companiilor",
+    "sections": {
+      "organization": "Organizație",
+      "general": "Date de bază și descriere",
+      "contact": "Date de contact",
+      "address": "Adresă și vizibilitate"
+    },
+    "fields": {
+      "organization": "Organizație",
+      "name": "Numele companiei",
+      "shortDescription": "Descriere scurtă",
+      "description": "Descriere",
+      "publicEmail": "E-mail public",
+      "phone": "Telefon",
+      "website": "Site web",
+      "street": "Stradă și număr",
+      "postalCode": "Cod poștal",
+      "city": "Localitate",
+      "canton": "Canton",
+      "addressVisibility": "Vizibilitatea adresei"
+    },
+    "organizationHint": "Sunt afișate doar organizațiile cu statut de membru activ.",
+    "chooseCanton": "Selectează cantonul",
+    "addressVisibility": {
+      "full": "Afișează adresa completă",
+      "city": "Afișează doar localitatea și cantonul",
+      "hidden": "Ascunde adresa"
+    },
+    "create": "Creează profilul companiei",
+    "creating": "Se creează …",
+    "noOrganizationsTitle": "Nu a fost găsită nicio organizație activă",
+    "noOrganizationsDescription": "Ai nevoie de cel puțin un statut de membru activ într-o organizație pentru a crea un profil de companie.",
+    "errors": {
+      "invalid_data": "Verifică datele introduse.",
+      "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
+      "forbidden": "Nu poți crea un profil de companie pentru această organizație.",
+      "create_failed": "Profilul companiei nu a putut fi creat.",
+      "network": "Conexiunea la server a eșuat."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Verificare internă",
+    "title": "Profiluri de firme în aşteptare",
+    "description": "Verifică profilurile noi şi modificate înainte de publicare.",
+    "emptyTitle": "Nicio verificare în aşteptare",
+    "emptyDescription": "Momentan nu există profiluri de firme care aşteaptă aprobarea.",
+    "unknownDate": "Dată necunoscută",
+    "unknownOrganization": "Organizaţie necunoscută",
+    "unknownSubmitter": "Utilizator necunoscut",
+    "submittedBy": "Trimis de {name} la {date}",
+    "pending": "În verificare",
+    "changedFields": "{count, plural, =0 {Nicio modificare} one {# modificare} few {# modificări} other {# de modificări}}",
+    "detail": {
+      "back": "Înapoi la verificare",
+      "eyebrow": "Verificarea modificărilor",
+      "changesTitle": "Modificări solicitate",
+      "noChanges": "Nu au fost detectate diferențe pentru această revizie.",
+      "oldValue": "Publicat în prezent",
+      "newValue": "Solicitat",
+      "emptyValue": "Nespecificat",
+      "decisionTitle": "Decizie",
+      "decisionDescription": "Aprobă modificările sau introdu un motiv la respingere ori suspendare.",
+      "reasonLabel": "Motiv",
+      "reasonPlaceholder": "Obligatoriu la respingere sau suspendare",
+      "reasonRequired": "Introdu un motiv de cel puțin trei caractere.",
+      "actionFailed": "Acțiunea nu a putut fi efectuată. Încearcă din nou.",
+      "processing": "Se procesează…",
+      "approve": "Aprobă modificările",
+      "reject": "Respinge modificările",
+      "suspend": "Suspendă profilul",
+      "fields": {
+        "name": "Numele firmei",
+        "short_description": "Descriere scurtă",
+        "description": "Descriere",
+        "street": "Stradă",
+        "postal_code": "Cod poștal",
+        "city": "Localitate",
+        "canton": "Canton",
+        "public_email": "E-mail public",
+        "phone": "Telefon",
+        "website_url": "Site web",
+        "address_visibility": "Afișarea adresei",
+        "industry_ids": "Domenii",
+        "spoken_language_ids": "Limbi vorbite"
+      }
     }
   }
 }

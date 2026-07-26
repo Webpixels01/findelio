@@ -153,7 +153,8 @@
       "overview": "Overview",
       "organizations": "Organizations",
       "listings": "Business listings",
-      "team": "Team"
+      "team": "Team",
+      "review": "Review"
     },
     "summary": {
       "organizations": "Organizations",
@@ -167,7 +168,8 @@
       "emptyTitle": "No business listings yet",
       "emptyDescription": "No business listing has been created for your active organizations yet.",
       "notPublic": "This listing is not publicly visible yet.",
-      "editListing": "Edit"
+      "editListing": "Edit",
+      "createListing": "New company profile"
     },
     "teamPage": {
       "eyebrow": "Team management",
@@ -204,6 +206,7 @@
     "back": "Back to business profiles",
     "sections": {
       "general": "Business details and description",
+      "classification": "Industries and languages",
       "contact": "Contact details",
       "address": "Address and visibility",
       "workflow": "Publication status"
@@ -212,6 +215,8 @@
       "name": "Business name",
       "shortDescription": "Short description",
       "description": "Description",
+      "industries": "Industries",
+      "spokenLanguages": "Spoken languages",
       "publicEmail": "Public email",
       "phone": "Phone",
       "website": "Website",
@@ -220,8 +225,10 @@
       "city": "City",
       "canton": "Canton",
       "addressVisibility": "Address visibility",
-      "status": "Save as"
+      "status": "Status"
     },
+    "industryHint": "Select all industries in which the business operates.",
+    "spokenLanguagesHint": "Select all languages in which the business serves customers.",
     "addressVisibility": {
       "full": "Show full address",
       "city": "Show city and canton only",
@@ -230,6 +237,7 @@
     "statusValues": {
       "draft": "Draft",
       "review": "Submit for review",
+      "pending": "Submit for review",
       "published": "Published",
       "rejected": "Rejected",
       "suspended": "Suspended",
@@ -247,8 +255,101 @@
       "unauthorized": "Your session has expired. Please sign in again.",
       "forbidden": "You are not allowed to edit this business profile.",
       "not_found": "The business profile was not found.",
+      "invalid_selection": "A selected industry or language is invalid. Reload the page and try again.",
       "save_failed": "The changes could not be saved.",
       "network": "The connection to the server failed."
+    },
+    "createdNotice": "The company profile was created as a draft. You can now continue editing it."
+  },
+  "ListingCreator": {
+    "eyebrow": "Create company profile",
+    "title": "Create a new company profile",
+    "description": "Create a new listing for one of your active organizations. The profile is securely saved as a draft.",
+    "back": "Back to company profiles",
+    "sections": {
+      "organization": "Organization",
+      "general": "Basic details and description",
+      "contact": "Contact details",
+      "address": "Address and visibility"
+    },
+    "fields": {
+      "organization": "Organization",
+      "name": "Company name",
+      "shortDescription": "Short description",
+      "description": "Description",
+      "publicEmail": "Public email",
+      "phone": "Phone",
+      "website": "Website",
+      "street": "Street and number",
+      "postalCode": "Postal code",
+      "city": "City",
+      "canton": "Canton",
+      "addressVisibility": "Address visibility"
+    },
+    "organizationHint": "Only organizations with an active membership are available.",
+    "chooseCanton": "Select canton",
+    "addressVisibility": {
+      "full": "Show full address",
+      "city": "Show city and canton only",
+      "hidden": "Hide address"
+    },
+    "create": "Create company profile",
+    "creating": "Creating …",
+    "noOrganizationsTitle": "No active organization found",
+    "noOrganizationsDescription": "You need at least one active organization membership to create a company profile.",
+    "errors": {
+      "invalid_data": "Please check the entered data.",
+      "unauthorized": "Your session has expired. Please sign in again.",
+      "forbidden": "You cannot create a company profile for this organization.",
+      "create_failed": "The company profile could not be created.",
+      "network": "The connection to the server failed."
+    }
+  },
+  "ListingReview": {
+    "eyebrow": "Internal review",
+    "title": "Pending company profiles",
+    "description": "Review new and changed company profiles before they are published.",
+    "emptyTitle": "No pending reviews",
+    "emptyDescription": "There are currently no company profiles awaiting approval.",
+    "unknownDate": "Unknown date",
+    "unknownOrganization": "Unknown organization",
+    "unknownSubmitter": "Unknown user",
+    "submittedBy": "Submitted by {name} on {date}",
+    "pending": "Pending review",
+    "changedFields": "{count, plural, =0 {No changes} one {# change} other {# changes}}",
+    "detail": {
+      "back": "Back to review area",
+      "eyebrow": "Review changes",
+      "changesTitle": "Requested changes",
+      "noChanges": "No differences were detected for this revision.",
+      "oldValue": "Currently published",
+      "newValue": "Requested",
+      "emptyValue": "Not provided",
+      "decisionTitle": "Decision",
+      "decisionDescription": "Approve the changes or provide a reason when rejecting or suspending.",
+      "reasonLabel": "Reason",
+      "reasonPlaceholder": "Required for rejection or suspension",
+      "reasonRequired": "Enter a reason with at least three characters.",
+      "actionFailed": "The action could not be completed. Please try again.",
+      "processing": "Processing…",
+      "approve": "Approve changes",
+      "reject": "Reject changes",
+      "suspend": "Suspend listing",
+      "fields": {
+        "name": "Company name",
+        "short_description": "Short description",
+        "description": "Description",
+        "street": "Street",
+        "postal_code": "Postal code",
+        "city": "City",
+        "canton": "Canton",
+        "public_email": "Public email address",
+        "phone": "Phone",
+        "website_url": "Website",
+        "address_visibility": "Address display",
+        "industry_ids": "Industries",
+        "spoken_language_ids": "Spoken languages"
+      }
     }
   }
 }

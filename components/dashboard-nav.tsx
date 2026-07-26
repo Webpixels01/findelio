@@ -10,9 +10,16 @@ const navigationItems = [
   { href: "/dashboard/team", label: "team" },
 ] as const;
 
-export default function DashboardNav() {
+export default function DashboardNav({
+  canReviewListings = false,
+}: {
+  canReviewListings?: boolean;
+}) {
   const t = useTranslations("Dashboard.navigation");
   const pathname = usePathname();
+  const visibleItems = canReviewListings
+    ? [...navigationItems, { href: "/dashboard/pruefung", label: "review" } as const]
+    : navigationItems;
 
   return (
     <nav
@@ -20,7 +27,7 @@ export default function DashboardNav() {
       aria-label={t("label")}
     >
       <div className="flex min-w-max gap-1">
-        {navigationItems.map((item) => {
+        {visibleItems.map((item) => {
           const isActive =
             item.href === "/dashboard"
               ? pathname === item.href
