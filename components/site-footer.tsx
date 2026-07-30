@@ -21,6 +21,7 @@ export default async function SiteFooter() {
         <div>
           <p className="font-bold">{t("legal")}</p>
           <div className="mt-3 flex flex-col gap-2 text-white/70">
+            <Link href="/kontakt" className="hover:text-white">{t("contact")}</Link>
             <Link href="/impressum" className="hover:text-white">{t("imprint")}</Link>
             <Link href="/datenschutz" className="hover:text-white">{t("privacy")}</Link>
           </div>

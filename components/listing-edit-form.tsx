@@ -1,8 +1,12 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import ListingPremiumFields, {
+  type PremiumListingFieldsHandle,
+  type PremiumListingPayload,
+} from "@/components/listing-premium-fields";
 
 type DirectoryOption = {
   id: string | number;
@@ -33,20 +37,60 @@ type SaveResult = {
   error?: string;
 };
 
+type ListingPremiumData = {
+  enabled: boolean;
+  logo: {
+    id: string;
+    assetUrl: string;
+  } | null;
+  gallery: Array<{
+    id: string;
+    assetUrl: string;
+  }>;
+  socialLinks: Array<{
+    platform:
+      | "instagram"
+      | "facebook"
+      | "linkedin"
+      | "tiktok"
+      | "youtube"
+      | "x";
+    url: string;
+  }>;
+  openingHours: Array<{
+    day_of_week: number;
+    opens_at: string;
+    closes_at: string;
+  }>;
+};
+
+function normalizeSearchValue(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase()
+    .trim();
+}
+
 export default function ListingEditForm({
   listing,
   cantons,
   industries,
   spokenLanguages,
+  premium,
 }: {
   listing: ListingEditData;
   cantons: DirectoryOption[];
   industries: DirectoryOption[];
   spokenLanguages: DirectoryOption[];
+  premium: ListingPremiumData;
 }) {
   const t = useTranslations("ListingEditor");
   const router = useRouter();
+  const premiumFieldsRef = useRef<PremiumListingFieldsHandle>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [industrySearch, setIndustrySearch] = useState("");
+  const [languageSearch, setLanguageSearch] = useState("");
   const [notice, setNotice] = useState<
     | { type: "success"; text: string }
     | { type: "error"; text: string }
@@ -56,6 +100,14 @@ export default function ListingEditForm({
   const editableStatus = ["draft", "pending"].includes(listing.status)
     ? listing.status
     : "pending";
+  const normalizedIndustrySearch = normalizeSearchValue(industrySearch);
+  const normalizedLanguageSearch = normalizeSearchValue(languageSearch);
+  const matchingIndustryCount = industries.filter((industry) =>
+    normalizeSearchValue(industry.name).includes(normalizedIndustrySearch),
+  ).length;
+  const matchingLanguageCount = spokenLanguages.filter((language) =>
+    normalizeSearchValue(language.name).includes(normalizedLanguageSearch),
+  ).length;
 
   function getErrorMessage(code?: string): string {
     const knownCodes = new Set([
@@ -64,6 +116,11 @@ export default function ListingEditForm({
       "forbidden",
       "not_found",
       "invalid_selection",
+      "invalid_image",
+      "file_too_large",
+      "too_many_files",
+      "upload_failed",
+      "premium_required",
       "save_failed",
     ]);
 
@@ -78,6 +135,23 @@ export default function ListingEditForm({
     setNotice(null);
 
     const formData = new FormData(event.currentTarget);
+    let premiumPayload: PremiumListingPayload | undefined;
+
+    try {
+      premiumPayload = premium.enabled
+        ? await premiumFieldsRef.current?.preparePayload()
+        : undefined;
+    } catch (error) {
+      setNotice({
+        type: "error",
+        text: getErrorMessage(
+          error instanceof Error ? error.message : "upload_failed",
+        ),
+      });
+      setIsSaving(false);
+      return;
+    }
+
     const payload = {
       name: formData.get("name"),
       short_description: formData.get("short_description"),
@@ -95,6 +169,7 @@ export default function ListingEditForm({
       spoken_language_ids: formData
         .getAll("spoken_language_ids")
         .map(String),
+      ...(premiumPayload ? { premium: premiumPayload } : {}),
     };
 
     try {
@@ -163,6 +238,17 @@ export default function ListingEditForm({
         </div>
       </section>
 
+      <ListingPremiumFields
+        ref={premiumFieldsRef}
+        listingId={listing.id}
+        premiumEnabled={premium.enabled}
+        disabled={isSaving}
+        logo={premium.logo}
+        gallery={premium.gallery}
+        socialLinks={premium.socialLinks}
+        openingHours={premium.openingHours}
+      />
+
       <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
         <h2 className="text-2xl font-extrabold">
           {t("sections.classification")}
@@ -175,11 +261,28 @@ export default function ListingEditForm({
               {t("industryHint")}
             </p>
 
+            <label className="mt-4 block">
+              <span className="field-label">{t("industrySearch")}</span>
+              <input
+                className="field-control mt-2"
+                type="search"
+                value={industrySearch}
+                onChange={(event) => setIndustrySearch(event.target.value)}
+                placeholder={t("industrySearchPlaceholder")}
+                autoComplete="off"
+              />
+            </label>
+
             <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
               {industries.map((industry) => (
                 <label
                   key={String(industry.id)}
                   className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
+                  hidden={
+                    !normalizeSearchValue(industry.name).includes(
+                      normalizedIndustrySearch,
+                    )
+                  }
                 >
                   <input
                     type="checkbox"
@@ -193,6 +296,11 @@ export default function ListingEditForm({
                   <span className="block font-bold">{industry.name}</span>
                 </label>
               ))}
+              {matchingIndustryCount === 0 && (
+                <p className="px-3 py-2.5 text-sm text-[var(--muted)]">
+                  {t("noSearchResults")}
+                </p>
+              )}
             </div>
           </fieldset>
 
@@ -204,11 +312,28 @@ export default function ListingEditForm({
               {t("spokenLanguagesHint")}
             </p>
 
+            <label className="mt-4 block">
+              <span className="field-label">{t("spokenLanguagesSearch")}</span>
+              <input
+                className="field-control mt-2"
+                type="search"
+                value={languageSearch}
+                onChange={(event) => setLanguageSearch(event.target.value)}
+                placeholder={t("spokenLanguagesSearchPlaceholder")}
+                autoComplete="off"
+              />
+            </label>
+
             <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
               {spokenLanguages.map((language) => (
                 <label
                   key={String(language.id)}
                   className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
+                  hidden={
+                    !normalizeSearchValue(language.name).includes(
+                      normalizedLanguageSearch,
+                    )
+                  }
                 >
                   <input
                     type="checkbox"
@@ -222,6 +347,11 @@ export default function ListingEditForm({
                   <span className="block font-bold">{language.name}</span>
                 </label>
               ))}
+              {matchingLanguageCount === 0 && (
+                <p className="px-3 py-2.5 text-sm text-[var(--muted)]">
+                  {t("noSearchResults")}
+                </p>
+              )}
             </div>
           </fieldset>
         </div>

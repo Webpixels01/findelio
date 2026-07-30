@@ -13,8 +13,7 @@ export default async function CompanyCard({
 }) {
   const t = await getTranslations("Results");
 
-  const primaryIndustry =
-    company.industries[0]?.industries_id.name ?? "";
+  const primaryIndustry = company.industries[0]?.industries_id;
 
   const languages = company.spoken_languages.map(
     (item) => item.spoken_languages_id,
@@ -45,9 +44,15 @@ export default async function CompanyCard({
           </div>
 
           {primaryIndustry && (
-            <p className="mt-1 text-sm font-semibold text-[var(--accent)]">
-              {primaryIndustry}
-            </p>
+            <Link
+              href={`/unternehmen?branche=${encodeURIComponent(
+                primaryIndustry.code,
+              )}`}
+              locale={locale}
+              className="mt-1 inline-flex text-sm font-semibold text-[var(--accent)] hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+            >
+              {primaryIndustry.name}
+            </Link>
           )}
         </div>
       </div>

@@ -81,6 +81,81 @@ async function readDirectusResponse<T>(response: Response): Promise<T> {
   return result.data;
 }
 
+export async function registerDirectusUser({
+  firstName,
+  lastName,
+  email,
+  password,
+  verificationUrl,
+}: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  verificationUrl: string;
+}): Promise<void> {
+  const response = await fetch(new URL("/users/register", getDirectusUrl()), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      password,
+      verification_url: verificationUrl,
+    }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    let result: DirectusDataResponse<never> | null = null;
+
+    try {
+      result = (await response.json()) as DirectusDataResponse<never>;
+    } catch {
+      result = null;
+    }
+
+    throw new DirectusAuthError(
+      result?.errors?.[0]?.message ?? "Directus-Registrierung fehlgeschlagen.",
+      response.status,
+      result?.errors?.[0]?.extensions?.code,
+    );
+  }
+}
+
+export async function verifyDirectusRegistration(token: string): Promise<void> {
+  const verificationUrl = new URL(
+    "/users/register/verify-email",
+    getDirectusUrl(),
+  );
+
+  verificationUrl.searchParams.set("token", token);
+
+  const response = await fetch(verificationUrl, {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    let result: DirectusDataResponse<never> | null = null;
+
+    try {
+      result = (await response.json()) as DirectusDataResponse<never>;
+    } catch {
+      result = null;
+    }
+
+    throw new DirectusAuthError(
+      result?.errors?.[0]?.message ?? "Directus-Bestätigung fehlgeschlagen.",
+      response.status,
+      result?.errors?.[0]?.extensions?.code,
+    );
+  }
+}
+
 export async function loginWithDirectus(
   email: string,
   password: string,

@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
@@ -46,7 +46,9 @@ export default async function ListingReviewPage({
 
   const permissions = await getDirectusCurrentUserPermissions(accessToken);
 
-  if (!hasListingReviewAccess(permissions)) notFound();
+  if (!hasListingReviewAccess(permissions)) {
+    redirect(`/${locale}/dashboard`);
+  }
 
   const revisions = await getPendingListingRevisions(accessToken);
   const dateFormatter = new Intl.DateTimeFormat(locale, {

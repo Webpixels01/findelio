@@ -1,118 +1,117 @@
 import "server-only";
-import nodemailer from "nodemailer";
 
 export type ListingReviewNotification = {
   listingId: string;
-  listingName: string;
+  revisionId: string;
   kind: "new_listing" | "listing_revision";
-  changedFields?: string[];
 };
 
-const fieldLabels: Record<string, string> = {
-  name: "Firmenname",
-  short_description: "Kurzbeschreibung",
-  description: "Beschreibung",
-  street: "Strasse",
-  postal_code: "Postleitzahl",
-  city: "Ort",
-  canton: "Kanton",
-  public_email: "E-Mail-Adresse",
-  phone: "Telefon",
-  website_url: "Website",
-  address_visibility: "Adressanzeige",
-  industry_ids: "Branchen",
-  spoken_language_ids: "Gesprochene Sprachen",
+export type ListingDecisionNotification = {
+  revisionId: string;
+  action: "approve" | "reject" | "suspend";
+  reason?: string;
 };
 
-function requiredEnvironmentValue(name: string): string {
-  const value = process.env[name]?.trim();
+export type ContactNotification = {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  locale: string;
+};
 
-  if (!value) {
-    throw new Error(`${name} fehlt in der Datei .env.local`);
+function getDirectusUrl(): string {
+  const directusUrl = process.env.DIRECTUS_URL;
+
+  if (!directusUrl) {
+    throw new Error("DIRECTUS_URL fehlt in der Datei .env.local");
   }
 
-  return value;
+  return directusUrl;
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+function getDirectusServerToken(): string {
+  const directusToken = process.env.DIRECTUS_TOKEN;
 
-function getReviewUrl(kind: ListingReviewNotification["kind"]): string {
-  const siteUrl = requiredEnvironmentValue("NEXT_PUBLIC_SITE_URL").replace(
-    /\/$/,
-    "",
-  );
+  if (!directusToken) {
+    throw new Error("DIRECTUS_TOKEN fehlt in der Datei .env.local");
+  }
 
-  return kind === "listing_revision"
-    ? `${siteUrl}/de-ch/dashboard/pruefung`
-    : `${siteUrl}/de-ch/dashboard/firmenprofile`;
+  return directusToken;
 }
 
 export async function sendListingReviewNotification(
+  accessToken: string,
   notification: ListingReviewNotification,
 ): Promise<void> {
-  const host = requiredEnvironmentValue("SMTP_HOST");
-  const port = Number(requiredEnvironmentValue("SMTP_PORT"));
-  const user = requiredEnvironmentValue("SMTP_USER");
-  const password = requiredEnvironmentValue("SMTP_PASSWORD");
-  const from = requiredEnvironmentValue("MAIL_FROM");
-  const to = requiredEnvironmentValue("ADMIN_NOTIFICATION_EMAIL");
-
-  if (!Number.isInteger(port) || port <= 0 || port > 65535) {
-    throw new Error("SMTP_PORT ist ungültig.");
-  }
-
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure: process.env.SMTP_SECURE === "true",
-    auth: {
-      user,
-      pass: password,
+  const response = await fetch(
+    new URL("/findelio-review-notification", getDirectusUrl()),
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        listing_id: notification.listingId,
+        revision_id: notification.revisionId,
+        kind: notification.kind,
+      }),
+      cache: "no-store",
     },
-    requireTLS: process.env.SMTP_SECURE !== "true",
-  });
+  );
 
-  const isRevision = notification.kind === "listing_revision";
-  const subject = isRevision
-    ? `Änderungen warten auf Freigabe: ${notification.listingName}`
-    : `Neuer Eintrag wartet auf Freigabe: ${notification.listingName}`;
-  const reviewUrl = getReviewUrl(notification.kind);
-  const changedFields = (notification.changedFields ?? [])
-    .map((field) => fieldLabels[field] ?? field)
-    .sort((a, b) => a.localeCompare(b, "de"));
-  const changedFieldsText =
-    isRevision && changedFields.length > 0
-      ? `\nGeänderte Felder:\n${changedFields.map((field) => `- ${field}`).join("\n")}`
-      : "";
-  const changedFieldsHtml =
-    isRevision && changedFields.length > 0
-      ? `<p><strong>Geänderte Felder:</strong></p><ul>${changedFields
-          .map((field) => `<li>${escapeHtml(field)}</li>`)
-          .join("")}</ul>`
-      : "";
-  const intro = isRevision
-    ? "Ein bereits veröffentlichter Firmeneintrag wurde geändert und wartet auf deine Freigabe."
-    : "Ein neuer Firmeneintrag wurde zur Prüfung eingereicht.";
+  if (!response.ok) {
+    throw new Error(`Directus-Mailversand fehlgeschlagen (${response.status}).`);
+  }
+}
 
-  await transporter.sendMail({
-    from,
-    to,
-    replyTo: from,
-    subject,
-    text: `${intro}\n\nFirma: ${notification.listingName}${changedFieldsText}\n\nPrüfbereich öffnen:\n${reviewUrl}\n\nListing-ID: ${notification.listingId}`,
-    html: [
-      `<p>${escapeHtml(intro)}</p>`,
-      `<p><strong>Firma:</strong> ${escapeHtml(notification.listingName)}</p>`,
-      changedFieldsHtml,
-      `<p><a href="${escapeHtml(reviewUrl)}">Prüfbereich öffnen</a></p>`,
-      `<p style="color:#667085;font-size:12px">Listing-ID: ${escapeHtml(notification.listingId)}</p>`,
-    ].join(""),
-  });
+export async function sendListingDecisionNotification(
+  accessToken: string,
+  notification: ListingDecisionNotification,
+): Promise<void> {
+  const response = await fetch(
+    new URL("/findelio-review-notification/decision", getDirectusUrl()),
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        revision_id: notification.revisionId,
+        action: notification.action,
+        reason: notification.reason,
+      }),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Directus-Kundenbenachrichtigung fehlgeschlagen (${response.status}).`,
+    );
+  }
+}
+
+export async function sendContactNotification(
+  notification: ContactNotification,
+): Promise<void> {
+  const response = await fetch(
+    new URL("/findelio-review-notification/contact", getDirectusUrl()),
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getDirectusServerToken()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(notification),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Directus-Kontaktversand fehlgeschlagen (${response.status}).`);
+  }
 }

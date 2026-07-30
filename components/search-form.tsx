@@ -44,6 +44,7 @@ export default async function SearchForm({
         <span className="field-label">{t("language")}</span>
 
         <select
+          key={`sprache-${values.sprache ?? ""}`}
           name="sprache"
           defaultValue={values.sprache ?? ""}
           className="field-control"
@@ -62,6 +63,7 @@ export default async function SearchForm({
         <span className="field-label">{t("industry")}</span>
 
         <select
+          key={`branche-${values.branche ?? ""}`}
           name="branche"
           defaultValue={values.branche ?? ""}
           className="field-control"
@@ -80,6 +82,7 @@ export default async function SearchForm({
         <span className="field-label">{t("canton")}</span>
 
         <select
+          key={`kanton-${values.kanton ?? ""}`}
           name="kanton"
           defaultValue={values.kanton ?? ""}
           className="field-control"
@@ -98,6 +101,7 @@ export default async function SearchForm({
         <span className="field-label">{t("location")}</span>
 
         <input
+          key={`ort-${values.ort ?? ""}`}
           type="search"
           name="ort"
           defaultValue={values.ort ?? ""}

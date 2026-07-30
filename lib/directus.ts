@@ -20,6 +20,7 @@ const PUBLIC_LISTING_STATUS = "published" as const;
 
 export type Listing = {
   id: string;
+  organization: string | { id: string } | null;
   name: string;
   slug: string;
   status: string;
@@ -69,6 +70,7 @@ export type ListingDetail = Listing & {
   social_links: SocialLink[] | null;
   address_visibility: "full" | "city" | "hidden";
   gallery: GalleryItem[];
+  premium_features_enabled: boolean;
 };
 
 export type ListingOpeningHour = {
@@ -93,6 +95,11 @@ export type ListingFilters = {
 
 type DirectusResponse<T> = {
   data: T;
+};
+
+type PremiumSubscription = {
+  organization: string | { id: string } | null;
+  current_period_end: string | null;
 };
 
 type DirectoryCollection =
@@ -220,12 +227,77 @@ function cleanValue(value?: string): string | undefined {
   return cleaned || undefined;
 }
 
+function subscriptionOrganizationId(
+  value: PremiumSubscription["organization"],
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.id ?? null;
+}
+
+async function getActivePremiumOrganizationIds(): Promise<Set<string>> {
+  const url = new URL("/items/subscriptions", directusUrl);
+
+  url.searchParams.set(
+    "fields",
+    "organization,current_period_end",
+  );
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      _and: [
+        { status: { _eq: "active" } },
+        { plan: { _eq: "premium" } },
+      ],
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusHeaders,
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.warn(
+      "Premium-Abos konnten nicht geprüft werden:",
+      response.status,
+      response.statusText,
+    );
+    return new Set();
+  }
+
+  const result = (await response.json()) as DirectusResponse<
+    PremiumSubscription[]
+  >;
+  const now = new Date();
+
+  return new Set(
+    result.data
+      .filter((subscription) => {
+        if (!subscription.current_period_end) {
+          return true;
+        }
+
+        const periodEnd = new Date(subscription.current_period_end);
+        return !Number.isNaN(periodEnd.getTime()) && periodEnd > now;
+      })
+      .map((subscription) =>
+        subscriptionOrganizationId(subscription.organization),
+      )
+      .filter((id): id is string => Boolean(id)),
+  );
+}
+
 export async function getListings(
   locale: AppLocale,
   filters: ListingFilters = {},
 ): Promise<Listing[]> {
   const fields = [
     "id",
+    "organization",
     "name",
     "slug",
     "status",
@@ -319,7 +391,12 @@ export async function getListings(
     }),
   );
 
-  const [response, industryNames, spokenLanguageNames] =
+  const [
+    response,
+    industryNames,
+    spokenLanguageNames,
+    premiumOrganizationIds,
+  ] =
     await Promise.all([
       fetch(url, {
         headers: directusHeaders,
@@ -327,6 +404,7 @@ export async function getListings(
       }),
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
+      getActivePremiumOrganizationIds(),
     ]);
 
   if (!response.ok) {
@@ -337,9 +415,20 @@ export async function getListings(
 
   const result = (await response.json()) as DirectusResponse<Listing[]>;
 
-  return result.data.map((listing) =>
-    localizeListing(listing, industryNames, spokenLanguageNames),
-  );
+  return result.data.map((listing) => {
+    const premiumEnabled = premiumOrganizationIds.has(
+      subscriptionOrganizationId(listing.organization) ?? "",
+    );
+
+    return localizeListing(
+      {
+        ...listing,
+        logo: premiumEnabled ? listing.logo : null,
+      },
+      industryNames,
+      spokenLanguageNames,
+    );
+  });
 }
 
 export async function getListingBySlug(
@@ -348,6 +437,7 @@ export async function getListingBySlug(
 ): Promise<ListingDetail | null> {
   const fields = [
     "id",
+    "organization",
     "name",
     "slug",
     "status",
@@ -399,7 +489,12 @@ export async function getListingBySlug(
     }),
   );
 
-  const [response, industryNames, spokenLanguageNames] =
+  const [
+    response,
+    industryNames,
+    spokenLanguageNames,
+    premiumOrganizationIds,
+  ] =
     await Promise.all([
       fetch(url, {
         headers: directusHeaders,
@@ -407,6 +502,7 @@ export async function getListingBySlug(
       }),
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
+      getActivePremiumOrganizationIds(),
     ]);
 
   if (!response.ok) {
@@ -418,9 +514,25 @@ export async function getListingBySlug(
   const result = (await response.json()) as DirectusResponse<ListingDetail[]>;
   const listing = result.data[0];
 
-  return listing
-    ? localizeListing(listing, industryNames, spokenLanguageNames)
-    : null;
+  if (!listing) {
+    return null;
+  }
+
+  const premiumEnabled = premiumOrganizationIds.has(
+    subscriptionOrganizationId(listing.organization) ?? "",
+  );
+
+  return localizeListing(
+    {
+      ...listing,
+      logo: premiumEnabled ? listing.logo : null,
+      gallery: premiumEnabled ? listing.gallery : [],
+      social_links: premiumEnabled ? listing.social_links : [],
+      premium_features_enabled: premiumEnabled,
+    },
+    industryNames,
+    spokenLanguageNames,
+  );
 }
 
 

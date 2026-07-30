@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
+import Image from "next/image";
+import { notFound, redirect } from "next/navigation";
 import ListingReviewActions from "@/components/listing-review-actions";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
@@ -14,6 +15,7 @@ import {
   type ListingRevisionChangedValue,
   type ReviewOptionMaps,
 } from "@/lib/directus-review";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
 
 function submitterName(
   submitter: {
@@ -31,6 +33,8 @@ function valueLabel(
   field: string,
   value: unknown,
   options: ReviewOptionMaps,
+  addressVisibilityLabels: Record<string, string>,
+  weekdayLabels: Record<number, string>,
   emptyLabel: string,
 ): string {
   if (value === null || value === undefined || value === "") return emptyLabel;
@@ -47,10 +51,115 @@ function valueLabel(
     return value.map((id) => typeof id === "string" ? options.spokenLanguages[id] ?? id : String(id)).join(", ");
   }
 
+  if (field === "address_visibility" && typeof value === "string") {
+    return addressVisibilityLabels[value] ?? value;
+  }
+
+  if (field === "gallery_file_ids" && Array.isArray(value)) {
+    return value.map(String).join("\n");
+  }
+
+  if (field === "social_links" && Array.isArray(value)) {
+    return value
+      .map((item) => {
+        if (!item || typeof item !== "object") return String(item);
+        const link = item as { platform?: unknown; url?: unknown };
+        return `${String(link.platform ?? "")}: ${String(link.url ?? "")}`;
+      })
+      .join("\n");
+  }
+
+  if (field === "opening_hours" && Array.isArray(value)) {
+    return value
+      .map((item) => {
+        if (!item || typeof item !== "object") return String(item);
+        const interval = item as {
+          day_of_week?: unknown;
+          opens_at?: unknown;
+          closes_at?: unknown;
+        };
+        const day =
+          typeof interval.day_of_week === "number"
+            ? weekdayLabels[interval.day_of_week] ??
+              String(interval.day_of_week)
+            : String(interval.day_of_week ?? "");
+        return `${day}: ${String(interval.opens_at ?? "").slice(0, 5)}–${String(interval.closes_at ?? "").slice(0, 5)}`;
+      })
+      .join("\n");
+  }
+
   if (typeof value === "boolean") return value ? "Ja" : "Nein";
   if (Array.isArray(value)) return value.map(String).join(", ");
   if (typeof value === "object") return JSON.stringify(value, null, 2);
   return String(value);
+}
+
+function mediaFileIds(field: string, value: unknown): string[] | null {
+  if (field === "logo_id") {
+    return typeof value === "string" && value ? [value] : [];
+  }
+
+  if (field === "gallery_file_ids" && Array.isArray(value)) {
+    return value.filter((item): item is string => typeof item === "string");
+  }
+
+  return null;
+}
+
+function ReviewValue({
+  field,
+  value,
+  fallback,
+  emptyLabel,
+  emphasized = false,
+}: {
+  field: string;
+  value: unknown;
+  fallback: string;
+  emptyLabel: string;
+  emphasized?: boolean;
+}) {
+  const fileIds = mediaFileIds(field, value);
+
+  if (fileIds === null) {
+    return (
+      <p
+        className={`mt-2 whitespace-pre-wrap break-words ${
+          emphasized ? "font-bold" : ""
+        }`}
+      >
+        {fallback}
+      </p>
+    );
+  }
+
+  if (fileIds.length === 0) {
+    return <p className="mt-2">{emptyLabel}</p>;
+  }
+
+  return (
+    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+      {fileIds.map((fileId) => (
+        <a
+          key={fileId}
+          href={getDirectusAssetUrl(fileId)}
+          target="_blank"
+          rel="noreferrer"
+          className="relative block aspect-[4/3] overflow-hidden rounded-xl border border-[var(--border)] bg-white"
+        >
+          <Image
+            src={getDirectusAssetUrl(fileId)}
+            alt=""
+            fill
+            sizes="240px"
+            className={
+              field === "logo_id" ? "object-contain p-2" : "object-cover"
+            }
+          />
+        </a>
+      ))}
+    </div>
+  );
 }
 
 export default async function ListingReviewDetailPage({
@@ -61,8 +170,10 @@ export default async function ListingReviewDetailPage({
   const { locale, id } = await params;
   setRequestLocale(locale);
 
-  const [t] = await Promise.all([
+  const [t, tEditor, tCompany] = await Promise.all([
     getTranslations("ListingReview"),
+    getTranslations("ListingEditor"),
+    getTranslations("Company"),
     requireCurrentUser({
       locale,
       nextPath: `/${locale}/dashboard/pruefung/${id}`,
@@ -73,7 +184,9 @@ export default async function ListingReviewDetailPage({
   if (!accessToken) notFound();
 
   const permissions = await getDirectusCurrentUserPermissions(accessToken);
-  if (!hasListingReviewAccess(permissions)) notFound();
+  if (!hasListingReviewAccess(permissions)) {
+    redirect(`/${locale}/dashboard`);
+  }
 
   const [revision, optionMaps] = await Promise.all([
     getPendingListingRevision(accessToken, id),
@@ -85,6 +198,17 @@ export default async function ListingReviewDetailPage({
   const changes = Object.entries(revision.changed_fields ?? {}) as Array<
     [string, ListingRevisionChangedValue]
   >;
+  const addressVisibilityLabels = {
+    full: tEditor("addressVisibility.full"),
+    city: tEditor("addressVisibility.city"),
+    hidden: tEditor("addressVisibility.hidden"),
+  };
+  const weekdayLabels = Object.fromEntries(
+    Array.from({ length: 7 }, (_, index) => [
+      index + 1,
+      tCompany(`weekdays.${index + 1}`),
+    ]),
+  );
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
     timeStyle: "short",
@@ -145,17 +269,38 @@ export default async function ListingReviewDetailPage({
                       <p className="text-xs font-extrabold uppercase tracking-wider text-[var(--muted)]">
                         {t("detail.oldValue")}
                       </p>
-                      <p className="mt-2 whitespace-pre-wrap break-words">
-                        {valueLabel(field, change.old, optionMaps, t("detail.emptyValue"))}
-                      </p>
+                      <ReviewValue
+                        field={field}
+                        value={change.old}
+                        fallback={valueLabel(
+                          field,
+                          change.old,
+                          optionMaps,
+                          addressVisibilityLabels,
+                          weekdayLabels,
+                          t("detail.emptyValue"),
+                        )}
+                        emptyLabel={t("detail.emptyValue")}
+                      />
                     </div>
                     <div className="bg-[#f2f9ff] p-5">
                       <p className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent)]">
                         {t("detail.newValue")}
                       </p>
-                      <p className="mt-2 whitespace-pre-wrap break-words font-bold">
-                        {valueLabel(field, change.new, optionMaps, t("detail.emptyValue"))}
-                      </p>
+                      <ReviewValue
+                        field={field}
+                        value={change.new}
+                        fallback={valueLabel(
+                          field,
+                          change.new,
+                          optionMaps,
+                          addressVisibilityLabels,
+                          weekdayLabels,
+                          t("detail.emptyValue"),
+                        )}
+                        emptyLabel={t("detail.emptyValue")}
+                        emphasized
+                      />
                     </div>
                   </div>
                 </article>

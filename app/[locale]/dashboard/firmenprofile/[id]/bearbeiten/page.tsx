@@ -6,6 +6,7 @@ import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { getEditableAccountListingEditorData } from "@/lib/directus-account";
 import { getCantons, getIndustries, getSpokenLanguages } from "@/lib/directus";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { htmlToPlainText } from "@/lib/text";
 
 export default async function EditListingPage({
@@ -44,7 +45,21 @@ export default async function EditListingPage({
     return notFound();
   }
 
-  const { listing, industryIds, spokenLanguageIds } = editorData;
+  const {
+    listing,
+    industryIds,
+    spokenLanguageIds,
+    openingHours,
+    premiumEnabled,
+  } = editorData;
+  const supportedSocialPlatforms = new Set([
+    "instagram",
+    "facebook",
+    "linkedin",
+    "tiktok",
+    "youtube",
+    "x",
+  ]);
 
   return (
     <>
@@ -95,6 +110,33 @@ export default async function EditListingPage({
         cantons={cantons}
         industries={industries}
         spokenLanguages={spokenLanguages}
+        premium={{
+          enabled: premiumEnabled,
+          logo: listing.logo
+            ? {
+                id: listing.logo,
+                assetUrl: getDirectusAssetUrl(listing.logo),
+              }
+            : null,
+          gallery: (listing.gallery ?? []).map((item) => ({
+            id: item.directus_files_id,
+            assetUrl: getDirectusAssetUrl(item.directus_files_id),
+          })),
+          socialLinks: (listing.social_links ?? []).filter(
+            (
+              item,
+            ): item is typeof item & {
+              platform:
+                | "instagram"
+                | "facebook"
+                | "linkedin"
+                | "tiktok"
+                | "youtube"
+                | "x";
+            } => supportedSocialPlatforms.has(item.platform),
+          ),
+          openingHours,
+        }}
       />
     </>
   );

@@ -1,6 +1,7 @@
-import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import type { GalleryItem } from "@/lib/directus";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
+import CompanyGalleryLightbox from "@/components/company-gallery-lightbox";
 
 type CompanyGalleryProps = {
   items: GalleryItem[];
@@ -8,7 +9,7 @@ type CompanyGalleryProps = {
   companyName: string;
 };
 
-export default function CompanyGallery({
+export default async function CompanyGallery({
   items,
   title,
   companyName,
@@ -17,35 +18,31 @@ export default function CompanyGallery({
     return null;
   }
 
+  const t = await getTranslations("Company");
+  const images = items.map((item, index) => ({
+    id: String(item.id),
+    url: getDirectusAssetUrl(item.directus_files_id),
+    alt: t("galleryImage", {
+      company: companyName,
+      current: index + 1,
+      total: items.length,
+    }),
+    openLabel: t("galleryOpen", { current: index + 1 }),
+  }));
+
   return (
     <section className="mt-9 border-t border-[var(--border)] pt-8">
       <h2 className="text-2xl font-extrabold">{title}</h2>
 
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        {items.map((item, index) => {
-          const imageUrl = getDirectusAssetUrl(
-            item.directus_files_id,
-          );
-
-          return (
-            <a
-              key={item.id}
-              href={imageUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]"
-            >
-              <Image
-                src={imageUrl}
-                alt={`${companyName} – Bild ${index + 1}`}
-                fill
-                sizes="(max-width: 640px) 100vw, 50vw"
-                className="object-cover transition duration-300 group-hover:scale-[1.03]"
-              />
-            </a>
-          );
-        })}
-      </div>
+      <CompanyGalleryLightbox
+        images={images}
+        labels={{
+          dialog: t("galleryDialog"),
+          close: t("galleryClose"),
+          previous: t("galleryPrevious"),
+          next: t("galleryNext"),
+        }}
+      />
     </section>
   );
 }

@@ -147,11 +147,12 @@ export default async function CompanyPage({
 
   const [t, openingHours] = await Promise.all([
     getTranslations("Company"),
-    getListingOpeningHours(company.id),
+    company.premium_features_enabled
+      ? getListingOpeningHours(company.id)
+      : Promise.resolve([]),
   ]);
 
-  const primaryIndustry =
-    company.industries[0]?.industries_id.name ?? "";
+  const primaryIndustry = company.industries[0]?.industries_id;
 
   const languages = company.spoken_languages.map(
     (item) => item.spoken_languages_id,
@@ -240,9 +241,15 @@ export default async function CompanyPage({
                   </div>
 
                   {primaryIndustry && (
-                    <p className="mt-2 font-bold text-[var(--accent)]">
-                      {primaryIndustry}
-                    </p>
+                    <Link
+                      href={`/unternehmen?branche=${encodeURIComponent(
+                        primaryIndustry.code,
+                      )}`}
+                      locale={locale}
+                      className="mt-2 inline-flex font-bold text-[var(--accent)] hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                    >
+                      {primaryIndustry.name}
+                    </Link>
                   )}
 
                   <p className="mt-2 text-sm font-semibold text-[var(--muted)]">
@@ -366,7 +373,7 @@ export default async function CompanyPage({
                       company.social_links.length > 0 && (
                         <div>
                           <dt className="text-sm font-bold text-[var(--muted)]">
-                            Social Media
+                            {t("socialMedia")}
                           </dt>
 
                           <dd className="mt-2 flex flex-wrap gap-2">
@@ -388,43 +395,45 @@ export default async function CompanyPage({
                 )}
               </aside>
 
-              <aside className="rounded-3xl border border-[var(--border)] bg-white p-7">
-                <h2 className="text-2xl font-extrabold">
-                  {t("openingHours")}
-                </h2>
+              {company.premium_features_enabled && (
+                <aside className="rounded-3xl border border-[var(--border)] bg-white p-7">
+                  <h2 className="text-2xl font-extrabold">
+                    {t("openingHours")}
+                  </h2>
 
-                <div className="mt-6 space-y-3">
-                  {weekdays.map((weekday) => {
-                    const intervals = openingHours.filter(
-                      (item) => item.day_of_week === weekday.number,
-                    );
+                  <div className="mt-6 space-y-3">
+                    {weekdays.map((weekday) => {
+                      const intervals = openingHours.filter(
+                        (item) => item.day_of_week === weekday.number,
+                      );
 
-                    return (
-                      <div
-                        key={weekday.number}
-                        className="flex items-start justify-between gap-5 border-b border-[var(--border)] pb-3 last:border-b-0 last:pb-0"
-                      >
-                        <span className="font-semibold">
-                          {weekday.name}
-                        </span>
+                      return (
+                        <div
+                          key={weekday.number}
+                          className="flex items-start justify-between gap-5 border-b border-[var(--border)] pb-3 last:border-b-0 last:pb-0"
+                        >
+                          <span className="font-semibold">
+                            {weekday.name}
+                          </span>
 
-                        <span className="text-right text-sm text-[var(--muted)]">
-                          {intervals.length > 0
-                            ? intervals
-                                .map(
-                                  (interval) =>
-                                    `${formatTime(interval.opens_at)}–${formatTime(
-                                      interval.closes_at,
-                                    )}`,
-                                )
-                                .join(", ")
-                            : t("closed")}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </aside>
+                          <span className="text-right text-sm text-[var(--muted)]">
+                            {intervals.length > 0
+                              ? intervals
+                                  .map(
+                                    (interval) =>
+                                      `${formatTime(interval.opens_at)}–${formatTime(
+                                        interval.closes_at,
+                                      )}`,
+                                  )
+                                  .join(", ")
+                              : t("closed")}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </aside>
+              )}
             </div>
           </div>
         </div>

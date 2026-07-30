@@ -10,6 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "",
     "/unternehmen",
     "/firma-eintragen",
+    "/kontakt",
     "/login",
     "/impressum",
     "/datenschutz",
