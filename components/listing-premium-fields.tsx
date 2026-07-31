@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 type SocialPlatform =
   | "instagram"
@@ -273,9 +274,17 @@ const ListingPremiumFields = forwardRef<
             ),
           )}
         </div>
-        <p className="mt-5 text-sm font-bold text-[var(--accent)]">
-          {t("lockedHint")}
-        </p>
+        <div className="mt-5 flex flex-wrap items-center gap-4">
+          <p className="text-sm font-bold text-[var(--accent)]">
+            {t("lockedHint")}
+          </p>
+          <Link
+            href={`/dashboard/firmenprofile/${listingId}/abo`}
+            className="primary-button h-10 px-4"
+          >
+            {t("manageSubscription")}
+          </Link>
+        </div>
       </section>
     );
   }

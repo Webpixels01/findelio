@@ -198,7 +198,9 @@
       "emptyDescription": "Aktív szervezeteihez még nem készült cégbejegyzés.",
       "notPublic": "Ez a cégbejegyzés még nem látható nyilvánosan.",
       "editListing": "Szerkesztés",
-      "createListing": "Új cégbejegyzés"
+      "createListing": "Új cégbejegyzés",
+      "manageSubscription": "Előfizetés kezelése",
+      "choosePlan": "Csomag választása"
     },
     "teamPage": {
       "eyebrow": "Csapatkezelés",
@@ -348,6 +350,7 @@
       "description": "Egészítsd ki a cégbejegyzést logóval, képekkel, nyitvatartással és közösségimédia-hivatkozásokkal.",
       "lockedDescription": "Ezek a prémium funkciók aktív prémium előfizetéssel érhetők el.",
       "lockedHint": "A prémium előfizetés aktiválása után itt szerkesztheted ezeket a részeket.",
+      "manageSubscription": "Premium aktiválása",
       "features": {
         "logo": "Céglogó",
         "gallery": "Képgaléria",
@@ -386,6 +389,27 @@
       "full": "Teljes cím megjelenítése",
       "city": "Csak a település és a kanton megjelenítése",
       "hidden": "Cím elrejtése"
+    },
+    "plan": {
+      "eyebrow": "Csomag ehhez a bejegyzéshez",
+      "title": "Válassz Free vagy Premium csomagot",
+      "description": "A kiválasztott csomag csak erre a cégbejegyzésre vonatkozik. A további bejegyzések saját csomagot kaphatnak.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Minden alapadat és megjelenés a Findelio címtárában."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "havi CHF 8.25-től",
+        "description": "Emellett logó, képgaléria, nyitvatartás és közösségimédia-linkek."
+      },
+      "intervalTitle": "Számlázási időszak",
+      "intervals": {
+        "monthly": "Havonta – CHF 9.90",
+        "yearly": "Évente – CHF 99.00"
+      },
+      "cancellationHint": "Nincs próbaidőszak. Az előfizetés az aktuális számlázási időszak végére mondható le."
     },
     "statusValues": {
       "draft": "Piszkozat",
@@ -461,6 +485,74 @@
       "forbidden": "Ehhez a szervezethez nem hozhatsz létre cégbejegyzést.",
       "create_failed": "A cégbejegyzést nem sikerült létrehozni.",
       "network": "Nem sikerült kapcsolódni a szerverhez."
+    }
+  },
+  "Billing": {
+    "back": "Vissza a cégbejegyzésekhez",
+    "eyebrow": "Csomag és számlázás",
+    "title": "{name} előfizetése",
+    "description": "Kezeld ennek a cégbejegyzésnek a csomagját. A Premium csak a Stripe fizetési visszaigazolása után aktiválódik.",
+    "listingCreated": "A cégbejegyzést piszkozatként mentettük. Most válaszd ki a kívánt csomagot.",
+    "checkoutSuccess": "Köszönjük. A Stripe fogadta a fizetést. A Premium a webhook visszaigazolása után aktiválódik, ami rövid ideig eltarthat.",
+    "checkoutCancelled": "A fizetési folyamat megszakadt. A cégbejegyzés a Free csomagban marad.",
+    "intervalTitle": "Számlázási időszak",
+    "intervals": {
+      "monthly": {
+        "title": "Havonta",
+        "description": "CHF 9.90 havonta"
+      },
+      "yearly": {
+        "title": "Évente",
+        "description": "CHF 99.00 évente"
+      }
+    },
+    "terms": "Nincs ingyenes próbaidőszak. A lemondás az aktuális számlázási időszak végén lép hatályba. Sikertelen fizetés esetén a hozzáférés az időszak végéig megmarad, majd zárolódik.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Prémium cégbejegyzés",
+      "description": "Mutasd be vállalkozásodat további vizuális és praktikus információkkal.",
+      "features": {
+        "logo": "Céglogó",
+        "gallery": "Képgaléria",
+        "openingHours": "Nyitvatartás",
+        "socialLinks": "Közösségimédia-linkek"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktuális csomag",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Előfizetés állapota",
+      "price": "Ár",
+      "nextRenewal": "Következő megújítás",
+      "accessUntil": "Premium hozzáférés eddig",
+      "freeHint": "Ez a cégbejegyzés jelenleg az ingyenes csomagot használja.",
+      "values": {
+        "pending": "Függőben",
+        "active": "Aktív",
+        "past_due": "Fizetés függőben",
+        "cancelled": "Lemondva",
+        "expired": "Lejárt"
+      }
+    },
+    "actions": {
+      "subscribe": "Premium előfizetés Stripe-pal",
+      "openingCheckout": "A Stripe Checkout megnyitása …",
+      "manage": "Előfizetés és fizetési mód kezelése",
+      "openingPortal": "Ügyfélportál megnyitása …"
+    },
+    "errors": {
+      "invalid_data": "A kiválasztott számlázás érvénytelen.",
+      "unauthorized": "A munkamenet lejárt. Jelentkezz be újra.",
+      "forbidden": "Ezt az előfizetést nem kezelheted.",
+      "not_found": "A cégbejegyzés nem található.",
+      "already_active": "Ehhez a cégbejegyzéshez a Premium már aktív.",
+      "billing_not_configured": "A Stripe helyi beállítása még nem teljes.",
+      "portal_unavailable": "Ez a helyi tesztelőfizetés még nincs Stripe-ügyfélhez kapcsolva.",
+      "checkout_failed": "A Stripe Checkout nem indítható el.",
+      "portal_failed": "A Stripe ügyfélportál nem nyitható meg.",
+      "network": "A szerverkapcsolat sikertelen.",
+      "unknown": "Az előfizetési művelet nem hajtható végre."
     }
   },
   "ListingReview": {

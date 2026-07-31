@@ -327,10 +327,32 @@ Am 29. Juli 2026 umgesetzt:
 - Formularablauf mit Spamschutz, mobile Darstellung ohne horizontalen Überlauf, fehlende Karteneinbettung und fehlerfreie Browserkonsole wurden verifiziert. Es wurde dabei bewusst keine echte Testmail versendet.
 - JSON-Prüfung aller Sprachdateien, `npm run lint`, `npx tsc --noEmit`, `npm run build` und `git diff --check` sind erfolgreich.
 
+## Premium-Abos pro Firmeneintrag und Stripe-Vorbereitung
+
+Am 30. Juli 2026 umgesetzt:
+
+- Premium-Abos gelten neu pro Firmeneintrag statt für eine gesamte Organisation.
+- Das bestehende lokale Premium-Testabo wurde ausdrücklich dem Eintrag `Webpixels Schweiz aus Thurgau` zugeordnet. `JAZU Webdesign` verwendet dadurch das Free-Paket; dessen vorhandene Premium-Daten bleiben gespeichert, sind aber gesperrt und öffentlich ausgeblendet.
+- Die Sammlung `subscriptions` besitzt neu eine verpflichtende Beziehung zum jeweiligen Firmeneintrag. Organisation und Eintrag bleiben gemeinsam gespeichert, damit Eigentümerschaft, Abrechnung und Stripe-Synchronisierung eindeutig geprüft werden können.
+- Die Premium-Prüfung im Dashboard und auf öffentlichen Seiten verwendet ausschliesslich die Eintrags-ID. Ein Premium-Abo schaltet keine weiteren Einträge derselben Organisation frei.
+- Nach der Konto- und Organisationserstellung wird direkt zum ersten Firmeneintrag weitergeleitet. Beim Anlegen jedes Eintrags kann zwischen Free und Premium gewählt werden.
+- Premium kostet CHF 9.90 monatlich oder CHF 99.00 jährlich. Es gibt keine kostenlose Testphase. Die Kündigung wirkt auf das Ende der laufenden Zahlungsperiode.
+- Jeder Firmeneintrag besitzt eine eigene Abo-Seite mit Paketstatus, Zahlungsperiode, nächster Verlängerung beziehungsweise Zugangsende sowie Einstieg in Stripe Checkout oder das Stripe-Kundenportal.
+- Stripe Checkout verwendet ausschliesslich serverseitig konfigurierte Preis-IDs. Die Checkout- und Portal-Endpunkte prüfen Anmeldung, Organisationsmitgliedschaft, Eintragszugehörigkeit und Anfrageherkunft.
+- Der Stripe-Webhook prüft die Signatur des unveränderten Request-Bodys. Er verarbeitet abgeschlossene Checkouts, Abo-Änderungen, Kündigungen, erfolgreiche Rechnungen und fehlgeschlagene Zahlungen.
+- Bei einer fehlgeschlagenen Zahlung wird die Kündigung zum Periodenende geplant. Der bereits bezahlte Premium-Zugang bleibt bis dahin aktiv. Bei einer erfolgreichen Nachzahlung wird nur diese automatisch geplante Kündigung wieder aufgehoben.
+- Die technische `Findelio Server Policy` darf Stripe-Abos lesen, erstellen und ihre Abrechnungsfelder aktualisieren. Validierung begrenzt die Datensätze auf Stripe, Premium, CHF, die beiden Preise und bekannte Statuswerte. Löschrechte bleiben gesperrt.
+- Firmenkunden können weiterhin nur Abo-Daten ihrer eigenen Organisation lesen und besitzen keine Abo-Schreibrechte.
+- Die reproduzierbaren Directus-Migrationen befinden sich unter `infra/directus/migrations`.
+- Die sichtbaren Paket-, Status-, Preis- und Fehlermeldungen sind in allen neun unterstützten Sprachen vorhanden.
+- Im Browser wurden JAZU als Free, Webpixels als Premium, die gesperrten beziehungsweise freigeschalteten Editorfelder, die Abo-Seiten sowie Monats- und Jahresauswahl geprüft. Die Browserkonsole bleibt fehlerfrei.
+- Ohne lokale Stripe-Schlüssel erscheint eine verständliche Konfigurationsmeldung. Für einen echten Test fehlen noch die Test-Schlüssel, die beiden Stripe-Preis-IDs und das Webhook-Geheimnis in `.env.local`; Geheimnisse wurden nicht in Git aufgenommen.
+- JSON-Prüfung aller Sprachdateien, `npm run lint`, `npx tsc --noEmit`, `npm run build` und `git diff --check` sind erfolgreich.
+
 ## Git- und Arbeitsstand
 
 - Branch: `main`
-- Vorheriger grösserer Commit: `8ac22e2` (`Add listing review workflow and admin email notifications`)
+- Aktueller lokaler Sicherungs-Commit vor der Stripe-Erweiterung: `6bb6fba` (`Complete multilingual account and listing workflows`)
 - Der aktuelle Gesamtstand mit Registrierung, Onboarding, Premium-Funktionen, Prüfworkflow, E-Mail-Vorlagen, öffentlichen Verzeichnisfunktionen sowie Kontakt- und Rechtseiten ist in einem lokalen Git-Commit gesichert.
 - `SKILLS.md` und `PROJECT_STATUS.md` wurden am 28. Juli 2026 zur Projektdokumentation angelegt.
 - Es wurde kein Push ausgeführt.

@@ -198,7 +198,9 @@
       "emptyDescription": "Dla aktywnych organizacji nie utworzono jeszcze żadnego wpisu firmy.",
       "notPublic": "Ten wpis nie jest jeszcze publicznie widoczny.",
       "editListing": "Edytuj",
-      "createListing": "Nowy wpis firmy"
+      "createListing": "Nowy wpis firmy",
+      "manageSubscription": "Zarządzaj subskrypcją",
+      "choosePlan": "Wybierz pakiet"
     },
     "teamPage": {
       "eyebrow": "Zarządzanie zespołem",
@@ -348,6 +350,7 @@
       "description": "Uzupełnij wpis firmy o logo, zdjęcia, godziny otwarcia i linki do mediów społecznościowych.",
       "lockedDescription": "Te funkcje Premium są dostępne w ramach aktywnej subskrypcji Premium.",
       "lockedHint": "Po aktywowaniu subskrypcji Premium możesz edytować te sekcje.",
+      "manageSubscription": "Aktywuj Premium",
       "features": {
         "logo": "Logo firmy",
         "gallery": "Galeria zdjęć",
@@ -386,6 +389,27 @@
       "full": "Pokaż pełny adres",
       "city": "Pokaż tylko miejscowość i kanton",
       "hidden": "Ukryj adres"
+    },
+    "plan": {
+      "eyebrow": "Pakiet dla tego wpisu",
+      "title": "Wybierz Free lub Premium",
+      "description": "Wybrany pakiet dotyczy tylko tego wpisu firmy. Kolejne wpisy mogą mieć własny pakiet.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Wszystkie podstawowe dane i publikacja w katalogu Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 miesięcznie",
+        "description": "Dodatkowo logo, galeria zdjęć, godziny otwarcia i linki do mediów społecznościowych."
+      },
+      "intervalTitle": "Okres rozliczeniowy",
+      "intervals": {
+        "monthly": "Miesięcznie – CHF 9.90",
+        "yearly": "Rocznie – CHF 99.00"
+      },
+      "cancellationHint": "Bez okresu próbnego. Subskrypcję można anulować ze skutkiem na koniec bieżącego okresu rozliczeniowego."
     },
     "statusValues": {
       "draft": "Wersja robocza",
@@ -461,6 +485,74 @@
       "forbidden": "Nie możesz utworzyć wpisu firmy dla tej organizacji.",
       "create_failed": "Nie udało się utworzyć wpisu firmy.",
       "network": "Połączenie z serwerem nie powiodło się."
+    }
+  },
+  "Billing": {
+    "back": "Powrót do wpisów firm",
+    "eyebrow": "Pakiet i rozliczenia",
+    "title": "Subskrypcja dla {name}",
+    "description": "Zarządzaj pakietem tego wpisu firmy. Premium zostanie aktywowane dopiero po potwierdzeniu płatności przez Stripe.",
+    "listingCreated": "Wpis firmy zapisano jako wersję roboczą. Wybierz teraz odpowiedni pakiet.",
+    "checkoutSuccess": "Dziękujemy. Stripe przyjął płatność. Premium zostanie aktywowane po potwierdzeniu webhooka, co może chwilę potrwać.",
+    "checkoutCancelled": "Proces płatności został anulowany. Wpis firmy pozostaje w pakiecie Free.",
+    "intervalTitle": "Okres rozliczeniowy",
+    "intervals": {
+      "monthly": {
+        "title": "Miesięcznie",
+        "description": "CHF 9.90 miesięcznie"
+      },
+      "yearly": {
+        "title": "Rocznie",
+        "description": "CHF 99.00 rocznie"
+      }
+    },
+    "terms": "Bez bezpłatnego okresu próbnego. Anulowanie następuje na koniec bieżącego okresu rozliczeniowego. W razie nieudanej płatności dostęp pozostaje do końca okresu, a następnie zostaje zablokowany.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Wpis firmy Premium",
+      "description": "Zaprezentuj firmę za pomocą dodatkowych informacji wizualnych i praktycznych.",
+      "features": {
+        "logo": "Logo firmy",
+        "gallery": "Galeria zdjęć",
+        "openingHours": "Godziny otwarcia",
+        "socialLinks": "Linki do mediów społecznościowych"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktualny pakiet",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Status subskrypcji",
+      "price": "Cena",
+      "nextRenewal": "Następne odnowienie",
+      "accessUntil": "Dostęp Premium do",
+      "freeHint": "Ten wpis firmy korzysta obecnie z bezpłatnego pakietu.",
+      "values": {
+        "pending": "Oczekuje",
+        "active": "Aktywna",
+        "past_due": "Płatność oczekuje",
+        "cancelled": "Anulowana",
+        "expired": "Wygasła"
+      }
+    },
+    "actions": {
+      "subscribe": "Subskrybuj Premium przez Stripe",
+      "openingCheckout": "Otwieranie Stripe Checkout …",
+      "manage": "Zarządzaj subskrypcją i metodą płatności",
+      "openingPortal": "Otwieranie portalu klienta …"
+    },
+    "errors": {
+      "invalid_data": "Wybrana opcja rozliczenia jest nieprawidłowa.",
+      "unauthorized": "Twoja sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "Nie możesz zarządzać tą subskrypcją.",
+      "not_found": "Nie znaleziono wpisu firmy.",
+      "already_active": "Premium jest już aktywne dla tego wpisu firmy.",
+      "billing_not_configured": "Stripe nie jest jeszcze w pełni skonfigurowany lokalnie.",
+      "portal_unavailable": "Ta lokalna subskrypcja testowa nie jest jeszcze połączona z klientem Stripe.",
+      "checkout_failed": "Nie udało się uruchomić Stripe Checkout.",
+      "portal_failed": "Nie udało się otworzyć portalu klienta Stripe.",
+      "network": "Połączenie z serwerem nie powiodło się.",
+      "unknown": "Nie udało się wykonać operacji subskrypcji."
     }
   },
   "ListingReview": {

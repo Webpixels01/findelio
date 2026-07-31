@@ -29,7 +29,7 @@ export default async function AccountSetupPage({
   const accessToken = await getAccessToken();
 
   if (accessToken && (await hasActiveAccountMembership(accessToken))) {
-    redirect(`/${locale}/dashboard`);
+    redirect(`/${locale}/dashboard/firmenprofile/neu?onboarding=1`);
   }
 
   return (

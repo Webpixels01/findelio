@@ -133,6 +133,16 @@ export default async function ListingsPage({
                     {t("listingsPage.editListing")}
                   </Link>
 
+                  <Link
+                    href={`/dashboard/firmenprofile/${listing.id}/abo`}
+                    locale={locale}
+                    className="font-extrabold text-[var(--accent)] hover:underline"
+                  >
+                    {listing.subscription
+                      ? t("listingsPage.manageSubscription")
+                      : t("listingsPage.choosePlan")}
+                  </Link>
+
                   {listing.status === "published" ? (
                     <Link
                       href={`/unternehmen/${listing.slug}`}

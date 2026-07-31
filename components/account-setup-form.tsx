@@ -49,7 +49,7 @@ export default function AccountSetupForm() {
       const result = (await response.json()) as SetupResult;
 
       if (response.status === 409 && result.error === "already_configured") {
-        router.replace("/dashboard");
+        router.replace("/dashboard/firmenprofile/neu?onboarding=1");
         router.refresh();
         return;
       }
@@ -59,7 +59,7 @@ export default function AccountSetupForm() {
         return;
       }
 
-      router.replace("/dashboard");
+      router.replace("/dashboard/firmenprofile/neu?onboarding=1");
       router.refresh();
     } catch {
       setError(t("errors.network"));

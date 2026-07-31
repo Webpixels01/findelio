@@ -198,7 +198,9 @@
       "emptyDescription": "Pro vaše aktivní organizace zatím nebyl vytvořen žádný firemní záznam.",
       "notPublic": "Tento záznam zatím není veřejně viditelný.",
       "editListing": "Upravit",
-      "createListing": "Nový firemní záznam"
+      "createListing": "Nový firemní záznam",
+      "manageSubscription": "Spravovat předplatné",
+      "choosePlan": "Vybrat balíček"
     },
     "teamPage": {
       "eyebrow": "Správa týmu",
@@ -348,6 +350,7 @@
       "description": "Doplňte firemní záznam o logo, obrázky, otevírací dobu a odkazy na sociální sítě.",
       "lockedDescription": "Tyto prémiové funkce jsou součástí aktivního prémiového předplatného.",
       "lockedHint": "Po aktivaci prémiového předplatného můžete tyto části upravovat.",
+      "manageSubscription": "Aktivovat Premium",
       "features": {
         "logo": "Firemní logo",
         "gallery": "Galerie obrázků",
@@ -451,6 +454,27 @@
       "city": "Zobrazit pouze město a kanton",
       "hidden": "Skrýt adresu"
     },
+    "plan": {
+      "eyebrow": "Balíček pro tento záznam",
+      "title": "Vyberte Free nebo Premium",
+      "description": "Vybraný balíček platí pouze pro tento firemní záznam. Další záznamy mohou mít vlastní balíček.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Všechny základní údaje a zveřejnění v katalogu Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 měsíčně",
+        "description": "Navíc logo, galerie obrázků, otevírací doba a odkazy na sociální sítě."
+      },
+      "intervalTitle": "Fakturační období",
+      "intervals": {
+        "monthly": "Měsíčně – CHF 9.90",
+        "yearly": "Ročně – CHF 99.00"
+      },
+      "cancellationHint": "Bez zkušebního období. Předplatné lze zrušit ke konci aktuálního fakturačního období."
+    },
     "create": "Vytvořit firemní záznam",
     "creating": "Vytváří se …",
     "noOrganizationsTitle": "Nebyla nalezena aktivní organizace",
@@ -461,6 +485,74 @@
       "forbidden": "Pro tuto organizaci nemůžeš vytvořit firemní záznam.",
       "create_failed": "Firemní záznam se nepodařilo vytvořit.",
       "network": "Připojení k serveru selhalo."
+    }
+  },
+  "Billing": {
+    "back": "Zpět na firemní záznamy",
+    "eyebrow": "Balíček a fakturace",
+    "title": "Předplatné pro {name}",
+    "description": "Spravujte balíček tohoto firemního záznamu. Premium se aktivuje až po potvrzení platby službou Stripe.",
+    "listingCreated": "Firemní záznam byl uložen jako koncept. Nyní vyberte požadovaný balíček.",
+    "checkoutSuccess": "Děkujeme. Stripe přijal platbu. Premium se aktivuje po potvrzení webhookem, což může chvíli trvat.",
+    "checkoutCancelled": "Platební proces byl zrušen. Firemní záznam zůstává v balíčku Free.",
+    "intervalTitle": "Fakturační období",
+    "intervals": {
+      "monthly": {
+        "title": "Měsíčně",
+        "description": "CHF 9.90 měsíčně"
+      },
+      "yearly": {
+        "title": "Ročně",
+        "description": "CHF 99.00 ročně"
+      }
+    },
+    "terms": "Bez bezplatného zkušobního období. Zrušení platí ke konci aktuálního fakturačního období. Při neúspěšné platbě zůstává přístup do konce období a poté se zablokuje.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Prémiový firemní záznam",
+      "description": "Prezentujte svou firmu pomocí dalších vizuálních a praktických informací.",
+      "features": {
+        "logo": "Logo firmy",
+        "gallery": "Galerie obrázků",
+        "openingHours": "Otevírací doba",
+        "socialLinks": "Odkazy na sociální sítě"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktuální balíček",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Stav předplatného",
+      "price": "Cena",
+      "nextRenewal": "Další obnovení",
+      "accessUntil": "Přístup Premium do",
+      "freeHint": "Tento firemní záznam aktuálně používá bezplatný balíček.",
+      "values": {
+        "pending": "Čeká se",
+        "active": "Aktivní",
+        "past_due": "Platba čeká",
+        "cancelled": "Zrušené",
+        "expired": "Vypršelo"
+      }
+    },
+    "actions": {
+      "subscribe": "Předplatit Premium přes Stripe",
+      "openingCheckout": "Otevírá se Stripe Checkout …",
+      "manage": "Spravovat předplatné a platební metodu",
+      "openingPortal": "Otevírá se zákaznický portál …"
+    },
+    "errors": {
+      "invalid_data": "Vybraná fakturace je neplatná.",
+      "unauthorized": "Vaše relace vypršela. Přihlaste se znovu.",
+      "forbidden": "Toto předplatné nemůžete spravovat.",
+      "not_found": "Firemní záznam nebyl nalezen.",
+      "already_active": "Premium je pro tento firemní záznam již aktivní.",
+      "billing_not_configured": "Stripe ještě není lokálně plně nakonfigurován.",
+      "portal_unavailable": "Toto lokální testovací předplatné ještě není propojeno se zákazníkem Stripe.",
+      "checkout_failed": "Stripe Checkout se nepodařilo spustit.",
+      "portal_failed": "Zákaznický portál Stripe se nepodařilo otevřít.",
+      "network": "Připojení k serveru selhalo.",
+      "unknown": "Akci předplatného se nepodařilo dokončit."
     }
   },
   "ListingReview": {

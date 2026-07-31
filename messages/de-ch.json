@@ -198,7 +198,9 @@
       "emptyDescription": "Für deine aktiven Organisationen wurde noch kein Firmeneintrag angelegt.",
       "notPublic": "Dieser Eintrag ist noch nicht öffentlich sichtbar.",
       "editListing": "Bearbeiten",
-      "createListing": "Neuer Firmeneintrag"
+      "createListing": "Neuer Firmeneintrag",
+      "manageSubscription": "Abo verwalten",
+      "choosePlan": "Paket wählen"
     },
     "teamPage": {
       "eyebrow": "Teamverwaltung",
@@ -348,6 +350,7 @@
       "description": "Ergänze deinen Firmeneintrag mit Logo, Bildern, Öffnungszeiten und Social-Media-Links.",
       "lockedDescription": "Diese Premium-Funktionen sind in einem aktiven Premium-Abo enthalten.",
       "lockedHint": "Sobald das Premium-Abo aktiv ist, kannst du diese Bereiche hier bearbeiten.",
+      "manageSubscription": "Premium freischalten",
       "features": {
         "logo": "Firmenlogo",
         "gallery": "Bildergalerie",
@@ -451,6 +454,27 @@
       "city": "Nur Ort und Kanton anzeigen",
       "hidden": "Adresse ausblenden"
     },
+    "plan": {
+      "eyebrow": "Paket für diesen Eintrag",
+      "title": "Free oder Premium wählen",
+      "description": "Das gewählte Paket gilt nur für diesen Firmeneintrag. Weitere Einträge können ein eigenes Paket erhalten.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Alle Basisangaben und die Veröffentlichung im Findelio-Verzeichnis."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "ab CHF 8.25 pro Monat",
+        "description": "Zusätzlich Logo, Bildergalerie, Öffnungszeiten und Social-Media-Links."
+      },
+      "intervalTitle": "Abrechnungszeitraum",
+      "intervals": {
+        "monthly": "Monatlich – CHF 9.90",
+        "yearly": "Jährlich – CHF 99.00"
+      },
+      "cancellationHint": "Keine Testphase. Das Abo kann auf das Ende der laufenden Zahlungsperiode gekündigt werden."
+    },
     "create": "Firmeneintrag anlegen",
     "creating": "Wird angelegt …",
     "noOrganizationsTitle": "Keine aktive Organisation gefunden",
@@ -461,6 +485,74 @@
       "forbidden": "Du darfst für diese Organisation keinen Firmeneintrag anlegen.",
       "create_failed": "Der Firmeneintrag konnte nicht angelegt werden.",
       "network": "Die Verbindung zum Server ist fehlgeschlagen."
+    }
+  },
+  "Billing": {
+    "back": "Zurück zu den Firmeneinträgen",
+    "eyebrow": "Paket und Abrechnung",
+    "title": "Abo für {name}",
+    "description": "Verwalte das Paket dieses Firmeneintrags. Premium wird erst nach bestätigter Stripe-Zahlung freigeschaltet.",
+    "listingCreated": "Der Firmeneintrag wurde als Entwurf angelegt. Wähle jetzt das gewünschte Paket.",
+    "checkoutSuccess": "Danke. Stripe hat die Zahlung entgegengenommen. Die Premium-Freischaltung erfolgt nach der Webhook-Bestätigung und kann einen kurzen Moment dauern.",
+    "checkoutCancelled": "Der Zahlungsvorgang wurde abgebrochen. Der Firmeneintrag bleibt im Free-Paket.",
+    "intervalTitle": "Abrechnungszeitraum",
+    "intervals": {
+      "monthly": {
+        "title": "Monatlich",
+        "description": "CHF 9.90 pro Monat"
+      },
+      "yearly": {
+        "title": "Jährlich",
+        "description": "CHF 99.00 pro Jahr"
+      }
+    },
+    "terms": "Keine kostenlose Testphase. Kündigung auf das Ende der laufenden Zahlungsperiode. Bei einer fehlgeschlagenen Zahlung bleibt der Zugang bis zum Periodenende bestehen und wird danach gesperrt.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Premium-Firmeneintrag",
+      "description": "Präsentiere dein Unternehmen mit zusätzlichen visuellen und praktischen Angaben.",
+      "features": {
+        "logo": "Firmenlogo",
+        "gallery": "Bildergalerie",
+        "openingHours": "Öffnungszeiten",
+        "socialLinks": "Social-Media-Links"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktuelles Paket",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Abo-Status",
+      "price": "Preis",
+      "nextRenewal": "Nächste Verlängerung",
+      "accessUntil": "Premium-Zugang bis",
+      "freeHint": "Dieser Firmeneintrag nutzt aktuell das kostenlose Paket.",
+      "values": {
+        "pending": "Ausstehend",
+        "active": "Aktiv",
+        "past_due": "Zahlung ausstehend",
+        "cancelled": "Gekündigt",
+        "expired": "Abgelaufen"
+      }
+    },
+    "actions": {
+      "subscribe": "Mit Stripe Premium abonnieren",
+      "openingCheckout": "Stripe Checkout wird geöffnet …",
+      "manage": "Abo und Zahlungsmittel verwalten",
+      "openingPortal": "Kundenportal wird geöffnet …"
+    },
+    "errors": {
+      "invalid_data": "Die gewählte Abrechnung ist ungültig.",
+      "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "forbidden": "Du darfst dieses Abo nicht verwalten.",
+      "not_found": "Der Firmeneintrag wurde nicht gefunden.",
+      "already_active": "Für diesen Firmeneintrag ist Premium bereits aktiv.",
+      "billing_not_configured": "Stripe ist lokal noch nicht vollständig konfiguriert.",
+      "portal_unavailable": "Dieses lokale Testabo ist noch nicht mit einem Stripe-Kunden verknüpft.",
+      "checkout_failed": "Stripe Checkout konnte nicht gestartet werden.",
+      "portal_failed": "Das Stripe-Kundenportal konnte nicht geöffnet werden.",
+      "network": "Die Verbindung zum Server ist fehlgeschlagen.",
+      "unknown": "Die Abo-Aktion konnte nicht ausgeführt werden."
     }
   },
   "ListingReview": {

@@ -198,7 +198,9 @@
       "emptyDescription": "Nu a fost creată încă nicio listare de firmă pentru organizațiile tale active.",
       "notPublic": "Această listare nu este încă vizibilă public.",
       "editListing": "Editează",
-      "createListing": "Listare nouă de firmă"
+      "createListing": "Listare nouă de firmă",
+      "manageSubscription": "Gestionează abonamentul",
+      "choosePlan": "Alege pachetul"
     },
     "teamPage": {
       "eyebrow": "Administrarea echipei",
@@ -348,6 +350,7 @@
       "description": "Completează listarea firmei cu logo, imagini, program de funcționare și linkuri către rețele sociale.",
       "lockedDescription": "Aceste funcții sunt incluse într-un abonament Premium activ.",
       "lockedHint": "După activarea abonamentului Premium, vei putea edita aceste secțiuni aici.",
+      "manageSubscription": "Activează Premium",
       "features": {
         "logo": "Logo-ul firmei",
         "gallery": "Galerie de imagini",
@@ -386,6 +389,27 @@
       "full": "Afișează adresa completă",
       "city": "Afișează doar localitatea și cantonul",
       "hidden": "Ascunde adresa"
+    },
+    "plan": {
+      "eyebrow": "Pachet pentru această listare",
+      "title": "Alege Free sau Premium",
+      "description": "Pachetul selectat se aplică doar acestei listări de firmă. Alte listări pot avea propriul pachet.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Toate informațiile de bază și publicarea în directorul Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "de la CHF 8.25 pe lună",
+        "description": "Include în plus siglă, galerie de imagini, program și linkuri către rețelele sociale."
+      },
+      "intervalTitle": "Perioada de facturare",
+      "intervals": {
+        "monthly": "Lunar – CHF 9.90",
+        "yearly": "Anual – CHF 99.00"
+      },
+      "cancellationHint": "Fără perioadă de probă. Abonamentul poate fi anulat la sfârșitul perioadei curente de facturare."
     },
     "statusValues": {
       "draft": "Schiță",
@@ -461,6 +485,74 @@
       "forbidden": "Nu poți crea o listare de firmă pentru această organizație.",
       "create_failed": "Listarea firmei nu a putut fi creată.",
       "network": "Conexiunea la server a eșuat."
+    }
+  },
+  "Billing": {
+    "back": "Înapoi la listările de firmă",
+    "eyebrow": "Pachet și facturare",
+    "title": "Abonament pentru {name}",
+    "description": "Gestionează pachetul acestei listări de firmă. Premium este activat doar după confirmarea plății de către Stripe.",
+    "listingCreated": "Listarea de firmă a fost salvată ca schiță. Alege acum pachetul dorit.",
+    "checkoutSuccess": "Mulțumim. Stripe a primit plata. Premium va fi activat după confirmarea webhookului, ceea ce poate dura puțin.",
+    "checkoutCancelled": "Procesul de plată a fost anulat. Listarea de firmă rămâne în pachetul Free.",
+    "intervalTitle": "Perioada de facturare",
+    "intervals": {
+      "monthly": {
+        "title": "Lunar",
+        "description": "CHF 9.90 pe lună"
+      },
+      "yearly": {
+        "title": "Anual",
+        "description": "CHF 99.00 pe an"
+      }
+    },
+    "terms": "Fără perioadă de probă gratuită. Anularea intră în vigoare la sfârșitul perioadei curente de facturare. Dacă o plată eșuează, accesul rămâne activ până la finalul perioadei și apoi este blocat.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Listare de firmă Premium",
+      "description": "Prezintă-ți firma cu informații vizuale și practice suplimentare.",
+      "features": {
+        "logo": "Sigla firmei",
+        "gallery": "Galerie de imagini",
+        "openingHours": "Program",
+        "socialLinks": "Linkuri către rețelele sociale"
+      }
+    },
+    "status": {
+      "eyebrow": "Pachet curent",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Starea abonamentului",
+      "price": "Preț",
+      "nextRenewal": "Următoarea reînnoire",
+      "accessUntil": "Acces Premium până la",
+      "freeHint": "Această listare de firmă folosește în prezent pachetul gratuit.",
+      "values": {
+        "pending": "În așteptare",
+        "active": "Activ",
+        "past_due": "Plată în așteptare",
+        "cancelled": "Anulat",
+        "expired": "Expirat"
+      }
+    },
+    "actions": {
+      "subscribe": "Abonează-te la Premium prin Stripe",
+      "openingCheckout": "Se deschide Stripe Checkout …",
+      "manage": "Gestionează abonamentul și metoda de plată",
+      "openingPortal": "Se deschide portalul pentru clienți …"
+    },
+    "errors": {
+      "invalid_data": "Opțiunea de facturare selectată nu este validă.",
+      "unauthorized": "Sesiunea ta a expirat. Autentifică-te din nou.",
+      "forbidden": "Nu poți gestiona acest abonament.",
+      "not_found": "Listarea de firmă nu a fost găsită.",
+      "already_active": "Premium este deja activ pentru această listare de firmă.",
+      "billing_not_configured": "Stripe nu este încă configurat complet local.",
+      "portal_unavailable": "Acest abonament local de test nu este încă asociat unui client Stripe.",
+      "checkout_failed": "Stripe Checkout nu a putut fi pornit.",
+      "portal_failed": "Portalul pentru clienți Stripe nu a putut fi deschis.",
+      "network": "Conexiunea la server a eșuat.",
+      "unknown": "Acțiunea asupra abonamentului nu a putut fi finalizată."
     }
   },
   "ListingReview": {

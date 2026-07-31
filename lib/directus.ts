@@ -98,7 +98,7 @@ type DirectusResponse<T> = {
 };
 
 type PremiumSubscription = {
-  organization: string | { id: string } | null;
+  listing: string | { id: string } | null;
   current_period_end: string | null;
 };
 
@@ -227,8 +227,8 @@ function cleanValue(value?: string): string | undefined {
   return cleaned || undefined;
 }
 
-function subscriptionOrganizationId(
-  value: PremiumSubscription["organization"],
+function subscriptionListingId(
+  value: PremiumSubscription["listing"],
 ): string | null {
   if (typeof value === "string") {
     return value;
@@ -237,19 +237,19 @@ function subscriptionOrganizationId(
   return value?.id ?? null;
 }
 
-async function getActivePremiumOrganizationIds(): Promise<Set<string>> {
+async function getActivePremiumListingIds(): Promise<Set<string>> {
   const url = new URL("/items/subscriptions", directusUrl);
 
   url.searchParams.set(
     "fields",
-    "organization,current_period_end",
+    "listing,current_period_end",
   );
   url.searchParams.set("limit", "-1");
   url.searchParams.set(
     "filter",
     JSON.stringify({
       _and: [
-        { status: { _eq: "active" } },
+        { status: { _in: ["active", "past_due"] } },
         { plan: { _eq: "premium" } },
       ],
     }),
@@ -285,7 +285,7 @@ async function getActivePremiumOrganizationIds(): Promise<Set<string>> {
         return !Number.isNaN(periodEnd.getTime()) && periodEnd > now;
       })
       .map((subscription) =>
-        subscriptionOrganizationId(subscription.organization),
+        subscriptionListingId(subscription.listing),
       )
       .filter((id): id is string => Boolean(id)),
   );
@@ -395,7 +395,7 @@ export async function getListings(
     response,
     industryNames,
     spokenLanguageNames,
-    premiumOrganizationIds,
+    premiumListingIds,
   ] =
     await Promise.all([
       fetch(url, {
@@ -404,7 +404,7 @@ export async function getListings(
       }),
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
-      getActivePremiumOrganizationIds(),
+      getActivePremiumListingIds(),
     ]);
 
   if (!response.ok) {
@@ -416,9 +416,7 @@ export async function getListings(
   const result = (await response.json()) as DirectusResponse<Listing[]>;
 
   return result.data.map((listing) => {
-    const premiumEnabled = premiumOrganizationIds.has(
-      subscriptionOrganizationId(listing.organization) ?? "",
-    );
+    const premiumEnabled = premiumListingIds.has(listing.id);
 
     return localizeListing(
       {
@@ -493,7 +491,7 @@ export async function getListingBySlug(
     response,
     industryNames,
     spokenLanguageNames,
-    premiumOrganizationIds,
+    premiumListingIds,
   ] =
     await Promise.all([
       fetch(url, {
@@ -502,7 +500,7 @@ export async function getListingBySlug(
       }),
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
-      getActivePremiumOrganizationIds(),
+      getActivePremiumListingIds(),
     ]);
 
   if (!response.ok) {
@@ -518,9 +516,7 @@ export async function getListingBySlug(
     return null;
   }
 
-  const premiumEnabled = premiumOrganizationIds.has(
-    subscriptionOrganizationId(listing.organization) ?? "",
-  );
+  const premiumEnabled = premiumListingIds.has(listing.id);
 
   return localizeListing(
     {

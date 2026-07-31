@@ -28,6 +28,24 @@ export type AccountListing = {
   };
 };
 
+export type AccountSubscription = {
+  id: string;
+  listing: string | { id: string } | null;
+  status: string;
+  plan: string;
+  billing_interval: "monthly" | "yearly";
+  current_period_start: string | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+  cancelled_at: string | null;
+  amount_minor: number;
+  currency: string;
+};
+
+export type AccountListingOverview = AccountListing & {
+  subscription: AccountSubscription | null;
+};
+
 export type EditableAccountListing = AccountListing & {
   short_description: string | null;
   description: string | null;
@@ -160,7 +178,13 @@ export type EditableAccountListingEditorData = {
 };
 
 export type AccountOrganizationOverview = AccountMembership & {
-  listings: AccountListing[];
+  listings: AccountListingOverview[];
+};
+
+export type AccountListingBillingData = {
+  listing: EditableAccountListing;
+  subscription: AccountSubscription | null;
+  premiumEnabled: boolean;
 };
 
 type DirectusError = {
@@ -317,16 +341,13 @@ async function getOrganizationMemberships(
   );
 }
 
-type AccountSubscription = {
-  status: string;
-  plan: string;
-  current_period_end: string | null;
-};
-
 function isActivePremiumSubscription(
   subscription: AccountSubscription,
 ): boolean {
-  if (subscription.status !== "active" || subscription.plan !== "premium") {
+  if (
+    !["active", "past_due"].includes(subscription.status) ||
+    subscription.plan !== "premium"
+  ) {
     return false;
   }
 
@@ -340,17 +361,20 @@ function isActivePremiumSubscription(
 
 async function hasActivePremiumSubscription(
   accessToken: string,
-  organizationId: string,
+  listingId: string,
 ): Promise<boolean> {
   const url = new URL("/items/subscriptions", getDirectusUrl());
 
-  url.searchParams.set("fields", "status,plan,current_period_end");
+  url.searchParams.set(
+    "fields",
+    "id,listing,status,plan,billing_interval,current_period_start,current_period_end,cancel_at_period_end,cancelled_at,amount_minor,currency",
+  );
   url.searchParams.set("limit", "20");
   url.searchParams.set(
     "filter",
     JSON.stringify({
-      organization: {
-        _eq: organizationId,
+      listing: {
+        _eq: listingId,
       },
     }),
   );
@@ -365,6 +389,99 @@ async function hasActivePremiumSubscription(
     await readDirectusListResponse<AccountSubscription>(response);
 
   return subscriptions.some(isActivePremiumSubscription);
+}
+
+function subscriptionListingId(
+  subscription: AccountSubscription,
+): string | null {
+  if (typeof subscription.listing === "string") {
+    return subscription.listing;
+  }
+
+  return subscription.listing?.id ?? null;
+}
+
+function selectCurrentSubscription(
+  subscriptions: AccountSubscription[],
+): AccountSubscription | null {
+  const sortedSubscriptions = [...subscriptions].sort((left, right) => {
+    const leftEnd = left.current_period_end
+      ? new Date(left.current_period_end).getTime()
+      : Number.MAX_SAFE_INTEGER;
+    const rightEnd = right.current_period_end
+      ? new Date(right.current_period_end).getTime()
+      : Number.MAX_SAFE_INTEGER;
+
+    return rightEnd - leftEnd;
+  });
+
+  return (
+    sortedSubscriptions.find(isActivePremiumSubscription) ??
+    sortedSubscriptions[0] ??
+    null
+  );
+}
+
+async function getAccountSubscriptions(
+  accessToken: string,
+  organizationIds: string[],
+): Promise<AccountSubscription[]> {
+  if (organizationIds.length === 0) {
+    return [];
+  }
+
+  const url = new URL("/items/subscriptions", getDirectusUrl());
+
+  url.searchParams.set(
+    "fields",
+    "id,listing,status,plan,billing_interval,current_period_start,current_period_end,cancel_at_period_end,cancelled_at,amount_minor,currency",
+  );
+  url.searchParams.set("limit", "500");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      organization: {
+        _in: organizationIds,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  return readDirectusListResponse<AccountSubscription>(response);
+}
+
+export async function getAccountListingBillingData(
+  accessToken: string,
+  listingId: string,
+): Promise<AccountListingBillingData | null> {
+  const listing = await getEditableAccountListing(accessToken, listingId);
+
+  if (!listing) {
+    return null;
+  }
+
+  const subscriptions = await getAccountSubscriptions(accessToken, [
+    listing.organization.id,
+  ]);
+  const subscription = selectCurrentSubscription(
+    subscriptions.filter(
+      (item) => subscriptionListingId(item) === listing.id,
+    ),
+  );
+
+  return {
+    listing,
+    subscription,
+    premiumEnabled: subscription
+      ? isActivePremiumSubscription(subscription)
+      : false,
+  };
 }
 
 async function getAccountListingOpeningHours(
@@ -1463,7 +1580,7 @@ export async function getEditableAccountListingEditorData(
       getListingRelationIds(listingId, industryRelationConfig),
       getListingRelationIds(listingId, spokenLanguageRelationConfig),
       getAccountListingOpeningHours(listingId),
-      hasActivePremiumSubscription(accessToken, listing.organization.id),
+      hasActivePremiumSubscription(accessToken, listing.id),
     ]);
 
   return mergeOpenRevisionIntoEditorData({
@@ -1531,7 +1648,7 @@ export async function uploadAccountListingImages(
 
   const premiumEnabled = await hasActivePremiumSubscription(
     accessToken,
-    listing.organization.id,
+    listing.id,
   );
 
   if (!premiumEnabled) {
@@ -1775,7 +1892,7 @@ export async function updateEditableAccountListing(
   if (values.premium) {
     const premiumEnabled = await hasActivePremiumSubscription(
       accessToken,
-      currentListing.organization.id,
+      currentListing.id,
     );
 
     if (!premiumEnabled) {
@@ -1977,11 +2094,25 @@ export async function getAccountOrganizationOverview(
     accessToken,
     organizationIds,
   );
+  const subscriptions = await getAccountSubscriptions(
+    accessToken,
+    organizationIds,
+  );
 
   return uniqueMemberships.map((membership) => ({
     ...membership,
-    listings: listings.filter(
-      (listing) => listing.organization?.id === membership.organization.id,
-    ),
+    listings: listings
+      .filter(
+        (listing) => listing.organization?.id === membership.organization.id,
+      )
+      .map((listing) => ({
+        ...listing,
+        subscription: selectCurrentSubscription(
+          subscriptions.filter(
+            (subscription) =>
+              subscriptionListingId(subscription) === listing.id,
+          ),
+        ),
+      })),
   }));
 }

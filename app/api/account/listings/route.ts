@@ -27,6 +27,8 @@ const uuidPattern =
 
 type ValidatedCreateValues = Omit<AccountListingCreate, "canton"> & {
   canton: string;
+  plan: "free" | "premium";
+  billing_interval: "monthly" | "yearly";
 };
 
 function isTrustedOrigin(request: Request): boolean {
@@ -86,6 +88,8 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   const publicEmail = optionalString(data.public_email)?.toLowerCase() ?? null;
   const phone = optionalString(data.phone);
   const addressVisibility = stringValue(data.address_visibility);
+  const plan = stringValue(data.plan);
+  const billingInterval = stringValue(data.billing_interval);
 
   let websiteUrl: string | null;
 
@@ -101,7 +105,9 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
     !postalCode ||
     !city ||
     !cantonCodes.has(canton) ||
-    !addressVisibilityValues.has(addressVisibility)
+    !addressVisibilityValues.has(addressVisibility) ||
+    !["free", "premium"].includes(plan) ||
+    !["monthly", "yearly"].includes(billingInterval)
   ) {
     return null;
   }
@@ -138,6 +144,9 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
     website_url: websiteUrl,
     address_visibility:
       addressVisibility as AccountListingCreate["address_visibility"],
+    plan: plan as ValidatedCreateValues["plan"],
+    billing_interval:
+      billingInterval as ValidatedCreateValues["billing_interval"],
   };
 }
 
@@ -192,8 +201,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
 
+  const {
+    plan,
+    billing_interval: billingInterval,
+    ...listingValues
+  } = values;
   const createValues: AccountListingCreate = {
-    ...values,
+    ...listingValues,
     canton: cantonId,
   };
 
@@ -209,7 +223,12 @@ export async function POST(request: Request) {
     const listing = await createAccountListing(accessToken, createValues);
 
     return NextResponse.json(
-      { success: true, listing: { id: listing.id } },
+      {
+        success: true,
+        listing: { id: listing.id },
+        checkout_required: plan === "premium",
+        billing_interval: billingInterval,
+      },
       { status: 201, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
@@ -227,7 +246,12 @@ export async function POST(request: Request) {
         );
 
         return NextResponse.json(
-          { success: true, listing: { id: listing.id } },
+          {
+            success: true,
+            listing: { id: listing.id },
+            checkout_required: plan === "premium",
+            billing_interval: billingInterval,
+          },
           { status: 201, headers: { "Cache-Control": "no-store" } },
         );
       } catch (retryError) {

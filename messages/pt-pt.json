@@ -198,7 +198,9 @@
       "emptyDescription": "Ainda não foi criado nenhum registo empresarial para as suas organizações ativas.",
       "notPublic": "Este registo ainda não está visível publicamente.",
       "editListing": "Editar",
-      "createListing": "Novo registo empresarial"
+      "createListing": "Novo registo empresarial",
+      "manageSubscription": "Gerir subscrição",
+      "choosePlan": "Escolher plano"
     },
     "teamPage": {
       "eyebrow": "Gestão da equipa",
@@ -348,6 +350,7 @@
       "description": "Completa o registo empresarial com logótipo, imagens, horário de funcionamento e ligações para redes sociais.",
       "lockedDescription": "Estas funcionalidades estão incluídas numa subscrição Premium ativa.",
       "lockedHint": "Assim que a subscrição Premium estiver ativa, poderás editar estas secções aqui.",
+      "manageSubscription": "Ativar Premium",
       "features": {
         "logo": "Logótipo da empresa",
         "gallery": "Galeria de imagens",
@@ -386,6 +389,27 @@
       "full": "Mostrar morada completa",
       "city": "Mostrar apenas localidade e cantão",
       "hidden": "Ocultar morada"
+    },
+    "plan": {
+      "eyebrow": "Plano para este registo",
+      "title": "Escolher Free ou Premium",
+      "description": "O plano selecionado aplica-se apenas a este registo empresarial. Outros registos podem ter um plano próprio.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Todos os dados básicos e publicação no diretório Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "desde CHF 8.25 por mês",
+        "description": "Inclui também logótipo, galeria de imagens, horário de funcionamento e ligações às redes sociais."
+      },
+      "intervalTitle": "Período de faturação",
+      "intervals": {
+        "monthly": "Mensal – CHF 9.90",
+        "yearly": "Anual – CHF 99.00"
+      },
+      "cancellationHint": "Sem período experimental. A subscrição pode ser cancelada no final do período de faturação atual."
     },
     "statusValues": {
       "draft": "Rascunho",
@@ -461,6 +485,74 @@
       "forbidden": "Não podes criar um registo empresarial para esta organização.",
       "create_failed": "Não foi possível criar o registo empresarial.",
       "network": "A ligação ao servidor falhou."
+    }
+  },
+  "Billing": {
+    "back": "Voltar aos registos empresariais",
+    "eyebrow": "Plano e faturação",
+    "title": "Subscrição de {name}",
+    "description": "Gere o plano deste registo empresarial. O Premium só é ativado após a confirmação do pagamento pela Stripe.",
+    "listingCreated": "O registo empresarial foi guardado como rascunho. Escolhe agora o plano pretendido.",
+    "checkoutSuccess": "Obrigado. A Stripe recebeu o pagamento. O Premium será ativado após a confirmação do webhook, o que pode demorar um momento.",
+    "checkoutCancelled": "O processo de pagamento foi cancelado. O registo empresarial permanece no plano Free.",
+    "intervalTitle": "Período de faturação",
+    "intervals": {
+      "monthly": {
+        "title": "Mensal",
+        "description": "CHF 9.90 por mês"
+      },
+      "yearly": {
+        "title": "Anual",
+        "description": "CHF 99.00 por ano"
+      }
+    },
+    "terms": "Sem período experimental gratuito. O cancelamento produz efeito no final do período de faturação atual. Se um pagamento falhar, o acesso mantém-se até ao final do período e é depois bloqueado.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Registo empresarial Premium",
+      "description": "Apresenta a tua empresa com informações visuais e práticas adicionais.",
+      "features": {
+        "logo": "Logótipo da empresa",
+        "gallery": "Galeria de imagens",
+        "openingHours": "Horário de funcionamento",
+        "socialLinks": "Ligações às redes sociais"
+      }
+    },
+    "status": {
+      "eyebrow": "Plano atual",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Estado da subscrição",
+      "price": "Preço",
+      "nextRenewal": "Próxima renovação",
+      "accessUntil": "Acesso Premium até",
+      "freeHint": "Este registo empresarial utiliza atualmente o plano gratuito.",
+      "values": {
+        "pending": "Pendente",
+        "active": "Ativa",
+        "past_due": "Pagamento pendente",
+        "cancelled": "Cancelada",
+        "expired": "Expirada"
+      }
+    },
+    "actions": {
+      "subscribe": "Subscrever Premium com Stripe",
+      "openingCheckout": "A abrir Stripe Checkout …",
+      "manage": "Gerir subscrição e método de pagamento",
+      "openingPortal": "A abrir portal do cliente …"
+    },
+    "errors": {
+      "invalid_data": "A opção de faturação selecionada é inválida.",
+      "unauthorized": "A tua sessão expirou. Inicia sessão novamente.",
+      "forbidden": "Não podes gerir esta subscrição.",
+      "not_found": "O registo empresarial não foi encontrado.",
+      "already_active": "O Premium já está ativo para este registo empresarial.",
+      "billing_not_configured": "A Stripe ainda não está totalmente configurada localmente.",
+      "portal_unavailable": "Esta subscrição de teste local ainda não está associada a um cliente Stripe.",
+      "checkout_failed": "Não foi possível iniciar o Stripe Checkout.",
+      "portal_failed": "Não foi possível abrir o portal do cliente Stripe.",
+      "network": "A ligação ao servidor falhou.",
+      "unknown": "Não foi possível concluir a ação da subscrição."
     }
   },
   "ListingReview": {

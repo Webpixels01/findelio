@@ -198,7 +198,9 @@
       "emptyDescription": "No business listing has been created for your active organizations yet.",
       "notPublic": "This listing is not publicly visible yet.",
       "editListing": "Edit",
-      "createListing": "New business listing"
+      "createListing": "New business listing",
+      "manageSubscription": "Manage subscription",
+      "choosePlan": "Choose plan"
     },
     "teamPage": {
       "eyebrow": "Team management",
@@ -348,6 +350,7 @@
       "description": "Enhance your business listing with a logo, images, opening hours and social media links.",
       "lockedDescription": "These Premium features are included with an active Premium subscription.",
       "lockedHint": "You can edit these sections here as soon as the Premium subscription is active.",
+      "manageSubscription": "Unlock Premium",
       "features": {
         "logo": "Company logo",
         "gallery": "Image gallery",
@@ -386,6 +389,27 @@
       "full": "Show full address",
       "city": "Show city and canton only",
       "hidden": "Hide address"
+    },
+    "plan": {
+      "eyebrow": "Plan for this listing",
+      "title": "Choose Free or Premium",
+      "description": "The selected plan applies only to this business listing. Additional listings can have their own plan.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "All basic details and publication in the Findelio directory."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "from CHF 8.25 per month",
+        "description": "Also includes a logo, image gallery, opening hours and social media links."
+      },
+      "intervalTitle": "Billing period",
+      "intervals": {
+        "monthly": "Monthly – CHF 9.90",
+        "yearly": "Yearly – CHF 99.00"
+      },
+      "cancellationHint": "No trial. The subscription can be cancelled at the end of the current billing period."
     },
     "statusValues": {
       "draft": "Draft",
@@ -461,6 +485,74 @@
       "forbidden": "You cannot create a business listing for this organization.",
       "create_failed": "The business listing could not be created.",
       "network": "The connection to the server failed."
+    }
+  },
+  "Billing": {
+    "back": "Back to business listings",
+    "eyebrow": "Plan and billing",
+    "title": "Subscription for {name}",
+    "description": "Manage the plan for this business listing. Premium is activated only after Stripe confirms payment.",
+    "listingCreated": "The business listing was saved as a draft. Now choose the plan you want.",
+    "checkoutSuccess": "Thank you. Stripe has received the payment. Premium is activated after webhook confirmation and may take a moment.",
+    "checkoutCancelled": "The payment process was cancelled. The business listing remains on the Free plan.",
+    "intervalTitle": "Billing period",
+    "intervals": {
+      "monthly": {
+        "title": "Monthly",
+        "description": "CHF 9.90 per month"
+      },
+      "yearly": {
+        "title": "Yearly",
+        "description": "CHF 99.00 per year"
+      }
+    },
+    "terms": "No free trial. Cancellation takes effect at the end of the current billing period. If a payment fails, access remains available until the period ends and is then locked.",
+    "premium": {
+      "badge": "Premium",
+      "title": "Premium business listing",
+      "description": "Present your business with additional visual and practical information.",
+      "features": {
+        "logo": "Company logo",
+        "gallery": "Image gallery",
+        "openingHours": "Opening hours",
+        "socialLinks": "Social media links"
+      }
+    },
+    "status": {
+      "eyebrow": "Current plan",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Subscription status",
+      "price": "Price",
+      "nextRenewal": "Next renewal",
+      "accessUntil": "Premium access until",
+      "freeHint": "This business listing currently uses the free plan.",
+      "values": {
+        "pending": "Pending",
+        "active": "Active",
+        "past_due": "Payment pending",
+        "cancelled": "Cancelled",
+        "expired": "Expired"
+      }
+    },
+    "actions": {
+      "subscribe": "Subscribe to Premium with Stripe",
+      "openingCheckout": "Opening Stripe Checkout …",
+      "manage": "Manage subscription and payment method",
+      "openingPortal": "Opening customer portal …"
+    },
+    "errors": {
+      "invalid_data": "The selected billing option is invalid.",
+      "unauthorized": "Your session has expired. Please sign in again.",
+      "forbidden": "You cannot manage this subscription.",
+      "not_found": "The business listing was not found.",
+      "already_active": "Premium is already active for this business listing.",
+      "billing_not_configured": "Stripe is not yet fully configured locally.",
+      "portal_unavailable": "This local test subscription is not yet linked to a Stripe customer.",
+      "checkout_failed": "Stripe Checkout could not be started.",
+      "portal_failed": "The Stripe customer portal could not be opened.",
+      "network": "The connection to the server failed.",
+      "unknown": "The subscription action could not be completed."
     }
   },
   "ListingReview": {
