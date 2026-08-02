@@ -136,6 +136,8 @@ export default async function EditListingPage({
             } => supportedSocialPlatforms.has(item.platform),
           ),
           openingHours,
+          customCtaLabel: listing.custom_cta_label ?? "",
+          customCtaValue: listing.custom_cta_value ?? "",
         }}
       />
     </>

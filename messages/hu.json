@@ -309,6 +309,103 @@
     "changesTitle": "11. Módosítások",
     "changesText": "A nyilatkozatot módosíthatjuk, ha a funkciók, szolgáltatók vagy jogi követelmények változnak. Mindig az ezen az oldalon közzétett változat érvényes."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Kép kiválasztása",
+      "imageEmpty": "Nincs kiválasztott kép",
+      "imageHint": "Ajánlott: 1200 × 675 px (16:9 képarány).",
+      "imageCurrent": "A jelenlegi kép megmarad",
+      "editTitle": "Bejegyzés szerkesztése",
+      "editPublishedHint": "A jelenlegi bejegyzés látható marad. A módosításokat közzététel előtt újra ellenőrizzük.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "A módosításokat elmentettük.",
+      "update": "Módosítások mentése",
+      "cancel": "Mégse",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Szerkesztés",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Cégbejegyzés szerkesztése",
     "title": "{name} szerkesztése",
@@ -362,6 +459,14 @@
       "noLogo": "Még nincs logó",
       "chooseLogo": "Logó kiválasztása",
       "remove": "Eltávolítás",
+      "removeDialog": {
+        "logoTitle": "Eltávolítod a céglogót?",
+        "logoDescription": "A céglogó eltávolítására készülsz ebből a cégbejegyzésből. A módosítás csak mentés után lép életbe.",
+        "galleryTitle": "Eltávolítod a galériaképet?",
+        "galleryDescription": "Ezt a képet készülsz eltávolítani a galériából. A módosítás csak mentés után lép életbe.",
+        "cancel": "Mégse",
+        "confirm": "Kép eltávolítása"
+      },
       "galleryHint": "Adj hozzá legfeljebb tíz jellemző képet a cégről.",
       "galleryPreview": "Galériakép előnézete",
       "galleryLimit": "A galéria legfeljebb tíz képet tartalmazhat.",
@@ -491,9 +596,9 @@
     "back": "Vissza a cégbejegyzésekhez",
     "eyebrow": "Csomag és számlázás",
     "title": "{name} előfizetése",
-    "description": "Kezeld ennek a cégbejegyzésnek a csomagját. A Premium csak a Stripe fizetési visszaigazolása után aktiválódik.",
+    "description": "Kezeld ennek a cégbejegyzésnek a csomagját. A Premium csak a fizetés visszaigazolása után aktiválódik.",
     "listingCreated": "A cégbejegyzést piszkozatként mentettük. Most válaszd ki a kívánt csomagot.",
-    "checkoutSuccess": "Köszönjük. A Stripe fogadta a fizetést. A Premium a webhook visszaigazolása után aktiválódik, ami rövid ideig eltarthat.",
+    "checkoutSuccess": "Köszönjük. A fizetés sikeres volt. A Premium aktiválásának megerősítése folyamatban van, ami rövid ideig eltarthat.",
     "checkoutCancelled": "A fizetési folyamat megszakadt. A cégbejegyzés a Free csomagban marad.",
     "intervalTitle": "Számlázási időszak",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Premium előfizetés Stripe-pal",
-      "openingCheckout": "A Stripe Checkout megnyitása …",
+      "subscribe": "Premium előfizetés",
+      "openingCheckout": "Biztonságos fizetés megnyitása …",
       "manage": "Előfizetés és fizetési mód kezelése",
-      "openingPortal": "Ügyfélportál megnyitása …"
+      "openingPortal": "Ügyfélportál megnyitása …",
+      "portalHint": "Az előfizetés kezelése új lapon nyílik meg. A Findelio nyitva marad."
     },
     "errors": {
       "invalid_data": "A kiválasztott számlázás érvénytelen.",
@@ -547,10 +653,10 @@
       "forbidden": "Ezt az előfizetést nem kezelheted.",
       "not_found": "A cégbejegyzés nem található.",
       "already_active": "Ehhez a cégbejegyzéshez a Premium már aktív.",
-      "billing_not_configured": "A Stripe helyi beállítása még nem teljes.",
-      "portal_unavailable": "Ez a helyi tesztelőfizetés még nincs Stripe-ügyfélhez kapcsolva.",
-      "checkout_failed": "A Stripe Checkout nem indítható el.",
-      "portal_failed": "A Stripe ügyfélportál nem nyitható meg.",
+      "billing_not_configured": "A fizetési funkció jelenleg nem érhető el.",
+      "portal_unavailable": "Az előfizetés kezelése ennél az előfizetésnél jelenleg nem érhető el.",
+      "checkout_failed": "A fizetési folyamat nem indítható el.",
+      "portal_failed": "Az előfizetés kezelése nem nyitható meg.",
       "network": "A szerverkapcsolat sikertelen.",
       "unknown": "Az előfizetési művelet nem hajtható végre."
     }

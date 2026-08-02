@@ -8,6 +8,8 @@ import {
   hasListingReviewAccess,
 } from "@/lib/directus-auth";
 import { getPendingListingRevisions } from "@/lib/directus-review";
+import { getPendingListingPosts } from "@/lib/directus-growth";
+import ListingPostReviewActions from "@/components/listing-post-review-actions";
 
 function submitterName(
   submitter: {
@@ -32,8 +34,9 @@ export default async function ListingReviewPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t] = await Promise.all([
+  const [t, tg] = await Promise.all([
     getTranslations("ListingReview"),
+    getTranslations("Growth"),
     requireCurrentUser({
       locale,
       nextPath: `/${locale}/dashboard/pruefung`,
@@ -50,7 +53,10 @@ export default async function ListingReviewPage({
     redirect(`/${locale}/dashboard`);
   }
 
-  const revisions = await getPendingListingRevisions(accessToken);
+  const [revisions, posts] = await Promise.all([
+    getPendingListingRevisions(accessToken),
+    getPendingListingPosts(accessToken),
+  ]);
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
     timeStyle: "short",
@@ -68,7 +74,7 @@ export default async function ListingReviewPage({
         </p>
       </header>
 
-      {revisions.length === 0 ? (
+      {revisions.length === 0 && posts.length === 0 ? (
         <div className="mt-8 rounded-3xl border border-[var(--border)] bg-white p-7 shadow-xl shadow-[#001734]/6">
           <h2 className="text-xl font-bold">{t("emptyTitle")}</h2>
           <p className="mt-2 text-[var(--muted)]">{t("emptyDescription")}</p>
@@ -120,6 +126,25 @@ export default async function ListingReviewPage({
               </Link>
             );
           })}
+        </section>
+      )}
+
+      {posts.length > 0 && (
+        <section className="mt-10">
+          <p className="eyebrow">{tg("review.eyebrow")}</p>
+          <h2 className="mt-3 text-3xl font-extrabold">{tg("review.title")}</h2>
+          <div className="mt-6 grid gap-5 lg:grid-cols-2">
+            {posts.map((post) => (
+              <article key={post.id} className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5">
+                <p className="text-sm font-bold text-[var(--accent)]">
+                  {typeof post.listing === "object" ? post.listing.name : ""}
+                </p>
+                <h3 className="mt-2 text-2xl font-extrabold">{post.title}</h3>
+                {post.excerpt && <p className="mt-3 whitespace-pre-line text-[var(--muted)]">{post.excerpt}</p>}
+                <ListingPostReviewActions postId={post.id} />
+              </article>
+            ))}
+          </div>
         </section>
       )}
     </>

@@ -49,6 +49,15 @@ export default function ListingBillingActions({
   async function startAction(
     action: "checkout" | "portal",
   ): Promise<void> {
+    // Open the customer portal synchronously so browsers don't block the new
+    // tab after the asynchronous session request has finished.
+    const portalWindow =
+      action === "portal" ? window.open("about:blank", "_blank") : null;
+
+    if (portalWindow) {
+      portalWindow.opener = null;
+    }
+
     setPendingAction(action);
     setError(null);
 
@@ -69,12 +78,19 @@ export default function ListingBillingActions({
         | null;
 
       if (!response.ok || !result?.success || !result.url) {
+        portalWindow?.close();
         setError(getErrorMessage(result?.error));
         return;
       }
 
-      window.location.assign(result.url);
+      if (portalWindow) {
+        portalWindow.location.replace(result.url);
+      } else {
+        // Fall back to the current tab if the browser blocks pop-ups.
+        window.location.assign(result.url);
+      }
     } catch {
+      portalWindow?.close();
       setError(t("errors.network"));
     } finally {
       setPendingAction(null);
@@ -94,6 +110,9 @@ export default function ListingBillingActions({
             ? t("actions.openingPortal")
             : t("actions.manage")}
         </button>
+        <p className="mt-3 text-sm text-[var(--muted)]">
+          {t("actions.portalHint")}
+        </p>
         {error && (
           <p className="mt-4 font-bold text-[#b42318]" role="alert">
             {error}

@@ -309,6 +309,103 @@
     "changesTitle": "11. Změny",
     "changesText": "Tyto zásady můžeme upravit při změně funkcí, poskytovatelů nebo právních požadavků. Platí verze zveřejněná na této stránce."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Vybrat obrázek",
+      "imageEmpty": "Není vybrán žádný obrázek",
+      "imageHint": "Doporučeno: 1200 × 675 px (poměr stran 16:9).",
+      "imageCurrent": "Aktuální obrázek zůstane zachován",
+      "editTitle": "Upravit příspěvek",
+      "editPublishedHint": "Dosavadní příspěvek zůstane viditelný. Změny budou před zveřejněním znovu zkontrolovány.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Změny byly uloženy.",
+      "update": "Uložit změny",
+      "cancel": "Zrušit",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Upravit",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Upravit firemní záznam",
     "title": "Upravit {name}",
@@ -362,6 +459,14 @@
       "noLogo": "Zatím bez loga",
       "chooseLogo": "Vybrat logo",
       "remove": "Odstranit",
+      "removeDialog": {
+        "logoTitle": "Odstranit firemní logo?",
+        "logoDescription": "Chystáte se odstranit firemní logo z tohoto firemního záznamu. Změna se projeví až po uložení.",
+        "galleryTitle": "Odstranit obrázek z galerie?",
+        "galleryDescription": "Chystáte se odstranit tento obrázek z galerie. Změna se projeví až po uložení.",
+        "cancel": "Zrušit",
+        "confirm": "Odstranit obrázek"
+      },
       "galleryHint": "Přidejte nejvýše deset výstižných obrázků své firmy.",
       "galleryPreview": "Náhled obrázku galerie",
       "galleryLimit": "Galerie může obsahovat nejvýše deset obrázků.",
@@ -491,9 +596,9 @@
     "back": "Zpět na firemní záznamy",
     "eyebrow": "Balíček a fakturace",
     "title": "Předplatné pro {name}",
-    "description": "Spravujte balíček tohoto firemního záznamu. Premium se aktivuje až po potvrzení platby službou Stripe.",
+    "description": "Spravujte balíček tohoto firemního záznamu. Premium se aktivuje až po potvrzení platby.",
     "listingCreated": "Firemní záznam byl uložen jako koncept. Nyní vyberte požadovaný balíček.",
-    "checkoutSuccess": "Děkujeme. Stripe přijal platbu. Premium se aktivuje po potvrzení webhookem, což může chvíli trvat.",
+    "checkoutSuccess": "Děkujeme. Vaše platba byla úspěšná. Aktivace Premium se potvrzuje a může chvíli trvat.",
     "checkoutCancelled": "Platební proces byl zrušen. Firemní záznam zůstává v balíčku Free.",
     "intervalTitle": "Fakturační období",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Předplatit Premium přes Stripe",
-      "openingCheckout": "Otevírá se Stripe Checkout …",
+      "subscribe": "Předplatit Premium",
+      "openingCheckout": "Otevírá se zabezpečená platba …",
       "manage": "Spravovat předplatné a platební metodu",
-      "openingPortal": "Otevírá se zákaznický portál …"
+      "openingPortal": "Otevírá se zákaznický portál …",
+      "portalHint": "Správa předplatného se otevře na nové kartě. Findelio zůstane otevřené."
     },
     "errors": {
       "invalid_data": "Vybraná fakturace je neplatná.",
@@ -547,10 +653,10 @@
       "forbidden": "Toto předplatné nemůžete spravovat.",
       "not_found": "Firemní záznam nebyl nalezen.",
       "already_active": "Premium je pro tento firemní záznam již aktivní.",
-      "billing_not_configured": "Stripe ještě není lokálně plně nakonfigurován.",
-      "portal_unavailable": "Toto lokální testovací předplatné ještě není propojeno se zákazníkem Stripe.",
-      "checkout_failed": "Stripe Checkout se nepodařilo spustit.",
-      "portal_failed": "Zákaznický portál Stripe se nepodařilo otevřít.",
+      "billing_not_configured": "Platební funkce momentálně není dostupná.",
+      "portal_unavailable": "Správa tohoto předplatného momentálně není dostupná.",
+      "checkout_failed": "Platební proces se nepodařilo spustit.",
+      "portal_failed": "Správu předplatného se nepodařilo otevřít.",
       "network": "Připojení k serveru selhalo.",
       "unknown": "Akci předplatného se nepodařilo dokončit."
     }

@@ -4,11 +4,16 @@ import type { AppLocale } from "@/i18n/routing";
 import {
   getListingBySlug,
   getListingOpeningHours,
+  getPublicListingPosts,
 } from "@/lib/directus";
 import SiteHeader from "@/components/site-header";
 import CompanyLogo from "@/components/company-logo";
 import CompanyGallery from "@/components/company-gallery";
 import { Link } from "@/i18n/navigation";
+import ListingMetricsTracker from "@/components/listing-metrics-tracker";
+import TrackedContactLink from "@/components/tracked-contact-link";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
+import Image from "next/image";
 
 const htmlEntities: Record<string, string> = {
   amp: "&",
@@ -145,10 +150,14 @@ export default async function CompanyPage({
     notFound();
   }
 
-  const [t, openingHours] = await Promise.all([
+  const [t, tg, openingHours, posts] = await Promise.all([
     getTranslations("Company"),
+    getTranslations("Growth"),
     company.premium_features_enabled
       ? getListingOpeningHours(company.id)
+      : Promise.resolve([]),
+    company.premium_features_enabled
+      ? getPublicListingPosts(company.id)
       : Promise.resolve([]),
   ]);
 
@@ -210,6 +219,12 @@ export default async function CompanyPage({
       <SiteHeader />
 
       <main className="page-shell bg-[var(--surface)] py-12 lg:py-16">
+        {company.premium_features_enabled && (
+          <ListingMetricsTracker listingIds={[company.id]} event="profile_views" />
+        )}
+        {company.premium_features_enabled && posts.length > 0 && (
+          <ListingMetricsTracker listingIds={[company.id]} event="post_views" />
+        )}
         <div className="site-container">
           <Link
             href="/unternehmen"
@@ -294,6 +309,33 @@ export default async function CompanyPage({
                 title={t("gallery")}
                 companyName={company.name}
               />
+
+              {posts.length > 0 && (
+                <section className="mt-9 border-t border-[var(--border)] pt-8">
+                  <h2 className="text-2xl font-extrabold">{tg("publicPosts.title")}</h2>
+                  <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                    {posts.map((post) => (
+                      <article key={post.id} className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+                        {post.image && (
+                          <div className="relative aspect-[16/9]">
+                            <Image src={getDirectusAssetUrl(post.image)} alt="" fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover" />
+                          </div>
+                        )}
+                        <div className="p-5">
+                          <p className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent)]">{tg(`posts.types.${post.type}`)}</p>
+                          <h3 className="mt-2 text-xl font-extrabold">{post.title}</h3>
+                          {(post.excerpt || post.body) && <p className="mt-3 whitespace-pre-line text-[var(--muted)]">{removeHtml(post.excerpt || post.body || "")}</p>}
+                          {post.cta_label && post.cta_url && (
+                            <TrackedContactLink listingId={company.id} metric="post_cta_clicks" href={post.cta_url} target="_blank" rel="noreferrer" className="primary-button mt-5 h-11 px-5">
+                              {post.cta_label}
+                            </TrackedContactLink>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </article>
 
             <div className="space-y-7">
@@ -323,12 +365,14 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="phone_clicks"
                             href={`tel:${company.phone.replace(/\s/g, "")}`}
                             className="font-semibold text-[var(--accent)]"
                           >
                             {company.phone}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -340,12 +384,14 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 break-all">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="email_clicks"
                             href={`mailto:${company.public_email}`}
                             className="font-semibold text-[var(--accent)]"
                           >
                             {company.public_email}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -357,14 +403,16 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 break-all">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="website_clicks"
                             href={company.website_url}
                             target="_blank"
                             rel="noreferrer"
                             className="font-semibold text-[var(--accent)]"
                           >
                             {getWebsiteLabel(company.website_url)}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -378,7 +426,9 @@ export default async function CompanyPage({
 
                           <dd className="mt-2 flex flex-wrap gap-2">
                             {company.social_links.map((socialLink) => (
-                              <a
+                              <TrackedContactLink
+                                listingId={company.id}
+                                metric="social_clicks"
                                 key={`${socialLink.platform}-${socialLink.url}`}
                                 href={socialLink.url}
                                 target="_blank"
@@ -386,7 +436,7 @@ export default async function CompanyPage({
                                 className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm font-bold text-[var(--accent)]"
                               >
                                 {socialLink.platform}
-                              </a>
+                              </TrackedContactLink>
                             ))}
                           </dd>
                         </div>
@@ -394,6 +444,19 @@ export default async function CompanyPage({
                   </dl>
                 )}
               </aside>
+
+              {company.custom_cta_label && company.custom_cta_value && (
+                <TrackedContactLink
+                  listingId={company.id}
+                  metric="custom_cta_clicks"
+                  href={company.custom_cta_value}
+                  target={company.custom_cta_value.startsWith("http") ? "_blank" : undefined}
+                  rel={company.custom_cta_value.startsWith("http") ? "noreferrer" : undefined}
+                  className="primary-button w-full min-h-12 px-6 text-center"
+                >
+                  {company.custom_cta_label}
+                </TrackedContactLink>
+              )}
 
               {company.premium_features_enabled && (
                 <aside className="rounded-3xl border border-[var(--border)] bg-white p-7">

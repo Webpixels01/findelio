@@ -21,8 +21,9 @@ export default async function ListingsPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t] = await Promise.all([
+  const [t, tg] = await Promise.all([
     getTranslations("Dashboard"),
+    getTranslations("Growth"),
     requireCurrentUser({
       locale,
       nextPath: `/${locale}/dashboard/firmenprofile`,
@@ -132,6 +133,13 @@ export default async function ListingsPage({
                   >
                     {t("listingsPage.editListing")}
                   </Link>
+
+                  {listing.subscription && ["active", "past_due"].includes(listing.subscription.status) && (
+                    <>
+                      <Link href={`/dashboard/firmenprofile/${listing.id}/beitraege`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("posts.manage")}</Link>
+                      <Link href={`/dashboard/firmenprofile/${listing.id}/statistik`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("statistics.link")}</Link>
+                    </>
+                  )}
 
                   <Link
                     href={`/dashboard/firmenprofile/${listing.id}/abo`}

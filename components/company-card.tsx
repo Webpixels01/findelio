@@ -12,6 +12,7 @@ export default async function CompanyCard({
   locale: AppLocale;
 }) {
   const t = await getTranslations("Results");
+  const tg = await getTranslations("Growth");
 
   const primaryIndustry = company.industries[0]?.industries_id;
 
@@ -39,6 +40,11 @@ export default async function CompanyCard({
             {isVerified && (
               <span className="rounded-full bg-[#e9f8ef] px-2.5 py-1 text-xs font-bold text-[#137a3d]">
                 {t("verified")}
+              </span>
+            )}
+            {company.premium_features_enabled && (
+              <span className="rounded-full bg-[#e8f3ff] px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--accent)]">
+                {tg("common.premium")}
               </span>
             )}
           </div>

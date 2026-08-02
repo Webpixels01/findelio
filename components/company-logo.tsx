@@ -15,8 +15,8 @@ export default function CompanyLogo({
   const isDetail = size === "detail";
 
   const containerClass = isDetail
-    ? "relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[var(--border)] bg-white"
-    : "relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-[var(--border)] bg-white";
+    ? "relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-white"
+    : "relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[var(--border)] bg-white";
 
   if (fileId) {
     return (
@@ -26,7 +26,7 @@ export default function CompanyLogo({
           alt={`${name} Logo`}
           fill
           sizes={isDetail ? "64px" : "56px"}
-          className="object-contain p-1.5"
+          className="object-cover"
         />
       </div>
     );

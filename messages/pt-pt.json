@@ -309,6 +309,103 @@
     "changesTitle": "11. Alterações",
     "changesText": "Podemos atualizar esta política quando mudarem funcionalidades, prestadores ou requisitos legais. É válida a versão publicada nesta página."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Selecionar imagem",
+      "imageEmpty": "Nenhuma imagem selecionada",
+      "imageHint": "Recomendado: 1200 × 675 px (proporção 16:9).",
+      "imageCurrent": "A imagem atual será mantida",
+      "editTitle": "Editar publicação",
+      "editPublishedHint": "A publicação atual continuará visível. As alterações serão novamente revistas antes da publicação.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "As alterações foram guardadas.",
+      "update": "Guardar alterações",
+      "cancel": "Cancelar",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Editar",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Editar registo empresarial",
     "title": "Editar {name}",
@@ -362,6 +459,14 @@
       "noLogo": "Ainda sem logótipo",
       "chooseLogo": "Escolher logótipo",
       "remove": "Remover",
+      "removeDialog": {
+        "logoTitle": "Remover o logótipo da empresa?",
+        "logoDescription": "Estás prestes a remover o logótipo deste registo empresarial. A alteração só será aplicada depois de guardares.",
+        "galleryTitle": "Remover a imagem da galeria?",
+        "galleryDescription": "Estás prestes a remover esta imagem da galeria. A alteração só será aplicada depois de guardares.",
+        "cancel": "Cancelar",
+        "confirm": "Remover imagem"
+      },
       "galleryHint": "Adiciona até dez imagens representativas da empresa.",
       "galleryPreview": "Pré-visualização da imagem da galeria",
       "galleryLimit": "A galeria pode conter no máximo dez imagens.",
@@ -491,9 +596,9 @@
     "back": "Voltar aos registos empresariais",
     "eyebrow": "Plano e faturação",
     "title": "Subscrição de {name}",
-    "description": "Gere o plano deste registo empresarial. O Premium só é ativado após a confirmação do pagamento pela Stripe.",
+    "description": "Gere o plano deste registo empresarial. O Premium só é ativado após a confirmação do pagamento.",
     "listingCreated": "O registo empresarial foi guardado como rascunho. Escolhe agora o plano pretendido.",
-    "checkoutSuccess": "Obrigado. A Stripe recebeu o pagamento. O Premium será ativado após a confirmação do webhook, o que pode demorar um momento.",
+    "checkoutSuccess": "Obrigado. O seu pagamento foi concluído com sucesso. A ativação do Premium está a ser confirmada e pode demorar alguns instantes.",
     "checkoutCancelled": "O processo de pagamento foi cancelado. O registo empresarial permanece no plano Free.",
     "intervalTitle": "Período de faturação",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Subscrever Premium com Stripe",
-      "openingCheckout": "A abrir Stripe Checkout …",
+      "subscribe": "Subscrever Premium",
+      "openingCheckout": "A abrir pagamento seguro …",
       "manage": "Gerir subscrição e método de pagamento",
-      "openingPortal": "A abrir portal do cliente …"
+      "openingPortal": "A abrir portal do cliente …",
+      "portalHint": "A gestão da subscrição abre num novo separador. O Findelio permanece aberto."
     },
     "errors": {
       "invalid_data": "A opção de faturação selecionada é inválida.",
@@ -547,10 +653,10 @@
       "forbidden": "Não podes gerir esta subscrição.",
       "not_found": "O registo empresarial não foi encontrado.",
       "already_active": "O Premium já está ativo para este registo empresarial.",
-      "billing_not_configured": "A Stripe ainda não está totalmente configurada localmente.",
-      "portal_unavailable": "Esta subscrição de teste local ainda não está associada a um cliente Stripe.",
-      "checkout_failed": "Não foi possível iniciar o Stripe Checkout.",
-      "portal_failed": "Não foi possível abrir o portal do cliente Stripe.",
+      "billing_not_configured": "A função de pagamento não está disponível neste momento.",
+      "portal_unavailable": "A gestão desta subscrição não está disponível neste momento.",
+      "checkout_failed": "Não foi possível iniciar o processo de pagamento.",
+      "portal_failed": "Não foi possível abrir a gestão da subscrição.",
       "network": "A ligação ao servidor falhou.",
       "unknown": "Não foi possível concluir a ação da subscrição."
     }

@@ -62,6 +62,8 @@ export type EditableAccountListing = AccountListing & {
   logo: string | null;
   gallery: AccountGalleryItem[];
   social_links: AccountSocialLink[] | null;
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 type RawEditableAccountListing = Omit<EditableAccountListing, "canton"> & {
@@ -133,6 +135,8 @@ export type AccountPremiumListingUpdate = {
   gallery_file_ids: string[];
   social_links: AccountSocialLink[];
   opening_hours: AccountOpeningHour[];
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 type ListingRevisionStatus =
@@ -149,6 +153,8 @@ type ListingRevisionData = Omit<AccountListingUpdate, "status"> & {
   gallery_file_ids?: string[];
   social_links?: AccountSocialLink[];
   opening_hours?: AccountOpeningHour[];
+  custom_cta_label?: string | null;
+  custom_cta_value?: string | null;
 };
 
 type ListingRevisionChangedFields = Record<
@@ -575,6 +581,8 @@ function editableListingFields(): string {
     "website_url",
     "logo",
     "social_links",
+    "custom_cta_label",
+    "custom_cta_value",
     "address_visibility",
     "verification_status",
     "organization.id",
@@ -1259,9 +1267,17 @@ async function mergeOpenRevisionIntoEditorData(
             directus_files_id: fileId,
           }))
         : editorData.listing.gallery,
-      social_links: Array.isArray(socialLinks)
+    social_links: Array.isArray(socialLinks)
         ? socialLinks
         : editorData.listing.social_links,
+      custom_cta_label:
+        revision.data.custom_cta_label === undefined
+          ? editorData.listing.custom_cta_label
+          : revision.data.custom_cta_label,
+      custom_cta_value:
+        revision.data.custom_cta_value === undefined
+          ? editorData.listing.custom_cta_value
+          : revision.data.custom_cta_value,
     },
     industryIds: Array.isArray(revision.data.industry_ids)
       ? revision.data.industry_ids
@@ -1339,6 +1355,8 @@ function createChangedFields(
       (item) => item.directus_files_id,
     ),
     social_links: listing.social_links ?? [],
+    custom_cta_label: listing.custom_cta_label,
+    custom_cta_value: listing.custom_cta_value,
     opening_hours: normalizedOpeningHours(currentOpeningHours),
   };
   const revisionValues: Record<string, unknown> = {
@@ -1486,6 +1504,8 @@ async function savePublishedListingRevision(
           gallery_file_ids: values.premium.gallery_file_ids,
           social_links: values.premium.social_links,
           opening_hours: values.premium.opening_hours,
+          custom_cta_label: values.premium.custom_cta_label,
+          custom_cta_value: values.premium.custom_cta_value,
         }
       : {}),
   };
@@ -1925,6 +1945,8 @@ export async function updateEditableAccountListing(
   const safeListingValues: AccountListingUpdate & {
     logo?: string | null;
     social_links?: AccountSocialLink[];
+    custom_cta_label?: string | null;
+    custom_cta_value?: string | null;
   } = {
     name: values.name,
     short_description: values.short_description,
@@ -1942,6 +1964,8 @@ export async function updateEditableAccountListing(
       ? {
           logo: values.premium.logo_id,
           social_links: values.premium.social_links,
+          custom_cta_label: values.premium.custom_cta_label,
+          custom_cta_value: values.premium.custom_cta_value,
         }
       : {}),
   };
@@ -2014,6 +2038,8 @@ export async function updateEditableAccountListing(
             gallery_file_ids: values.premium.gallery_file_ids,
             social_links: values.premium.social_links,
             opening_hours: values.premium.opening_hours,
+            custom_cta_label: values.premium.custom_cta_label,
+            custom_cta_value: values.premium.custom_cta_value,
           }
         : {}),
     };

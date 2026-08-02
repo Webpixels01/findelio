@@ -5,6 +5,7 @@ import SearchForm, { type SearchValues } from "@/components/search-form";
 import CompanyCard from "@/components/company-card";
 import { getListings } from "@/lib/directus";
 import { Link } from "@/i18n/navigation";
+import ListingMetricsTracker from "@/components/listing-metrics-tracker";
 
 function value(input: string | string[] | undefined) {
   return Array.isArray(input) ? input[0] : input;
@@ -77,6 +78,11 @@ export default async function CompaniesPage({
           </div>
 
           {results.length > 0 ? (
+            <>
+            <ListingMetricsTracker
+              listingIds={results.filter((item) => item.premium_features_enabled).map((item) => item.id)}
+              event="search_impressions"
+            />
             <div className="mt-10 grid gap-6 lg:grid-cols-2">
               {results.map((company) => (
                 <CompanyCard
@@ -86,6 +92,7 @@ export default async function CompaniesPage({
                 />
               ))}
             </div>
+            </>
           ) : (
             <div className="mt-10 rounded-3xl border border-dashed border-[#b9c9d9] bg-white p-10 text-center">
               <p className="text-xl font-bold">

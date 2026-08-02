@@ -33,6 +33,7 @@ export type Listing = {
     name: string;
   };
   verification_status: string;
+  premium_features_enabled?: boolean;
   spoken_languages: {
     spoken_languages_id: {
       id: string;
@@ -71,6 +72,8 @@ export type ListingDetail = Listing & {
   address_visibility: "full" | "city" | "hidden";
   gallery: GalleryItem[];
   premium_features_enabled: boolean;
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 export type ListingOpeningHour = {
@@ -78,6 +81,21 @@ export type ListingOpeningHour = {
   day_of_week: number;
   opens_at: string;
   closes_at: string;
+};
+
+export type ListingPost = {
+  id: string;
+  listing: string | { id: string };
+  type: "update" | "offer" | "event";
+  title: string;
+  excerpt: string | null;
+  body: string | null;
+  image: string | null;
+  cta_label: string | null;
+  cta_url: string | null;
+  starts_at: string | null;
+  ends_at: string | null;
+  published_at: string | null;
 };
 
 export type DirectoryOption = {
@@ -308,6 +326,8 @@ export async function getListings(
     "canton.code",
     "canton.name",
     "verification_status",
+    "custom_cta_label",
+    "custom_cta_value",
     "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
@@ -415,17 +435,38 @@ export async function getListings(
 
   const result = (await response.json()) as DirectusResponse<Listing[]>;
 
-  return result.data.map((listing) => {
+  const localizedListings = result.data.map((listing) => {
     const premiumEnabled = premiumListingIds.has(listing.id);
 
     return localizeListing(
       {
         ...listing,
         logo: premiumEnabled ? listing.logo : null,
+        premium_features_enabled: premiumEnabled,
       },
       industryNames,
       spokenLanguageNames,
     );
+  });
+
+  const dailySeed = new Date().toISOString().slice(0, 10);
+  const dailyRank = (id: string) => {
+    let hash = 0;
+    for (const character of `${dailySeed}:${id}`) {
+      hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
+    }
+    return hash;
+  };
+
+  return localizedListings.sort((first, second) => {
+    const premiumDifference =
+      Number(Boolean(second.premium_features_enabled)) -
+      Number(Boolean(first.premium_features_enabled));
+    if (premiumDifference !== 0) return premiumDifference;
+    if (first.premium_features_enabled && second.premium_features_enabled) {
+      return dailyRank(first.id) - dailyRank(second.id);
+    }
+    return first.name.localeCompare(second.name, locale);
   });
 }
 
@@ -457,6 +498,8 @@ export async function getListingBySlug(
     "published_at",
     "social_links",
     "address_visibility",
+    "custom_cta_label",
+    "custom_cta_value",
     "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
@@ -525,6 +568,8 @@ export async function getListingBySlug(
       gallery: premiumEnabled ? listing.gallery : [],
       social_links: premiumEnabled ? listing.social_links : [],
       premium_features_enabled: premiumEnabled,
+      custom_cta_label: premiumEnabled ? listing.custom_cta_label : null,
+      custom_cta_value: premiumEnabled ? listing.custom_cta_value : null,
     },
     industryNames,
     spokenLanguageNames,
@@ -565,6 +610,35 @@ export async function getPublishedListingSlugs(): Promise<string[]> {
   return result.data
     .map((listing) => listing.slug?.trim())
     .filter((slug): slug is string => Boolean(slug));
+}
+
+export async function getPublicListingPosts(
+  listingId: string,
+): Promise<ListingPost[]> {
+  const url = new URL("/items/listing_posts", directusUrl);
+  url.searchParams.set(
+    "fields",
+    "id,listing,type,title,excerpt,body,image,cta_label,cta_url,starts_at,ends_at,published_at",
+  );
+  url.searchParams.set("sort", "-published_at");
+  url.searchParams.set("limit", "20");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      _and: [
+        { listing: { _eq: listingId } },
+        { status: { _eq: "published" } },
+        { _or: [{ ends_at: { _null: true } }, { ends_at: { _gte: "$NOW" } }] },
+      ],
+    }),
+  );
+  const response = await fetch(url, {
+    headers: directusHeaders,
+    cache: "no-store",
+  });
+  if (!response.ok) return [];
+  const result = (await response.json()) as DirectusResponse<ListingPost[]>;
+  return result.data;
 }
 
 export async function getListingOpeningHours(

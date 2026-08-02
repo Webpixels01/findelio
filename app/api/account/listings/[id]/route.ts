@@ -131,6 +131,25 @@ function normalizeWebsite(value: unknown): string | null {
   return parsedUrl.toString();
 }
 
+function normalizeActionValue(value: unknown): string | null {
+  const rawValue = stringValue(value);
+
+  if (!rawValue) {
+    return null;
+  }
+
+  const candidate = /^https?:\/\//i.test(rawValue)
+    ? rawValue
+    : rawValue;
+  const parsedUrl = new URL(candidate);
+
+  if (!["https:", "http:", "mailto:", "tel:"].includes(parsedUrl.protocol)) {
+    throw new Error("INVALID_ACTION");
+  }
+
+  return parsedUrl.toString();
+}
+
 function fileId(value: unknown): string | null | undefined {
   if (value === null) {
     return null;
@@ -273,12 +292,23 @@ function premiumValues(
   const galleryFileIds = relationIds(data.gallery_file_ids, 10);
   const validatedSocialLinks = socialLinks(data.social_links);
   const validatedOpeningHours = openingHours(data.opening_hours);
+  const customCtaLabel = optionalString(data.custom_cta_label);
+  let customCtaValue: string | null;
+
+  try {
+    customCtaValue = normalizeActionValue(data.custom_cta_value);
+  } catch {
+    return null;
+  }
 
   if (
     logoId === undefined ||
     galleryFileIds === null ||
     validatedSocialLinks === null ||
     validatedOpeningHours === null
+    || !hasValidLength(customCtaLabel, 80)
+    || !hasValidLength(customCtaValue, 500)
+    || Boolean(customCtaLabel) !== Boolean(customCtaValue)
   ) {
     return null;
   }
@@ -292,6 +322,8 @@ function premiumValues(
     gallery_file_ids: galleryFileIds,
     social_links: validatedSocialLinks,
     opening_hours: validatedOpeningHours,
+    custom_cta_label: customCtaLabel,
+    custom_cta_value: customCtaValue,
   };
 }
 

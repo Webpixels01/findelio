@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --spacing: 0.2rem;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #001734;
@@ -7,7 +11,7 @@
   --surface: #f4f8fc;
   --border: #dce6f0;
   --muted: #52657b;
-  --spacing: 0.23rem;
+  --spacing: 0.2rem;
 }
 
 * { box-sizing: border-box; }

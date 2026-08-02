@@ -309,6 +309,103 @@
     "changesTitle": "11. Zmiany",
     "changesText": "Możemy aktualizować tę politykę po zmianie funkcji, usługodawców lub wymogów prawnych. Obowiązuje wersja opublikowana na tej stronie."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Wybierz obraz",
+      "imageEmpty": "Nie wybrano obrazu",
+      "imageHint": "Zalecane: 1200 × 675 px (proporcje 16:9).",
+      "imageCurrent": "Obecny obraz zostanie zachowany",
+      "editTitle": "Edytuj wpis",
+      "editPublishedHint": "Dotychczasowy wpis pozostanie widoczny. Zmiany zostaną ponownie sprawdzone przed publikacją.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Zmiany zostały zapisane.",
+      "update": "Zapisz zmiany",
+      "cancel": "Anuluj",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Edytuj",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Edytuj wpis firmy",
     "title": "Edytuj {name}",
@@ -362,6 +459,14 @@
       "noLogo": "Brak logo",
       "chooseLogo": "Wybierz logo",
       "remove": "Usuń",
+      "removeDialog": {
+        "logoTitle": "Usunąć logo firmy?",
+        "logoDescription": "Zamierzasz usunąć logo firmy z tego wpisu. Zmiana zostanie zastosowana dopiero po zapisaniu.",
+        "galleryTitle": "Usunąć zdjęcie z galerii?",
+        "galleryDescription": "Zamierzasz usunąć to zdjęcie z galerii. Zmiana zostanie zastosowana dopiero po zapisaniu.",
+        "cancel": "Anuluj",
+        "confirm": "Usuń zdjęcie"
+      },
       "galleryHint": "Dodaj maksymalnie dziesięć zdjęć przedstawiających firmę.",
       "galleryPreview": "Podgląd zdjęcia z galerii",
       "galleryLimit": "Galeria może zawierać maksymalnie dziesięć zdjęć.",
@@ -491,9 +596,9 @@
     "back": "Powrót do wpisów firm",
     "eyebrow": "Pakiet i rozliczenia",
     "title": "Subskrypcja dla {name}",
-    "description": "Zarządzaj pakietem tego wpisu firmy. Premium zostanie aktywowane dopiero po potwierdzeniu płatności przez Stripe.",
+    "description": "Zarządzaj pakietem tego wpisu firmy. Premium zostanie aktywowane dopiero po potwierdzeniu płatności.",
     "listingCreated": "Wpis firmy zapisano jako wersję roboczą. Wybierz teraz odpowiedni pakiet.",
-    "checkoutSuccess": "Dziękujemy. Stripe przyjął płatność. Premium zostanie aktywowane po potwierdzeniu webhooka, co może chwilę potrwać.",
+    "checkoutSuccess": "Dziękujemy. Płatność zakończyła się pomyślnie. Potwierdzenie aktywacji Premium może chwilę potrwać.",
     "checkoutCancelled": "Proces płatności został anulowany. Wpis firmy pozostaje w pakiecie Free.",
     "intervalTitle": "Okres rozliczeniowy",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Subskrybuj Premium przez Stripe",
-      "openingCheckout": "Otwieranie Stripe Checkout …",
+      "subscribe": "Subskrybuj Premium",
+      "openingCheckout": "Otwieranie bezpiecznej płatności …",
       "manage": "Zarządzaj subskrypcją i metodą płatności",
-      "openingPortal": "Otwieranie portalu klienta …"
+      "openingPortal": "Otwieranie portalu klienta …",
+      "portalHint": "Zarządzanie subskrypcją otworzy się w nowej karcie. Findelio pozostanie otwarte."
     },
     "errors": {
       "invalid_data": "Wybrana opcja rozliczenia jest nieprawidłowa.",
@@ -547,10 +653,10 @@
       "forbidden": "Nie możesz zarządzać tą subskrypcją.",
       "not_found": "Nie znaleziono wpisu firmy.",
       "already_active": "Premium jest już aktywne dla tego wpisu firmy.",
-      "billing_not_configured": "Stripe nie jest jeszcze w pełni skonfigurowany lokalnie.",
-      "portal_unavailable": "Ta lokalna subskrypcja testowa nie jest jeszcze połączona z klientem Stripe.",
-      "checkout_failed": "Nie udało się uruchomić Stripe Checkout.",
-      "portal_failed": "Nie udało się otworzyć portalu klienta Stripe.",
+      "billing_not_configured": "Funkcja płatności jest obecnie niedostępna.",
+      "portal_unavailable": "Zarządzanie tą subskrypcją jest obecnie niedostępne.",
+      "checkout_failed": "Nie udało się rozpocząć procesu płatności.",
+      "portal_failed": "Nie udało się otworzyć zarządzania subskrypcją.",
       "network": "Połączenie z serwerem nie powiodło się.",
       "unknown": "Nie udało się wykonać operacji subskrypcji."
     }

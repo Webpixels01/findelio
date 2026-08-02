@@ -309,6 +309,103 @@
     "changesTitle": "11. Изменения",
     "changesText": "Мы можем обновлять эту политику при изменении функций, поставщиков услуг или требований закона. Действует версия, опубликованная на этой странице."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Выбрать изображение",
+      "imageEmpty": "Изображение не выбрано",
+      "imageHint": "Рекомендуется: 1200 × 675 пикс. (соотношение 16:9).",
+      "imageCurrent": "Текущее изображение будет сохранено",
+      "editTitle": "Редактировать публикацию",
+      "editPublishedHint": "Текущая публикация останется видимой. Изменения будут повторно проверены перед публикацией.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Изменения сохранены.",
+      "update": "Сохранить изменения",
+      "cancel": "Отмена",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Редактировать",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Редактирование карточки компании",
     "title": "Редактировать {name}",
@@ -362,6 +459,14 @@
       "noLogo": "Логотип ещё не добавлен",
       "chooseLogo": "Выбрать логотип",
       "remove": "Удалить",
+      "removeDialog": {
+        "logoTitle": "Удалить логотип компании?",
+        "logoDescription": "Вы собираетесь удалить логотип из этой карточки компании. Изменение вступит в силу только после сохранения.",
+        "galleryTitle": "Удалить изображение из галереи?",
+        "galleryDescription": "Вы собираетесь удалить это изображение из галереи. Изменение вступит в силу только после сохранения.",
+        "cancel": "Отмена",
+        "confirm": "Удалить изображение"
+      },
       "galleryHint": "Добавьте до десяти изображений, представляющих вашу компанию.",
       "galleryPreview": "Предпросмотр изображения галереи",
       "galleryLimit": "Галерея может содержать не более десяти изображений.",
@@ -491,9 +596,9 @@
     "back": "Назад к карточкам компаний",
     "eyebrow": "Тариф и оплата",
     "title": "Подписка для {name}",
-    "description": "Управляйте тарифом этой карточки компании. Premium активируется только после подтверждения оплаты Stripe.",
+    "description": "Управляйте тарифом этой карточки компании. Premium активируется только после подтверждения оплаты.",
     "listingCreated": "Карточка компании сохранена как черновик. Теперь выберите нужный тариф.",
-    "checkoutSuccess": "Спасибо. Stripe принял платёж. Premium будет активирован после подтверждения вебхука; это может занять немного времени.",
+    "checkoutSuccess": "Спасибо. Платёж прошёл успешно. Подтверждение активации Premium может занять немного времени.",
     "checkoutCancelled": "Процесс оплаты отменён. Карточка компании остаётся на тарифе Free.",
     "intervalTitle": "Расчётный период",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Подписаться на Premium через Stripe",
-      "openingCheckout": "Открывается Stripe Checkout …",
+      "subscribe": "Подписаться на Premium",
+      "openingCheckout": "Открывается защищённая оплата …",
       "manage": "Управлять подпиской и способом оплаты",
-      "openingPortal": "Открывается клиентский портал …"
+      "openingPortal": "Открывается клиентский портал …",
+      "portalHint": "Управление подпиской откроется в новой вкладке. Findelio останется открытым."
     },
     "errors": {
       "invalid_data": "Выбранный вариант оплаты недействителен.",
@@ -547,10 +653,10 @@
       "forbidden": "Вы не можете управлять этой подпиской.",
       "not_found": "Карточка компании не найдена.",
       "already_active": "Premium уже активен для этой карточки компании.",
-      "billing_not_configured": "Stripe ещё не полностью настроен локально.",
-      "portal_unavailable": "Эта локальная тестовая подписка ещё не связана с клиентом Stripe.",
-      "checkout_failed": "Не удалось запустить Stripe Checkout.",
-      "portal_failed": "Не удалось открыть клиентский портал Stripe.",
+      "billing_not_configured": "Функция оплаты временно недоступна.",
+      "portal_unavailable": "Управление этой подпиской временно недоступно.",
+      "checkout_failed": "Не удалось начать процесс оплаты.",
+      "portal_failed": "Не удалось открыть управление подпиской.",
       "network": "Не удалось подключиться к серверу.",
       "unknown": "Не удалось выполнить действие с подпиской."
     }

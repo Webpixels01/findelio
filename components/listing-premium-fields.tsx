@@ -4,6 +4,7 @@ import Image from "next/image";
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -47,6 +48,8 @@ export type PremiumListingPayload = {
     opens_at: string;
     closes_at: string;
   }>;
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 export type PremiumListingFieldsHandle = {
@@ -58,6 +61,11 @@ type UploadResult = {
   images?: UploadedImage[];
   error?: string;
 };
+
+type PendingImageRemoval =
+  | { type: "logo" }
+  | { type: "gallery"; imageId: string }
+  | { type: "galleryFile"; index: number };
 
 const platforms: SocialPlatform[] = [
   "instagram",
@@ -86,6 +94,8 @@ const ListingPremiumFields = forwardRef<
       opens_at: string;
       closes_at: string;
     }>;
+    customCtaLabel: string;
+    customCtaValue: string;
   }
 >(function ListingPremiumFields(
   {
@@ -96,10 +106,13 @@ const ListingPremiumFields = forwardRef<
     gallery: initialGallery,
     socialLinks: initialSocialLinks,
     openingHours: initialOpeningHours,
+    customCtaLabel: initialCustomCtaLabel,
+    customCtaValue: initialCustomCtaValue,
   },
   ref,
 ) {
   const t = useTranslations("ListingEditor.premium");
+  const tg = useTranslations("Growth");
   const tCompany = useTranslations("Company");
   const [logo, setLogo] = useState(initialLogo);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -115,6 +128,25 @@ const ListingPremiumFields = forwardRef<
     })),
   );
   const [localError, setLocalError] = useState<string | null>(null);
+  const [pendingImageRemoval, setPendingImageRemoval] =
+    useState<PendingImageRemoval | null>(null);
+  const [customCtaLabel, setCustomCtaLabel] = useState(initialCustomCtaLabel);
+  const [customCtaValue, setCustomCtaValue] = useState(initialCustomCtaValue);
+
+  useEffect(() => {
+    if (!pendingImageRemoval) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setPendingImageRemoval(null);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [pendingImageRemoval]);
 
   const weekdays = useMemo(
     () =>
@@ -190,6 +222,8 @@ const ListingPremiumFields = forwardRef<
               closes_at,
             }),
           ),
+          custom_cta_label: customCtaLabel.trim() || null,
+          custom_cta_value: customCtaValue.trim() || null,
         };
       },
     }),
@@ -201,6 +235,8 @@ const ListingPremiumFields = forwardRef<
       openingHours,
       socialLinks,
       uploadImages,
+      customCtaLabel,
+      customCtaValue,
     ],
   );
 
@@ -247,11 +283,32 @@ const ListingPremiumFields = forwardRef<
     ]);
   }
 
+  function confirmImageRemoval() {
+    if (!pendingImageRemoval) {
+      return;
+    }
+
+    if (pendingImageRemoval.type === "logo") {
+      setLogo(null);
+      setLogoFile(null);
+    } else if (pendingImageRemoval.type === "gallery") {
+      setGallery((current) =>
+        current.filter((item) => item.id !== pendingImageRemoval.imageId),
+      );
+    } else {
+      setGalleryFiles((current) =>
+        current.filter((_, index) => index !== pendingImageRemoval.index),
+      );
+    }
+
+    setPendingImageRemoval(null);
+  }
+
   if (!premiumEnabled) {
     return (
       <section className="rounded-3xl border border-[#bfdcff] bg-[#f2f8ff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full bg-[var(--accent)] px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+          <span className="inline-flex h-7 items-center justify-center rounded-full bg-[var(--accent)] px-3 text-xs leading-none font-extrabold uppercase tracking-wider text-white">
             {t("badge")}
           </span>
           <h2 className="text-2xl font-extrabold">{t("title")}</h2>
@@ -260,7 +317,7 @@ const ListingPremiumFields = forwardRef<
           {t("lockedDescription")}
         </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {(["logo", "gallery", "openingHours", "socialLinks"] as const).map(
+          {(["logo", "gallery", "openingHours", "socialLinks", "customCta"] as const).map(
             (feature) => (
               <div
                 key={feature}
@@ -269,7 +326,7 @@ const ListingPremiumFields = forwardRef<
                 <span className="mr-2 text-[var(--accent)]" aria-hidden="true">
                   ◆
                 </span>
-                {t(`features.${feature}`)}
+                {feature === "customCta" ? tg("customCta.title") : t(`features.${feature}`)}
               </div>
             ),
           )}
@@ -292,7 +349,7 @@ const ListingPremiumFields = forwardRef<
   return (
     <section className="rounded-3xl border border-[#bfdcff] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="rounded-full bg-[var(--accent)] px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
+        <span className="inline-flex h-7 items-center justify-center rounded-full bg-[var(--accent)] px-3 text-xs leading-none font-extrabold uppercase tracking-wider text-white">
           {t("badge")}
         </span>
         <h2 className="text-2xl font-extrabold">{t("title")}</h2>
@@ -335,10 +392,7 @@ const ListingPremiumFields = forwardRef<
               <button
                 type="button"
                 className="rounded-xl border border-[#e2a6a6] px-4 py-2.5 font-bold text-[#9d1c1c]"
-                onClick={() => {
-                  setLogo(null);
-                  setLogoFile(null);
-                }}
+                onClick={() => setPendingImageRemoval({ type: "logo" })}
               >
                 {t("remove")}
               </button>
@@ -372,9 +426,10 @@ const ListingPremiumFields = forwardRef<
                 <button
                   type="button"
                   onClick={() =>
-                    setGallery((current) =>
-                      current.filter((item) => item.id !== image.id),
-                    )
+                    setPendingImageRemoval({
+                      type: "gallery",
+                      imageId: image.id,
+                    })
                   }
                   className="absolute right-2 top-2 rounded-lg bg-white/95 px-3 py-1.5 text-xs font-extrabold text-[#9d1c1c] shadow"
                 >
@@ -391,9 +446,10 @@ const ListingPremiumFields = forwardRef<
                 <button
                   type="button"
                   onClick={() =>
-                    setGalleryFiles((current) =>
-                      current.filter((_, itemIndex) => itemIndex !== index),
-                    )
+                    setPendingImageRemoval({
+                      type: "galleryFile",
+                      index,
+                    })
                   }
                   className="mt-3 text-sm font-extrabold text-[#9d1c1c]"
                 >
@@ -611,12 +667,98 @@ const ListingPremiumFields = forwardRef<
         </button>
       </fieldset>
 
+      <fieldset
+        className="mt-8 border-t border-[var(--border)] pt-8"
+        disabled={disabled}
+      >
+        <legend className="text-xl font-extrabold">
+          {tg("customCta.title")}
+        </legend>
+        <p className="mt-1 text-sm text-[var(--muted)]">
+          {tg("customCta.hint")}
+        </p>
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <label className="field-group">
+            <span className="field-label">{tg("customCta.label")}</span>
+            <input
+              className="field-control"
+              value={customCtaLabel}
+              onChange={(event) => setCustomCtaLabel(event.target.value)}
+              maxLength={80}
+              placeholder={tg("customCta.placeholder")}
+            />
+          </label>
+          <label className="field-group">
+            <span className="field-label">{tg("customCta.value")}</span>
+            <input
+              className="field-control"
+              value={customCtaValue}
+              onChange={(event) => setCustomCtaValue(event.target.value)}
+              maxLength={500}
+              placeholder="https://, mailto: oder tel:"
+            />
+          </label>
+        </div>
+      </fieldset>
+
       {localError && (
         <p className="mt-5 rounded-xl bg-[#fff0f0] px-4 py-3 text-sm font-bold text-[#9d1c1c]">
           {localError}
         </p>
       )}
       <p className="mt-5 text-xs text-[var(--muted)]">{t("imageRules")}</p>
+
+      {pendingImageRemoval && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#001734]/65 p-4 backdrop-blur-sm"
+          role="presentation"
+        >
+          <div
+            className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-white p-6 shadow-2xl sm:p-8"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="image-removal-title"
+            aria-describedby="image-removal-description"
+          >
+            <div className="flex size-12 items-center justify-center rounded-full bg-[#fff0f0] text-2xl text-[#9d1c1c]" aria-hidden="true">
+              !
+            </div>
+            <h2
+              id="image-removal-title"
+              className="mt-5 text-2xl font-extrabold"
+            >
+              {pendingImageRemoval.type === "logo"
+                ? t("removeDialog.logoTitle")
+                : t("removeDialog.galleryTitle")}
+            </h2>
+            <p
+              id="image-removal-description"
+              className="mt-3 text-[var(--muted)]"
+            >
+              {pendingImageRemoval.type === "logo"
+                ? t("removeDialog.logoDescription")
+                : t("removeDialog.galleryDescription")}
+            </p>
+            <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                className="secondary-button h-11 px-5"
+                onClick={() => setPendingImageRemoval(null)}
+                autoFocus
+              >
+                {t("removeDialog.cancel")}
+              </button>
+              <button
+                type="button"
+                className="h-11 rounded-xl bg-[#b42318] px-5 font-extrabold text-white transition hover:bg-[#8f1c13]"
+                onClick={confirmImageRemoval}
+              >
+                {t("removeDialog.confirm")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 });

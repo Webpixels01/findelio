@@ -168,6 +168,11 @@ function createProviderSubscriptionPayload(
 
   const firstItem = subscription.items.data[0];
   const { start, end } = getSubscriptionPeriod(subscription);
+  const cancellationScheduled = Boolean(
+    subscription.cancel_at_period_end ||
+      (subscription.cancel_at &&
+        subscription.cancel_at * 1000 > Date.now()),
+  );
 
   return {
     organization: organizationId,
@@ -180,7 +185,10 @@ function createProviderSubscriptionPayload(
     provider_subscription_id: subscription.id,
     current_period_start: start?.toISOString() ?? null,
     current_period_end: end?.toISOString() ?? null,
-    cancel_at_period_end: subscription.cancel_at_period_end,
+    // The customer portal can schedule the cancellation through `cancel_at`
+    // instead of setting `cancel_at_period_end`, even when both dates match.
+    // Directus stores the product-level meaning: access ends in the future.
+    cancel_at_period_end: cancellationScheduled,
     cancelled_at: subscription.canceled_at
       ? new Date(subscription.canceled_at * 1000).toISOString()
       : null,

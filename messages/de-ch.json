@@ -309,6 +309,102 @@
     "changesTitle": "11. Änderungen",
     "changesText": "Wir können diese Datenschutzerklärung anpassen, wenn sich Funktionen, Dienstleister oder rechtliche Anforderungen ändern. Es gilt die jeweils auf dieser Seite veröffentlichte Fassung."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Individueller Aktionsbutton",
+      "hint": "Lege Beschriftung und Ziel fest. Erlaubt sind Webseiten-, E-Mail- und Telefonlinks.",
+      "label": "Button-Beschriftung",
+      "placeholder": "z. B. Termin vereinbaren",
+      "value": "Ziel oder Aktion"
+    },
+    "publicPosts": {
+      "title": "Aktuelles, Aktionen und Veranstaltungen"
+    },
+    "posts": {
+      "back": "Zurück zu den Firmeneinträgen",
+      "eyebrow": "Premium-Inhalte",
+      "pageTitle": "Beiträge für {name}",
+      "description": "Veröffentliche Neuigkeiten, Aktionen und Veranstaltungen. Eingereichte Beiträge werden vor der Veröffentlichung geprüft.",
+      "manage": "Beiträge verwalten",
+      "createTitle": "Neuen Beitrag erstellen",
+      "type": "Beitragsart",
+      "types": {
+        "update": "Neuigkeit",
+        "offer": "Aktion",
+        "event": "Veranstaltung"
+      },
+      "title": "Titel",
+      "excerpt": "Kurztext",
+      "body": "Beschreibung",
+      "image": "Bild",
+      "imageSelect": "Bild auswählen",
+      "imageEmpty": "Kein Bild ausgewählt",
+      "imageHint": "Empfohlen: 1200 × 675 px (Seitenverhältnis 16:9).",
+      "imageCurrent": "Aktuelles Bild wird beibehalten",
+      "editTitle": "Beitrag bearbeiten",
+      "editPublishedHint": "Der bisherige Beitrag bleibt sichtbar. Die Änderungen werden vor der Veröffentlichung erneut geprüft.",
+      "startsAt": "Beginn",
+      "endsAt": "Ende",
+      "buttonLabel": "Button-Beschriftung",
+      "buttonUrl": "Button-Ziel",
+      "status": "Speicherstatus",
+      "statuses": {
+        "draft": "Entwurf",
+        "pending": "Zur Prüfung",
+        "published": "Veröffentlicht",
+        "rejected": "Abgelehnt",
+        "archived": "Archiviert"
+      },
+      "save": "Beitrag speichern",
+      "saving": "Wird gespeichert …",
+      "saved": "Der Beitrag wurde gespeichert.",
+      "updated": "Die Änderungen wurden gespeichert.",
+      "update": "Änderungen speichern",
+      "cancel": "Abbrechen",
+      "existingTitle": "Vorhandene Beiträge",
+      "empty": "Noch keine Beiträge vorhanden.",
+      "archive": "Archivieren",
+      "edit": "Bearbeiten",
+      "archiveConfirm": "Möchtest du diesen Beitrag wirklich archivieren?",
+      "errors": {
+        "upload": "Das Bild konnte nicht hochgeladen werden.",
+        "save": "Der Beitrag konnte nicht gespeichert werden."
+      }
+    },
+    "statistics": {
+      "back": "Zurück zu den Firmeneinträgen",
+      "eyebrow": "Premium-Statistik",
+      "pageTitle": "Erfolg von {name}",
+      "description": "Sieh, wie Besucher deinen Firmeneintrag finden und welche Kontaktmöglichkeiten sie nutzen.",
+      "link": "Statistik ansehen",
+      "days": "{count} Tage",
+      "metrics": {
+        "search_impressions": "Einblendungen in der Suche",
+        "profile_views": "Profilaufrufe",
+        "website_clicks": "Website-Klicks",
+        "phone_clicks": "Telefon-Klicks",
+        "email_clicks": "E-Mail-Klicks",
+        "social_clicks": "Social-Media-Klicks",
+        "custom_cta_clicks": "Klicks auf deinen Button",
+        "post_views": "Beitragsaufrufe",
+        "post_cta_clicks": "Klicks auf Beitragsbuttons"
+      },
+      "privacyHint": "Die Statistik enthält ausschliesslich zusammengefasste Tageswerte und keine personenbezogenen Besucherdaten.",
+      "privacyTitle": "Reichweitenmessung für Premium-Einträge",
+      "privacyText": "Bei aktiven Premium-Einträgen zählen wir Such-Einblendungen, Profilaufrufe und Klicks auf Kontaktmöglichkeiten, Aktionsbuttons sowie Beiträge. Gespeichert werden ausschliesslich zusammengefasste Tageswerte. Es werden keine dauerhaften IP-Adressen, Besucherprofile oder Tracking-Cookies angelegt. Organisationsinhaber können einen monatlichen Erfolgsbericht per E-Mail erhalten."
+    },
+    "review": {
+      "eyebrow": "Premium-Inhalte",
+      "title": "Beiträge zur Prüfung",
+      "reason": "Begründung bei Ablehnung",
+      "error": "Die Aktion konnte nicht ausgeführt werden. Bei einer Ablehnung ist eine Begründung erforderlich.",
+      "approve": "Beitrag freigeben",
+      "reject": "Beitrag ablehnen"
+    }
+  },
   "ListingEditor": {
     "eyebrow": "Firmeneintrag bearbeiten",
     "title": "{name} bearbeiten",
@@ -362,6 +458,14 @@
       "noLogo": "Noch kein Logo",
       "chooseLogo": "Logo auswählen",
       "remove": "Entfernen",
+      "removeDialog": {
+        "logoTitle": "Firmenlogo entfernen?",
+        "logoDescription": "Du bist dabei, das Firmenlogo aus diesem Firmeneintrag zu entfernen. Die Änderung wird erst beim Speichern übernommen.",
+        "galleryTitle": "Galeriebild entfernen?",
+        "galleryDescription": "Du bist dabei, dieses Bild aus der Galerie zu entfernen. Die Änderung wird erst beim Speichern übernommen.",
+        "cancel": "Abbrechen",
+        "confirm": "Bild entfernen"
+      },
       "galleryHint": "Füge bis zu zehn aussagekräftige Bilder deines Unternehmens hinzu.",
       "galleryPreview": "Vorschau eines Galeriebildes",
       "galleryLimit": "Die Galerie kann höchstens zehn Bilder enthalten.",
@@ -491,9 +595,9 @@
     "back": "Zurück zu den Firmeneinträgen",
     "eyebrow": "Paket und Abrechnung",
     "title": "Abo für {name}",
-    "description": "Verwalte das Paket dieses Firmeneintrags. Premium wird erst nach bestätigter Stripe-Zahlung freigeschaltet.",
+    "description": "Verwalte das Paket dieses Firmeneintrags. Premium wird erst nach bestätigter Zahlung freigeschaltet.",
     "listingCreated": "Der Firmeneintrag wurde als Entwurf angelegt. Wähle jetzt das gewünschte Paket.",
-    "checkoutSuccess": "Danke. Stripe hat die Zahlung entgegengenommen. Die Premium-Freischaltung erfolgt nach der Webhook-Bestätigung und kann einen kurzen Moment dauern.",
+    "checkoutSuccess": "Danke. Deine Zahlung war erfolgreich. Die Premium-Freischaltung wird bestätigt und kann einen kurzen Moment dauern.",
     "checkoutCancelled": "Der Zahlungsvorgang wurde abgebrochen. Der Firmeneintrag bleibt im Free-Paket.",
     "intervalTitle": "Abrechnungszeitraum",
     "intervals": {
@@ -536,10 +640,11 @@
       }
     },
     "actions": {
-      "subscribe": "Mit Stripe Premium abonnieren",
-      "openingCheckout": "Stripe Checkout wird geöffnet …",
+      "subscribe": "Premium abonnieren",
+      "openingCheckout": "Sichere Zahlung wird geöffnet …",
       "manage": "Abo und Zahlungsmittel verwalten",
-      "openingPortal": "Kundenportal wird geöffnet …"
+      "openingPortal": "Kundenportal wird geöffnet …",
+      "portalHint": "Die Aboverwaltung öffnet sich in einem neuen Tab. Findelio bleibt geöffnet."
     },
     "errors": {
       "invalid_data": "Die gewählte Abrechnung ist ungültig.",
@@ -547,10 +652,10 @@
       "forbidden": "Du darfst dieses Abo nicht verwalten.",
       "not_found": "Der Firmeneintrag wurde nicht gefunden.",
       "already_active": "Für diesen Firmeneintrag ist Premium bereits aktiv.",
-      "billing_not_configured": "Stripe ist lokal noch nicht vollständig konfiguriert.",
-      "portal_unavailable": "Dieses lokale Testabo ist noch nicht mit einem Stripe-Kunden verknüpft.",
-      "checkout_failed": "Stripe Checkout konnte nicht gestartet werden.",
-      "portal_failed": "Das Stripe-Kundenportal konnte nicht geöffnet werden.",
+      "billing_not_configured": "Die Zahlungsfunktion ist momentan nicht verfügbar.",
+      "portal_unavailable": "Die Aboverwaltung ist für dieses Abo momentan nicht verfügbar.",
+      "checkout_failed": "Der Zahlungsvorgang konnte nicht gestartet werden.",
+      "portal_failed": "Die Aboverwaltung konnte nicht geöffnet werden.",
       "network": "Die Verbindung zum Server ist fehlgeschlagen.",
       "unknown": "Die Abo-Aktion konnte nicht ausgeführt werden."
     }
@@ -603,6 +708,8 @@
         "gallery_file_ids": "Bildergalerie",
         "social_links": "Social-Media-Links",
         "opening_hours": "Öffnungszeiten"
+        ,"custom_cta_label": "Button-Beschriftung"
+        ,"custom_cta_value": "Button-Ziel"
       }
     }
   },

@@ -23,6 +23,7 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Legal");
+  const tg = await getTranslations("Growth.statistics");
 
   const dataItems = [
     t("technicalData"),
@@ -103,6 +104,10 @@ export default async function PrivacyPage({ params }: PrivacyPageProps) {
 
             <PrivacySection title={t("thirdPartyTitle")}>
               <p>{t("thirdPartyText")}</p>
+            </PrivacySection>
+
+            <PrivacySection title={tg("privacyTitle")}>
+              <p>{tg("privacyText")}</p>
             </PrivacySection>
 
             <PrivacySection title={t("changesTitle")}>

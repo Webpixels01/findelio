@@ -31,7 +31,7 @@ export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
             locale: event.target.value as AppLocale,
           });
         }}
-        className="h-11 cursor-pointer rounded-xl border border-[var(--border)] bg-white px-3 pr-8 text-sm font-bold text-[var(--foreground)] outline-none transition hover:border-[var(--accent)] focus:border-[var(--accent)]"
+        className="h-11 cursor-pointer rounded-xl border border-[var(--border)] bg-white px-3 pr-1 text-sm font-bold text-[var(--foreground)] outline-none transition hover:border-[var(--accent)] focus:border-[var(--accent)]"
         aria-label={ariaLabel}
       >
         {routing.locales.map((item) => (

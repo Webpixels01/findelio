@@ -346,13 +346,53 @@ Am 30. Juli 2026 umgesetzt:
 - Die reproduzierbaren Directus-Migrationen befinden sich unter `infra/directus/migrations`.
 - Die sichtbaren Paket-, Status-, Preis- und Fehlermeldungen sind in allen neun unterstützten Sprachen vorhanden.
 - Im Browser wurden JAZU als Free, Webpixels als Premium, die gesperrten beziehungsweise freigeschalteten Editorfelder, die Abo-Seiten sowie Monats- und Jahresauswahl geprüft. Die Browserkonsole bleibt fehlerfrei.
-- Ohne lokale Stripe-Schlüssel erscheint eine verständliche Konfigurationsmeldung. Für einen echten Test fehlen noch die Test-Schlüssel, die beiden Stripe-Preis-IDs und das Webhook-Geheimnis in `.env.local`; Geheimnisse wurden nicht in Git aufgenommen.
+- Ohne lokale Stripe-Schlüssel erscheint eine verständliche Konfigurationsmeldung. Die Sandbox-Schlüssel, beide Preis-IDs und das lokale Webhook-Geheimnis sind inzwischen ausschliesslich in `.env.local` konfiguriert; Geheimnisse wurden nicht in Git aufgenommen.
 - JSON-Prüfung aller Sprachdateien, `npm run lint`, `npx tsc --noEmit`, `npm run build` und `git diff --check` sind erfolgreich.
+
+Am 1. August 2026 zusätzlich geprüft:
+
+- Monats- und Jahresabo wurden vollständig in der Sandbox bezahlt und mit den korrekten Preisen CHF 9.90 beziehungsweise CHF 99.00 angelegt.
+- Das Jahresabo von `Well & Wow Kitchen by Marina` wurde zunächst nicht nach Directus synchronisiert, weil der lokale Webhook-Listener während der Zahlung nicht lief. Nach dem Neustart des Listeners wurde ein echtes Abo-Aktualisierungsereignis mit HTTP 200 verarbeitet; Directus führt den Eintrag nun mit aktivem Jahresabo bis 1. August 2027.
+- Für weitere lokale Zahlungs-, Kündigungs- und Portaltests muss der Stripe-CLI-Listener aktiv bleiben. Im Livebetrieb übernimmt ein dauerhaft konfigurierter öffentlicher Webhook-Endpunkt diese Aufgabe.
+- Sämtliche sichtbaren Abo-, Zahlungs-, Portal- und Fehlermeldungen nennen den technischen Zahlungsanbieter in keiner der neun unterstützten Sprachen. Interne Variablennamen, Serverlogs und Integrationscode bleiben technisch eindeutig benannt.
+- Der Premium-Badge im Eintragseditor ist optisch mittig ausgerichtet. Beim Entfernen des Firmenlogos sowie bestehender oder neu ausgewählter Galeriebilder erscheint ein eigener Bestätigungsdialog mit Abbrechen- und Entfernen-Aktion; die Warntexte sind in allen neun Sprachen vorhanden.
+
+Am 2. August 2026 ergänzt:
+
+- Die Abo- und Zahlungsmittelverwaltung öffnet sich aus Findelio in einem neuen Browser-Tab. Der ursprüngliche Findelio-Tab bleibt geöffnet; falls der Browser das Öffnen blockiert, wird als Rückfall weiterhin im aktuellen Tab navigiert.
+- Ein Hinweis unter dem Verwaltungsbutton erklärt dieses Verhalten in allen neun unterstützten Sprachen.
+- Vom Kundenportal mit einem konkreten zukünftigen `cancel_at` geplante Kündigungen werden auch dann als Kündigung zum Periodenende synchronisiert, wenn Stripe `cancel_at_period_end` nicht setzt.
+- Der bereits vorgemerkte Kündigungsstatus von `JAZU Webdesign` wurde mit Stripe abgeglichen und in Directus korrigiert. Premium bleibt bis 31. August 2026 aktiv; auf der Abo-Seite wird nun das Zugangsende statt einer nächsten Verlängerung angezeigt.
+
+## Premium-Wachstumsfunktionen
+
+Am 1. August 2026 umgesetzt:
+
+- Premium-Firmeneinträge besitzen neu einen frei beschriftbaren Aktionsbutton mit geprüftem Ziel als Web-, E-Mail- oder Telefonlink. Die beiden Felder laufen bei veröffentlichten Einträgen durch den bestehenden Freigabeprozess.
+- Premium-Kunden können Neuigkeiten, Aktionen und Veranstaltungen mit Bild, Zeitraum, Beschreibung und optionalem Aktionsbutton als Entwurf speichern oder zur Prüfung einreichen.
+- Bestehende Beiträge können im Dashboard bearbeitet werden. Bei Änderungen an einer veröffentlichten Fassung bleibt das Original öffentlich sichtbar; eine verknüpfte neue Fassung durchläuft erneut die Prüfung und ersetzt das Original erst nach der Freigabe. Entwürfe, wartende und abgelehnte Fassungen werden direkt weiterbearbeitet. Das Kundendashboard fasst diese technischen Versionen zu einem logischen Beitrag zusammen und blendet archivierte Vorgänger aus.
+- Der Bild-Upload für Beiträge verwendet statt der nativen Dateieingabe einen einheitlichen, zentrierten Findelio-Button mit separat angezeigtem Dateinamen. Darunter wird passend zur öffentlichen 16:9-Darstellung `1200 × 675 px` empfohlen. Button, Leerstatus und Bildhinweis sind in allen neun Sprachen übersetzt.
+- Ausstehende Premium-Beiträge erscheinen im internen Findelio-Prüfbereich und können dort freigegeben oder mit Begründung abgelehnt werden. Nur veröffentlichte und noch aktuelle Beiträge erscheinen auf dem öffentlichen Firmenprofil.
+- Passende Premium-Einträge werden in der Suche vor Free-Einträgen angezeigt und deutlich als Premium gekennzeichnet. Mehrere Premium-Einträge werden anhand eines täglich wechselnden, stabilen Werts fair angeordnet.
+- Für aktive Premium-Einträge werden Such-Einblendungen, Profilaufrufe sowie Klicks auf Website, Telefon, E-Mail, Social Media, individuellen Button und Beitragsbuttons als zusammengefasste Tageswerte gespeichert.
+- Die Messung legt keine dauerhaften IP-Adressen, Besucherprofile oder Tracking-Cookies an. Die Datenschutzerklärung enthält einen eigenen Abschnitt zur Reichweitenmessung.
+- Jeder Premium-Eintrag besitzt im Dashboard eine Statistikseite für 30, 90 oder 365 Tage.
+- Eine neue Directus-Zeitplanerweiterung versendet am ersten Tag jedes Monats einen lokalisierten Bericht für den Vormonat an aktive Organisationsinhaber. Ein Versandprotokoll mit Eindeutigkeitsregel verhindert doppelte Berichte.
+- Beim Einreichen eines Premium-Beitrags zur Prüfung erhält `info@findelio.ch` eine Findelio-Benachrichtigung mit direktem Link zum internen Prüfbereich. Nach Bestätigung oder Ablehnung erhält die einreichende Person eine Kundenmail mit öffentlichem Profillink beziehungsweise Begründung und Bearbeitungslink. Die zuvor ausgebliebenen Nachrichten für den Beitrag von `JAZU Webdesign` wurden erfolgreich nachgesendet.
+- Entscheidungsbenachrichtigungen für Eintragsänderungen können über den internen Serverzugang sicher nachgesendet werden. Die Bestätigung zur Spezialbutton-Änderung von `JAZU Webdesign` wurde am 2. August 2026 erneut an die in der Revision hinterlegte Kundenadresse übergeben; Directus bestätigte den Versand mit HTTP 204.
+- Die reproduzierbare Migration `20260801_premium_growth_features.sql` legt Felder, Sammlungen, Beziehungen, Indizes und die minimalen technischen Directus-Rechte an.
+- Die ergänzende Migration `20260802_listing_post_edits.sql` verknüpft neue Prüffassungen mit dem weiterhin veröffentlichten Original; sie wurde lokal erfolgreich angewendet und von Directus geladen.
+- Directus lädt Tracking- und Berichtserweiterung fehlerfrei. Ein realer lokaler Tracking-Aufruf erhöhte den aggregierten Tageswert atomar. Suche, Premium-Profil, Beitragsverwaltung, Statistik und Button-Felder wurden im Browser geprüft; die Browserkonsole blieb fehlerfrei.
+- JSON-Prüfung aller Sprachdateien, `npx tsc --noEmit`, `npm run lint` und `npm run build` sind erfolgreich.
+
+## Globales Abstandsmaß
+
+- Das Tailwind-v4-Theme und `:root` verwenden global `--spacing: 0.2rem`. Im gerenderten Frontend wurde der Wert als `.2rem` bestätigt; beispielsweise ergeben `p-6` und `gap-6` jeweils `19.2px`.
 
 ## Git- und Arbeitsstand
 
 - Branch: `main`
-- Aktueller lokaler Sicherungs-Commit vor der Stripe-Erweiterung: `6bb6fba` (`Complete multilingual account and listing workflows`)
+- Aktueller lokaler Sicherungs-Commit mit der Stripe-Erweiterung: `8515165` (`feat: add per-listing Stripe subscriptions`)
 - Der aktuelle Gesamtstand mit Registrierung, Onboarding, Premium-Funktionen, Prüfworkflow, E-Mail-Vorlagen, öffentlichen Verzeichnisfunktionen sowie Kontakt- und Rechtseiten ist in einem lokalen Git-Commit gesichert.
 - `SKILLS.md` und `PROJECT_STATUS.md` wurden am 28. Juli 2026 zur Projektdokumentation angelegt.
 - Es wurde kein Push ausgeführt.

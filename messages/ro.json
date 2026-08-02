@@ -309,6 +309,103 @@
     "changesTitle": "11. Modificări",
     "changesText": "Putem actualiza această politică atunci când se schimbă funcțiile, furnizorii sau cerințele legale. Este valabilă versiunea publicată pe această pagină."
   },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "excerpt": "Summary",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Selectează imaginea",
+      "imageEmpty": "Nicio imagine selectată",
+      "imageHint": "Recomandat: 1200 × 675 px (raport 16:9).",
+      "imageCurrent": "Imaginea actuală va fi păstrată",
+      "editTitle": "Editează postarea",
+      "editPublishedHint": "Postarea actuală rămâne vizibilă. Modificările vor fi verificate din nou înainte de publicare.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Modificările au fost salvate.",
+      "update": "Salvează modificările",
+      "cancel": "Anulează",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archive",
+      "edit": "Editează",
+      "archiveConfirm": "Do you really want to archive this post?",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Reason for rejection",
+      "error": "The action failed. A reason is required when rejecting a post.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
+  }
+  ,
   "ListingEditor": {
     "eyebrow": "Editează listarea firmei",
     "title": "Editează {name}",
@@ -362,6 +459,14 @@
       "noLogo": "Niciun logo încă",
       "chooseLogo": "Alege logo-ul",
       "remove": "Elimină",
+      "removeDialog": {
+        "logoTitle": "Elimini logo-ul firmei?",
+        "logoDescription": "Ești pe cale să elimini logo-ul din această listare de firmă. Modificarea se aplică numai după salvare.",
+        "galleryTitle": "Elimini imaginea din galerie?",
+        "galleryDescription": "Ești pe cale să elimini această imagine din galerie. Modificarea se aplică numai după salvare.",
+        "cancel": "Anulează",
+        "confirm": "Elimină imaginea"
+      },
       "galleryHint": "Adaugă cel mult zece imagini reprezentative ale firmei.",
       "galleryPreview": "Previzualizarea imaginii din galerie",
       "galleryLimit": "Galeria poate conține cel mult zece imagini.",
@@ -491,9 +596,9 @@
     "back": "Înapoi la listările de firmă",
     "eyebrow": "Pachet și facturare",
     "title": "Abonament pentru {name}",
-    "description": "Gestionează pachetul acestei listări de firmă. Premium este activat doar după confirmarea plății de către Stripe.",
+    "description": "Gestionează pachetul acestei listări de firmă. Premium este activat doar după confirmarea plății.",
     "listingCreated": "Listarea de firmă a fost salvată ca schiță. Alege acum pachetul dorit.",
-    "checkoutSuccess": "Mulțumim. Stripe a primit plata. Premium va fi activat după confirmarea webhookului, ceea ce poate dura puțin.",
+    "checkoutSuccess": "Mulțumim. Plata a fost efectuată cu succes. Activarea Premium este în curs de confirmare și poate dura puțin.",
     "checkoutCancelled": "Procesul de plată a fost anulat. Listarea de firmă rămâne în pachetul Free.",
     "intervalTitle": "Perioada de facturare",
     "intervals": {
@@ -536,10 +641,11 @@
       }
     },
     "actions": {
-      "subscribe": "Abonează-te la Premium prin Stripe",
-      "openingCheckout": "Se deschide Stripe Checkout …",
+      "subscribe": "Abonează-te la Premium",
+      "openingCheckout": "Se deschide plata securizată …",
       "manage": "Gestionează abonamentul și metoda de plată",
-      "openingPortal": "Se deschide portalul pentru clienți …"
+      "openingPortal": "Se deschide portalul pentru clienți …",
+      "portalHint": "Gestionarea abonamentului se deschide într-o filă nouă. Findelio rămâne deschis."
     },
     "errors": {
       "invalid_data": "Opțiunea de facturare selectată nu este validă.",
@@ -547,10 +653,10 @@
       "forbidden": "Nu poți gestiona acest abonament.",
       "not_found": "Listarea de firmă nu a fost găsită.",
       "already_active": "Premium este deja activ pentru această listare de firmă.",
-      "billing_not_configured": "Stripe nu este încă configurat complet local.",
-      "portal_unavailable": "Acest abonament local de test nu este încă asociat unui client Stripe.",
-      "checkout_failed": "Stripe Checkout nu a putut fi pornit.",
-      "portal_failed": "Portalul pentru clienți Stripe nu a putut fi deschis.",
+      "billing_not_configured": "Funcția de plată nu este disponibilă momentan.",
+      "portal_unavailable": "Gestionarea acestui abonament nu este disponibilă momentan.",
+      "checkout_failed": "Procesul de plată nu a putut fi pornit.",
+      "portal_failed": "Gestionarea abonamentului nu a putut fi deschisă.",
       "network": "Conexiunea la server a eșuat.",
       "unknown": "Acțiunea asupra abonamentului nu a putut fi finalizată."
     }

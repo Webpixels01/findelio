@@ -12,6 +12,11 @@ export type ListingDecisionNotification = {
   reason?: string;
 };
 
+export type PostDecisionNotification = {
+  postId: string;
+  action: "approve" | "reject";
+};
+
 export type ContactNotification = {
   name: string;
   email: string;
@@ -20,6 +25,55 @@ export type ContactNotification = {
   message: string;
   locale: string;
 };
+
+export async function sendPostReviewNotification(
+  accessToken: string,
+  postId: string,
+): Promise<void> {
+  const response = await fetch(
+    new URL("/findelio-review-notification/post-review", getDirectusUrl()),
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ post_id: postId }),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Directus-Beitragsmail fehlgeschlagen (${response.status}).`);
+  }
+}
+
+export async function sendPostDecisionNotification(
+  accessToken: string,
+  notification: PostDecisionNotification,
+): Promise<void> {
+  const response = await fetch(
+    new URL("/findelio-review-notification/post-decision", getDirectusUrl()),
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        post_id: notification.postId,
+        action: notification.action,
+      }),
+      cache: "no-store",
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Directus-Beitragsentscheidung konnte nicht versendet werden (${response.status}).`,
+    );
+  }
+}
 
 function getDirectusUrl(): string {
   const directusUrl = process.env.DIRECTUS_URL;

@@ -62,6 +62,8 @@ type ListingPremiumData = {
     opens_at: string;
     closes_at: string;
   }>;
+  customCtaLabel: string;
+  customCtaValue: string;
 };
 
 function normalizeSearchValue(value: string): string {
@@ -247,6 +249,8 @@ export default function ListingEditForm({
         gallery={premium.gallery}
         socialLinks={premium.socialLinks}
         openingHours={premium.openingHours}
+        customCtaLabel={premium.customCtaLabel}
+        customCtaValue={premium.customCtaValue}
       />
 
       <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">

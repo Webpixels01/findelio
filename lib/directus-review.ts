@@ -31,6 +31,8 @@ export type ListingRevisionData = {
     opens_at: string;
     closes_at: string;
   }>;
+  custom_cta_label?: string | null;
+  custom_cta_value?: string | null;
 };
 
 export type PendingListingRevision = {
@@ -643,6 +645,12 @@ export async function approveListingRevision(
             : {}),
           ...(data.social_links !== undefined
             ? { social_links: data.social_links }
+            : {}),
+          ...(data.custom_cta_label !== undefined
+            ? { custom_cta_label: data.custom_cta_label }
+            : {}),
+          ...(data.custom_cta_value !== undefined
+            ? { custom_cta_value: data.custom_cta_value }
             : {}),
           status: "published",
           published_at: reviewedAt,

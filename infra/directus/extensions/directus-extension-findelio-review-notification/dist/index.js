@@ -19,6 +19,8 @@ const fieldLabels = {
   gallery_file_ids: "Bildergalerie",
   opening_hours: "Öffnungszeiten",
   social_links: "Social-Media-Links",
+  custom_cta_label: "Button-Beschriftung",
+  custom_cta_value: "Button-Ziel",
 };
 
 const contactSubjectLabels = {
@@ -28,6 +30,12 @@ const contactSubjectLabels = {
   partnership: "Partnerschaft",
   other: "Anderes Anliegen",
 };
+
+const metricColumns = new Set([
+  "search_impressions", "profile_views", "website_clicks", "phone_clicks",
+  "email_clicks", "social_clicks", "custom_cta_clicks", "post_views",
+  "post_cta_clicks",
+]);
 
 const findelioReviewNotificationEndpoint = {
   id: "findelio-review-notification",
@@ -163,6 +171,276 @@ const findelioReviewNotificationEndpoint = {
       }
     });
 
+    router.post("/metrics", async (req, res) => {
+      if (!req.accountability?.user) {
+        return res.status(401).json({ error: "unauthorized" });
+      }
+      const event = typeof req.body?.event === "string" ? req.body.event : "";
+      const listingIds = Array.isArray(req.body?.listing_ids)
+        ? [...new Set(req.body.listing_ids.filter((id) =>
+            typeof id === "string" && uuidPattern.test(id),
+          ))].slice(0, 50)
+        : [];
+      if (!metricColumns.has(event) || listingIds.length === 0) {
+        return res.status(400).json({ error: "invalid_data" });
+      }
+
+      try {
+        const activeRows = await database("listings")
+          .join("subscriptions", "subscriptions.listing", "listings.id")
+          .whereIn("listings.id", listingIds)
+          .where("listings.status", "published")
+          .where("subscriptions.plan", "premium")
+          .whereIn("subscriptions.status", ["active", "past_due"])
+          .where((query) => query
+            .whereNull("subscriptions.current_period_end")
+            .orWhere("subscriptions.current_period_end", ">", database.fn.now()))
+          .distinct("listings.id");
+        const today = new Date().toISOString().slice(0, 10);
+
+        for (const row of activeRows) {
+          await database("listing_metrics_daily")
+            .insert({ listing: row.id, metric_date: today, [event]: 1 })
+            .onConflict(["listing", "metric_date"])
+            .merge({
+              [event]: database.raw("??.?? + 1", ["listing_metrics_daily", event]),
+              date_updated: database.fn.now(),
+            });
+        }
+        return res.status(204).send();
+      } catch (error) {
+        logger.error(error, "Findelio metric tracking failed");
+        return res.status(500).json({ error: "save_failed" });
+      }
+    });
+
+    router.post("/post-review", async (req, res) => {
+      const userId = req.accountability?.user;
+      const postId =
+        typeof req.body?.post_id === "string" ? req.body.post_id.trim() : "";
+
+      if (!userId) {
+        return res.status(401).json({ error: "unauthorized" });
+      }
+
+      if (!uuidPattern.test(postId)) {
+        return res.status(400).json({ error: "invalid_data" });
+      }
+
+      const recipient = String(env.ADMIN_NOTIFICATION_EMAIL ?? "").trim();
+      const siteUrl = String(env.FINDELIO_SITE_URL ?? "")
+        .trim()
+        .replace(/\/$/, "");
+
+      if (!recipient || !siteUrl) {
+        logger.error("ADMIN_NOTIFICATION_EMAIL or FINDELIO_SITE_URL is missing");
+        return res.status(500).json({ error: "configuration_error" });
+      }
+
+      try {
+        const accountabilityRole = await database("directus_roles")
+          .select("name")
+          .where("id", req.accountability?.role)
+          .first();
+        const isServerRole = accountabilityRole?.name === "Findelio Server";
+        let postQuery = database("listing_posts as posts")
+          .join("listings", "posts.listing", "listings.id")
+          .select(
+            "posts.title as post_title",
+            "posts.type as post_type",
+            "posts.submitted_by",
+            "listings.name as listing_name",
+          )
+          .where({
+            "posts.id": postId,
+            "posts.status": "pending",
+          });
+
+        if (req.accountability?.admin !== true && !isServerRole) {
+          postQuery = postQuery
+            .join(
+              "organization_members as members",
+              "listings.organization",
+              "members.organization",
+            )
+            .where({
+              "posts.submitted_by": userId,
+              "members.user": userId,
+              "members.status": "active",
+            });
+        }
+
+        const post = await postQuery.first();
+
+        if (!post) {
+          return res.status(403).json({ error: "forbidden" });
+        }
+
+        const reviewPath = "/de-ch/dashboard/pruefung";
+        const reviewUrl = `${siteUrl}/api/auth/refresh?next=${encodeURIComponent(
+          reviewPath,
+        )}&locale=de-ch`;
+        const typeLabels = {
+          update: "Neuigkeit",
+          offer: "Aktion",
+          event: "Veranstaltung",
+        };
+        const mailService = new MailService({
+          schema: await getSchema(),
+          accountability: req.accountability,
+          knex: database,
+        });
+
+        await mailService.send({
+          to: recipient,
+          subject: `Beitrag wartet auf Freigabe: ${post.post_title}`,
+          text: `Ein Premium-Beitrag wartet auf deine Prüfung.\n\nFirma: ${post.listing_name}\nBeitrag: ${post.post_title}\nArt: ${typeLabels[post.post_type] ?? post.post_type}\n\nPrüfung öffnen:\n${reviewUrl}`,
+          template: {
+            name: "listing-post-review-notification",
+            data: {
+              listingName: post.listing_name,
+              postTitle: post.post_title,
+              postType: typeLabels[post.post_type] ?? post.post_type,
+              reviewUrl,
+            },
+          },
+        });
+
+        return res.status(204).send();
+      } catch (error) {
+        logger.error(error, "Findelio post review notification failed");
+        return res.status(500).json({ error: "send_failed" });
+      }
+    });
+
+    router.post("/post-decision", async (req, res) => {
+      const userId = req.accountability?.user;
+      const postId =
+        typeof req.body?.post_id === "string" ? req.body.post_id.trim() : "";
+      const action = req.body?.action;
+
+      if (!userId) {
+        return res.status(401).json({ error: "unauthorized" });
+      }
+
+      if (!uuidPattern.test(postId) || !["approve", "reject"].includes(action)) {
+        return res.status(400).json({ error: "invalid_data" });
+      }
+
+      const siteUrl = String(env.FINDELIO_SITE_URL ?? "")
+        .trim()
+        .replace(/\/$/, "");
+
+      if (!siteUrl) {
+        logger.error("FINDELIO_SITE_URL is missing");
+        return res.status(500).json({ error: "configuration_error" });
+      }
+
+      try {
+        const accountabilityRole = await database("directus_roles")
+          .select("name")
+          .where("id", req.accountability?.role)
+          .first();
+        const isServerRole = accountabilityRole?.name === "Findelio Server";
+        let postQuery = database("listing_posts as posts")
+          .join("listings", "posts.listing", "listings.id")
+          .leftJoin(
+            "directus_users as submitter",
+            "posts.submitted_by",
+            "submitter.id",
+          )
+          .select(
+            "posts.status",
+            "posts.reviewed_by",
+            "posts.title as post_title",
+            "posts.type as post_type",
+            "posts.rejection_reason",
+            "listings.id as listing_id",
+            "listings.name as listing_name",
+            "listings.slug as listing_slug",
+            "submitter.email as recipient",
+          )
+          .where("posts.id", postId);
+
+        if (!isServerRole) {
+          postQuery = postQuery.where("posts.reviewed_by", userId);
+        }
+
+        const post = await postQuery.first();
+        const hasExpectedState =
+          (action === "approve" && post?.status === "published") ||
+          (action === "reject" && post?.status === "rejected");
+
+        if (!post || !hasExpectedState) {
+          return res.status(403).json({ error: "forbidden" });
+        }
+
+        const recipient = String(post.recipient ?? "").trim();
+        if (!recipient) {
+          logger.warn({ postId }, "Findelio post decision notification has no recipient");
+          return res.status(422).json({ error: "no_recipient" });
+        }
+
+        const typeLabels = {
+          update: "Neuigkeit",
+          offer: "Aktion",
+          event: "Veranstaltung",
+        };
+        const decisionContent = {
+          approve: {
+            heading: "Beitrag bestätigt",
+            intro: "Gute Nachrichten: Dein Beitrag wurde geprüft und veröffentlicht.",
+            subject: `Dein Beitrag wurde bestätigt: ${post.post_title}`,
+            buttonLabel: "Beitrag ansehen",
+            targetUrl: `${siteUrl}/de-ch/unternehmen/${encodeURIComponent(
+              post.listing_slug,
+            )}`,
+          },
+          reject: {
+            heading: "Beitrag abgelehnt",
+            intro: "Dein Beitrag wurde geprüft, konnte aber noch nicht veröffentlicht werden.",
+            subject: `Dein Beitrag wurde abgelehnt: ${post.post_title}`,
+            buttonLabel: "Beiträge bearbeiten",
+            targetUrl: `${siteUrl}/api/auth/refresh?next=${encodeURIComponent(
+              `/de-ch/dashboard/firmenprofile/${post.listing_id}/beitraege`,
+            )}&locale=de-ch`,
+          },
+        }[action];
+        const reason =
+          action === "reject" ? String(post.rejection_reason ?? "").trim() : "";
+        const reasonText = reason ? `\n\nBegründung:\n${reason}` : "";
+        const mailService = new MailService({
+          schema: await getSchema(),
+          accountability: req.accountability,
+          knex: database,
+        });
+
+        await mailService.send({
+          to: recipient,
+          subject: decisionContent.subject,
+          text: `${decisionContent.intro}\n\nFirma: ${post.listing_name}\nBeitrag: ${post.post_title}${reasonText}\n\n${decisionContent.buttonLabel}:\n${decisionContent.targetUrl}`,
+          template: {
+            name: "listing-post-decision-notification",
+            data: {
+              heading: decisionContent.heading,
+              intro: decisionContent.intro,
+              listingName: post.listing_name,
+              postTitle: post.post_title,
+              postType: typeLabels[post.post_type] ?? post.post_type,
+              reason,
+              buttonLabel: decisionContent.buttonLabel,
+              targetUrl: decisionContent.targetUrl,
+            },
+          },
+        });
+
+        return res.status(204).send();
+      } catch (error) {
+        logger.error(error, "Findelio post decision notification failed");
+        return res.status(500).json({ error: "send_failed" });
+      }
+    });
+
     router.post("/contact", async (req, res) => {
       const userId = req.accountability?.user;
       const name =
@@ -265,7 +543,12 @@ const findelioReviewNotificationEndpoint = {
       }
 
       try {
-        const revision = await database("listing_revisions as revisions")
+        const accountabilityRole = await database("directus_roles")
+          .select("name")
+          .where("id", req.accountability?.role)
+          .first();
+        const isServerRole = accountabilityRole?.name === "Findelio Server";
+        let revisionQuery = database("listing_revisions as revisions")
           .join("listings", "revisions.listing", "listings.id")
           .leftJoin(
             "directus_users as submitter",
@@ -282,11 +565,13 @@ const findelioReviewNotificationEndpoint = {
             "listings.status as listing_status",
             "submitter.email as recipient",
           )
-          .where({
-            "revisions.id": revisionId,
-            "revisions.reviewed_by": userId,
-          })
-          .first();
+          .where("revisions.id", revisionId);
+
+        if (!isServerRole) {
+          revisionQuery = revisionQuery.where("revisions.reviewed_by", userId);
+        }
+
+        const revision = await revisionQuery.first();
 
         const hasExpectedState =
           (action === "approve" &&
