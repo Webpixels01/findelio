@@ -8,8 +8,8 @@ export type ListingRevisionChangedValue = {
 
 export type ListingRevisionData = {
   name: string;
-  short_description: string | null;
   description: string | null;
+  description_translations?: Record<string, string>;
   street: string | null;
   postal_code: string;
   city: string;
@@ -630,8 +630,13 @@ export async function approveListingRevision(
         },
         body: JSON.stringify({
           name: data.name,
-          short_description: data.short_description,
           description: data.description,
+          ...(data.description_translations !== undefined
+            ? {
+                description_translations:
+                  data.description_translations,
+              }
+            : {}),
           street: data.street,
           postal_code: data.postal_code,
           city: data.city,

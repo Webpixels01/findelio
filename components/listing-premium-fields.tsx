@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import PremiumBadge from "@/components/premium-badge";
 import {
   forwardRef,
   useCallback,
@@ -308,16 +309,14 @@ const ListingPremiumFields = forwardRef<
     return (
       <section className="rounded-3xl border border-[#bfdcff] bg-[#f2f8ff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex h-7 items-center justify-center rounded-full bg-[var(--accent)] px-3 text-xs leading-none font-extrabold uppercase tracking-wider text-white">
-            {t("badge")}
-          </span>
+          <PremiumBadge>{t("badge")}</PremiumBadge>
           <h2 className="text-2xl font-extrabold">{t("title")}</h2>
         </div>
         <p className="mt-3 max-w-3xl text-[var(--muted)]">
           {t("lockedDescription")}
         </p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {(["logo", "gallery", "openingHours", "socialLinks", "customCta"] as const).map(
+          {(["logo", "gallery", "openingHours", "socialLinks", "translations", "customCta"] as const).map(
             (feature) => (
               <div
                 key={feature}
@@ -349,9 +348,7 @@ const ListingPremiumFields = forwardRef<
   return (
     <section className="rounded-3xl border border-[#bfdcff] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="inline-flex h-7 items-center justify-center rounded-full bg-[var(--accent)] px-3 text-xs leading-none font-extrabold uppercase tracking-wider text-white">
-          {t("badge")}
-        </span>
+        <PremiumBadge>{t("badge")}</PremiumBadge>
         <h2 className="text-2xl font-extrabold">{t("title")}</h2>
       </div>
       <p className="mt-3 text-[var(--muted)]">{t("description")}</p>

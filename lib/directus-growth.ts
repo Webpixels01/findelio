@@ -12,7 +12,6 @@ export type AccountListingPost = {
   type: "update" | "offer" | "event";
   status: ListingPostStatus;
   title: string;
-  excerpt: string | null;
   body: string | null;
   image: string | null;
   cta_label: string | null;
@@ -28,7 +27,7 @@ export type AccountListingPost = {
 
 export type ListingPostInput = Pick<
   AccountListingPost,
-  "type" | "title" | "excerpt" | "body" | "image" | "cta_label" | "cta_url" | "starts_at" | "ends_at"
+  "type" | "title" | "body" | "image" | "cta_label" | "cta_url" | "starts_at" | "ends_at"
 > & { status: "draft" | "pending" };
 
 export type ListingMetricSummary = {
@@ -75,7 +74,7 @@ async function ensurePremium(accessToken: string, listingId: string) {
 export async function getAccountListingPosts(accessToken: string, listingId: string) {
   await ensurePremium(accessToken, listingId);
   const url = new URL("/items/listing_posts", directusUrl());
-  url.searchParams.set("fields", "id,listing,type,status,title,excerpt,body,image,cta_label,cta_url,starts_at,ends_at,submitted_at,published_at,rejection_reason,replaces_post");
+  url.searchParams.set("fields", "id,listing,type,status,title,body,image,cta_label,cta_url,starts_at,ends_at,submitted_at,published_at,rejection_reason,replaces_post");
   url.searchParams.set("sort", "-date_created");
   url.searchParams.set("filter", JSON.stringify({ listing: { _eq: listingId } }));
   return readList<AccountListingPost>(await fetch(url, { headers: serverHeaders(), cache: "no-store" }));
@@ -201,7 +200,7 @@ export async function archiveAccountListingPost(
 
 export async function getPendingListingPosts(accessToken: string) {
   const url = new URL("/items/listing_posts", directusUrl());
-  url.searchParams.set("fields", "id,listing.id,listing.name,type,status,title,excerpt,body,image,cta_label,cta_url,starts_at,ends_at,submitted_by.id,submitted_by.email,submitted_at,published_at,rejection_reason,replaces_post");
+  url.searchParams.set("fields", "id,listing.id,listing.name,type,status,title,body,image,cta_label,cta_url,starts_at,ends_at,submitted_by.id,submitted_by.email,submitted_at,published_at,rejection_reason,replaces_post");
   url.searchParams.set("sort", "submitted_at");
   url.searchParams.set("filter", JSON.stringify({ status: { _eq: "pending" } }));
   return readList<AccountListingPost>(await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` }, cache: "no-store" }));

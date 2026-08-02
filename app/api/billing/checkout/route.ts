@@ -29,6 +29,15 @@ type CheckoutBody = {
   locale?: unknown;
 };
 
+function isMissingProviderResource(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "resource_missing"
+  );
+}
+
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -138,6 +147,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "already_active" }, { status: 409 });
     }
 
+    if (billingData.listing.status !== "published") {
+      return NextResponse.json(
+        { error: "listing_not_published" },
+        { status: 409 },
+      );
+    }
+
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
     if (!siteUrl) {
@@ -148,9 +164,25 @@ export async function POST(request: Request) {
 
     const billingInterval = interval as BillingInterval;
     const stripe = getStripeClient();
-    const customerId = await getProviderCustomerIdForOrganization(
+    let customerId = await getProviderCustomerIdForOrganization(
       billingData.listing.organization.id,
     );
+
+    if (customerId) {
+      try {
+        const customer = await stripe.customers.retrieve(customerId);
+
+        if (customer.deleted) {
+          customerId = null;
+        }
+      } catch (error) {
+        if (isMissingProviderResource(error)) {
+          customerId = null;
+        } else {
+          throw error;
+        }
+      }
+    }
     const billingPageUrl = new URL(
       `/${locale}/dashboard/firmenprofile/${listingId}/abo`,
       siteUrl,

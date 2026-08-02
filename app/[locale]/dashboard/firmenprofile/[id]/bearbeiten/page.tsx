@@ -85,7 +85,9 @@ export default async function EditListingPage({
           className="mt-8 rounded-2xl border border-[#bfe4ca] bg-[#eefaf2] p-4 font-bold text-[#135f30]"
           role="status"
         >
-          {t("createdNotice")}
+          {listing.requested_billing_interval
+            ? t("createdPremiumNotice")
+            : t("createdNotice")}
         </div>
       )}
 
@@ -94,8 +96,15 @@ export default async function EditListingPage({
           id: listing.id,
           name: listing.name,
           status: listing.status,
-          shortDescription: listing.short_description ?? "",
           description: htmlToPlainText(listing.description),
+          descriptionTranslations: Object.fromEntries(
+            Object.entries(listing.description_translations ?? {}).map(
+              ([translationLocale, value]) => [
+                translationLocale,
+                htmlToPlainText(value),
+              ],
+            ),
+          ),
           street: listing.street ?? "",
           postalCode: listing.postal_code ?? "",
           city: listing.city ?? "",

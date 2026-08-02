@@ -266,7 +266,7 @@ Am 29. Juli 2026 umgesetzt:
 - Bei einer Sperrung enthält die Mail ebenfalls die Begründung und einen Link zu den Firmeneinträgen im Dashboard.
 - Die Mail verwendet das vorhandene Findelio-Layout mit zentriertem Logo und Findelio-Absenderdarstellung.
 - Der Benachrichtigungsendpunkt prüft, dass die aufrufende Person die Revision selbst geprüft hat und dass Entscheidung, Revisionsstatus und Eintragsstatus zusammenpassen.
-- Die Empfängeradresse und die Begründung werden serverseitig aus der geprüften Revision gelesen und nicht aus dem Browser übernommen.
+- Die Empfängeradresse sowie Begründungen für Ablehnung und Sperrung werden serverseitig aus der geprüften Revision gelesen. Ein freiwilliger Hinweis bei einer Bestätigung wird aus der authentifizierten Admin-Prüfaktion übernommen, auf höchstens 2000 Zeichen begrenzt und ebenfalls in der Kundenmail angezeigt.
 - Ein Fehler beim nachgelagerten Mailversand ändert die bereits erfolgreich gespeicherte Prüfentscheidung nicht; er wird serverseitig protokolliert.
 - Eine endgültige Löschaktion existiert im aktuellen Prüfworkflow nicht. Der vorhandene Zustand heisst korrekt `suspended` beziehungsweise „gesperrt“ und wird in der Mail nicht als Löschung bezeichnet.
 - `npm run lint`, `npx tsc --noEmit` sowie die Syntaxprüfung aller geänderten Directus-Erweiterungen sind erfolgreich.
@@ -344,6 +344,14 @@ Am 30. Juli 2026 umgesetzt:
 - Die technische `Findelio Server Policy` darf Stripe-Abos lesen, erstellen und ihre Abrechnungsfelder aktualisieren. Validierung begrenzt die Datensätze auf Stripe, Premium, CHF, die beiden Preise und bekannte Statuswerte. Löschrechte bleiben gesperrt.
 - Firmenkunden können weiterhin nur Abo-Daten ihrer eigenen Organisation lesen und besitzen keine Abo-Schreibrechte.
 - Die reproduzierbaren Directus-Migrationen befinden sich unter `infra/directus/migrations`.
+- Eine beim Anlegen gewählte monatliche oder jährliche Premium-Option wird jetzt am Entwurf vorgemerkt. Premium-Entwürfe können Logo, Galerie, Öffnungszeiten, Social-Media-Links und weitere Premium-Angaben bereits vor der Zahlung vollständig vorbereiten; öffentlich sichtbar werden diese Inhalte weiterhin erst mit aktivem Abo.
+- Der Abo-Abschluss ist technisch und in der Oberfläche gesperrt, solange ein Firmeneintrag nicht veröffentlicht ist. Entwürfe führen zuerst in den Editor, eingereichte Einträge zeigen den laufenden Prüfstatus.
+- Nach der administrativen Freigabe führt die Kundenmail bei einer vorgemerkten Premium-Option direkt zur Abo-Seite mit der zuvor gewählten Abrechnungsperiode. Erst dort wird die Zahlung gestartet.
+- Die Migration `20260802_premium_checkout_after_approval.sql` ergänzt dafür das verborgene Feld `requested_billing_interval` und die minimal nötigen Rechte. Der vorhandene lokale Jahresabo-Entwurf wurde auf `yearly` nachgeführt.
+- Beim späteren Premium-Abschluss eines ursprünglich kostenlosen Eintrags wird eine gespeicherte Zahlungs-Kunden-ID vor der Wiederverwendung geprüft. Gelöschte oder in der aktuellen Sandbox nicht mehr vorhandene Kunden werden verworfen; der Checkout kann dadurch automatisch einen neuen Kunden anlegen.
+- Statusmails zu Firmeneinträgen gehen an die E-Mail-Adresse des einreichenden Kontos und bei einer abweichenden öffentlichen Firmenadresse zusätzlich an diese zweite Adresse. Doppelte Empfänger werden entfernt; Directus protokolliert den erfolgreichen Versand mit der Empfängeranzahl.
+- Premium-Badges verwenden eine gemeinsame Komponente mit fester Höhe und optisch korrigierter vertikaler Textzentrierung.
+- Firmenlogos werden anhand ihrer gespeicherten Bildabmessungen adaptiv dargestellt: quadratische Logos bleiben kreisförmig und flächig, breite Wortmarken erhalten in Suchkarten und Detailprofilen einen breiteren abgerundeten Rahmen und werden vollständig angezeigt. Die Migration `20260802_adaptive_company_logos.sql` ergänzt dafür nur die technischen Lesefelder `width` und `height`.
 - Die sichtbaren Paket-, Status-, Preis- und Fehlermeldungen sind in allen neun unterstützten Sprachen vorhanden.
 - Im Browser wurden JAZU als Free, Webpixels als Premium, die gesperrten beziehungsweise freigeschalteten Editorfelder, die Abo-Seiten sowie Monats- und Jahresauswahl geprüft. Die Browserkonsole bleibt fehlerfrei.
 - Ohne lokale Stripe-Schlüssel erscheint eine verständliche Konfigurationsmeldung. Die Sandbox-Schlüssel, beide Preis-IDs und das lokale Webhook-Geheimnis sind inzwischen ausschliesslich in `.env.local` konfiguriert; Geheimnisse wurden nicht in Git aufgenommen.
@@ -372,22 +380,42 @@ Am 1. August 2026 umgesetzt:
 - Premium-Kunden können Neuigkeiten, Aktionen und Veranstaltungen mit Bild, Zeitraum, Beschreibung und optionalem Aktionsbutton als Entwurf speichern oder zur Prüfung einreichen.
 - Bestehende Beiträge können im Dashboard bearbeitet werden. Bei Änderungen an einer veröffentlichten Fassung bleibt das Original öffentlich sichtbar; eine verknüpfte neue Fassung durchläuft erneut die Prüfung und ersetzt das Original erst nach der Freigabe. Entwürfe, wartende und abgelehnte Fassungen werden direkt weiterbearbeitet. Das Kundendashboard fasst diese technischen Versionen zu einem logischen Beitrag zusammen und blendet archivierte Vorgänger aus.
 - Der Bild-Upload für Beiträge verwendet statt der nativen Dateieingabe einen einheitlichen, zentrierten Findelio-Button mit separat angezeigtem Dateinamen. Darunter wird passend zur öffentlichen 16:9-Darstellung `1200 × 675 px` empfohlen. Button, Leerstatus und Bildhinweis sind in allen neun Sprachen übersetzt.
-- Ausstehende Premium-Beiträge erscheinen im internen Findelio-Prüfbereich und können dort freigegeben oder mit Begründung abgelehnt werden. Nur veröffentlichte und noch aktuelle Beiträge erscheinen auf dem öffentlichen Firmenprofil.
+- Ausstehende Premium-Beiträge erscheinen im internen Findelio-Prüfbereich mit Beitragsart, vollständiger Beschreibung, Bildvorschau, Beginn, Ende sowie Beschriftung und Ziel des Aktionsbuttons. Fehlende optionale Angaben sind klar als leer erkennbar. Die Beiträge können dort freigegeben oder mit Begründung abgelehnt werden. Nur veröffentlichte und noch aktuelle Beiträge erscheinen auf dem öffentlichen Firmenprofil.
+- Beiträge verwenden wie Firmeneinträge nur noch eine vollständige Beschreibung. Das alte Kurztextfeld bleibt aus Kompatibilitätsgründen verborgen bestehen und wird weder im Formular noch öffentlich abgefragt. Die Migration `20260802_listing_posts_single_description.sql` übernimmt vorhandene Kurztexte verlustfrei in die Beschreibung, falls diese bisher leer war.
 - Passende Premium-Einträge werden in der Suche vor Free-Einträgen angezeigt und deutlich als Premium gekennzeichnet. Mehrere Premium-Einträge werden anhand eines täglich wechselnden, stabilen Werts fair angeordnet.
 - Für aktive Premium-Einträge werden Such-Einblendungen, Profilaufrufe sowie Klicks auf Website, Telefon, E-Mail, Social Media, individuellen Button und Beitragsbuttons als zusammengefasste Tageswerte gespeichert.
 - Die Messung legt keine dauerhaften IP-Adressen, Besucherprofile oder Tracking-Cookies an. Die Datenschutzerklärung enthält einen eigenen Abschnitt zur Reichweitenmessung.
 - Jeder Premium-Eintrag besitzt im Dashboard eine Statistikseite für 30, 90 oder 365 Tage.
 - Eine neue Directus-Zeitplanerweiterung versendet am ersten Tag jedes Monats einen lokalisierten Bericht für den Vormonat an aktive Organisationsinhaber. Ein Versandprotokoll mit Eindeutigkeitsregel verhindert doppelte Berichte.
-- Beim Einreichen eines Premium-Beitrags zur Prüfung erhält `info@findelio.ch` eine Findelio-Benachrichtigung mit direktem Link zum internen Prüfbereich. Nach Bestätigung oder Ablehnung erhält die einreichende Person eine Kundenmail mit öffentlichem Profillink beziehungsweise Begründung und Bearbeitungslink. Die zuvor ausgebliebenen Nachrichten für den Beitrag von `JAZU Webdesign` wurden erfolgreich nachgesendet.
+- Beim Einreichen eines Premium-Beitrags zur Prüfung erhält `info@findelio.ch` eine Findelio-Benachrichtigung mit direktem Link zum internen Prüfbereich. Nach Bestätigung oder Ablehnung erhält die einreichende Person eine Kundenmail mit öffentlichem Profillink beziehungsweise Begründung und Bearbeitungslink. Das Textfeld im Prüfbereich dient bei einer Freigabe als freiwillige Nachricht an den Kunden und bei einer Ablehnung als verpflichtende Begründung; der Inhalt wird in beiden Fällen in der E-Mail ausgegeben. Die zuvor ausgebliebenen Nachrichten für den Beitrag von `JAZU Webdesign` wurden erfolgreich nachgesendet.
 - Entscheidungsbenachrichtigungen für Eintragsänderungen können über den internen Serverzugang sicher nachgesendet werden. Die Bestätigung zur Spezialbutton-Änderung von `JAZU Webdesign` wurde am 2. August 2026 erneut an die in der Revision hinterlegte Kundenadresse übergeben; Directus bestätigte den Versand mit HTTP 204.
 - Die reproduzierbare Migration `20260801_premium_growth_features.sql` legt Felder, Sammlungen, Beziehungen, Indizes und die minimalen technischen Directus-Rechte an.
 - Die ergänzende Migration `20260802_listing_post_edits.sql` verknüpft neue Prüffassungen mit dem weiterhin veröffentlichten Original; sie wurde lokal erfolgreich angewendet und von Directus geladen.
+- Die Migration `20260802_listing_posts_single_description.sql` wurde lokal angewendet; Directus und sein Schema-Cache wurden danach neu geladen.
 - Directus lädt Tracking- und Berichtserweiterung fehlerfrei. Ein realer lokaler Tracking-Aufruf erhöhte den aggregierten Tageswert atomar. Suche, Premium-Profil, Beitragsverwaltung, Statistik und Button-Felder wurden im Browser geprüft; die Browserkonsole blieb fehlerfrei.
 - JSON-Prüfung aller Sprachdateien, `npx tsc --noEmit`, `npm run lint` und `npm run build` sind erfolgreich.
 
 ## Globales Abstandsmaß
 
 - Das Tailwind-v4-Theme und `:root` verwenden global `--spacing: 0.2rem`. Im gerenderten Frontend wurde der Wert als `.2rem` bestätigt; beispielsweise ergeben `p-6` und `gap-6` jeweils `19.2px`.
+
+## Mehrsprachige Premium-Beschreibungen
+
+Am 2. August 2026 umgesetzt:
+
+- Die separate Kurzbeschreibung wurde aus dem Erstellen- und Bearbeiten-Formular sowie aus der öffentlichen Ausgabe entfernt. Das alte Directus-Feld bleibt aus Kompatibilitätsgründen verborgen bestehen und wird nicht mehr neu beschrieben.
+- Falls ein bestehender Eintrag nur eine Kurzbeschreibung, aber keine vollständige Beschreibung besass, wurde der vorhandene Text bei der Migration verlustfrei in das Beschreibungsfeld übernommen.
+- Suchkarten erzeugen ihren dreizeiligen Auszug jetzt automatisch aus der vollständigen Beschreibung. Die öffentliche Profilseite zeigt weiterhin den vollständigen Text.
+- Premium-Einträge können zusätzlich zur deutschen Hauptbeschreibung eigene Fassungen für Englisch, Slowakisch, Tschechisch, Ungarisch, Polnisch, Russisch, Portugiesisch und Rumänisch speichern.
+- Der Editor verwendet übersichtliche Sprachreiter. Leere Übersetzungen fallen auf der entsprechenden öffentlichen Sprachversion automatisch auf die deutsche Hauptbeschreibung zurück.
+- Übersetzungsänderungen laufen durch denselben Entwurfs- und Prüfworkflow wie andere Änderungen am Firmeneintrag. Der interne Prüfbereich zeigt die Übersetzungen sprachweise lesbar an.
+- Die Übersetzungen werden nur bei aktivem Premium-Abo öffentlich verwendet; gespeicherte Übersetzungen bleiben bei einem abgelaufenen Abo erhalten, werden dann jedoch nicht ausgespielt.
+- Paketdarstellung, Editorhinweise und Prüffeldbezeichnungen wurden in allen neun unterstützten UI-Sprachen ergänzt.
+- Die reproduzierbare Directus-Migration `20260802_multilingual_listing_descriptions.sql` wurde lokal erfolgreich angewendet. Directus wurde danach neu gestartet und lädt alle Erweiterungen fehlerfrei.
+- Die öffentliche Firmensuche wurde im Browser geprüft: Alle vorhandenen Karten zeigen ihren Auszug aus der vollständigen Beschreibung und Directus liefert das neue Übersetzungsfeld mit HTTP 200 aus.
+- JSON-Prüfung aller Sprachdateien, `npx tsc --noEmit`, `npm run lint`, `npm run build` und `git diff --check` sind erfolgreich.
+- Ein nach der Migration aufgetretener Directus-403 auf öffentlichen Profilseiten wurde behoben: Die eingebettete Galerie wird nun getrennt vom Firmeneintrag geladen, weil Directus die kombinierte Detailabfrage trotz einzeln erlaubter Felder ablehnte. Dafür wurden keine Rechte erweitert. Das öffentliche Profil `JAZU Webdesign` lädt danach wieder vollständig inklusive Galerie, Beschreibung, Beiträgen, Kontakt und Öffnungszeiten.
+- Ein weiterer 403 im angemeldeten Eigentümer-Editor wurde auf einen veralteten Directus-Schema-Cache in Redis zurückgeführt. Nach dem Leeren des technischen Cache und einem Directus-Neustart erkennt Directus `description_translations` als reguläres Feld. Der Editor von `JAZU Webdesign` wurde anschliessend als Eigentümer vollständig und ohne 404 oder Feldfehler im Browser geöffnet. Die öffentlichen oder internen Rechte mussten dafür nicht erweitert werden.
 
 ## Git- und Arbeitsstand
 

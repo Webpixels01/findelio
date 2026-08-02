@@ -200,7 +200,9 @@
       "editListing": "Edytuj",
       "createListing": "Nowy wpis firmy",
       "manageSubscription": "Zarządzaj subskrypcją",
-      "choosePlan": "Wybierz pakiet"
+      "choosePlan": "Wybierz pakiet",
+      "completeBeforeBilling": "Najpierw uzupełnij i wyślij do weryfikacji.",
+      "billingAfterApproval": "Subskrypcja po zatwierdzeniu."
     },
     "teamPage": {
       "eyebrow": "Zarządzanie zespołem",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Wybierz obraz",
@@ -399,8 +400,8 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
-      "error": "The action failed. A reason is required when rejecting a post.",
+      "reason": "Wiadomość dla klienta (wymagana przy odrzuceniu)",
+      "error": "Nie udało się wykonać działania. Przy odrzuceniu wpisu wymagane jest uzasadnienie.",
       "approve": "Approve post",
       "reject": "Reject post"
     }
@@ -441,10 +442,16 @@
     "spokenLanguagesSearch": "Przeszukaj języki",
     "spokenLanguagesSearchPlaceholder": "Wpisz język",
     "noSearchResults": "Nie znaleziono pasujących pozycji.",
+    "translations": {
+      "title": "Opis wielojęzyczny",
+      "description": "Uzupełnij główny opis w języku niemieckim własnymi tłumaczeniami na pozostałe języki Findelio.",
+      "fallbackHint": "Jeśli tłumaczenie pozostanie puste, automatycznie zostanie wyświetlony opis niemiecki.",
+      "fieldLabel": "Opis w języku {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Wpis Premium",
-      "description": "Uzupełnij wpis firmy o logo, zdjęcia, godziny otwarcia i linki do mediów społecznościowych.",
+      "description": "Uzupełnij wpis firmy o logo, zdjęcia, godziny otwarcia, opisy wielojęzyczne i linki do mediów społecznościowych.",
       "lockedDescription": "Te funkcje Premium są dostępne w ramach aktywnej subskrypcji Premium.",
       "lockedHint": "Po aktywowaniu subskrypcji Premium możesz edytować te sekcje.",
       "manageSubscription": "Aktywuj Premium",
@@ -452,7 +459,8 @@
         "logo": "Logo firmy",
         "gallery": "Galeria zdjęć",
         "openingHours": "Godziny otwarcia",
-        "socialLinks": "Linki do mediów społecznościowych"
+        "socialLinks": "Linki do mediów społecznościowych",
+        "translations": "Opis wielojęzyczny"
       },
       "logoHint": "Prześlij kwadratowe lub poziome logo firmy.",
       "logoPreview": "Podgląd logo firmy",
@@ -546,7 +554,8 @@
       "save_failed": "Nie udało się zapisać zmian.",
       "network": "Nie udało się połączyć z serwerem."
     },
-    "createdNotice": "Wpis firmy został utworzony jako szkic. Możesz teraz kontynuować edycję."
+    "createdNotice": "Wpis firmy został utworzony jako szkic. Możesz teraz kontynuować edycję.",
+    "createdPremiumNotice": "Wpis firmy został utworzony jako szkic Premium. Uzupełnij logo, galerię, godziny otwarcia i linki do mediów społecznościowych, a następnie wyślij wpis do weryfikacji. Subskrypcję wykupisz dopiero po zatwierdzeniu."
   },
   "ListingCreator": {
     "eyebrow": "Utwórz wpis firmy",
@@ -600,6 +609,18 @@
     "listingCreated": "Wpis firmy zapisano jako wersję roboczą. Wybierz teraz odpowiedni pakiet.",
     "checkoutSuccess": "Dziękujemy. Płatność zakończyła się pomyślnie. Potwierdzenie aktywacji Premium może chwilę potrwać.",
     "checkoutCancelled": "Proces płatności został anulowany. Wpis firmy pozostaje w pakiecie Free.",
+    "approvedNotice": "Twój wpis firmy został zatwierdzony. Możesz teraz dokończyć wybraną subskrypcję Premium.",
+    "preApproval": {
+      "eyebrow": "Przed płatnością",
+      "draftTitle": "Najpierw uzupełnij wpis firmy",
+      "draftDescription": "Dodaj wszystkie potrzebne informacje, takie jak logo, galeria, godziny otwarcia i linki do mediów społecznościowych, a następnie wyślij wpis do weryfikacji. Premium opłacasz dopiero po zatwierdzeniu.",
+      "pendingTitle": "Twój wpis firmy jest weryfikowany",
+      "pendingDescription": "Po zatwierdzeniu wpisu przez Findelio otrzymasz wiadomość e-mail i będzie można dokończyć wybraną subskrypcję Premium.",
+      "unavailableTitle": "Premium nie jest jeszcze dostępne",
+      "unavailableDescription": "Wpis firmy musi zostać zatwierdzony, zanim będzie można wykupić Premium.",
+      "edit": "Uzupełnij wpis",
+      "back": "Wróć do wpisów firm"
+    },
     "intervalTitle": "Okres rozliczeniowy",
     "intervals": {
       "monthly": {
@@ -620,7 +641,8 @@
         "logo": "Logo firmy",
         "gallery": "Galeria zdjęć",
         "openingHours": "Godziny otwarcia",
-        "socialLinks": "Linki do mediów społecznościowych"
+        "socialLinks": "Linki do mediów społecznościowych",
+        "translations": "Opis wielojęzyczny"
       }
     },
     "status": {
@@ -653,6 +675,7 @@
       "forbidden": "Nie możesz zarządzać tą subskrypcją.",
       "not_found": "Nie znaleziono wpisu firmy.",
       "already_active": "Premium jest już aktywne dla tego wpisu firmy.",
+      "listing_not_published": "Wpis firmy musi najpierw zostać zatwierdzony.",
       "billing_not_configured": "Funkcja płatności jest obecnie niedostępna.",
       "portal_unavailable": "Zarządzanie tą subskrypcją jest obecnie niedostępne.",
       "checkout_failed": "Nie udało się rozpocząć procesu płatności.",
@@ -695,6 +718,7 @@
         "name": "Nazwa firmy",
         "short_description": "Krótki opis",
         "description": "Opis",
+        "description_translations": "Przetłumaczone opisy",
         "street": "Ulica",
         "postal_code": "Kod pocztowy",
         "city": "Miejscowość",

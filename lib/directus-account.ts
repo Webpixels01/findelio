@@ -23,6 +23,7 @@ export type AccountListing = {
   postal_code: string | null;
   city: string | null;
   verification_status: string | null;
+  requested_billing_interval: "monthly" | "yearly" | null;
   organization: {
     id: string;
   };
@@ -47,8 +48,8 @@ export type AccountListingOverview = AccountListing & {
 };
 
 export type EditableAccountListing = AccountListing & {
-  short_description: string | null;
   description: string | null;
+  description_translations: Record<string, string> | null;
   street: string | null;
   canton: {
     id?: string;
@@ -80,7 +81,6 @@ type RawEditableAccountListing = Omit<EditableAccountListing, "canton"> & {
 export type AccountListingCreate = {
   organization: string;
   name: string;
-  short_description: string | null;
   description: string | null;
   street: string | null;
   postal_code: string;
@@ -90,11 +90,11 @@ export type AccountListingCreate = {
   phone: string | null;
   website_url: string | null;
   address_visibility: "full" | "city" | "hidden";
+  requested_billing_interval: "monthly" | "yearly" | null;
 };
 
 export type AccountListingUpdate = {
   name: string;
-  short_description: string | null;
   description: string | null;
   street: string | null;
   postal_code: string;
@@ -137,6 +137,7 @@ export type AccountPremiumListingUpdate = {
   opening_hours: AccountOpeningHour[];
   custom_cta_label: string | null;
   custom_cta_value: string | null;
+  description_translations: Record<string, string>;
 };
 
 type ListingRevisionStatus =
@@ -155,6 +156,7 @@ type ListingRevisionData = Omit<AccountListingUpdate, "status"> & {
   opening_hours?: AccountOpeningHour[];
   custom_cta_label?: string | null;
   custom_cta_value?: string | null;
+  description_translations?: Record<string, string>;
 };
 
 type ListingRevisionChangedFields = Record<
@@ -397,6 +399,23 @@ async function hasActivePremiumSubscription(
   return subscriptions.some(isActivePremiumSubscription);
 }
 
+async function hasPremiumEditingAccess(
+  accessToken: string,
+  listing: Pick<
+    EditableAccountListing,
+    "id" | "status" | "requested_billing_interval"
+  >,
+): Promise<boolean> {
+  if (
+    listing.requested_billing_interval &&
+    ["draft", "pending"].includes(listing.status)
+  ) {
+    return true;
+  }
+
+  return hasActivePremiumSubscription(accessToken, listing.id);
+}
+
 function subscriptionListingId(
   subscription: AccountSubscription,
 ): string | null {
@@ -535,6 +554,7 @@ async function getListingsForOrganizations(
       "postal_code",
       "city",
       "verification_status",
+      "requested_billing_interval",
       "organization.id",
     ].join(","),
   );
@@ -567,8 +587,8 @@ function editableListingFields(): string {
     "name",
     "slug",
     "status",
-    "short_description",
     "description",
+    "description_translations",
     "street",
     "postal_code",
     "city",
@@ -585,6 +605,7 @@ function editableListingFields(): string {
     "custom_cta_value",
     "address_visibility",
     "verification_status",
+    "requested_billing_interval",
     "organization.id",
   ].join(",");
 }
@@ -1338,8 +1359,8 @@ function createChangedFields(
 ): ListingRevisionChangedFields {
   const publishedValues: Record<string, unknown> = {
     name: listing.name,
-    short_description: listing.short_description,
     description: listing.description,
+    description_translations: listing.description_translations ?? {},
     street: listing.street,
     postal_code: listing.postal_code,
     city: listing.city,
@@ -1486,7 +1507,6 @@ async function savePublishedListingRevision(
 ): Promise<EditableAccountListing> {
   const revisionData: ListingRevisionData = {
     name: values.name,
-    short_description: values.short_description,
     description: values.description,
     street: values.street,
     postal_code: values.postal_code,
@@ -1506,6 +1526,8 @@ async function savePublishedListingRevision(
           opening_hours: values.premium.opening_hours,
           custom_cta_label: values.premium.custom_cta_label,
           custom_cta_value: values.premium.custom_cta_value,
+          description_translations:
+            values.premium.description_translations,
         }
       : {}),
   };
@@ -1600,7 +1622,7 @@ export async function getEditableAccountListingEditorData(
       getListingRelationIds(listingId, industryRelationConfig),
       getListingRelationIds(listingId, spokenLanguageRelationConfig),
       getAccountListingOpeningHours(listingId),
-      hasActivePremiumSubscription(accessToken, listing.id),
+      hasPremiumEditingAccess(accessToken, listing),
     ]);
 
   return mergeOpenRevisionIntoEditorData({
@@ -1666,10 +1688,7 @@ export async function uploadAccountListingImages(
     );
   }
 
-  const premiumEnabled = await hasActivePremiumSubscription(
-    accessToken,
-    listing.id,
-  );
+  const premiumEnabled = await hasPremiumEditingAccess(accessToken, listing);
 
   if (!premiumEnabled) {
     throw new DirectusAccountError(
@@ -1910,9 +1929,9 @@ export async function updateEditableAccountListing(
   ]);
 
   if (values.premium) {
-    const premiumEnabled = await hasActivePremiumSubscription(
+    const premiumEnabled = await hasPremiumEditingAccess(
       accessToken,
-      currentListing.id,
+      currentListing,
     );
 
     if (!premiumEnabled) {
@@ -1947,9 +1966,9 @@ export async function updateEditableAccountListing(
     social_links?: AccountSocialLink[];
     custom_cta_label?: string | null;
     custom_cta_value?: string | null;
+    description_translations?: Record<string, string>;
   } = {
     name: values.name,
-    short_description: values.short_description,
     description: values.description,
     street: values.street,
     postal_code: values.postal_code,
@@ -1966,6 +1985,8 @@ export async function updateEditableAccountListing(
           social_links: values.premium.social_links,
           custom_cta_label: values.premium.custom_cta_label,
           custom_cta_value: values.premium.custom_cta_value,
+          description_translations:
+            values.premium.description_translations,
         }
       : {}),
   };
@@ -2020,7 +2041,6 @@ export async function updateEditableAccountListing(
   if (values.status === "pending" || currentRevision) {
     const revisionData: ListingRevisionData = {
       name: values.name,
-      short_description: values.short_description,
       description: values.description,
       street: values.street,
       postal_code: values.postal_code,
@@ -2040,6 +2060,8 @@ export async function updateEditableAccountListing(
             opening_hours: values.premium.opening_hours,
             custom_cta_label: values.premium.custom_cta_label,
             custom_cta_value: values.premium.custom_cta_value,
+            description_translations:
+              values.premium.description_translations,
           }
         : {}),
     };

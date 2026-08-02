@@ -200,7 +200,9 @@
       "editListing": "Editar",
       "createListing": "Novo registo empresarial",
       "manageSubscription": "Gerir subscrição",
-      "choosePlan": "Escolher plano"
+      "choosePlan": "Escolher plano",
+      "completeBeforeBilling": "Primeiro, completa e envia para revisão.",
+      "billingAfterApproval": "Subscrição após a aprovação."
     },
     "teamPage": {
       "eyebrow": "Gestão da equipa",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Selecionar imagem",
@@ -399,8 +400,8 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
-      "error": "The action failed. A reason is required when rejecting a post.",
+      "reason": "Mensagem ao cliente (obrigatória em caso de rejeição)",
+      "error": "Não foi possível concluir a ação. Ao rejeitar uma publicação, é necessário indicar um motivo.",
       "approve": "Approve post",
       "reject": "Reject post"
     }
@@ -441,10 +442,16 @@
     "spokenLanguagesSearch": "Pesquisar idiomas",
     "spokenLanguagesSearchPlaceholder": "Introduz um idioma",
     "noSearchResults": "Não foram encontradas opções correspondentes.",
+    "translations": {
+      "title": "Descrição multilingue",
+      "description": "Completa a descrição principal em alemão com as tuas próprias traduções para os restantes idiomas do Findelio.",
+      "fallbackHint": "Se uma tradução ficar vazia, a descrição em alemão será apresentada automaticamente.",
+      "fieldLabel": "Descrição em {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Registo empresarial Premium",
-      "description": "Completa o registo empresarial com logótipo, imagens, horário de funcionamento e ligações para redes sociais.",
+      "description": "Completa o registo empresarial com logótipo, imagens, horário de funcionamento, descrições multilingues e ligações para redes sociais.",
       "lockedDescription": "Estas funcionalidades estão incluídas numa subscrição Premium ativa.",
       "lockedHint": "Assim que a subscrição Premium estiver ativa, poderás editar estas secções aqui.",
       "manageSubscription": "Ativar Premium",
@@ -452,7 +459,8 @@
         "logo": "Logótipo da empresa",
         "gallery": "Galeria de imagens",
         "openingHours": "Horário de funcionamento",
-        "socialLinks": "Ligações para redes sociais"
+        "socialLinks": "Ligações para redes sociais",
+        "translations": "Descrição multilingue"
       },
       "logoHint": "Carrega um logótipo quadrado ou horizontal da empresa.",
       "logoPreview": "Pré-visualização do logótipo",
@@ -546,7 +554,8 @@
       "save_failed": "Não foi possível guardar as alterações.",
       "network": "A ligação ao servidor falhou."
     },
-    "createdNotice": "O registo empresarial foi criado como rascunho. Podes agora continuar a editá-lo."
+    "createdNotice": "O registo empresarial foi criado como rascunho. Podes agora continuar a editá-lo.",
+    "createdPremiumNotice": "O registo empresarial foi criado como rascunho Premium. Completa o logótipo, a galeria, o horário e as ligações às redes sociais e envia depois o registo para revisão. Só subscreves após a aprovação."
   },
   "ListingCreator": {
     "eyebrow": "Criar registo empresarial",
@@ -600,6 +609,18 @@
     "listingCreated": "O registo empresarial foi guardado como rascunho. Escolhe agora o plano pretendido.",
     "checkoutSuccess": "Obrigado. O seu pagamento foi concluído com sucesso. A ativação do Premium está a ser confirmada e pode demorar alguns instantes.",
     "checkoutCancelled": "O processo de pagamento foi cancelado. O registo empresarial permanece no plano Free.",
+    "approvedNotice": "O teu registo empresarial foi aprovado. Agora podes concluir a subscrição Premium reservada.",
+    "preApproval": {
+      "eyebrow": "Antes do pagamento",
+      "draftTitle": "Completa primeiro o registo empresarial",
+      "draftDescription": "Adiciona todos os dados pretendidos, como logótipo, galeria, horário e ligações às redes sociais, e envia depois o registo para revisão. O Premium só é pago após a aprovação.",
+      "pendingTitle": "O teu registo empresarial está em revisão",
+      "pendingDescription": "Assim que a Findelio aprovar o registo, receberás um e-mail e poderás concluir a subscrição Premium reservada.",
+      "unavailableTitle": "O Premium ainda não está disponível",
+      "unavailableDescription": "O registo empresarial tem de ser aprovado antes de poderes subscrever o Premium.",
+      "edit": "Completar registo",
+      "back": "Voltar aos registos empresariais"
+    },
     "intervalTitle": "Período de faturação",
     "intervals": {
       "monthly": {
@@ -620,7 +641,8 @@
         "logo": "Logótipo da empresa",
         "gallery": "Galeria de imagens",
         "openingHours": "Horário de funcionamento",
-        "socialLinks": "Ligações às redes sociais"
+        "socialLinks": "Ligações às redes sociais",
+        "translations": "Descrição multilingue"
       }
     },
     "status": {
@@ -653,6 +675,7 @@
       "forbidden": "Não podes gerir esta subscrição.",
       "not_found": "O registo empresarial não foi encontrado.",
       "already_active": "O Premium já está ativo para este registo empresarial.",
+      "listing_not_published": "O registo empresarial tem de ser aprovado primeiro.",
       "billing_not_configured": "A função de pagamento não está disponível neste momento.",
       "portal_unavailable": "A gestão desta subscrição não está disponível neste momento.",
       "checkout_failed": "Não foi possível iniciar o processo de pagamento.",
@@ -695,6 +718,7 @@
         "name": "Nome da empresa",
         "short_description": "Descrição curta",
         "description": "Descrição",
+        "description_translations": "Descrições traduzidas",
         "street": "Rua",
         "postal_code": "Código postal",
         "city": "Localidade",

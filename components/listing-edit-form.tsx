@@ -7,6 +7,7 @@ import ListingPremiumFields, {
   type PremiumListingFieldsHandle,
   type PremiumListingPayload,
 } from "@/components/listing-premium-fields";
+import PremiumBadge from "@/components/premium-badge";
 
 type DirectoryOption = {
   id: string | number;
@@ -18,8 +19,8 @@ type ListingEditData = {
   id: string;
   name: string;
   status: string;
-  shortDescription: string;
   description: string;
+  descriptionTranslations: Record<string, string>;
   street: string;
   postalCode: string;
   city: string;
@@ -31,6 +32,17 @@ type ListingEditData = {
   industryIds: string[];
   spokenLanguageIds: string[];
 };
+
+const descriptionTranslationLocales = [
+  { code: "en", label: "English" },
+  { code: "sk", label: "Slovenčina" },
+  { code: "cs", label: "Čeština" },
+  { code: "hu", label: "Magyar" },
+  { code: "pl", label: "Polski" },
+  { code: "ru", label: "Русский" },
+  { code: "pt-pt", label: "Português" },
+  { code: "ro", label: "Română" },
+] as const;
 
 type SaveResult = {
   success?: boolean;
@@ -93,6 +105,8 @@ export default function ListingEditForm({
   const [isSaving, setIsSaving] = useState(false);
   const [industrySearch, setIndustrySearch] = useState("");
   const [languageSearch, setLanguageSearch] = useState("");
+  const [activeTranslationLocale, setActiveTranslationLocale] =
+    useState<(typeof descriptionTranslationLocales)[number]["code"]>("en");
   const [notice, setNotice] = useState<
     | { type: "success"; text: string }
     | { type: "error"; text: string }
@@ -154,9 +168,20 @@ export default function ListingEditForm({
       return;
     }
 
+    const descriptionTranslations = premium.enabled
+      ? Object.fromEntries(
+          descriptionTranslationLocales
+            .map(({ code }) => [
+              code,
+              String(
+                formData.get(`description_translation_${code}`) ?? "",
+              ).trim(),
+            ])
+            .filter(([, value]) => value),
+        )
+      : {};
     const payload = {
       name: formData.get("name"),
-      short_description: formData.get("short_description"),
       description: formData.get("description"),
       public_email: formData.get("public_email"),
       phone: formData.get("phone"),
@@ -171,7 +196,14 @@ export default function ListingEditForm({
       spoken_language_ids: formData
         .getAll("spoken_language_ids")
         .map(String),
-      ...(premiumPayload ? { premium: premiumPayload } : {}),
+      ...(premiumPayload
+        ? {
+            premium: {
+              ...premiumPayload,
+              description_translations: descriptionTranslations,
+            },
+          }
+        : {}),
     };
 
     try {
@@ -217,17 +249,6 @@ export default function ListingEditForm({
           </label>
 
           <label className="field-group">
-            <span className="field-label">{t("fields.shortDescription")}</span>
-            <textarea
-              className="field-control field-textarea min-h-28"
-              name="short_description"
-              defaultValue={listing.shortDescription}
-              maxLength={500}
-              disabled={isSaving}
-            />
-          </label>
-
-          <label className="field-group">
             <span className="field-label">{t("fields.description")}</span>
             <textarea
               className="field-control field-textarea min-h-56"
@@ -239,6 +260,69 @@ export default function ListingEditForm({
           </label>
         </div>
       </section>
+
+      {premium.enabled && (
+        <section className="rounded-3xl border border-[#bfdcff] bg-[#f7fbff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
+          <div className="flex flex-wrap items-center gap-3">
+            <PremiumBadge>{t("premium.badge")}</PremiumBadge>
+            <h2 className="text-2xl font-extrabold">
+              {t("translations.title")}
+            </h2>
+          </div>
+          <p className="mt-3 max-w-3xl text-[var(--muted)]">
+            {t("translations.description")}
+          </p>
+          <p className="mt-2 text-sm font-bold text-[var(--accent)]">
+            {t("translations.fallbackHint")}
+          </p>
+
+          <div
+            className="mt-6 flex flex-wrap gap-2"
+            role="tablist"
+            aria-label={t("translations.title")}
+          >
+            {descriptionTranslationLocales.map(({ code, label }) => (
+              <button
+                key={code}
+                type="button"
+                role="tab"
+                aria-selected={activeTranslationLocale === code}
+                aria-controls={`description-translation-${code}`}
+                className={
+                  activeTranslationLocale === code
+                    ? "primary-button h-10 px-4"
+                    : "secondary-button h-10 px-4"
+                }
+                onClick={() => setActiveTranslationLocale(code)}
+                disabled={isSaving}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {descriptionTranslationLocales.map(({ code, label }) => (
+            <label
+              key={code}
+              id={`description-translation-${code}`}
+              role="tabpanel"
+              className="field-group mt-5"
+              hidden={activeTranslationLocale !== code}
+            >
+              <span className="field-label">
+                {t("translations.fieldLabel", { language: label })}
+              </span>
+              <textarea
+                className="field-control field-textarea min-h-56"
+                name={`description_translation_${code}`}
+                defaultValue={listing.descriptionTranslations[code] ?? ""}
+                maxLength={20000}
+                disabled={isSaving}
+              />
+            </label>
+          ))}
+        </section>
+      )}
 
       <ListingPremiumFields
         ref={premiumFieldsRef}

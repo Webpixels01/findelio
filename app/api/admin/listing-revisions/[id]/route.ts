@@ -62,12 +62,20 @@ async function runAction(
     throw new DirectusReviewError("Keine Berechtigung.", 403, "FORBIDDEN");
   }
 
+  if (reason.length > 2000) {
+    throw new DirectusReviewError(
+      "Die Begründung darf höchstens 2000 Zeichen lang sein.",
+      400,
+      "INVALID_REASON",
+    );
+  }
+
   if (action === "approve") {
     await approveListingRevision(accessToken, revisionId, user.id);
     return;
   }
 
-  if (!reason || reason.length < 3 || reason.length > 2000) {
+  if (!reason || reason.length < 3) {
     throw new DirectusReviewError(
       "Eine Begründung ist erforderlich.",
       400,

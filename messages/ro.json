@@ -200,7 +200,9 @@
       "editListing": "Editează",
       "createListing": "Listare nouă de firmă",
       "manageSubscription": "Gestionează abonamentul",
-      "choosePlan": "Alege pachetul"
+      "choosePlan": "Alege pachetul",
+      "completeBeforeBilling": "Mai întâi completează și trimite pentru verificare.",
+      "billingAfterApproval": "Abonament după aprobare."
     },
     "teamPage": {
       "eyebrow": "Administrarea echipei",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Selectează imaginea",
@@ -399,8 +400,8 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
-      "error": "The action failed. A reason is required when rejecting a post.",
+      "reason": "Mesaj pentru client (obligatoriu la respingere)",
+      "error": "Acțiunea nu a putut fi efectuată. La respingerea unei postări este necesar un motiv.",
       "approve": "Approve post",
       "reject": "Reject post"
     }
@@ -441,10 +442,16 @@
     "spokenLanguagesSearch": "Caută limbi",
     "spokenLanguagesSearchPlaceholder": "Introdu o limbă",
     "noSearchResults": "Nu au fost găsite opțiuni potrivite.",
+    "translations": {
+      "title": "Descriere multilingvă",
+      "description": "Completează descrierea principală în germană cu propriile traduceri pentru celelalte limbi Findelio.",
+      "fallbackHint": "Dacă o traducere rămâne goală, descrierea în germană este afișată automat.",
+      "fieldLabel": "Descriere în {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Listare Premium",
-      "description": "Completează listarea firmei cu logo, imagini, program de funcționare și linkuri către rețele sociale.",
+      "description": "Completează listarea firmei cu logo, imagini, program de funcționare, descrieri multilingve și linkuri către rețele sociale.",
       "lockedDescription": "Aceste funcții sunt incluse într-un abonament Premium activ.",
       "lockedHint": "După activarea abonamentului Premium, vei putea edita aceste secțiuni aici.",
       "manageSubscription": "Activează Premium",
@@ -452,7 +459,8 @@
         "logo": "Logo-ul firmei",
         "gallery": "Galerie de imagini",
         "openingHours": "Program de funcționare",
-        "socialLinks": "Linkuri către rețele sociale"
+        "socialLinks": "Linkuri către rețele sociale",
+        "translations": "Descriere multilingvă"
       },
       "logoHint": "Încarcă un logo pătrat sau orizontal al firmei.",
       "logoPreview": "Previzualizarea logo-ului firmei",
@@ -546,7 +554,8 @@
       "save_failed": "Modificările nu au putut fi salvate.",
       "network": "Conexiunea la server a eșuat."
     },
-    "createdNotice": "Listarea firmei a fost creată ca schiță. Acum poți continua editarea."
+    "createdNotice": "Listarea firmei a fost creată ca schiță. Acum poți continua editarea.",
+    "createdPremiumNotice": "Listarea firmei a fost creată ca schiță Premium. Completează sigla, galeria, programul și linkurile către rețelele sociale, apoi trimite listarea pentru verificare. Abonamentul se încheie doar după aprobare."
   },
   "ListingCreator": {
     "eyebrow": "Creează o listare de firmă",
@@ -600,6 +609,18 @@
     "listingCreated": "Listarea de firmă a fost salvată ca schiță. Alege acum pachetul dorit.",
     "checkoutSuccess": "Mulțumim. Plata a fost efectuată cu succes. Activarea Premium este în curs de confirmare și poate dura puțin.",
     "checkoutCancelled": "Procesul de plată a fost anulat. Listarea de firmă rămâne în pachetul Free.",
+    "approvedNotice": "Listarea firmei tale a fost aprobată. Acum poți finaliza abonamentul Premium rezervat.",
+    "preApproval": {
+      "eyebrow": "Înainte de plată",
+      "draftTitle": "Completează mai întâi listarea firmei",
+      "draftDescription": "Adaugă toate informațiile dorite, precum sigla, galeria, programul și linkurile către rețelele sociale, apoi trimite listarea pentru verificare. Premium se plătește doar după aprobare.",
+      "pendingTitle": "Listarea firmei tale este verificată",
+      "pendingDescription": "După ce Findelio aprobă listarea, vei primi un e-mail și vei putea finaliza abonamentul Premium rezervat.",
+      "unavailableTitle": "Premium nu este încă disponibil",
+      "unavailableDescription": "Listarea firmei trebuie aprobată înainte de a te putea abona la Premium.",
+      "edit": "Completează listarea",
+      "back": "Înapoi la listările firmelor"
+    },
     "intervalTitle": "Perioada de facturare",
     "intervals": {
       "monthly": {
@@ -620,7 +641,8 @@
         "logo": "Sigla firmei",
         "gallery": "Galerie de imagini",
         "openingHours": "Program",
-        "socialLinks": "Linkuri către rețelele sociale"
+        "socialLinks": "Linkuri către rețelele sociale",
+        "translations": "Descriere multilingvă"
       }
     },
     "status": {
@@ -653,6 +675,7 @@
       "forbidden": "Nu poți gestiona acest abonament.",
       "not_found": "Listarea de firmă nu a fost găsită.",
       "already_active": "Premium este deja activ pentru această listare de firmă.",
+      "listing_not_published": "Listarea firmei trebuie aprobată mai întâi.",
       "billing_not_configured": "Funcția de plată nu este disponibilă momentan.",
       "portal_unavailable": "Gestionarea acestui abonament nu este disponibilă momentan.",
       "checkout_failed": "Procesul de plată nu a putut fi pornit.",
@@ -695,6 +718,7 @@
         "name": "Numele firmei",
         "short_description": "Descriere scurtă",
         "description": "Descriere",
+        "description_translations": "Descrieri traduse",
         "street": "Stradă",
         "postal_code": "Cod poștal",
         "city": "Localitate",

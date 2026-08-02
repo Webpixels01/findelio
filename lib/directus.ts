@@ -24,10 +24,18 @@ export type Listing = {
   name: string;
   slug: string;
   status: string;
-  short_description: string | null;
+  description: string | null;
+  description_translations: Partial<Record<AppLocale, string>> | null;
   postal_code: string | null;
   city: string;
-  logo: string | null;
+  logo:
+    | string
+    | {
+        id: string;
+        width: number | null;
+        height: number | null;
+      }
+    | null;
   canton: {
     code: string;
     name: string;
@@ -60,8 +68,12 @@ export type GalleryItem = {
   directus_files_id: string;
 };
 
+type PublicGalleryRelationRow = {
+  id: number;
+  directus_files_id: string | { id: string } | null;
+};
+
 export type ListingDetail = Listing & {
-  description: string | null;
   street: string | null;
   public_email: string | null;
   phone: string | null;
@@ -88,7 +100,6 @@ export type ListingPost = {
   listing: string | { id: string };
   type: "update" | "offer" | "event";
   title: string;
-  excerpt: string | null;
   body: string | null;
   image: string | null;
   cta_label: string | null;
@@ -166,6 +177,59 @@ function getRelationCode(value: unknown): string | null {
   return null;
 }
 
+function getGalleryFileId(
+  value: PublicGalleryRelationRow["directus_files_id"],
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.id ?? null;
+}
+
+async function getPublicListingGallery(
+  listingId: string,
+): Promise<GalleryItem[]> {
+  const url = new URL("/items/listings_files", directusUrl);
+
+  url.searchParams.set("fields", "id,directus_files_id");
+  url.searchParams.set("sort", "id");
+  url.searchParams.set("limit", "10");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listings_id: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusHeaders,
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.warn(
+      `Bildergalerie konnte nicht geladen werden: ${response.status} ${response.statusText}`,
+    );
+    return [];
+  }
+
+  const result = (await response.json()) as DirectusResponse<
+    PublicGalleryRelationRow[]
+  >;
+
+  return result.data
+    .map((item) => ({
+      id: item.id,
+      directus_files_id: getGalleryFileId(item.directus_files_id),
+    }))
+    .filter(
+      (item): item is GalleryItem => Boolean(item.directus_files_id),
+    );
+}
+
 async function getDirectoryTranslationMap(
   collection: TranslatableDirectoryCollection,
   locale: AppLocale,
@@ -237,6 +301,21 @@ function localizeListing<T extends Listing>(
       },
     })),
   } as T;
+}
+
+function localizedListingDescription(
+  listing: Listing,
+  locale: AppLocale,
+  premiumEnabled: boolean,
+): string | null {
+  if (!premiumEnabled || locale === "de-ch") {
+    return listing.description;
+  }
+
+  const translatedDescription =
+    listing.description_translations?.[locale]?.trim();
+
+  return translatedDescription || listing.description;
 }
 
 function cleanValue(value?: string): string | undefined {
@@ -319,10 +398,13 @@ export async function getListings(
     "name",
     "slug",
     "status",
-    "short_description",
+    "description",
+    "description_translations",
     "postal_code",
     "city",
-    "logo",
+    "logo.id",
+    "logo.width",
+    "logo.height",
     "canton.code",
     "canton.name",
     "verification_status",
@@ -441,6 +523,11 @@ export async function getListings(
     return localizeListing(
       {
         ...listing,
+        description: localizedListingDescription(
+          listing,
+          locale,
+          premiumEnabled,
+        ),
         logo: premiumEnabled ? listing.logo : null,
         premium_features_enabled: premiumEnabled,
       },
@@ -480,8 +567,8 @@ export async function getListingBySlug(
     "name",
     "slug",
     "status",
-    "short_description",
     "description",
+    "description_translations",
     "street",
     "postal_code",
     "city",
@@ -490,9 +577,9 @@ export async function getListingBySlug(
     "public_email",
     "phone",
     "website_url",
-    "logo",
-    "gallery.id",
-    "gallery.directus_files_id",
+    "logo.id",
+    "logo.width",
+    "logo.height",
     "location",
     "verification_status",
     "published_at",
@@ -552,7 +639,9 @@ export async function getListingBySlug(
     );
   }
 
-  const result = (await response.json()) as DirectusResponse<ListingDetail[]>;
+  const result = (await response.json()) as DirectusResponse<
+    Array<Omit<ListingDetail, "gallery">>
+  >;
   const listing = result.data[0];
 
   if (!listing) {
@@ -560,12 +649,20 @@ export async function getListingBySlug(
   }
 
   const premiumEnabled = premiumListingIds.has(listing.id);
+  const gallery = premiumEnabled
+    ? await getPublicListingGallery(listing.id)
+    : [];
 
   return localizeListing(
     {
       ...listing,
+      description: localizedListingDescription(
+        listing,
+        locale,
+        premiumEnabled,
+      ),
       logo: premiumEnabled ? listing.logo : null,
-      gallery: premiumEnabled ? listing.gallery : [],
+      gallery,
       social_links: premiumEnabled ? listing.social_links : [],
       premium_features_enabled: premiumEnabled,
       custom_cta_label: premiumEnabled ? listing.custom_cta_label : null,
@@ -618,7 +715,7 @@ export async function getPublicListingPosts(
   const url = new URL("/items/listing_posts", directusUrl);
   url.searchParams.set(
     "fields",
-    "id,listing,type,title,excerpt,body,image,cta_label,cta_url,starts_at,ends_at,published_at",
+    "id,listing,type,title,body,image,cta_label,cta_url,starts_at,ends_at,published_at",
   );
   url.searchParams.set("sort", "-published_at");
   url.searchParams.set("limit", "20");

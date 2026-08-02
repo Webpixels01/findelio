@@ -200,7 +200,9 @@
       "editListing": "Edit",
       "createListing": "New business listing",
       "manageSubscription": "Manage subscription",
-      "choosePlan": "Choose plan"
+      "choosePlan": "Choose plan",
+      "completeBeforeBilling": "Complete it and submit it for review first.",
+      "billingAfterApproval": "Subscription available after approval."
     },
     "teamPage": {
       "eyebrow": "Team management",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Choose image",
@@ -399,7 +400,7 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
+      "reason": "Message to the customer (required for rejection)",
       "error": "The action failed. A reason is required when rejecting a post.",
       "approve": "Approve post",
       "reject": "Reject post"
@@ -440,10 +441,16 @@
     "spokenLanguagesSearch": "Search languages",
     "spokenLanguagesSearchPlaceholder": "Enter a language",
     "noSearchResults": "No matching options found.",
+    "translations": {
+      "title": "Multilingual description",
+      "description": "Add your own translations of the main German description for the other Findelio languages.",
+      "fallbackHint": "If a translation is empty, the German description is shown automatically.",
+      "fieldLabel": "Description in {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Premium business listing",
-      "description": "Enhance your business listing with a logo, images, opening hours and social media links.",
+      "description": "Enhance your business listing with a logo, images, opening hours, multilingual descriptions and social media links.",
       "lockedDescription": "These Premium features are included with an active Premium subscription.",
       "lockedHint": "You can edit these sections here as soon as the Premium subscription is active.",
       "manageSubscription": "Unlock Premium",
@@ -451,7 +458,8 @@
         "logo": "Company logo",
         "gallery": "Image gallery",
         "openingHours": "Opening hours",
-        "socialLinks": "Social media links"
+        "socialLinks": "Social media links",
+        "translations": "Multilingual description"
       },
       "logoHint": "Upload a square or horizontal company logo.",
       "logoPreview": "Company logo preview",
@@ -545,7 +553,8 @@
       "save_failed": "The changes could not be saved.",
       "network": "The connection to the server failed."
     },
-    "createdNotice": "The business listing was created as a draft. You can now continue editing it."
+    "createdNotice": "The business listing was created as a draft. You can now continue editing it.",
+    "createdPremiumNotice": "The business listing was created as a Premium draft. Complete the logo, gallery, opening hours and social media links, then submit it for review. You will subscribe only after approval."
   },
   "ListingCreator": {
     "eyebrow": "Create business listing",
@@ -599,6 +608,18 @@
     "listingCreated": "The business listing was saved as a draft. Now choose the plan you want.",
     "checkoutSuccess": "Thank you. Your payment was successful. Premium activation is being confirmed and may take a moment.",
     "checkoutCancelled": "The payment process was cancelled. The business listing remains on the Free plan.",
+    "approvedNotice": "Your business listing has been approved. You can now complete the reserved Premium subscription.",
+    "preApproval": {
+      "eyebrow": "Before payment",
+      "draftTitle": "Complete your business listing first",
+      "draftDescription": "Add all desired details such as logo, gallery, opening hours and social media links, then submit the listing for review. Premium is paid only after approval.",
+      "pendingTitle": "Your business listing is being reviewed",
+      "pendingDescription": "Once Findelio approves the listing, you will receive an email and can complete the reserved Premium subscription.",
+      "unavailableTitle": "Premium is not available yet",
+      "unavailableDescription": "The business listing must be approved before you can subscribe to Premium.",
+      "edit": "Complete listing",
+      "back": "Back to business listings"
+    },
     "intervalTitle": "Billing period",
     "intervals": {
       "monthly": {
@@ -619,7 +640,8 @@
         "logo": "Company logo",
         "gallery": "Image gallery",
         "openingHours": "Opening hours",
-        "socialLinks": "Social media links"
+        "socialLinks": "Social media links",
+        "translations": "Multilingual description"
       }
     },
     "status": {
@@ -652,6 +674,7 @@
       "forbidden": "You cannot manage this subscription.",
       "not_found": "The business listing was not found.",
       "already_active": "Premium is already active for this business listing.",
+      "listing_not_published": "The business listing must be approved first.",
       "billing_not_configured": "The payment function is currently unavailable.",
       "portal_unavailable": "Subscription management is currently unavailable for this subscription.",
       "checkout_failed": "The payment process could not be started.",
@@ -694,6 +717,7 @@
         "name": "Company name",
         "short_description": "Short description",
         "description": "Description",
+        "description_translations": "Translated descriptions",
         "street": "Street",
         "postal_code": "Postal code",
         "city": "City",

@@ -112,7 +112,6 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
         <div className="mt-6 grid gap-5">
           <label className="field-group"><span className="field-label">{t("type")}</span><select name="type" className="field-control" defaultValue={editingPost?.type ?? "update"}><option value="update">{t("types.update")}</option><option value="offer">{t("types.offer")}</option><option value="event">{t("types.event")}</option></select></label>
           <label className="field-group"><span className="field-label">{t("title")}</span><input name="title" className="field-control" maxLength={180} defaultValue={editingPost?.title ?? ""} required /></label>
-          <label className="field-group"><span className="field-label">{t("excerpt")}</span><textarea name="excerpt" className="field-control min-h-24" maxLength={500} defaultValue={editingPost?.excerpt ?? ""} /></label>
           <label className="field-group"><span className="field-label">{t("body")}</span><textarea name="body" className="field-control min-h-40" maxLength={10000} defaultValue={editingPost?.body ?? ""} /></label>
           <div className="field-group">
             <span className="field-label">{t("image")}</span>

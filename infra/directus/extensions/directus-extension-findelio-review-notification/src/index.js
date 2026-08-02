@@ -5,6 +5,7 @@ const fieldLabels = {
   name: "Firmenname",
   short_description: "Kurzbeschreibung",
   description: "Beschreibung",
+  description_translations: "Übersetzte Beschreibungen",
   street: "Strasse",
   postal_code: "Postleitzahl",
   city: "Ort",
@@ -318,12 +319,18 @@ const findelioReviewNotificationEndpoint = {
       const postId =
         typeof req.body?.post_id === "string" ? req.body.post_id.trim() : "";
       const action = req.body?.action;
+      const requestedReason =
+        typeof req.body?.reason === "string" ? req.body.reason.trim() : "";
 
       if (!userId) {
         return res.status(401).json({ error: "unauthorized" });
       }
 
-      if (!uuidPattern.test(postId) || !["approve", "reject"].includes(action)) {
+      if (
+        !uuidPattern.test(postId) ||
+        !["approve", "reject"].includes(action) ||
+        requestedReason.length > 2000
+      ) {
         return res.status(400).json({ error: "invalid_data" });
       }
 
@@ -407,8 +414,11 @@ const findelioReviewNotificationEndpoint = {
           },
         }[action];
         const reason =
-          action === "reject" ? String(post.rejection_reason ?? "").trim() : "";
-        const reasonText = reason ? `\n\nBegründung:\n${reason}` : "";
+          action === "approve"
+            ? requestedReason
+            : String(post.rejection_reason ?? "").trim();
+        const reasonLabel = action === "approve" ? "Nachricht" : "Begründung";
+        const reasonText = reason ? `\n\n${reasonLabel}:\n${reason}` : "";
         const mailService = new MailService({
           schema: await getSchema(),
           accountability: req.accountability,
@@ -428,6 +438,7 @@ const findelioReviewNotificationEndpoint = {
               postTitle: post.post_title,
               postType: typeLabels[post.post_type] ?? post.post_type,
               reason,
+              reasonLabel,
               buttonLabel: decisionContent.buttonLabel,
               targetUrl: decisionContent.targetUrl,
             },
@@ -521,6 +532,8 @@ const findelioReviewNotificationEndpoint = {
           ? req.body.revision_id.trim()
           : "";
       const action = req.body?.action;
+      const requestedReason =
+        typeof req.body?.reason === "string" ? req.body.reason.trim() : "";
 
       if (!userId) {
         return res.status(401).json({ error: "unauthorized" });
@@ -528,7 +541,8 @@ const findelioReviewNotificationEndpoint = {
 
       if (
         !uuidPattern.test(revisionId) ||
-        !["approve", "reject", "suspend"].includes(action)
+        !["approve", "reject", "suspend"].includes(action) ||
+        requestedReason.length > 2000
       ) {
         return res.status(400).json({ error: "invalid_data" });
       }
@@ -563,6 +577,21 @@ const findelioReviewNotificationEndpoint = {
             "listings.name as listing_name",
             "listings.slug as listing_slug",
             "listings.status as listing_status",
+            "listings.public_email as public_recipient",
+            "listings.requested_billing_interval",
+            database.raw(`
+              EXISTS (
+                SELECT 1
+                FROM subscriptions
+                WHERE subscriptions.listing = listings.id
+                  AND subscriptions.plan = 'premium'
+                  AND subscriptions.status IN ('active', 'past_due')
+                  AND (
+                    subscriptions.current_period_end IS NULL
+                    OR subscriptions.current_period_end >= NOW()
+                  )
+              ) AS premium_active
+            `),
             "submitter.email as recipient",
           )
           .where("revisions.id", revisionId);
@@ -589,8 +618,14 @@ const findelioReviewNotificationEndpoint = {
         }
 
         const recipient = String(revision.recipient ?? "").trim();
+        const publicRecipient = String(
+          revision.public_recipient ?? "",
+        ).trim();
+        const recipients = Array.from(
+          new Set([recipient, publicRecipient].filter(Boolean)),
+        );
 
-        if (!recipient) {
+        if (recipients.length === 0) {
           logger.warn(
             { revisionId },
             "Findelio decision notification has no recipient",
@@ -598,16 +633,32 @@ const findelioReviewNotificationEndpoint = {
           return res.status(422).json({ error: "no_recipient" });
         }
 
+        const needsPremiumCheckout =
+          action === "approve" &&
+          ["monthly", "yearly"].includes(
+            revision.requested_billing_interval,
+          ) &&
+          revision.premium_active !== true;
+        const premiumBillingPath = `/de-ch/dashboard/firmenprofile/${revision.listing_id}/abo?interval=${encodeURIComponent(
+          revision.requested_billing_interval ?? "monthly",
+        )}&approved=1`;
         const decisionContent = {
           approve: {
             heading: "Firmeneintrag bestätigt",
-            intro:
-              "Gute Nachrichten: Dein Firmeneintrag wurde geprüft und bestätigt.",
+            intro: needsPremiumCheckout
+              ? "Gute Nachrichten: Dein Firmeneintrag wurde geprüft und bestätigt. Du kannst jetzt dein vorgemerktes Premium-Abo abschliessen."
+              : "Gute Nachrichten: Dein Firmeneintrag wurde geprüft und bestätigt.",
             subject: `Dein Firmeneintrag wurde bestätigt: ${revision.listing_name}`,
-            buttonLabel: "Firmeneintrag ansehen",
-            targetUrl: `${siteUrl}/de-ch/unternehmen/${encodeURIComponent(
-              revision.listing_slug,
-            )}`,
+            buttonLabel: needsPremiumCheckout
+              ? "Premium-Abo abschliessen"
+              : "Firmeneintrag ansehen",
+            targetUrl: needsPremiumCheckout
+              ? `${siteUrl}/api/auth/refresh?next=${encodeURIComponent(
+                  premiumBillingPath,
+                )}&locale=de-ch`
+              : `${siteUrl}/de-ch/unternehmen/${encodeURIComponent(
+                  revision.listing_slug,
+                )}`,
           },
           reject: {
             heading: "Firmeneintrag abgelehnt",
@@ -632,7 +683,7 @@ const findelioReviewNotificationEndpoint = {
         }[action];
         const reason =
           action === "approve"
-            ? ""
+            ? requestedReason
             : String(revision.rejection_reason ?? "").trim();
         const reasonText = reason ? `\n\nBegründung:\n${reason}` : "";
         const mailService = new MailService({
@@ -642,7 +693,7 @@ const findelioReviewNotificationEndpoint = {
         });
 
         await mailService.send({
-          to: recipient,
+          to: recipients,
           subject: decisionContent.subject,
           text: `${decisionContent.intro}\n\nFirma: ${revision.listing_name}${reasonText}\n\n${decisionContent.buttonLabel}:\n${decisionContent.targetUrl}`,
           template: {
@@ -657,6 +708,11 @@ const findelioReviewNotificationEndpoint = {
             },
           },
         });
+
+        logger.info(
+          { revisionId, recipientCount: recipients.length },
+          "Findelio decision notification sent",
+        );
 
         return res.status(204).send();
       } catch (error) {

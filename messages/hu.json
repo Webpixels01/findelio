@@ -200,7 +200,9 @@
       "editListing": "Szerkesztés",
       "createListing": "Új cégbejegyzés",
       "manageSubscription": "Előfizetés kezelése",
-      "choosePlan": "Csomag választása"
+      "choosePlan": "Csomag választása",
+      "completeBeforeBilling": "Először fejezd be, majd küldd ellenőrzésre.",
+      "billingAfterApproval": "Előfizetés a jóváhagyás után."
     },
     "teamPage": {
       "eyebrow": "Csapatkezelés",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Kép kiválasztása",
@@ -399,8 +400,8 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
-      "error": "The action failed. A reason is required when rejecting a post.",
+      "reason": "Üzenet az ügyfélnek (elutasításkor kötelező)",
+      "error": "A művelet nem hajtható végre. A bejegyzés elutasításához indoklás szükséges.",
       "approve": "Approve post",
       "reject": "Reject post"
     }
@@ -441,10 +442,16 @@
     "spokenLanguagesSearch": "Keresés a nyelvek között",
     "spokenLanguagesSearchPlaceholder": "Adj meg egy nyelvet",
     "noSearchResults": "Nincs megfelelő találat.",
+    "translations": {
+      "title": "Többnyelvű leírás",
+      "description": "Egészítsd ki a német fő leírást saját fordításokkal a Findelio további nyelvein.",
+      "fallbackHint": "Ha egy fordítás üres marad, automatikusan a német leírás jelenik meg.",
+      "fieldLabel": "Leírás {language} nyelven"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Prémium cégbejegyzés",
-      "description": "Egészítsd ki a cégbejegyzést logóval, képekkel, nyitvatartással és közösségimédia-hivatkozásokkal.",
+      "description": "Egészítsd ki a cégbejegyzést logóval, képekkel, nyitvatartással, többnyelvű leírásokkal és közösségimédia-hivatkozásokkal.",
       "lockedDescription": "Ezek a prémium funkciók aktív prémium előfizetéssel érhetők el.",
       "lockedHint": "A prémium előfizetés aktiválása után itt szerkesztheted ezeket a részeket.",
       "manageSubscription": "Premium aktiválása",
@@ -452,7 +459,8 @@
         "logo": "Céglogó",
         "gallery": "Képgaléria",
         "openingHours": "Nyitvatartás",
-        "socialLinks": "Közösségimédia-hivatkozások"
+        "socialLinks": "Közösségimédia-hivatkozások",
+        "translations": "Többnyelvű leírás"
       },
       "logoHint": "Tölts fel négyzetes vagy vízszintes céglogót.",
       "logoPreview": "Céglogó előnézete",
@@ -546,7 +554,8 @@
       "save_failed": "A módosításokat nem sikerült menteni.",
       "network": "Nem sikerült kapcsolódni a szerverhez."
     },
-    "createdNotice": "A cégbejegyzés piszkozatként létrejött. Most folytathatod a szerkesztést."
+    "createdNotice": "A cégbejegyzés piszkozatként létrejött. Most folytathatod a szerkesztést.",
+    "createdPremiumNotice": "A cégbejegyzés Premium-piszkozatként létrejött. Töltsd ki a logót, a galériát, a nyitvatartást és a közösségimédia-hivatkozásokat, majd küldd ellenőrzésre. Az előfizetést csak a jóváhagyás után kell megkötnöd."
   },
   "ListingCreator": {
     "eyebrow": "Cégbejegyzés létrehozása",
@@ -600,6 +609,18 @@
     "listingCreated": "A cégbejegyzést piszkozatként mentettük. Most válaszd ki a kívánt csomagot.",
     "checkoutSuccess": "Köszönjük. A fizetés sikeres volt. A Premium aktiválásának megerősítése folyamatban van, ami rövid ideig eltarthat.",
     "checkoutCancelled": "A fizetési folyamat megszakadt. A cégbejegyzés a Free csomagban marad.",
+    "approvedNotice": "A cégbejegyzésedet jóváhagytuk. Most befejezheted az előjegyzett Premium-előfizetést.",
+    "preApproval": {
+      "eyebrow": "Fizetés előtt",
+      "draftTitle": "Először fejezd be a cégbejegyzést",
+      "draftDescription": "Add meg az összes kívánt adatot, például a logót, a galériát, a nyitvatartást és a közösségimédia-hivatkozásokat, majd küldd ellenőrzésre. A Premium díját csak a jóváhagyás után kell kifizetni.",
+      "pendingTitle": "A cégbejegyzésed ellenőrzés alatt áll",
+      "pendingDescription": "Amint a Findelio jóváhagyja a bejegyzést, e-mailt kapsz, és befejezheted az előjegyzett Premium-előfizetést.",
+      "unavailableTitle": "A Premium még nem érhető el",
+      "unavailableDescription": "A Premium-előfizetéshez előbb jóvá kell hagyni a cégbejegyzést.",
+      "edit": "Bejegyzés befejezése",
+      "back": "Vissza a cégbejegyzésekhez"
+    },
     "intervalTitle": "Számlázási időszak",
     "intervals": {
       "monthly": {
@@ -620,7 +641,8 @@
         "logo": "Céglogó",
         "gallery": "Képgaléria",
         "openingHours": "Nyitvatartás",
-        "socialLinks": "Közösségimédia-linkek"
+        "socialLinks": "Közösségimédia-linkek",
+        "translations": "Többnyelvű leírás"
       }
     },
     "status": {
@@ -653,6 +675,7 @@
       "forbidden": "Ezt az előfizetést nem kezelheted.",
       "not_found": "A cégbejegyzés nem található.",
       "already_active": "Ehhez a cégbejegyzéshez a Premium már aktív.",
+      "listing_not_published": "A cégbejegyzést előbb jóvá kell hagyni.",
       "billing_not_configured": "A fizetési funkció jelenleg nem érhető el.",
       "portal_unavailable": "Az előfizetés kezelése ennél az előfizetésnél jelenleg nem érhető el.",
       "checkout_failed": "A fizetési folyamat nem indítható el.",
@@ -695,6 +718,7 @@
         "name": "Cégnév",
         "short_description": "Rövid leírás",
         "description": "Leírás",
+        "description_translations": "Lefordított leírások",
         "street": "Utca",
         "postal_code": "Irányítószám",
         "city": "Település",

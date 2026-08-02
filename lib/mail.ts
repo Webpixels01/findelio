@@ -15,6 +15,7 @@ export type ListingDecisionNotification = {
 export type PostDecisionNotification = {
   postId: string;
   action: "approve" | "reject";
+  reason?: string;
 };
 
 export type ContactNotification = {
@@ -63,6 +64,7 @@ export async function sendPostDecisionNotification(
       body: JSON.stringify({
         post_id: notification.postId,
         action: notification.action,
+        reason: notification.reason,
       }),
       cache: "no-store",
     },

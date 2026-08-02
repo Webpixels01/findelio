@@ -30,7 +30,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     type: type === "offer" || type === "event" ? type : "update",
     status: status === "draft" ? "draft" : "pending",
     title: text("title", 180),
-    excerpt: text("excerpt", 500) || null,
     body: text("body", 10000) || null,
     image: text("image", 36) || null,
     cta_label: text("cta_label", 80) || null,

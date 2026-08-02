@@ -25,7 +25,10 @@ const addressVisibilityValues = new Set(["full", "city", "hidden"]);
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-type ValidatedCreateValues = Omit<AccountListingCreate, "canton"> & {
+type ValidatedCreateValues = Omit<
+  AccountListingCreate,
+  "canton" | "requested_billing_interval"
+> & {
   canton: string;
   plan: "free" | "premium";
   billing_interval: "monthly" | "yearly";
@@ -79,7 +82,6 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   const data = body as Record<string, unknown>;
   const organization = stringValue(data.organization_id);
   const name = stringValue(data.name);
-  const shortDescription = optionalString(data.short_description);
   const description = optionalString(data.description);
   const street = optionalString(data.street);
   const postalCode = stringValue(data.postal_code);
@@ -114,7 +116,6 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
 
   if (
     !hasValidLength(name, 180) ||
-    !hasValidLength(shortDescription, 500) ||
     !hasValidLength(description, 20000) ||
     !hasValidLength(street, 200) ||
     !hasValidLength(postalCode, 20) ||
@@ -133,7 +134,6 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   return {
     organization,
     name,
-    short_description: shortDescription,
     description,
     street,
     postal_code: postalCode,
@@ -209,6 +209,8 @@ export async function POST(request: Request) {
   const createValues: AccountListingCreate = {
     ...listingValues,
     canton: cantonId,
+    requested_billing_interval:
+      plan === "premium" ? billingInterval : null,
   };
 
   let accessToken = await getAccessToken();
@@ -226,8 +228,7 @@ export async function POST(request: Request) {
       {
         success: true,
         listing: { id: listing.id },
-        checkout_required: plan === "premium",
-        billing_interval: billingInterval,
+        premium_requested: plan === "premium",
       },
       { status: 201, headers: { "Cache-Control": "no-store" } },
     );
@@ -249,8 +250,7 @@ export async function POST(request: Request) {
           {
             success: true,
             listing: { id: listing.id },
-            checkout_required: plan === "premium",
-            billing_interval: billingInterval,
+            premium_requested: plan === "premium",
           },
           { status: 201, headers: { "Cache-Control": "no-store" } },
         );

@@ -17,8 +17,7 @@ type CantonOption = {
 type CreateResult = {
   success?: boolean;
   error?: string;
-  checkout_required?: boolean;
-  billing_interval?: "monthly" | "yearly";
+  premium_requested?: boolean;
   listing?: {
     id?: string;
   };
@@ -62,7 +61,6 @@ export default function ListingCreateForm({
     const payload = {
       organization_id: formData.get("organization_id"),
       name: formData.get("name"),
-      short_description: formData.get("short_description"),
       description: formData.get("description"),
       public_email: formData.get("public_email"),
       phone: formData.get("phone"),
@@ -91,15 +89,9 @@ export default function ListingCreateForm({
         return;
       }
 
-      if (result.checkout_required) {
-        router.push(
-          `/dashboard/firmenprofile/${result.listing.id}/abo?interval=${result.billing_interval ?? billingInterval}&new=1`,
-        );
-      } else {
-        router.push(
-          `/dashboard/firmenprofile/${result.listing.id}/bearbeiten?created=1`,
-        );
-      }
+      router.push(
+        `/dashboard/firmenprofile/${result.listing.id}/bearbeiten?created=1`,
+      );
     } catch {
       setError(t("errors.network"));
     } finally {
@@ -144,16 +136,6 @@ export default function ListingCreateForm({
               name="name"
               maxLength={180}
               required
-              disabled={isSaving}
-            />
-          </label>
-
-          <label className="field-group">
-            <span className="field-label">{t("fields.shortDescription")}</span>
-            <textarea
-              className="field-control field-textarea min-h-28"
-              name="short_description"
-              maxLength={500}
               disabled={isSaving}
             />
           </label>

@@ -17,6 +17,17 @@ import {
 } from "@/lib/directus-review";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
 
+const descriptionTranslationLabels: Record<string, string> = {
+  en: "English",
+  sk: "Slovenčina",
+  cs: "Čeština",
+  hu: "Magyar",
+  pl: "Polski",
+  ru: "Русский",
+  "pt-pt": "Português",
+  ro: "Română",
+};
+
 function submitterName(
   submitter: {
     first_name: string | null;
@@ -86,6 +97,20 @@ function valueLabel(
         return `${day}: ${String(interval.opens_at ?? "").slice(0, 5)}–${String(interval.closes_at ?? "").slice(0, 5)}`;
       })
       .join("\n");
+  }
+
+  if (
+    field === "description_translations" &&
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+    return Object.entries(value)
+      .map(
+        ([locale, description]) =>
+          `${descriptionTranslationLabels[locale] ?? locale}:\n${String(description)}`,
+      )
+      .join("\n\n");
   }
 
   if (typeof value === "boolean") return value ? "Ja" : "Nein";

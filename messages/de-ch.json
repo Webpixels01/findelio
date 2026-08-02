@@ -200,7 +200,9 @@
       "editListing": "Bearbeiten",
       "createListing": "Neuer Firmeneintrag",
       "manageSubscription": "Abo verwalten",
-      "choosePlan": "Paket wählen"
+      "choosePlan": "Paket wählen",
+      "completeBeforeBilling": "Zuerst vervollständigen und zur Prüfung einreichen.",
+      "billingAfterApproval": "Abo-Abschluss nach der Freigabe."
     },
     "teamPage": {
       "eyebrow": "Teamverwaltung",
@@ -337,7 +339,6 @@
         "event": "Veranstaltung"
       },
       "title": "Titel",
-      "excerpt": "Kurztext",
       "body": "Beschreibung",
       "image": "Bild",
       "imageSelect": "Bild auswählen",
@@ -399,7 +400,7 @@
     "review": {
       "eyebrow": "Premium-Inhalte",
       "title": "Beiträge zur Prüfung",
-      "reason": "Begründung bei Ablehnung",
+      "reason": "Nachricht an den Kunden (bei Ablehnung erforderlich)",
       "error": "Die Aktion konnte nicht ausgeführt werden. Bei einer Ablehnung ist eine Begründung erforderlich.",
       "approve": "Beitrag freigeben",
       "reject": "Beitrag ablehnen"
@@ -440,10 +441,16 @@
     "spokenLanguagesSearch": "Sprachen durchsuchen",
     "spokenLanguagesSearchPlaceholder": "Sprache eingeben",
     "noSearchResults": "Keine passenden Einträge gefunden.",
+    "translations": {
+      "title": "Mehrsprachige Beschreibung",
+      "description": "Ergänze die deutsche Hauptbeschreibung mit eigenen Übersetzungen für die weiteren Findelio-Sprachen.",
+      "fallbackHint": "Bleibt eine Übersetzung leer, wird automatisch die deutsche Beschreibung angezeigt.",
+      "fieldLabel": "Beschreibung auf {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Premium-Firmeneintrag",
-      "description": "Ergänze deinen Firmeneintrag mit Logo, Bildern, Öffnungszeiten und Social-Media-Links.",
+      "description": "Ergänze deinen Firmeneintrag mit Logo, Bildern, Öffnungszeiten, mehrsprachigen Beschreibungen und Social-Media-Links.",
       "lockedDescription": "Diese Premium-Funktionen sind in einem aktiven Premium-Abo enthalten.",
       "lockedHint": "Sobald das Premium-Abo aktiv ist, kannst du diese Bereiche hier bearbeiten.",
       "manageSubscription": "Premium freischalten",
@@ -451,7 +458,8 @@
         "logo": "Firmenlogo",
         "gallery": "Bildergalerie",
         "openingHours": "Öffnungszeiten",
-        "socialLinks": "Social-Media-Links"
+        "socialLinks": "Social-Media-Links",
+        "translations": "Mehrsprachige Beschreibung"
       },
       "logoHint": "Lade ein quadratisches oder horizontales Firmenlogo hoch.",
       "logoPreview": "Vorschau des Firmenlogos",
@@ -524,7 +532,8 @@
       "save_failed": "Die Änderungen konnten nicht gespeichert werden.",
       "network": "Die Verbindung zum Server ist fehlgeschlagen."
     },
-    "createdNotice": "Der Firmeneintrag wurde als Entwurf angelegt. Du kannst die Angaben jetzt weiter bearbeiten."
+    "createdNotice": "Der Firmeneintrag wurde als Entwurf angelegt. Du kannst die Angaben jetzt weiter bearbeiten.",
+    "createdPremiumNotice": "Der Firmeneintrag wurde als Premium-Entwurf angelegt. Vervollständige jetzt auch Logo, Galerie, Öffnungszeiten und Social-Media-Links und reiche den Eintrag anschliessend zur Prüfung ein. Das Abo schliesst du erst nach der Freigabe ab."
   },
   "ListingCreator": {
     "eyebrow": "Firmeneintrag anlegen",
@@ -599,6 +608,18 @@
     "listingCreated": "Der Firmeneintrag wurde als Entwurf angelegt. Wähle jetzt das gewünschte Paket.",
     "checkoutSuccess": "Danke. Deine Zahlung war erfolgreich. Die Premium-Freischaltung wird bestätigt und kann einen kurzen Moment dauern.",
     "checkoutCancelled": "Der Zahlungsvorgang wurde abgebrochen. Der Firmeneintrag bleibt im Free-Paket.",
+    "approvedNotice": "Dein Firmeneintrag wurde freigegeben. Du kannst jetzt das vorgemerkte Premium-Abo abschliessen.",
+    "preApproval": {
+      "eyebrow": "Vor der Zahlung",
+      "draftTitle": "Vervollständige zuerst deinen Firmeneintrag",
+      "draftDescription": "Ergänze alle gewünschten Angaben wie Logo, Galerie, Öffnungszeiten und Social-Media-Links und reiche den Eintrag danach zur Prüfung ein. Das Premium-Abo wird erst nach der Freigabe bezahlt.",
+      "pendingTitle": "Dein Firmeneintrag wird geprüft",
+      "pendingDescription": "Sobald Findelio den Eintrag freigegeben hat, erhältst du eine E-Mail und kannst anschliessend das vorgemerkte Premium-Abo abschliessen.",
+      "unavailableTitle": "Premium ist noch nicht verfügbar",
+      "unavailableDescription": "Der Firmeneintrag muss zuerst freigegeben sein, bevor du ein Premium-Abo abschliessen kannst.",
+      "edit": "Eintrag vervollständigen",
+      "back": "Zu den Firmeneinträgen"
+    },
     "intervalTitle": "Abrechnungszeitraum",
     "intervals": {
       "monthly": {
@@ -619,7 +640,8 @@
         "logo": "Firmenlogo",
         "gallery": "Bildergalerie",
         "openingHours": "Öffnungszeiten",
-        "socialLinks": "Social-Media-Links"
+        "socialLinks": "Social-Media-Links",
+        "translations": "Mehrsprachige Beschreibung"
       }
     },
     "status": {
@@ -652,6 +674,7 @@
       "forbidden": "Du darfst dieses Abo nicht verwalten.",
       "not_found": "Der Firmeneintrag wurde nicht gefunden.",
       "already_active": "Für diesen Firmeneintrag ist Premium bereits aktiv.",
+      "listing_not_published": "Der Firmeneintrag muss zuerst freigegeben werden.",
       "billing_not_configured": "Die Zahlungsfunktion ist momentan nicht verfügbar.",
       "portal_unavailable": "Die Aboverwaltung ist für dieses Abo momentan nicht verfügbar.",
       "checkout_failed": "Der Zahlungsvorgang konnte nicht gestartet werden.",
@@ -694,6 +717,7 @@
         "name": "Firmenname",
         "short_description": "Kurzbeschreibung",
         "description": "Beschreibung",
+        "description_translations": "Übersetzte Beschreibungen",
         "street": "Strasse",
         "postal_code": "Postleitzahl",
         "city": "Ort",

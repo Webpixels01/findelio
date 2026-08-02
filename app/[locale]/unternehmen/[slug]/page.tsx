@@ -171,7 +171,7 @@ export default async function CompanyPage({
 
   const description = company.description
     ? removeHtml(company.description)
-    : company.short_description;
+    : null;
 
   const fullAddress =
     company.address_visibility === "full"
@@ -324,7 +324,7 @@ export default async function CompanyPage({
                         <div className="p-5">
                           <p className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent)]">{tg(`posts.types.${post.type}`)}</p>
                           <h3 className="mt-2 text-xl font-extrabold">{post.title}</h3>
-                          {(post.excerpt || post.body) && <p className="mt-3 whitespace-pre-line text-[var(--muted)]">{removeHtml(post.excerpt || post.body || "")}</p>}
+                          {post.body && <p className="mt-3 whitespace-pre-line text-[var(--muted)]">{removeHtml(post.body)}</p>}
                           {post.cta_label && post.cta_url && (
                             <TrackedContactLink listingId={company.id} metric="post_cta_clicks" href={post.cta_url} target="_blank" rel="noreferrer" className="primary-button mt-5 h-11 px-5">
                               {post.cta_label}

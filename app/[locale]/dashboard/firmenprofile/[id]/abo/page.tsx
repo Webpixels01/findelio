@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import ListingBillingActions from "@/components/listing-billing-actions";
+import PremiumBadge from "@/components/premium-badge";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
@@ -21,6 +22,7 @@ export default async function ListingBillingPage({
     interval?: string;
     checkout?: string;
     new?: string;
+    approved?: string;
   }>;
 }) {
   const [{ locale, id }, query] = await Promise.all([params, searchParams]);
@@ -47,8 +49,14 @@ export default async function ListingBillingPage({
 
   const { listing, subscription, premiumEnabled } = billingData;
   const initialInterval = normalizeInterval(
-    query.interval ?? subscription?.billing_interval,
+    query.interval ??
+      subscription?.billing_interval ??
+      listing.requested_billing_interval ??
+      undefined,
   );
+  const canStartCheckout = listing.status === "published";
+  const isPendingReview = listing.status === "pending";
+  const canContinueEditing = listing.status === "draft";
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     dateStyle: "long",
   });
@@ -103,11 +111,46 @@ export default async function ListingBillingPage({
         </div>
       )}
 
+      {query.approved === "1" && !premiumEnabled && canStartCheckout && (
+        <div className="mt-8 rounded-2xl border border-[#bfe4ca] bg-[#eefaf2] p-4 font-bold text-[#135f30]" role="status">
+          {t("approvedNotice")}
+        </div>
+      )}
+
+      {!premiumEnabled && !canStartCheckout ? (
+        <section className="mt-8 rounded-3xl border border-[#bfdcff] bg-[#f5faff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
+          <p className="eyebrow">{t("preApproval.eyebrow")}</p>
+          <h2 className="mt-3 text-2xl font-extrabold">
+            {isPendingReview
+              ? t("preApproval.pendingTitle")
+              : canContinueEditing
+                ? t("preApproval.draftTitle")
+                : t("preApproval.unavailableTitle")}
+          </h2>
+          <p className="mt-3 max-w-3xl text-[var(--muted)]">
+            {isPendingReview
+              ? t("preApproval.pendingDescription")
+              : canContinueEditing
+                ? t("preApproval.draftDescription")
+                : t("preApproval.unavailableDescription")}
+          </p>
+          <Link
+            href={
+              canContinueEditing
+                ? `/dashboard/firmenprofile/${listing.id}/bearbeiten`
+                : "/dashboard/firmenprofile"
+            }
+            className="primary-button mt-6 h-12 px-6"
+          >
+            {canContinueEditing
+              ? t("preApproval.edit")
+              : t("preApproval.back")}
+          </Link>
+        </section>
+      ) : (
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <section className="rounded-3xl border border-[#bfdcff] bg-[#f5faff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
-          <span className="rounded-full bg-[var(--accent)] px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-white">
-            {t("premium.badge")}
-          </span>
+          <PremiumBadge>{t("premium.badge")}</PremiumBadge>
           <h2 className="mt-4 text-3xl font-extrabold">
             {t("premium.title")}
           </h2>
@@ -116,7 +159,7 @@ export default async function ListingBillingPage({
           </p>
 
           <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-            {(["logo", "gallery", "openingHours", "socialLinks"] as const).map(
+            {(["logo", "gallery", "openingHours", "socialLinks", "translations"] as const).map(
               (feature) => (
                 <li
                   key={feature}
@@ -194,6 +237,7 @@ export default async function ListingBillingPage({
           )}
         </section>
       </div>
+      )}
     </>
   );
 }

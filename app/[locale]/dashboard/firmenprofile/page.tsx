@@ -141,15 +141,23 @@ export default async function ListingsPage({
                     </>
                   )}
 
-                  <Link
-                    href={`/dashboard/firmenprofile/${listing.id}/abo`}
-                    locale={locale}
-                    className="font-extrabold text-[var(--accent)] hover:underline"
-                  >
-                    {listing.subscription
-                      ? t("listingsPage.manageSubscription")
-                      : t("listingsPage.choosePlan")}
-                  </Link>
+                  {listing.status === "published" ? (
+                    <Link
+                      href={`/dashboard/firmenprofile/${listing.id}/abo`}
+                      locale={locale}
+                      className="font-extrabold text-[var(--accent)] hover:underline"
+                    >
+                      {listing.subscription
+                        ? t("listingsPage.manageSubscription")
+                        : t("listingsPage.choosePlan")}
+                    </Link>
+                  ) : (
+                    <p className="text-sm font-semibold text-[var(--muted)]">
+                      {listing.status === "pending"
+                        ? t("listingsPage.billingAfterApproval")
+                        : t("listingsPage.completeBeforeBilling")}
+                    </p>
+                  )}
 
                   {listing.status === "published" ? (
                     <Link

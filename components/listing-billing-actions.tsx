@@ -35,6 +35,7 @@ export default function ListingBillingActions({
       "forbidden",
       "not_found",
       "already_active",
+      "listing_not_published",
       "billing_not_configured",
       "portal_unavailable",
       "checkout_failed",

@@ -200,7 +200,9 @@
       "editListing": "Upravit",
       "createListing": "Nový firemní záznam",
       "manageSubscription": "Spravovat předplatné",
-      "choosePlan": "Vybrat balíček"
+      "choosePlan": "Vybrat balíček",
+      "completeBeforeBilling": "Nejprve dokončit a odeslat ke kontrole.",
+      "billingAfterApproval": "Předplatné po schválení."
     },
     "teamPage": {
       "eyebrow": "Správa týmu",
@@ -337,7 +339,6 @@
         "event": "Event"
       },
       "title": "Title",
-      "excerpt": "Summary",
       "body": "Description",
       "image": "Image",
       "imageSelect": "Vybrat obrázek",
@@ -399,8 +400,8 @@
     "review": {
       "eyebrow": "Premium content",
       "title": "Posts awaiting review",
-      "reason": "Reason for rejection",
-      "error": "The action failed. A reason is required when rejecting a post.",
+      "reason": "Zpráva zákazníkovi (povinná při zamítnutí)",
+      "error": "Akci se nepodařilo provést. Při zamítnutí příspěvku je nutné uvést důvod.",
       "approve": "Approve post",
       "reject": "Reject post"
     }
@@ -441,10 +442,16 @@
     "spokenLanguagesSearch": "Hledat v jazycích",
     "spokenLanguagesSearchPlaceholder": "Zadejte jazyk",
     "noSearchResults": "Nebyly nalezeny žádné odpovídající položky.",
+    "translations": {
+      "title": "Vícejazyčný popis",
+      "description": "Doplňte hlavní německý popis vlastními překlady do dalších jazyků Findelio.",
+      "fallbackHint": "Pokud překlad zůstane prázdný, automaticky se zobrazí německý popis.",
+      "fieldLabel": "Popis v jazyce {language}"
+    },
     "premium": {
       "badge": "Premium",
       "title": "Prémiový firemní záznam",
-      "description": "Doplňte firemní záznam o logo, obrázky, otevírací dobu a odkazy na sociální sítě.",
+      "description": "Doplňte firemní záznam o logo, obrázky, otevírací dobu, vícejazyčné popisy a odkazy na sociální sítě.",
       "lockedDescription": "Tyto prémiové funkce jsou součástí aktivního prémiového předplatného.",
       "lockedHint": "Po aktivaci prémiového předplatného můžete tyto části upravovat.",
       "manageSubscription": "Aktivovat Premium",
@@ -452,7 +459,8 @@
         "logo": "Firemní logo",
         "gallery": "Galerie obrázků",
         "openingHours": "Otevírací doba",
-        "socialLinks": "Odkazy na sociální sítě"
+        "socialLinks": "Odkazy na sociální sítě",
+        "translations": "Vícejazyčný popis"
       },
       "logoHint": "Nahrajte čtvercové nebo horizontální firemní logo.",
       "logoPreview": "Náhled firemního loga",
@@ -525,7 +533,8 @@
       "save_failed": "Změny se nepodařilo uložit.",
       "network": "Připojení k serveru selhalo."
     },
-    "createdNotice": "Firemní záznam byl vytvořen jako koncept. Nyní můžeš pokračovat v úpravách."
+    "createdNotice": "Firemní záznam byl vytvořen jako koncept. Nyní můžeš pokračovat v úpravách.",
+    "createdPremiumNotice": "Firemní záznam byl vytvořen jako prémiový koncept. Doplň logo, galerii, otevírací dobu a odkazy na sociální sítě a potom ho odešli ke kontrole. Předplatné dokončíš až po schválení."
   },
   "ListingCreator": {
     "eyebrow": "Vytvořit firemní záznam",
@@ -600,6 +609,18 @@
     "listingCreated": "Firemní záznam byl uložen jako koncept. Nyní vyberte požadovaný balíček.",
     "checkoutSuccess": "Děkujeme. Vaše platba byla úspěšná. Aktivace Premium se potvrzuje a může chvíli trvat.",
     "checkoutCancelled": "Platební proces byl zrušen. Firemní záznam zůstává v balíčku Free.",
+    "approvedNotice": "Tvůj firemní záznam byl schválen. Nyní můžeš dokončit připravené prémiové předplatné.",
+    "preApproval": {
+      "eyebrow": "Před platbou",
+      "draftTitle": "Nejprve dokonči firemní záznam",
+      "draftDescription": "Doplň všechny požadované údaje, například logo, galerii, otevírací dobu a odkazy na sociální sítě, a potom záznam odešli ke kontrole. Premium se platí až po schválení.",
+      "pendingTitle": "Tvůj firemní záznam se kontroluje",
+      "pendingDescription": "Jakmile Findelio záznam schválí, dostaneš e-mail a budeš moci dokončit připravené prémiové předplatné.",
+      "unavailableTitle": "Premium zatím není dostupné",
+      "unavailableDescription": "Předplatné Premium můžeš uzavřít až po schválení firemního záznamu.",
+      "edit": "Dokončit záznam",
+      "back": "Zpět na firemní záznamy"
+    },
     "intervalTitle": "Fakturační období",
     "intervals": {
       "monthly": {
@@ -620,7 +641,8 @@
         "logo": "Logo firmy",
         "gallery": "Galerie obrázků",
         "openingHours": "Otevírací doba",
-        "socialLinks": "Odkazy na sociální sítě"
+        "socialLinks": "Odkazy na sociální sítě",
+        "translations": "Vícejazyčný popis"
       }
     },
     "status": {
@@ -653,6 +675,7 @@
       "forbidden": "Toto předplatné nemůžete spravovat.",
       "not_found": "Firemní záznam nebyl nalezen.",
       "already_active": "Premium je pro tento firemní záznam již aktivní.",
+      "listing_not_published": "Firemní záznam musí být nejprve schválen.",
       "billing_not_configured": "Platební funkce momentálně není dostupná.",
       "portal_unavailable": "Správa tohoto předplatného momentálně není dostupná.",
       "checkout_failed": "Platební proces se nepodařilo spustit.",
@@ -695,6 +718,7 @@
         "name": "Název firmy",
         "short_description": "Krátký popis",
         "description": "Popis",
+        "description_translations": "Přeložené popisy",
         "street": "Ulice",
         "postal_code": "PSČ",
         "city": "Město",

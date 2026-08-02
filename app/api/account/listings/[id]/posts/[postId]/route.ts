@@ -43,7 +43,6 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       type: body.type === "offer" || body.type === "event" ? body.type : "update",
       status: body.status === "draft" ? "draft" : "pending",
       title: text("title", 180),
-      excerpt: text("excerpt", 500) || null,
       body: text("body", 10000) || null,
       image: text("image", 36) || null,
       cta_label: text("cta_label", 80) || null,

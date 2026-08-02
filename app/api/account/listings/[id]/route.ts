@@ -60,6 +60,16 @@ const socialPlatforms = new Set([
   "x",
 ]);
 const timePattern = /^([01]\d|2[0-3]):[0-5]\d$/;
+const descriptionTranslationLocales = new Set([
+  "en",
+  "sk",
+  "cs",
+  "hu",
+  "pl",
+  "ru",
+  "pt-pt",
+  "ro",
+]);
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -276,6 +286,41 @@ function openingHours(value: unknown): AccountOpeningHour[] | null {
   return hours;
 }
 
+function descriptionTranslations(
+  value: unknown,
+): Record<string, string> | null {
+  if (value === undefined) {
+    return {};
+  }
+
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+
+  const translations: Record<string, string> = {};
+
+  for (const [locale, rawDescription] of Object.entries(value)) {
+    if (
+      !descriptionTranslationLocales.has(locale) ||
+      typeof rawDescription !== "string"
+    ) {
+      return null;
+    }
+
+    const description = rawDescription.trim();
+
+    if (description.length > 20000) {
+      return null;
+    }
+
+    if (description) {
+      translations[locale] = description;
+    }
+  }
+
+  return translations;
+}
+
 function premiumValues(
   value: unknown,
 ): AccountPremiumListingUpdate | null | undefined {
@@ -292,6 +337,9 @@ function premiumValues(
   const galleryFileIds = relationIds(data.gallery_file_ids, 10);
   const validatedSocialLinks = socialLinks(data.social_links);
   const validatedOpeningHours = openingHours(data.opening_hours);
+  const validatedDescriptionTranslations = descriptionTranslations(
+    data.description_translations,
+  );
   const customCtaLabel = optionalString(data.custom_cta_label);
   let customCtaValue: string | null;
 
@@ -306,6 +354,7 @@ function premiumValues(
     galleryFileIds === null ||
     validatedSocialLinks === null ||
     validatedOpeningHours === null
+    || validatedDescriptionTranslations === null
     || !hasValidLength(customCtaLabel, 80)
     || !hasValidLength(customCtaValue, 500)
     || Boolean(customCtaLabel) !== Boolean(customCtaValue)
@@ -324,6 +373,7 @@ function premiumValues(
     opening_hours: validatedOpeningHours,
     custom_cta_label: customCtaLabel,
     custom_cta_value: customCtaValue,
+    description_translations: validatedDescriptionTranslations,
   };
 }
 
@@ -334,7 +384,6 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
 
   const data = body as Record<string, unknown>;
   const name = stringValue(data.name);
-  const shortDescription = optionalString(data.short_description);
   const description = optionalString(data.description);
   const street = optionalString(data.street);
   const postalCode = stringValue(data.postal_code);
@@ -372,7 +421,6 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
 
   if (
     !hasValidLength(name, 180) ||
-    !hasValidLength(shortDescription, 500) ||
     !hasValidLength(description, 20000) ||
     !hasValidLength(street, 200) ||
     !hasValidLength(postalCode, 20) ||
@@ -393,7 +441,6 @@ function validateBody(body: unknown): AccountListingEditorUpdate | null {
 
   return {
     name,
-    short_description: shortDescription,
     description,
     street,
     postal_code: postalCode,
