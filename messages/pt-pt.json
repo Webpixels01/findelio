@@ -13,6 +13,13 @@
     "menu": "Abrir menu",
     "dashboard": "Painel"
   },
+  "Share": {
+    "page": "Partilhar página",
+    "listing": "Partilhar ficha",
+    "copied": "Ligação copiada",
+    "shared": "Partilhado",
+    "error": "Não foi possível partilhar"
+  },
   "Home": {
     "eyebrow": "Empresas multilingues na Suíça",
     "title": "Encontre empresas que falam a sua língua.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Voltar à pesquisa",
+    "metaDescription": "Ficha empresarial de {company} em {city} na Findelio: contacto, setores e línguas faladas.",
     "about": "Sobre a empresa",
     "contact": "Contacto",
     "website": "Website",
@@ -225,7 +233,23 @@
     "contact": "Contacto",
     "imprint": "Ficha técnica",
     "privacy": "Privacidade",
+    "howItWorks": "Como funciona a Findelio para empresas",
+    "terms": "Termos",
     "copyright": "Todos os direitos reservados."
+  },
+  "CompanyGuide": {
+    "metaTitle": "Como funciona a Findelio para empresas | Findelio", "metaDescription": "Da conta empresarial à ficha publicada: saiba como as empresas utilizam a Findelio e o que oferece o Premium.", "eyebrow": "Para empresas", "title": "A sua ficha Findelio em poucos passos.", "intro": "A Findelio liga a sua empresa a pessoas que procuram serviços na sua língua. Mantém o controlo dos dados e escolhe Free ou Premium para cada ficha.", "stepsTitle": "Como funciona a publicação",
+    "steps": { "register": { "title": "Criar uma conta", "text": "Registe-se com o seu e-mail e confirme o endereço através da ligação recebida." }, "organization": { "title": "Criar uma organização", "text": "Adicione a organização à qual pertencem as fichas e, mais tarde, os membros da equipa." }, "listing": { "title": "Criar uma ficha", "text": "Adicione a empresa, selecione setores e línguas e escolha Free ou Premium." }, "complete": { "title": "Completar o perfil", "text": "Adicione descrição, contacto e morada. O Premium inclui também logótipo, galeria, horários, redes sociais e traduções." }, "review": { "title": "Enviar para revisão", "text": "A Findelio verifica dados novos e alterados para manter o diretório fiável e atualizado." }, "publish": { "title": "Publicar e crescer", "text": "Após aprovação, a ficha fica visível. Só então ativa o Premium, publicações e estatísticas." } },
+    "packagesEyebrow": "Plano por ficha", "packagesTitle": "Comece com Free ou mostre mais com Premium",
+    "free": { "title": "Free", "price": "CHF 0", "description": "Uma base sólida para uma ficha pesquisável e verificada.", "features": { "profile": "Nome da empresa e descrição completa", "classification": "Setores e línguas faladas", "contact": "Contacto, site e localização" } },
+    "premium": { "title": "Premium", "price": "CHF 9.90 por mês ou CHF 99 por ano", "description": "Para empresas que querem apresentação visual, conteúdo atual e informação sobre alcance.", "features": { "media": "Logótipo e galeria de imagens", "details": "Horários, redes sociais e botão personalizado", "translations": "Descrições próprias em todas as línguas Findelio", "posts": "Notícias, promoções e eventos", "ranking": "Posição prioritária para fichas Premium relevantes", "statistics": "Estatísticas e relatório mensal" } },
+    "reviewTitle": "Porque são verificadas as fichas?", "reviewText": "A revisão protege visitantes e empresas sérias. A Findelio verifica a plausibilidade dos dados e envia uma mensagem em caso de dúvidas ou rejeição.", "verificationEyebrow": "Verificação adicional voluntária", "verificationTitle": "Obtenha o estado Verificado com um comprovativo oficial", "verificationText": "Pode enviar voluntariamente à Findelio um comprovativo oficial e atual da empresa. Após uma verificação bem-sucedida, marcamos a ficha como «Verificada».", "verificationProofs": "Pode ser, por exemplo, um extrato atual do registo comercial ou do registo UID. Para empresários em nome individual sem inscrição no registo comercial, também pode ser usada uma confirmação da entidade de segurança social competente que reconheça a atividade independente.", "verificationNote": "O selo Verificado confirma apenas que a Findelio verificou a existência ou associação da empresa através do comprovativo. Não garante qualidade, solvabilidade, licenças ou serviços.", "verificationCta": "Enviar comprovativo por e-mail", "ctaTitle": "Pronto para adicionar a sua empresa?", "ctaText": "Crie uma conta gratuita, complete o perfil e seja encontrado pelos clientes certos.", "ctaButton": "Registar empresa"
+  },
+  "Terms": {
+    "metaTitle": "Termos e Condições | Findelio", "metaDescription": "Termos aplicáveis a contas empresariais, fichas e subscrições Premium na Findelio.", "eyebrow": "Informação legal", "title": "Termos e Condições", "lastUpdated": "Atualizado em 3 de agosto de 2026", "intro": "Estes Termos regulam a utilização da Findelio por empresas, organizações e respetivos utilizadores autorizados.",
+    "sections": { "scope": { "title": "Prestador e âmbito", "body": "A Findelio é disponibilizada por Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Suíça. Os Termos aplicam-se a contas, organizações, fichas e funções gratuitas e pagas." }, "services": { "title": "Serviços Findelio", "body": "A Findelio opera um diretório empresarial multilingue e ferramentas para criar, verificar e gerir fichas. Não é parte dos contratos entre visitantes e empresas." }, "accounts": { "title": "Conta e autorização", "body": "Os dados devem ser corretos e atuais e as credenciais confidenciais. Quem atua por uma organização confirma a sua autorização e responde pela atividade da conta." }, "content": { "title": "Conteúdo e licença", "body": "A empresa responde por textos, imagens, logótipos e ligações e confirma a sua legalidade. A Findelio recebe os direitos não exclusivos necessários para guardar e apresentar o conteúdo durante a publicação." }, "review": { "title": "Revisão e bloqueio", "body": "Conteúdo ilegal, enganador, incompleto ou abusivo pode ser rejeitado, suspenso ou eliminado. Quando adequado, a Findelio indica o motivo e permite correção." }, "packages": { "title": "Free e Premium", "body": "O Free inclui as funções básicas indicadas. O Premium aplica-se a uma ficha e inclui os extras descritos nas páginas de oferta e faturação." }, "contract": { "title": "Contrato, preços e pagamento", "body": "Os preços são apresentados em francos suíços. O contrato Premium inicia-se com a confirmação do pagamento. As subscrições mensais e anuais renovam-se se não forem canceladas antes do fim do período." }, "cancellation": { "title": "Cancelamento e pagamento falhado", "body": "O Premium pode ser cancelado para o fim do período e mantém-se ativo até lá. Após falha de pagamento, o acesso pode ser bloqueado no fim do período. Em regra não há reembolso proporcional; os direitos imperativos mantêm-se." }, "availability": { "title": "Disponibilidade", "body": "Não é garantido funcionamento contínuo e sem erros. Manutenção, segurança, terceiros ou força maior podem causar interrupções." }, "liability": { "title": "Responsabilidade", "body": "A Findelio responde no âmbito legal obrigatório. Na medida permitida, exclui-se responsabilidade por negligência ligeira, danos indiretos, lucros cessantes e perda de dados." }, "termination": { "title": "Cessação e eliminação da conta", "body": "Eliminar a conta não substitui o cancelamento de Premium ativo. Violações graves ou repetidas podem levar ao bloqueio ou cessação do acesso." }, "privacy": { "title": "Privacidade", "body": "Os dados pessoais são tratados segundo a Política de Privacidade atual da Findelio." }, "changes": { "title": "Alterações aos Termos", "body": "A Findelio pode alterar os Termos para o futuro por razões legais, técnicas ou comerciais. Alterações relevantes serão comunicadas." }, "law": { "title": "Lei e foro", "body": "Aplica-se a lei suíça. Quando legalmente permitido, são competentes os tribunais da sede da Webpixels. Regras imperativas mantêm-se; em divergências prevalece a versão alemã." } },
+    "verification": { "title": "Fichas empresariais verificadas", "body": "As empresas podem apresentar voluntariamente um extrato atual do registo comercial, do registo UID ou um comprovativo oficial comparável. Para empresários em nome individual sem inscrição no registo comercial, a Findelio pode aceitar, em especial, uma confirmação da entidade de segurança social competente que reconheça a atividade independente. Após uma verificação bem-sucedida, a Findelio pode marcar a ficha como «Verificada». O selo confirma apenas a existência ou associação da empresa verificada pelo documento; não garante qualidade, solvabilidade, licenças ou serviços. A Findelio pode solicitar mais dados ou retirar o estado se as informações estiverem desatualizadas, forem contraditórias ou falsas. Os comprovativos são utilizados exclusivamente para verificação, acessíveis apenas a pessoas autorizadas e eliminados quando deixam de ser necessários para esse fim, salvo obrigação de conservação." },
+    "contact": "Para questões sobre estes Termos, contacte a equipa Findelio em"
   },
   "Contact": {
     "metaTitle": "Contacto | Findelio",
@@ -633,6 +657,8 @@
       }
     },
     "terms": "Sem período experimental gratuito. O cancelamento produz efeito no final do período de faturação atual. Se um pagamento falhar, o acesso mantém-se até ao final do período e é depois bloqueado.",
+    "termsNotice": "Ao concluir a subscrição paga, aceita os",
+    "termsLink": "Termos e Condições",
     "premium": {
       "badge": "Premium",
       "title": "Registo empresarial Premium",

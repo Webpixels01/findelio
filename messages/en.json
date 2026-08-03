@@ -13,6 +13,13 @@
     "menu": "Open menu",
     "dashboard": "Dashboard"
   },
+  "Share": {
+    "page": "Share page",
+    "listing": "Share listing",
+    "copied": "Link copied",
+    "shared": "Shared",
+    "error": "Unable to share"
+  },
   "Home": {
     "eyebrow": "Multilingual businesses in Switzerland",
     "title": "Find businesses that speak your language.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Back to search",
+    "metaDescription": "Business profile for {company} in {city} on Findelio: contact details, industries and spoken languages.",
     "about": "About the business",
     "contact": "Contact",
     "website": "Website",
@@ -225,7 +233,66 @@
     "contact": "Contact",
     "imprint": "Imprint",
     "privacy": "Privacy",
+    "howItWorks": "How Findelio works for businesses",
+    "terms": "Terms",
     "copyright": "All rights reserved."
+  },
+  "CompanyGuide": {
+    "metaTitle": "How Findelio works for businesses | Findelio",
+    "metaDescription": "From company account to published listing: learn how businesses use Findelio and what Premium adds.",
+    "eyebrow": "For businesses",
+    "title": "Your Findelio listing in just a few steps.",
+    "intro": "Findelio connects your business with people looking for advice and services in their language. You stay in control of your information and choose Free or Premium for each listing.",
+    "stepsTitle": "How publication works",
+    "steps": {
+      "register": { "title": "Create an account", "text": "Register with your email address and confirm it using the link in the confirmation email." },
+      "organization": { "title": "Create an organisation", "text": "Add the organisation that owns your business listings and can later include additional team members." },
+      "listing": { "title": "Create a listing", "text": "Add your business listing, select relevant industries and languages, and choose Free or Premium." },
+      "complete": { "title": "Complete the profile", "text": "Add a description, contact details and address. Premium also includes a logo, gallery, opening hours, social links and translations." },
+      "review": { "title": "Submit for review", "text": "Findelio reviews new and changed content to keep the directory reliable, current and free from misuse." },
+      "publish": { "title": "Publish and grow", "text": "After approval your listing becomes visible. Only then do you activate a reserved Premium plan and gain access to posts and statistics." }
+    },
+    "packagesEyebrow": "Plans per business listing",
+    "packagesTitle": "Start Free or show more with Premium",
+    "free": { "title": "Free", "price": "CHF 0", "description": "A solid foundation for a searchable and reviewed business listing.", "features": { "profile": "Business name and full description", "classification": "Industries and spoken languages", "contact": "Contact details, website and location" } },
+    "premium": { "title": "Premium", "price": "CHF 9.90 monthly or CHF 99 yearly", "description": "For businesses that want a visual presence, current content and useful reach insights.", "features": { "media": "Business logo and image gallery", "details": "Opening hours, social links and a custom action button", "translations": "Custom descriptions in every Findelio language", "posts": "News, promotions and events", "ranking": "Priority placement for relevant Premium listings", "statistics": "Reach statistics and a monthly performance report" } },
+    "reviewTitle": "Why are listings reviewed?",
+    "reviewText": "Review protects visitors and reputable businesses. Findelio checks that information is plausible and belongs to a genuine business. You receive a message if we have questions or reject content.",
+    "verificationEyebrow": "Optional additional check",
+    "verificationTitle": "Earn Verified status with official evidence",
+    "verificationText": "You may voluntarily send Findelio current official evidence of your business. After a successful check, we mark your business listing as ‘Verified’.",
+    "verificationProofs": "Suitable evidence includes a current commercial-register or UID-register extract. For sole proprietorships not entered in the commercial register, confirmation from the social-security compensation office recognising self-employed status may also be used.",
+    "verificationNote": "The Verified badge only confirms that Findelio checked the existence or association of the business using submitted evidence. It is not a guarantee of quality, creditworthiness, licences or services.",
+    "verificationCta": "Send evidence by email",
+    "ctaTitle": "Ready to list your business?",
+    "ctaText": "Create your free account, complete your profile and be found by the right customers.",
+    "ctaButton": "List a business"
+  },
+  "Terms": {
+    "metaTitle": "Terms and Conditions | Findelio",
+    "metaDescription": "Terms and Conditions for business accounts, listings and Premium subscriptions on Findelio.",
+    "eyebrow": "Legal",
+    "title": "Terms and Conditions",
+    "lastUpdated": "Last updated: 3 August 2026",
+    "intro": "These Terms govern the use of Findelio by businesses, organisations and their authorised users. Please read them carefully before registering or purchasing a Premium subscription.",
+    "sections": {
+      "scope": { "title": "Provider and scope", "body": "Findelio is provided by Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Switzerland. These Terms apply to business accounts, organisations, listings, and free and paid Findelio features." },
+      "services": { "title": "Findelio services", "body": "Findelio operates a multilingual business directory and provides tools to create, review, publish and manage business listings. Findelio facilitates visibility and contact but is not a party to contracts between visitors and listed businesses." },
+      "accounts": { "title": "Accounts and authority", "body": "Registration details must be accurate and current. Login credentials must be kept confidential. Anyone acting for an organisation confirms that they are authorised to do so. Account holders are responsible for activity performed through their account." },
+      "content": { "title": "Content and licence", "body": "Businesses are responsible for their text, contact details, images, logos, links and other content. They confirm that information is truthful, current and lawful and does not infringe third-party rights. For the publication period, Findelio receives the non-exclusive rights needed to store, display and technically process this content for the directory." },
+      "review": { "title": "Review, rejection and suspension", "body": "Findelio may review new and changed content before publication. Illegal, misleading, incomplete, abusive or insufficient-quality content may be rejected, deferred, suspended or deleted. Where appropriate, Findelio will explain the decision and allow corrections." },
+      "packages": { "title": "Free and Premium", "body": "The Free plan includes the displayed basic features. Premium applies per business listing and includes the additional features described on the offer and billing pages. Features may evolve without unreasonably reducing the essential value of a current paid period." },
+      "contract": { "title": "Contract, prices and payment", "body": "Current prices are displayed in Swiss francs including any applicable charges. Before purchase, the plan, billing interval and price are shown again. The Premium contract begins when payment is confirmed. Monthly and annual subscriptions renew for the selected interval unless cancelled before the end of the period." },
+      "cancellation": { "title": "Cancellation and failed payments", "body": "Premium can be cancelled through subscription management effective at the end of the current billing period. Features remain available until then. Following a failed payment, Premium access may be blocked no later than the end of the period. Used or partly used periods are generally not refunded; mandatory legal rights remain unaffected." },
+      "availability": { "title": "Availability and development", "body": "Findelio aims to operate reliably but does not guarantee uninterrupted or error-free availability. Maintenance, security measures, third-party outages or force majeure may cause interruptions. Features may be reasonably adapted or replaced." },
+      "liability": { "title": "Liability", "body": "Findelio remains liable where required by mandatory law. To the extent permitted, liability for slight negligence, indirect loss, lost profits and data loss is excluded. Businesses remain responsible for their content, offers and transactions with visitors." },
+      "termination": { "title": "Termination and account deletion", "body": "Users may request account deletion unless legal retention duties or open contractual relationships prevent it. Deleting an account does not cancel an active Premium subscription. Findelio may suspend or terminate access for serious or repeated violations after reasonably considering the interests involved." },
+      "privacy": { "title": "Privacy", "body": "Personal data is processed under the current Findelio Privacy Policy. Businesses are responsible for personal data they publish in their listings." },
+      "changes": { "title": "Changes to these Terms", "body": "Findelio may amend these Terms prospectively for legal, technical or business reasons. Material changes will be communicated appropriately. Paid periods will not be subject to unreasonable retroactive disadvantages." },
+      "law": { "title": "Governing law and jurisdiction", "body": "Swiss law applies, excluding conflict-of-law rules. Where legally permitted, the courts at the registered location of Webpixels have jurisdiction. Mandatory venues and protections remain unaffected. If translations conflict, the German version prevails." }
+    },
+    "verification": { "title": "Verified business listings", "body": "Businesses may voluntarily submit a current commercial-register or UID-register extract or comparable official evidence. For sole proprietorships not entered in the commercial register, Findelio may in particular accept confirmation from the social-security compensation office recognising self-employed status. After a successful check, Findelio may mark the listing as ‘Verified’. The badge only confirms the existence or association of the business checked using the evidence; it is not a guarantee of quality, creditworthiness, licences or services. Findelio may request further information or remove the status if information becomes outdated, contradictory or false. Evidence is used solely for verification, made accessible only to authorised persons, and deleted when no longer required for that purpose unless a retention obligation applies." },
+    "contact": "For questions about these Terms, contact the Findelio team at"
   },
   "Contact": {
     "metaTitle": "Contact | Findelio",
@@ -632,6 +699,8 @@
       }
     },
     "terms": "No free trial. Cancellation takes effect at the end of the current billing period. If a payment fails, access remains available until the period ends and is then locked.",
+    "termsNotice": "By completing the paid subscription, you accept the",
+    "termsLink": "Terms and Conditions",
     "premium": {
       "badge": "Premium",
       "title": "Premium business listing",

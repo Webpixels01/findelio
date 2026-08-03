@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
 type BillingResult = {
@@ -162,6 +163,12 @@ export default function ListingBillingActions({
       </fieldset>
 
       <p className="mt-4 text-sm text-[var(--muted)]">{t("terms")}</p>
+      <p className="mt-2 text-sm text-[var(--muted)]">
+        {t("termsNotice")}{" "}
+        <Link href="/agb" className="font-bold text-[var(--accent)] hover:underline">
+          {t("termsLink")}
+        </Link>
+      </p>
 
       <button
         type="button"

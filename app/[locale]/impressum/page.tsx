@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import SiteHeader from "@/components/site-header";
 import type { AppLocale } from "@/i18n/routing";
+import { buildPageMetadata } from "@/lib/seo";
 
 type ImprintPageProps = {
   params: Promise<{ locale: AppLocale }>;
@@ -13,10 +14,12 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Legal" });
 
-  return {
+  return buildPageMetadata({
+    locale,
+    path: "/impressum",
     title: t("imprintMetaTitle"),
     description: t("imprintMetaDescription"),
-  };
+  });
 }
 
 export default async function ImprintPage({ params }: ImprintPageProps) {

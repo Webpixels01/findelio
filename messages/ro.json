@@ -13,6 +13,13 @@
     "menu": "Deschide meniul",
     "dashboard": "Panou de control"
   },
+  "Share": {
+    "page": "Distribuie pagina",
+    "listing": "Distribuie profilul",
+    "copied": "Link copiat",
+    "shared": "Distribuit",
+    "error": "Distribuirea nu este posibilă"
+  },
   "Home": {
     "eyebrow": "Companii multilingve în Elveția",
     "title": "Găsește companii care vorbesc limba ta.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Înapoi la căutare",
+    "metaDescription": "Profilul firmei {company} din {city} pe Findelio: contact, domenii și limbi vorbite.",
     "about": "Despre companie",
     "contact": "Contact",
     "website": "Website",
@@ -225,7 +233,23 @@
     "contact": "Contact",
     "imprint": "Date legale",
     "privacy": "Confidențialitate",
+    "howItWorks": "Cum funcționează Findelio pentru firme",
+    "terms": "Termeni",
     "copyright": "Toate drepturile rezervate."
+  },
+  "CompanyGuide": {
+    "metaTitle": "Cum funcționează Findelio pentru firme | Findelio", "metaDescription": "De la contul companiei la profilul publicat: află cum folosesc firmele Findelio și ce oferă Premium.", "eyebrow": "Pentru firme", "title": "Profilul tău Findelio în câțiva pași.", "intro": "Findelio conectează firma ta cu persoane care caută servicii în limba lor. Păstrezi controlul datelor și alegi Free sau Premium pentru fiecare profil.", "stepsTitle": "Cum funcționează publicarea",
+    "steps": { "register": { "title": "Creează un cont", "text": "Înregistrează-te cu e-mailul și confirmă adresa prin linkul primit." }, "organization": { "title": "Creează organizația", "text": "Adaugă organizația căreia îi aparțin profilurile și, ulterior, membrii echipei." }, "listing": { "title": "Creează profilul", "text": "Adaugă firma, selectează domeniile și limbile și alege Free sau Premium." }, "complete": { "title": "Completează profilul", "text": "Adaugă descrierea, contactul și adresa. Premium include și logo, galerie, program, rețele sociale și traduceri." }, "review": { "title": "Trimite la verificare", "text": "Findelio verifică datele noi și modificate pentru ca directorul să rămână credibil și actual." }, "publish": { "title": "Publică și dezvoltă-te", "text": "După aprobare, profilul devine vizibil. Abia apoi activezi Premium, postările și statisticile." } },
+    "packagesEyebrow": "Pachet pentru fiecare profil", "packagesTitle": "Începe cu Free sau arată mai mult cu Premium",
+    "free": { "title": "Free", "price": "CHF 0", "description": "O bază solidă pentru un profil găsit în căutare și verificat.", "features": { "profile": "Numele firmei și descriere completă", "classification": "Domenii și limbi vorbite", "contact": "Contact, site și locație" } },
+    "premium": { "title": "Premium", "price": "CHF 9.90 lunar sau CHF 99 anual", "description": "Pentru firme care doresc prezentare vizuală, conținut actual și informații despre audiență.", "features": { "media": "Logo și galerie de imagini", "details": "Program, rețele sociale și buton personalizat", "translations": "Descrieri proprii în toate limbile Findelio", "posts": "Noutăți, promoții și evenimente", "ranking": "Poziționare prioritară pentru profiluri Premium relevante", "statistics": "Statistici și raport lunar" } },
+    "reviewTitle": "De ce sunt verificate profilurile?", "reviewText": "Verificarea protejează vizitatorii și firmele serioase. Findelio verifică plauzibilitatea datelor și trimite un mesaj dacă are întrebări sau respinge conținutul.", "verificationEyebrow": "Verificare suplimentară voluntară", "verificationTitle": "Obține statutul Verificat cu un document oficial", "verificationText": "Poți trimite voluntar către Findelio un document oficial și actual al firmei. După verificarea reușită, marcăm profilul drept „Verificat”.", "verificationProofs": "Poate fi, de exemplu, un extras actual din registrul comerțului sau registrul UID. Pentru întreprinderile individuale care nu sunt înscrise în registrul comerțului, se poate folosi și confirmarea instituției competente de asigurări sociale privind recunoașterea activității independente.", "verificationNote": "Insigna Verificat confirmă doar că Findelio a verificat existența sau legătura firmei pe baza documentului. Nu garantează calitatea, solvabilitatea, autorizațiile sau serviciile.", "verificationCta": "Trimite documentul prin e-mail", "ctaTitle": "Ești gata să adaugi firma?", "ctaText": "Creează un cont gratuit, completează profilul și fii găsit de clienții potriviți.", "ctaButton": "Adaugă compania"
+  },
+  "Terms": {
+    "metaTitle": "Termeni și condiții | Findelio", "metaDescription": "Termeni pentru conturi de firmă, profiluri și abonamente Premium pe Findelio.", "eyebrow": "Informații juridice", "title": "Termeni și condiții", "lastUpdated": "Actualizat la 3 august 2026", "intro": "Acești Termeni reglementează utilizarea Findelio de către firme, organizații și utilizatorii lor autorizați.",
+    "sections": { "scope": { "title": "Furnizor și domeniu", "body": "Findelio este furnizat de Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Elveția. Termenii se aplică conturilor, organizațiilor, profilurilor și funcțiilor gratuite și plătite." }, "services": { "title": "Serviciile Findelio", "body": "Findelio operează un director multilingv și instrumente pentru crearea, verificarea și administrarea profilurilor. Nu este parte în contractele dintre vizitatori și firme." }, "accounts": { "title": "Cont și autorizare", "body": "Datele trebuie să fie corecte și actuale, iar credențialele confidențiale. Persoana care acționează pentru o organizație confirmă autorizarea și răspunde pentru activitatea contului." }, "content": { "title": "Conținut și licență", "body": "Firma răspunde pentru texte, imagini, logo-uri și linkuri și confirmă legalitatea lor. Findelio primește drepturile neexclusive necesare pentru stocarea și afișarea conținutului pe durata publicării." }, "review": { "title": "Verificare și blocare", "body": "Conținutul ilegal, înșelător, incomplet sau abuziv poate fi respins, suspendat sau șters. Când este adecvat, Findelio explică motivul și permite corectarea." }, "packages": { "title": "Free și Premium", "body": "Free include funcțiile de bază afișate. Premium se aplică unui profil și include opțiunile descrise pe paginile de ofertă și facturare." }, "contract": { "title": "Contract, prețuri și plată", "body": "Prețurile sunt afișate în franci elvețieni. Contractul Premium începe la confirmarea plății. Abonamentele lunare și anuale se reînnoiesc dacă nu sunt anulate înainte de sfârșitul perioadei." }, "cancellation": { "title": "Anulare și plată eșuată", "body": "Premium poate fi anulat pentru sfârșitul perioadei și rămâne activ până atunci. După o plată eșuată, accesul poate fi blocat la finalul perioadei. În general nu există rambursare proporțională; drepturile obligatorii rămân." }, "availability": { "title": "Disponibilitate", "body": "Nu este garantată funcționarea continuă fără erori. Mentenanța, securitatea, terții sau forța majoră pot cauza întreruperi." }, "liability": { "title": "Răspundere", "body": "Findelio răspunde în limitele obligatorii ale legii. În măsura permisă, se exclude răspunderea pentru neglijență ușoară, prejudicii indirecte, profit pierdut și pierdere de date." }, "termination": { "title": "Încetare și ștergerea contului", "body": "Ștergerea contului nu înlocuiește anularea unui Premium activ. Încălcările grave sau repetate pot duce la blocarea sau încetarea accesului." }, "privacy": { "title": "Confidențialitate", "body": "Datele personale sunt prelucrate conform politicii de confidențialitate Findelio în vigoare." }, "changes": { "title": "Modificarea Termenilor", "body": "Findelio poate modifica Termenii pentru viitor din motive juridice, tehnice sau comerciale. Modificările importante vor fi comunicate." }, "law": { "title": "Lege și jurisdicție", "body": "Se aplică legea elvețiană. Când este permis, sunt competente instanțele de la sediul Webpixels. Normele obligatorii rămân; în caz de diferențe prevalează versiunea germană." } },
+    "verification": { "title": "Profiluri de firmă verificate", "body": "Firmele pot trimite voluntar un extras actual din registrul comerțului, registrul UID sau un document oficial comparabil. Pentru întreprinderile individuale care nu sunt înscrise în registrul comerțului, Findelio poate accepta în special confirmarea instituției competente de asigurări sociale privind recunoașterea activității independente. După verificarea reușită, Findelio poate marca profilul drept „Verificat”. Insigna confirmă doar existența sau legătura firmei verificată prin document; nu garantează calitatea, solvabilitatea, autorizațiile sau serviciile. Findelio poate solicita informații suplimentare sau retrage statutul dacă datele sunt învechite, contradictorii sau false. Documentele sunt folosite exclusiv pentru verificare, accesibile doar persoanelor autorizate și șterse când nu mai sunt necesare acestui scop, dacă nu există o obligație de păstrare." },
+    "contact": "Pentru întrebări despre acești Termeni, contactează echipa Findelio la"
   },
   "Contact": {
     "metaTitle": "Contact | Findelio",
@@ -633,6 +657,8 @@
       }
     },
     "terms": "Fără perioadă de probă gratuită. Anularea intră în vigoare la sfârșitul perioadei curente de facturare. Dacă o plată eșuează, accesul rămâne activ până la finalul perioadei și apoi este blocat.",
+    "termsNotice": "Prin finalizarea abonamentului plătit accepți",
+    "termsLink": "Termenii și condițiile",
     "premium": {
       "badge": "Premium",
       "title": "Listare de firmă Premium",

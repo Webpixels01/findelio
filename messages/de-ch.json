@@ -13,6 +13,13 @@
     "menu": "Menü öffnen",
     "dashboard": "Dashboard"
   },
+  "Share": {
+    "page": "Seite teilen",
+    "listing": "Eintrag teilen",
+    "copied": "Link kopiert",
+    "shared": "Geteilt",
+    "error": "Teilen nicht möglich"
+  },
   "Home": {
     "eyebrow": "Mehrsprachige Unternehmen in der Schweiz",
     "title": "Finde Unternehmen, die deine Sprache sprechen.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Zurück zur Suche",
+    "metaDescription": "Firmenprofil von {company} in {city} auf Findelio: Kontakt, Branchen und gesprochene Sprachen.",
     "about": "Über das Unternehmen",
     "contact": "Kontakt",
     "website": "Website",
@@ -225,7 +233,87 @@
     "contact": "Kontakt",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
+    "howItWorks": "So funktioniert Findelio für Firmen",
+    "terms": "AGB",
     "copyright": "Alle Rechte vorbehalten."
+  },
+  "CompanyGuide": {
+    "metaTitle": "So funktioniert Findelio für Firmen | Findelio",
+    "metaDescription": "Vom Firmenkonto bis zum veröffentlichten Eintrag: Erfahre, wie Unternehmen Findelio nutzen und welche Vorteile Premium bietet.",
+    "eyebrow": "Für Unternehmen",
+    "title": "In wenigen Schritten zu deinem Findelio-Eintrag.",
+    "intro": "Findelio bringt dein Unternehmen mit Menschen zusammen, die Beratung und Dienstleistungen in ihrer Sprache suchen. Du behältst die Kontrolle über deine Angaben und entscheidest pro Eintrag zwischen Free und Premium.",
+    "stepsTitle": "So funktioniert die Veröffentlichung",
+    "steps": {
+      "register": { "title": "Konto erstellen", "text": "Registriere dich mit deiner E-Mail-Adresse und bestätige sie über den Link in der Bestätigungsmail." },
+      "organization": { "title": "Organisation anlegen", "text": "Erfasse die Organisation, der deine Firmeneinträge und später auch weitere Teammitglieder zugeordnet werden." },
+      "listing": { "title": "Eintrag erstellen", "text": "Lege deinen Firmeneintrag an, wähle passende Branchen und Sprachen und entscheide dich für Free oder Premium." },
+      "complete": { "title": "Profil vervollständigen", "text": "Ergänze Beschreibung, Kontakt und Adresse. Bei Premium kannst du zusätzlich Logo, Galerie, Öffnungszeiten, Social Media und Übersetzungen pflegen." },
+      "review": { "title": "Zur Prüfung einreichen", "text": "Findelio prüft neue und geänderte Inhalte, damit das Verzeichnis verlässlich, aktuell und frei von missbräuchlichen Einträgen bleibt." },
+      "publish": { "title": "Veröffentlichen und wachsen", "text": "Nach der Freigabe ist dein Eintrag sichtbar. Ein vorgemerktes Premium-Abo schliesst du erst jetzt ab und kannst danach Beiträge und Statistiken nutzen." }
+    },
+    "packagesEyebrow": "Pakete pro Firmeneintrag",
+    "packagesTitle": "Free starten oder mit Premium mehr zeigen",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Die solide Basis für einen auffindbaren und geprüften Firmeneintrag.",
+      "features": {
+        "profile": "Firmenname und vollständige Beschreibung",
+        "classification": "Branchen und gesprochene Sprachen",
+        "contact": "Kontaktangaben, Website und Standort"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 monatlich oder CHF 99 jährlich",
+      "description": "Für Unternehmen, die sich visuell präsentieren, aktuelle Inhalte veröffentlichen und ihre Reichweite verstehen möchten.",
+      "features": {
+        "media": "Firmenlogo und Bildergalerie",
+        "details": "Öffnungszeiten, Social-Media-Links und eigener Aktionsbutton",
+        "translations": "Eigene Beschreibungen in allen Findelio-Sprachen",
+        "posts": "Neuigkeiten, Aktionen und Veranstaltungen",
+        "ranking": "Bevorzugte Platzierung passender Premium-Einträge",
+        "statistics": "Reichweitenstatistik und monatlicher Erfolgsbericht"
+      }
+    },
+    "reviewTitle": "Warum werden Einträge geprüft?",
+    "reviewText": "Die Prüfung schützt Besucher und seriöse Unternehmen. Findelio kontrolliert, ob Angaben plausibel sind und die Inhalte zu einem echten Unternehmen gehören. Bei Rückfragen oder einer Ablehnung erhältst du eine Nachricht.",
+    "verificationEyebrow": "Freiwillige Zusatzprüfung",
+    "verificationTitle": "Mit offiziellem Nachweis zum Verifiziert-Status",
+    "verificationText": "Du kannst Findelio freiwillig einen aktuellen offiziellen Unternehmensnachweis zusenden. Nach erfolgreicher Prüfung kennzeichnen wir deinen Firmeneintrag als „Verifiziert“.",
+    "verificationProofs": "Geeignet sind beispielsweise ein aktueller Handelsregister- oder UID-Registerauszug. Bei Einzelunternehmen ohne Handelsregistereintrag kann auch eine Bestätigung der AHV-Ausgleichskasse über die Anerkennung als selbstständigerwerbend verwendet werden.",
+    "verificationNote": "Das Verifiziert-Badge bestätigt nur, dass Findelio die Existenz beziehungsweise Zuordnung des Unternehmens anhand eines Nachweises geprüft hat. Es ist keine Garantie für Qualität, Bonität, Bewilligungen oder Leistungen.",
+    "verificationCta": "Nachweis per E-Mail senden",
+    "ctaTitle": "Bereit für deinen Firmeneintrag?",
+    "ctaText": "Erstelle kostenlos dein Konto, vervollständige dein Profil und werde von den richtigen Kundinnen und Kunden gefunden.",
+    "ctaButton": "Firma eintragen"
+  },
+  "Terms": {
+    "metaTitle": "Allgemeine Geschäftsbedingungen | Findelio",
+    "metaDescription": "Allgemeine Geschäftsbedingungen für Firmenkonten, Firmeneinträge und Premium-Abonnements bei Findelio.",
+    "eyebrow": "Rechtliches",
+    "title": "Allgemeine Geschäftsbedingungen (AGB)",
+    "lastUpdated": "Stand: 3. August 2026",
+    "intro": "Diese AGB regeln die Nutzung von Findelio durch Unternehmen, Organisationen und deren berechtigte Nutzerinnen und Nutzer. Bitte lies sie vor der Registrierung beziehungsweise dem Abschluss eines Premium-Abonnements sorgfältig.",
+    "sections": {
+      "scope": { "title": "Anbieter und Geltungsbereich", "body": "Findelio ist ein Angebot von Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Schweiz. Diese AGB gelten für Firmenkonten, Organisationen, Firmeneinträge sowie kostenlose und kostenpflichtige Funktionen auf Findelio." },
+      "services": { "title": "Leistungen von Findelio", "body": "Findelio betreibt ein mehrsprachiges Firmenverzeichnis und stellt Funktionen zur Erfassung, Prüfung, Veröffentlichung und Verwaltung von Firmeneinträgen bereit. Findelio vermittelt Sichtbarkeit und Kontaktmöglichkeiten, wird aber nicht Partei von Verträgen zwischen Besuchern und eingetragenen Unternehmen." },
+      "accounts": { "title": "Konto und Berechtigung", "body": "Bei der Registrierung sind richtige und aktuelle Angaben zu machen. Zugangsdaten müssen vertraulich behandelt werden. Wer für eine Organisation handelt, bestätigt, dazu berechtigt zu sein. Für Handlungen über das eigene Konto ist die kontoinhabende Person verantwortlich." },
+      "content": { "title": "Inhalte und Nutzungsrechte", "body": "Unternehmen sind für Texte, Kontaktdaten, Bilder, Logos, Links und sonstige Inhalte selbst verantwortlich. Sie sichern zu, dass die Angaben wahr, aktuell und rechtmässig sind und keine Rechte Dritter verletzen. Findelio erhält für die Dauer der Veröffentlichung das notwendige, nicht ausschliessliche Recht, diese Inhalte technisch zu speichern, darzustellen und für die Verzeichnisfunktionen zu bearbeiten." },
+      "review": { "title": "Prüfung, Ablehnung und Sperrung", "body": "Findelio darf neue und geänderte Inhalte vor der Veröffentlichung prüfen. Rechtswidrige, irreführende, unvollständige, missbräuchliche oder qualitativ unzureichende Inhalte können abgelehnt, zurückgestellt, gesperrt oder gelöscht werden. Soweit angemessen, wird die Entscheidung begründet und eine Korrektur ermöglicht." },
+      "packages": { "title": "Free und Premium", "body": "Das Free-Paket enthält die jeweils ausgewiesenen Basisfunktionen. Premium gilt pro Firmeneintrag und umfasst die auf der Angebots- und Abrechnungsseite beschriebenen Zusatzfunktionen. Umfang und technische Ausgestaltung können weiterentwickelt werden, ohne den wesentlichen Nutzen eines laufenden bezahlten Zeitraums unangemessen zu vermindern." },
+      "contract": { "title": "Vertragsabschluss, Preise und Zahlung", "body": "Die aktuellen Preise werden in Schweizer Franken inklusive allfällig geschuldeter Abgaben angezeigt. Vor dem kostenpflichtigen Abschluss werden Paket, Abrechnungszeitraum und Preis nochmals dargestellt. Der Premium-Vertrag kommt mit der bestätigten Zahlung zustande. Monats- und Jahresabonnements verlängern sich um den gewählten Zeitraum, sofern sie nicht vor Periodenende gekündigt werden." },
+      "cancellation": { "title": "Kündigung und fehlgeschlagene Zahlung", "body": "Premium kann über die Aboverwaltung auf das Ende der laufenden Zahlungsperiode gekündigt werden. Die Funktionen bleiben bis dahin verfügbar. Bei fehlgeschlagener Zahlung kann der Premium-Zugang spätestens am Periodenende gesperrt werden. Bereits bezahlte, angebrochene Perioden werden grundsätzlich nicht anteilig zurückerstattet; zwingende gesetzliche Ansprüche bleiben vorbehalten." },
+      "availability": { "title": "Verfügbarkeit und Weiterentwicklung", "body": "Findelio bemüht sich um einen zuverlässigen Betrieb, garantiert jedoch keine ununterbrochene oder fehlerfreie Verfügbarkeit. Wartung, Sicherheitsmassnahmen, Störungen bei Drittanbietern oder höhere Gewalt können zu Unterbrüchen führen. Funktionen dürfen aus sachlichen Gründen angepasst oder ersetzt werden." },
+      "liability": { "title": "Haftung", "body": "Findelio haftet im gesetzlich zwingenden Umfang. Soweit rechtlich zulässig, ist die Haftung für leichte Fahrlässigkeit sowie für indirekte Schäden, entgangenen Gewinn und Datenverluste ausgeschlossen. Unternehmen bleiben für ihre Inhalte, Angebote und die Abwicklung von Geschäften mit Besuchern verantwortlich." },
+      "termination": { "title": "Beendigung und Kontolöschung", "body": "Nutzer können die Löschung ihres Kontos verlangen, sofern keine gesetzlichen Aufbewahrungspflichten oder offenen Vertragsverhältnisse entgegenstehen. Die Kontolöschung ersetzt nicht die Kündigung eines aktiven Premium-Abonnements. Bei schweren oder wiederholten Verstössen darf Findelio den Zugang nach angemessener Interessenabwägung sperren oder beenden." },
+      "privacy": { "title": "Datenschutz", "body": "Die Bearbeitung personenbezogener Daten richtet sich nach der jeweils aktuellen Datenschutzerklärung von Findelio. Für personenbezogene Daten, die Unternehmen in ihren Einträgen veröffentlichen, sind sie selbst verantwortlich." },
+      "changes": { "title": "Änderungen dieser AGB", "body": "Findelio kann diese AGB für die Zukunft ändern, wenn rechtliche, technische oder geschäftliche Gründe dies erfordern. Wesentliche Änderungen werden in geeigneter Form mitgeteilt. Für bereits bezahlte Perioden gelten keine unangemessenen rückwirkenden Verschlechterungen." },
+      "law": { "title": "Anwendbares Recht und Gerichtsstand", "body": "Es gilt Schweizer Recht unter Ausschluss kollisionsrechtlicher Bestimmungen. Gerichtsstand ist, soweit gesetzlich zulässig, der Sitz von Webpixels. Zwingende gesetzliche Gerichtsstände und Schutzbestimmungen bleiben vorbehalten. Bei Widersprüchen zwischen Übersetzungen ist die deutsche Fassung massgebend." }
+    },
+    "verification": { "title": "Verifizierte Firmeneinträge", "body": "Unternehmen können freiwillig einen aktuellen Handelsregister- oder UID-Registerauszug oder einen vergleichbaren offiziellen Nachweis einreichen. Bei Einzelunternehmen ohne Handelsregistereintrag kann insbesondere eine Bestätigung der AHV-Ausgleichskasse über die Anerkennung als selbstständigerwerbend akzeptiert werden. Nach erfolgreicher Prüfung darf Findelio den Eintrag als „Verifiziert“ kennzeichnen. Das Badge bestätigt nur die anhand des Nachweises geprüfte Existenz beziehungsweise Zuordnung des Unternehmens und ist keine Garantie für Qualität, Bonität, Bewilligungen oder Leistungen. Findelio darf weitere Angaben verlangen oder den Status bei veralteten, widersprüchlichen oder falschen Informationen wieder entziehen. Nachweise werden ausschliesslich für die Verifizierung verwendet, nur befugten Personen zugänglich gemacht und gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind, soweit keine Aufbewahrungspflicht entgegensteht." },
+    "contact": "Fragen zu diesen AGB beantwortet das Findelio-Team unter"
   },
   "Contact": {
     "metaTitle": "Kontakt | Findelio",
@@ -632,6 +720,8 @@
       }
     },
     "terms": "Keine kostenlose Testphase. Kündigung auf das Ende der laufenden Zahlungsperiode. Bei einer fehlgeschlagenen Zahlung bleibt der Zugang bis zum Periodenende bestehen und wird danach gesperrt.",
+    "termsNotice": "Mit dem kostenpflichtigen Abschluss akzeptierst du die",
+    "termsLink": "Allgemeinen Geschäftsbedingungen",
     "premium": {
       "badge": "Premium",
       "title": "Premium-Firmeneintrag",

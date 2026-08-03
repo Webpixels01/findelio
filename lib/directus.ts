@@ -674,10 +674,17 @@ export async function getListingBySlug(
 }
 
 
-export async function getPublishedListingSlugs(): Promise<string[]> {
+export type PublishedListingSitemapEntry = {
+  slug: string;
+  lastModified: string | null;
+};
+
+export async function getPublishedListingSitemapEntries(): Promise<
+  PublishedListingSitemapEntry[]
+> {
   const url = new URL("/items/listings", directusUrl);
 
-  url.searchParams.set("fields", "slug");
+  url.searchParams.set("fields", "slug,published_at");
   url.searchParams.set("sort", "slug");
   url.searchParams.set("limit", "-1");
   url.searchParams.set(
@@ -701,12 +708,18 @@ export async function getPublishedListingSlugs(): Promise<string[]> {
   }
 
   const result = (await response.json()) as DirectusResponse<
-    Array<{ slug: string }>
+    Array<{ slug: string; published_at: string | null }>
   >;
 
   return result.data
-    .map((listing) => listing.slug?.trim())
-    .filter((slug): slug is string => Boolean(slug));
+    .map((listing) => ({
+      slug: listing.slug?.trim(),
+      lastModified: listing.published_at,
+    }))
+    .filter(
+      (listing): listing is PublishedListingSitemapEntry =>
+        Boolean(listing.slug),
+    );
 }
 
 export async function getPublicListingPosts(

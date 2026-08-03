@@ -13,6 +13,13 @@
     "menu": "Menü megnyitása",
     "dashboard": "Vezérlőpult"
   },
+  "Share": {
+    "page": "Oldal megosztása",
+    "listing": "Adatlap megosztása",
+    "copied": "Link másolva",
+    "shared": "Megosztva",
+    "error": "A megosztás nem lehetséges"
+  },
   "Home": {
     "eyebrow": "Többnyelvű vállalkozások Svájcban",
     "title": "Találjon az Ön nyelvén beszélő vállalkozásokat.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Vissza a kereséshez",
+    "metaDescription": "{company} cégadatlapja itt: {city}, a Findelión – elérhetőség, ágazatok és beszélt nyelvek.",
     "about": "A vállalkozásról",
     "contact": "Kapcsolat",
     "website": "Weboldal",
@@ -225,7 +233,23 @@
     "contact": "Kapcsolat",
     "imprint": "Impresszum",
     "privacy": "Adatvédelem",
+    "howItWorks": "Hogyan működik a Findelio cégeknek",
+    "terms": "ÁSZF",
     "copyright": "Minden jog fenntartva."
+  },
+  "CompanyGuide": {
+    "metaTitle": "Hogyan működik a Findelio cégeknek | Findelio", "metaDescription": "A céges fióktól a közzétett adatlapig: ismerje meg a Findelio használatát és a Premium előnyeit.", "eyebrow": "Cégeknek", "title": "Findelio-adatlap néhány lépésben.", "intro": "A Findelio összeköti cégét azokkal, akik saját nyelvükön keresnek szolgáltatásokat. Az adatokat Ön kezeli, és adatlaponként választhat Free vagy Premium csomagot.", "stepsTitle": "A közzététel menete",
+    "steps": { "register": { "title": "Fiók létrehozása", "text": "Regisztráljon e-mail-címmel, majd erősítse meg a kapott hivatkozással." }, "organization": { "title": "Szervezet létrehozása", "text": "Adja meg a szervezetet, amelyhez az adatlapok és később a csapattagok tartoznak." }, "listing": { "title": "Adatlap létrehozása", "text": "Rögzítse a céget, válasszon ágazatokat és nyelveket, majd Free vagy Premium csomagot." }, "complete": { "title": "Profil kiegészítése", "text": "Adjon meg leírást, elérhetőséget és címet. A Premium logót, galériát, nyitvatartást, közösségi linkeket és fordításokat is kínál." }, "review": { "title": "Beküldés ellenőrzésre", "text": "A Findelio ellenőrzi az új és módosított adatokat, hogy a címtár megbízható és naprakész maradjon." }, "publish": { "title": "Közzététel és növekedés", "text": "Jóváhagyás után az adatlap látható. Ezután aktiválható a Premium, a bejegyzések és a statisztikák." } },
+    "packagesEyebrow": "Csomag adatlaponként", "packagesTitle": "Kezdjen Free csomaggal, vagy mutasson többet Premiummal",
+    "free": { "title": "Free", "price": "CHF 0", "description": "Megbízható alap egy kereshető és ellenőrzött cégadatlaphoz.", "features": { "profile": "Cégnév és teljes leírás", "classification": "Ágazatok és beszélt nyelvek", "contact": "Elérhetőség, weboldal és hely" } },
+    "premium": { "title": "Premium", "price": "Havi CHF 9.90 vagy évi CHF 99", "description": "Azoknak a cégeknek, amelyek látványos megjelenést, friss tartalmat és elérési adatokat szeretnének.", "features": { "media": "Céglogó és képgaléria", "details": "Nyitvatartás, közösségi linkek és egyéni gomb", "translations": "Saját leírás minden Findelio-nyelven", "posts": "Hírek, akciók és események", "ranking": "Releváns Premium adatlapok előnyös helyezése", "statistics": "Elérési statisztika és havi jelentés" } },
+    "reviewTitle": "Miért ellenőrizzük az adatlapokat?", "reviewText": "Az ellenőrzés védi a látogatókat és a tisztességes cégeket. A Findelio megvizsgálja az adatok hitelességét, és kérdés vagy elutasítás esetén üzenetet küld.", "verificationEyebrow": "Önkéntes kiegészítő ellenőrzés", "verificationTitle": "Hivatalos igazolással Ellenőrzött státusz", "verificationText": "Önkéntesen elküldheti a Findeliónak cége aktuális hivatalos igazolását. Sikeres ellenőrzés után a cégadatlapot „Ellenőrzött” jelöléssel látjuk el.", "verificationProofs": "Megfelelő lehet például egy friss cégjegyzék- vagy UID-nyilvántartási kivonat. A cégjegyzékben nem szereplő egyéni vállalkozóknál az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentuma is használható.", "verificationNote": "Az Ellenőrzött jelvény csak azt igazolja, hogy a Findelio dokumentum alapján ellenőrizte a vállalkozás létezését vagy kapcsolatát. Nem jelent garanciát a minőségre, fizetőképességre, engedélyekre vagy szolgáltatásokra.", "verificationCta": "Igazolás küldése e-mailben", "ctaTitle": "Készen áll cége felvételére?", "ctaText": "Hozzon létre ingyenes fiókot, töltse ki profilját, és találják meg a megfelelő ügyfelek.", "ctaButton": "Cég hozzáadása"
+  },
+  "Terms": {
+    "metaTitle": "Általános Szerződési Feltételek | Findelio", "metaDescription": "A Findelio céges fiókjaira, adatlapjaira és Premium előfizetéseire vonatkozó feltételek.", "eyebrow": "Jogi információk", "title": "Általános Szerződési Feltételek", "lastUpdated": "Hatályos: 2026. augusztus 3.", "intro": "Ezek a feltételek szabályozzák a Findelio használatát cégek, szervezetek és meghatalmazott felhasználóik számára.",
+    "sections": { "scope": { "title": "Szolgáltató és hatály", "body": "A Findelio szolgáltatója: Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Svájc. A feltételek a fiókokra, szervezetekre, adatlapokra, valamint az ingyenes és fizetős funkciókra vonatkoznak." }, "services": { "title": "A Findelio szolgáltatásai", "body": "A Findelio többnyelvű cégjegyzéket és adatlap-kezelő eszközöket működtet. Nem részese a látogatók és a cégek közötti szerződéseknek." }, "accounts": { "title": "Fiók és jogosultság", "body": "Az adatoknak pontosnak és naprakésznek, a belépési adatoknak bizalmasnak kell lenniük. A szervezet nevében eljáró személy igazolja jogosultságát és felel a fiók használatáért." }, "content": { "title": "Tartalom és felhasználási jog", "body": "A cég felel a szövegekért, képekért, logókért és linkekért, valamint azok jogszerűségéért. A Findelio a közzétételhez szükséges nem kizárólagos tárolási és megjelenítési jogot kapja." }, "review": { "title": "Ellenőrzés és felfüggesztés", "body": "A jogellenes, félrevezető, hiányos vagy visszaélésszerű tartalom elutasítható, felfüggeszthető vagy törölhető. Indokolt esetben a Findelio megadja az okot és javítást tesz lehetővé." }, "packages": { "title": "Free és Premium", "body": "A Free a feltüntetett alapfunkciókat tartalmazza. A Premium egy adatlapra érvényes, és az ajánlati, illetve számlázási oldalon leírt extrákat biztosítja." }, "contract": { "title": "Szerződés, árak és fizetés", "body": "Az árak svájci frankban jelennek meg. A Premium-szerződés a fizetés visszaigazolásával jön létre. A havi és éves előfizetés megújul, ha az időszak vége előtt nem mondják le." }, "cancellation": { "title": "Lemondás és sikertelen fizetés", "body": "A Premium az aktuális időszak végére mondható le, addig használható. Sikertelen fizetés után a hozzáférés az időszak végén zárolható. Időarányos visszatérítés általában nincs; a kötelező jogok változatlanok." }, "availability": { "title": "Elérhetőség", "body": "A megszakítás nélküli, hibamentes működés nem garantált. Karbantartás, biztonsági intézkedés, külső szolgáltató vagy vis maior kiesést okozhat." }, "liability": { "title": "Felelősség", "body": "A Findelio a kötelező jogszabályi körben felel. Amennyiben megengedett, kizárt az enyhe gondatlanságért, közvetett kárért, elmaradt haszonért és adatvesztésért való felelősség." }, "termination": { "title": "Megszüntetés és fióktörlés", "body": "A fiók törlése nem helyettesíti az aktív Premium lemondását. Súlyos vagy ismételt szabálysértés esetén a hozzáférés felfüggeszthető vagy megszüntethető." }, "privacy": { "title": "Adatvédelem", "body": "A személyes adatok kezelése a Findelio aktuális adatvédelmi tájékoztatója szerint történik." }, "changes": { "title": "A feltételek módosítása", "body": "A Findelio jogi, műszaki vagy üzleti okból a jövőre nézve módosíthatja a feltételeket. A lényeges változásokról értesítést ad." }, "law": { "title": "Jog és illetékesség", "body": "A svájci jog alkalmazandó. Amennyiben jogszerű, a Webpixels székhelye szerinti bíróság illetékes. A kötelező szabályok fennmaradnak; eltérő fordítás esetén a német változat irányadó." } },
+    "verification": { "title": "Ellenőrzött cégadatlapok", "body": "A cégek önkéntesen benyújthatnak friss cégjegyzék- vagy UID-nyilvántartási kivonatot, illetve hasonló hivatalos igazolást. A cégjegyzékben nem szereplő egyéni vállalkozóknál a Findelio különösen az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentumát fogadhatja el. Sikeres ellenőrzés után a Findelio „Ellenőrzött” jelöléssel láthatja el az adatlapot. A jelvény csak a dokumentummal ellenőrzött létezést vagy kapcsolatot igazolja; nem garantál minőséget, fizetőképességet, engedélyeket vagy szolgáltatásokat. A Findelio további adatokat kérhet, illetve elavult, ellentmondásos vagy valótlan információ esetén visszavonhatja a státuszt. Az igazolásokat kizárólag ellenőrzésre használjuk, csak jogosult személyek férhetnek hozzá, és a cél megszűnésekor töröljük, kivéve, ha megőrzési kötelezettség áll fenn." },
+    "contact": "A feltételekkel kapcsolatos kérdéseket küldje a Findelio csapatának:"
   },
   "Contact": {
     "metaTitle": "Kapcsolat | Findelio",
@@ -633,6 +657,8 @@
       }
     },
     "terms": "Nincs ingyenes próbaidőszak. A lemondás az aktuális számlázási időszak végén lép hatályba. Sikertelen fizetés esetén a hozzáférés az időszak végéig megmarad, majd zárolódik.",
+    "termsNotice": "A fizetős előfizetés befejezésével elfogadja az",
+    "termsLink": "Általános Szerződési Feltételeket",
     "premium": {
       "badge": "Premium",
       "title": "Prémium cégbejegyzés",

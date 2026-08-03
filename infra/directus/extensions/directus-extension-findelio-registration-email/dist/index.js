@@ -6,6 +6,8 @@ const registerFindelioRegistrationEmail = ({ filter }) => {
       "listing-decision-notification",
       "listing-post-review-notification",
       "listing-post-decision-notification",
+      "contact-notification",
+      "premium-performance-report",
     ].includes(payload.template?.name);
 
     if (

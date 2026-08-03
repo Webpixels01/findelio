@@ -16,6 +16,7 @@ export default async function SiteFooter() {
           <div className="mt-3 flex flex-col gap-2 text-white/70">
             <Link href="/unternehmen" className="hover:text-white">{t("findCompanies")}</Link>
             <Link href="/firma-eintragen" className="hover:text-white">{t("registerCompany")}</Link>
+            <Link href="/fuer-unternehmen" className="hover:text-white">{t("howItWorks")}</Link>
           </div>
         </div>
         <div>
@@ -24,6 +25,7 @@ export default async function SiteFooter() {
             <Link href="/kontakt" className="hover:text-white">{t("contact")}</Link>
             <Link href="/impressum" className="hover:text-white">{t("imprint")}</Link>
             <Link href="/datenschutz" className="hover:text-white">{t("privacy")}</Link>
+            <Link href="/agb" className="hover:text-white">{t("terms")}</Link>
           </div>
         </div>
       </div>

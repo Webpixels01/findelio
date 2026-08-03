@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
@@ -14,6 +15,9 @@ import ListingMetricsTracker from "@/components/listing-metrics-tracker";
 import TrackedContactLink from "@/components/tracked-contact-link";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import Image from "next/image";
+import ShareButton from "@/components/share-button";
+import StructuredData from "@/components/structured-data";
+import { buildPageMetadata, localizedUrl } from "@/lib/seo";
 
 const htmlEntities: Record<string, string> = {
   amp: "&",
@@ -132,14 +136,50 @@ function formatTime(value: string): string {
   return value.slice(0, 5);
 }
 
-export default async function CompanyPage({
-  params,
-}: {
+type CompanyPageProps = {
   params: Promise<{
     locale: AppLocale;
     slug: string;
   }>;
-}) {
+};
+
+export async function generateMetadata({
+  params,
+}: CompanyPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const [company, t] = await Promise.all([
+    getListingBySlug(slug, locale),
+    getTranslations({ locale, namespace: "Company" }),
+  ]);
+
+  if (!company) return {};
+
+  const plainDescription = company.description
+    ? removeHtml(company.description)
+    : null;
+  const description = plainDescription
+    ? plainDescription.length > 160
+      ? `${plainDescription.slice(0, 157).trimEnd()}...`
+      : plainDescription
+    : t("metaDescription", { company: company.name, city: company.city });
+  const title = `${company.name} | Findelio`;
+  const logoId =
+    typeof company.logo === "string" ? company.logo : company.logo?.id;
+  const logoUrl = logoId ? getDirectusAssetUrl(logoId) : null;
+
+  return buildPageMetadata({
+    locale,
+    path: `/unternehmen/${company.slug}`,
+    title,
+    description,
+    image: logoUrl,
+    imageAlt: `${company.name} Logo`,
+  });
+}
+
+export default async function CompanyPage({
+  params,
+}: CompanyPageProps) {
   const { locale, slug } = await params;
 
   setRequestLocale(locale);
@@ -150,9 +190,10 @@ export default async function CompanyPage({
     notFound();
   }
 
-  const [t, tg, openingHours, posts] = await Promise.all([
+  const [t, tg, th, openingHours, posts] = await Promise.all([
     getTranslations("Company"),
     getTranslations("Growth"),
+    getTranslations("Header"),
     company.premium_features_enabled
       ? getListingOpeningHours(company.id)
       : Promise.resolve([]),
@@ -196,6 +237,93 @@ export default async function CompanyPage({
 
   const visibleAddress = fullAddress ?? cityAddress;
 
+  const listingUrl = localizedUrl(
+    locale,
+    `/unternehmen/${company.slug}`,
+  );
+  const logoId =
+    typeof company.logo === "string" ? company.logo : company.logo?.id;
+  const logoUrl = logoId ? getDirectusAssetUrl(logoId) : undefined;
+  const sameAs = Array.from(
+    new Set(
+      [
+        company.website_url,
+        ...(company.social_links?.map((socialLink) => socialLink.url) ?? []),
+      ].filter((url): url is string => Boolean(url)),
+    ),
+  );
+  const schemaAddress =
+    company.address_visibility === "hidden"
+      ? undefined
+      : {
+          "@type": "PostalAddress",
+          ...(company.address_visibility === "full" && company.street
+            ? { streetAddress: company.street }
+            : {}),
+          ...(company.postal_code ? { postalCode: company.postal_code } : {}),
+          addressLocality: company.city,
+          addressRegion: company.canton.name,
+          addressCountry: "CH",
+        };
+  const openingHoursSpecification = openingHours.map((interval) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: `https://schema.org/${[
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ][interval.day_of_week - 1]}`,
+    opens: formatTime(interval.opens_at),
+    closes: formatTime(interval.closes_at),
+  }));
+  const businessData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${listingUrl}#business`,
+    name: company.name,
+    url: listingUrl,
+    ...(description ? { description } : {}),
+    ...(logoUrl ? { logo: logoUrl, image: logoUrl } : {}),
+    ...(primaryIndustry ? { category: primaryIndustry.name } : {}),
+    ...(company.phone ? { telephone: company.phone } : {}),
+    ...(company.public_email ? { email: company.public_email } : {}),
+    ...(schemaAddress ? { address: schemaAddress } : {}),
+    ...(languages.length > 0
+      ? { knowsLanguage: languages.map((language) => language.name) }
+      : {}),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+    ...(openingHoursSpecification.length > 0
+      ? { openingHoursSpecification }
+      : {}),
+  };
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Findelio",
+        item: localizedUrl(locale),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: th("findCompanies"),
+        item: localizedUrl(locale, "/unternehmen"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: company.name,
+        item: listingUrl,
+      },
+    ],
+  };
+
   const hasContactInformation = Boolean(
     visibleAddress ||
       company.phone ||
@@ -216,6 +344,7 @@ export default async function CompanyPage({
 
   return (
     <>
+      <StructuredData data={[businessData, breadcrumbData]} />
       <SiteHeader />
 
       <main className="page-shell bg-[var(--surface)] py-12 lg:py-16">
@@ -226,12 +355,15 @@ export default async function CompanyPage({
           <ListingMetricsTracker listingIds={[company.id]} event="post_views" />
         )}
         <div className="site-container">
-          <Link
-            href="/unternehmen"
-            className="font-bold text-[var(--accent)]"
-          >
-            ← {t("back")}
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/unternehmen"
+              className="font-bold text-[var(--accent)]"
+            >
+              ← {t("back")}
+            </Link>
+            <ShareButton variant="inline" kind="listing" />
+          </div>
 
           <div className="mt-7 grid gap-7 lg:grid-cols-[1.5fr_0.8fr]">
             <article className="rounded-3xl border border-[var(--border)] bg-white p-7 md:p-10">

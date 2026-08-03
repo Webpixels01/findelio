@@ -1,13 +1,31 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
 import RegisterForm from "@/components/register-form";
+import { buildPageMetadata } from "@/lib/seo";
+
+type RegisterPageProps = {
+  params: Promise<{ locale: AppLocale }>;
+};
+
+export async function generateMetadata({
+  params,
+}: RegisterPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Register" });
+
+  return buildPageMetadata({
+    locale,
+    path: "/firma-eintragen",
+    title: `${t("title")} | Findelio`,
+    description: t("description"),
+  });
+}
 
 export default async function RegisterPage({
   params,
-}: {
-  params: Promise<{ locale: AppLocale }>;
-}) {
+}: RegisterPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Register");

@@ -13,6 +13,13 @@
     "menu": "Otvoriť menu",
     "dashboard": "Dashboard"
   },
+  "Share": {
+    "page": "Zdieľať stránku",
+    "listing": "Zdieľať záznam",
+    "copied": "Odkaz skopírovaný",
+    "shared": "Zdieľané",
+    "error": "Zdieľanie nie je možné"
+  },
   "Home": {
     "eyebrow": "Viacjazyčné firmy vo Švajčiarsku",
     "title": "Nájdite firmy, ktoré hovoria vaším jazykom.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Späť na vyhľadávanie",
+    "metaDescription": "Firemný profil {company} v meste {city} na Findelio: kontakt, odvetvia a hovorené jazyky.",
     "about": "O firme",
     "contact": "Kontakt",
     "website": "Webová stránka",
@@ -225,7 +233,48 @@
     "contact": "Kontakt",
     "imprint": "Impresum",
     "privacy": "Ochrana súkromia",
+    "howItWorks": "Ako Findelio funguje pre firmy",
+    "terms": "VOP",
     "copyright": "Všetky práva vyhradené."
+  },
+  "CompanyGuide": {
+    "metaTitle": "Ako Findelio funguje pre firmy | Findelio", "metaDescription": "Od firemného účtu po zverejnený záznam: zistite, ako firmy používajú Findelio a čo prináša Premium.",
+    "eyebrow": "Pre firmy", "title": "Váš záznam na Findelio v niekoľkých krokoch.", "intro": "Findelio spája vašu firmu s ľuďmi, ktorí hľadajú služby vo svojom jazyku. Údaje máte pod kontrolou a pre každý záznam si volíte Free alebo Premium.", "stepsTitle": "Ako prebieha zverejnenie",
+    "steps": {
+      "register": { "title": "Vytvorte účet", "text": "Zaregistrujte sa e-mailom a potvrďte adresu cez odkaz v správe." },
+      "organization": { "title": "Vytvorte organizáciu", "text": "Pridajte organizáciu, ku ktorej patria firemné záznamy a neskôr aj členovia tímu." },
+      "listing": { "title": "Vytvorte záznam", "text": "Zadajte firmu, vyberte odvetvia a jazyky a zvoľte Free alebo Premium." },
+      "complete": { "title": "Doplňte profil", "text": "Doplňte popis, kontakt a adresu. Premium pridáva logo, galériu, otváracie hodiny, sociálne siete a preklady." },
+      "review": { "title": "Odošlite na kontrolu", "text": "Findelio kontroluje nové a zmenené údaje, aby bol katalóg dôveryhodný a aktuálny." },
+      "publish": { "title": "Zverejnite a rásťte", "text": "Po schválení je záznam viditeľný. Až potom aktivujete Premium a získate príspevky a štatistiky." }
+    },
+    "packagesEyebrow": "Balíky pre každý záznam", "packagesTitle": "Začnite Free alebo ukážte viac s Premium",
+    "free": { "title": "Free", "price": "CHF 0", "description": "Pevný základ pre vyhľadateľný a overený záznam.", "features": { "profile": "Názov firmy a úplný popis", "classification": "Odvetvia a hovorené jazyky", "contact": "Kontakt, web a poloha" } },
+    "premium": { "title": "Premium", "price": "CHF 9.90 mesačne alebo CHF 99 ročne", "description": "Pre firmy, ktoré chcú lepšiu prezentáciu, aktuálny obsah a prehľad o dosahu.", "features": { "media": "Logo a fotogaléria", "details": "Otváracie hodiny, sociálne siete a vlastné tlačidlo", "translations": "Vlastné popisy vo všetkých jazykoch Findelio", "posts": "Novinky, akcie a podujatia", "ranking": "Prednostné umiestnenie relevantných Premium záznamov", "statistics": "Štatistiky a mesačný report" } },
+    "reviewTitle": "Prečo sa záznamy kontrolujú?", "reviewText": "Kontrola chráni návštevníkov aj seriózne firmy. Findelio overuje vierohodnosť údajov a pri otázkach alebo odmietnutí pošle správu.",
+    "verificationEyebrow": "Dobrovoľné doplnkové overenie", "verificationTitle": "Získajte stav Overené pomocou úradného dokladu", "verificationText": "Findelio môžete dobrovoľne poslať aktuálny úradný doklad o firme. Po úspešnej kontrole označíme firemný záznam ako „Overený“.", "verificationProofs": "Vhodný je napríklad aktuálny výpis z obchodného registra alebo registra UID. Pri samostatne zárobkovo činnej osobe bez zápisu v obchodnom registri možno použiť aj potvrdenie príslušnej sociálnej poisťovne o uznaní samostatnej zárobkovej činnosti.", "verificationNote": "Odznak Overené potvrdzuje len to, že Findelio na základe dokladu overilo existenciu alebo príslušnosť firmy. Nezaručuje kvalitu, bonitu, povolenia ani služby.", "verificationCta": "Poslať doklad e-mailom",
+    "ctaTitle": "Pripravení pridať firmu?", "ctaText": "Vytvorte si bezplatný účet, doplňte profil a oslovte správnych zákazníkov.", "ctaButton": "Pridať firmu"
+  },
+  "Terms": {
+    "metaTitle": "Všeobecné obchodné podmienky | Findelio", "metaDescription": "Podmienky pre firemné účty, záznamy a Premium predplatné na Findelio.", "eyebrow": "Právne informácie", "title": "Všeobecné obchodné podmienky", "lastUpdated": "Stav k 3. augustu 2026", "intro": "Tieto podmienky upravujú používanie Findelio firmami, organizáciami a ich oprávnenými používateľmi.",
+    "sections": {
+      "scope": { "title": "Poskytovateľ a rozsah", "body": "Findelio poskytuje Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Švajčiarsko. Podmienky platia pre účty, organizácie, záznamy a bezplatné aj platené funkcie." },
+      "services": { "title": "Služby Findelio", "body": "Findelio prevádzkuje viacjazyčný firemný katalóg a nástroje na tvorbu, kontrolu a správu záznamov. Nie je stranou zmlúv medzi návštevníkmi a firmami." },
+      "accounts": { "title": "Účet a oprávnenie", "body": "Údaje musia byť správne a aktuálne, prihlasovacie údaje dôverné. Osoba konajúca za organizáciu potvrdzuje svoje oprávnenie a zodpovedá za činnosť účtu." },
+      "content": { "title": "Obsah a licencia", "body": "Firma zodpovedá za texty, obrázky, logá a odkazy a potvrdzuje ich zákonnosť. Findelio získava nevýhradné práva potrebné na uloženie a zobrazenie obsahu počas zverejnenia." },
+      "review": { "title": "Kontrola a blokovanie", "body": "Nezákonný, zavádzajúci, neúplný alebo zneužívajúci obsah môže byť odmietnutý, pozastavený alebo odstránený. Ak je to primerané, Findelio uvedie dôvod a umožní opravu." },
+      "packages": { "title": "Free a Premium", "body": "Free obsahuje uvedené základné funkcie. Premium platí pre jeden záznam a obsahuje doplnky opísané na stránke ponuky a fakturácie." },
+      "contract": { "title": "Zmluva, ceny a platba", "body": "Ceny sú uvedené vo švajčiarskych frankoch. Premium vzniká potvrdením platby. Mesačné a ročné predplatné sa obnovuje, ak nie je zrušené pred koncom obdobia." },
+      "cancellation": { "title": "Zrušenie a neúspešná platba", "body": "Premium možno zrušiť ku koncu obdobia; dovtedy zostáva aktívne. Po neúspešnej platbe môže byť prístup na konci obdobia zablokovaný. Pomerné refundácie sa spravidla neposkytujú; povinné práva zostávajú zachované." },
+      "availability": { "title": "Dostupnosť", "body": "Nepretržitá bezchybná prevádzka nie je zaručená. Údržba, bezpečnostné opatrenia, tretie strany alebo vyššia moc môžu spôsobiť prerušenia." },
+      "liability": { "title": "Zodpovednosť", "body": "Findelio zodpovedá v povinnom zákonnom rozsahu. Pokiaľ je to dovolené, nezodpovedá za ľahkú nedbanlivosť, nepriame škody, ušlý zisk a stratu údajov." },
+      "termination": { "title": "Ukončenie a vymazanie", "body": "Vymazanie účtu nenahrádza zrušenie aktívneho Premium. Pri závažnom alebo opakovanom porušení môže Findelio prístup zablokovať alebo ukončiť." },
+      "privacy": { "title": "Ochrana údajov", "body": "Spracovanie osobných údajov sa riadi aktuálnymi zásadami ochrany súkromia Findelio." },
+      "changes": { "title": "Zmeny podmienok", "body": "Findelio môže podmienky do budúcna meniť z právnych, technických alebo obchodných dôvodov. Podstatné zmeny budú oznámené." },
+      "law": { "title": "Právo a súd", "body": "Platí švajčiarske právo. Ak je to zákonne prípustné, príslušné sú súdy v sídle Webpixels. Povinné pravidlá zostávajú zachované; pri rozpore prekladov je rozhodujúca nemčina." }
+    },
+    "verification": { "title": "Overené firemné záznamy", "body": "Firmy môžu dobrovoľne predložiť aktuálny výpis z obchodného registra, registra UID alebo porovnateľný úradný doklad. Pri samostatne zárobkovo činnej osobe bez zápisu v obchodnom registri môže Findelio akceptovať najmä potvrdenie príslušnej sociálnej poisťovne o uznaní samostatnej zárobkovej činnosti. Po úspešnej kontrole môže Findelio označiť záznam ako „Overený“. Odznak potvrdzuje len existenciu alebo príslušnosť firmy overenú z dokladu; nezaručuje kvalitu, bonitu, povolenia ani služby. Findelio môže vyžiadať ďalšie údaje alebo stav odobrať pri zastaraných, rozporných či nepravdivých informáciách. Doklady sa používajú výlučne na overenie, sprístupňujú sa len oprávneným osobám a po skončení účelu sa vymažú, ak tomu nebráni povinnosť uchovávania." },
+    "contact": "Otázky k podmienkam pošlite tímu Findelio na"
   },
   "Contact": {
     "metaTitle": "Kontakt | Findelio",
@@ -633,6 +682,8 @@
       }
     },
     "terms": "Bez bezplatného skúšobného obdobia. Zrušenie platí ku koncu aktuálneho fakturačného obdobia. Pri neúspešnej platbe zostáva prístup do konca obdobia a potom sa zablokuje.",
+    "termsNotice": "Dokončením plateného predplatného súhlasíte so",
+    "termsLink": "Všeobecnými obchodnými podmienkami",
     "premium": {
       "badge": "Premium",
       "title": "Prémiový firemný záznam",

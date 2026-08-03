@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
@@ -6,20 +7,43 @@ import CompanyCard from "@/components/company-card";
 import { getListings } from "@/lib/directus";
 import { Link } from "@/i18n/navigation";
 import ListingMetricsTracker from "@/components/listing-metrics-tracker";
+import { buildPageMetadata } from "@/lib/seo";
 
 function value(input: string | string[] | undefined) {
   return Array.isArray(input) ? input[0] : input;
 }
 
+type CompaniesPageProps = {
+  params: Promise<{ locale: AppLocale }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: CompaniesPageProps): Promise<Metadata> {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const [t, metadata] = await Promise.all([
+    getTranslations({ locale, namespace: "Results" }),
+    getTranslations({ locale, namespace: "Metadata" }),
+  ]);
+  const hasFilters = ["sprache", "branche", "kanton", "ort"].some((key) =>
+    Boolean(value(query[key])?.trim()),
+  );
+
+  return buildPageMetadata({
+    locale,
+    path: "/unternehmen",
+    title: `${t("title")} | Findelio`,
+    description: metadata("description"),
+    noIndex: hasFilters,
+  });
+}
+
 export default async function CompaniesPage({
   params,
   searchParams,
-}: {
-  params: Promise<{ locale: AppLocale }>;
-  searchParams: Promise<
-    Record<string, string | string[] | undefined>
-  >;
-}) {
+}: CompaniesPageProps) {
   const { locale } = await params;
   const query = await searchParams;
 

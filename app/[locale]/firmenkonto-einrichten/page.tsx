@@ -5,6 +5,9 @@ import SiteHeader from "@/components/site-header";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { hasActiveAccountMembership } from "@/lib/directus-account";
+import { privatePageMetadata } from "@/lib/seo";
+
+export const metadata = privatePageMetadata;
 
 export default async function AccountSetupPage({
   params,

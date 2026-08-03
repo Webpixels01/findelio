@@ -2,6 +2,9 @@ import { setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
 import RegistrationVerification from "@/components/registration-verification";
+import { privatePageMetadata } from "@/lib/seo";
+
+export const metadata = privatePageMetadata;
 
 type VerificationPageProps = {
   params: Promise<{ locale: AppLocale }>;

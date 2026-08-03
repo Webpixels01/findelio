@@ -4,20 +4,15 @@ import "../globals.css";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing, type AppLocale } from "@/i18n/routing";
+import { routing } from "@/i18n/routing";
 import SiteFooter from "@/components/site-footer";
-
-const htmlLanguages: Record<AppLocale, string> = {
-  "de-ch": "de-CH",
-  en: "en",
-  sk: "sk",
-  cs: "cs",
-  hu: "hu",
-  pl: "pl",
-  ru: "ru",
-  "pt-pt": "pt-PT",
-  ro: "ro",
-};
+import StructuredData from "@/components/structured-data";
+import {
+  absoluteUrl,
+  getSiteUrl,
+  htmlLanguageTags,
+  localizedUrl,
+} from "@/lib/seo";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -27,17 +22,39 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   return {
-    metadataBase: new URL(siteUrl),
+    metadataBase: new URL(getSiteUrl()),
+    applicationName: "Findelio",
     title: t("title"),
     description: t("description"),
+    authors: [{ name: "Findelio", url: getSiteUrl() }],
+    creator: "Findelio",
+    publisher: "Findelio",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     openGraph: {
       title: t("title"),
       description: t("description"),
       siteName: "Findelio",
       type: "website",
+      images: [
+        {
+          url: localizedUrl(locale, "/share-image"),
+          width: 1200,
+          height: 630,
+          alt: t("title"),
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: [localizedUrl(locale, "/share-image")],
     },
   };
 }
@@ -48,10 +65,38 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const organizationData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${getSiteUrl()}/#organization`,
+    name: "Findelio",
+    legalName: "Webpixels",
+    url: getSiteUrl(),
+    logo: absoluteUrl("/findelio-logo-horizontal.svg"),
+    email: "info@findelio.ch",
+    telephone: "+41766137772",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Kirchgasse 13",
+      postalCode: "8532",
+      addressLocality: "Warth",
+      addressCountry: "CH",
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer service",
+      email: "info@findelio.ch",
+      telephone: "+41766137772",
+      availableLanguage: routing.locales.map(
+        (supportedLocale) => htmlLanguageTags[supportedLocale],
+      ),
+    },
+  };
 
   return (
-    <html lang={htmlLanguages[locale]} data-scroll-behavior="smooth">
+    <html lang={htmlLanguageTags[locale]} data-scroll-behavior="smooth">
       <body>
+        <StructuredData data={organizationData} />
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
             {children}

@@ -1,6 +1,6 @@
 # Findelio – Projektstatus
 
-Stand: 29. Juli 2026
+Stand: 3. August 2026
 
 ## Technischer Rahmen
 
@@ -417,10 +417,25 @@ Am 2. August 2026 umgesetzt:
 - Ein nach der Migration aufgetretener Directus-403 auf öffentlichen Profilseiten wurde behoben: Die eingebettete Galerie wird nun getrennt vom Firmeneintrag geladen, weil Directus die kombinierte Detailabfrage trotz einzeln erlaubter Felder ablehnte. Dafür wurden keine Rechte erweitert. Das öffentliche Profil `JAZU Webdesign` lädt danach wieder vollständig inklusive Galerie, Beschreibung, Beiträgen, Kontakt und Öffnungszeiten.
 - Ein weiterer 403 im angemeldeten Eigentümer-Editor wurde auf einen veralteten Directus-Schema-Cache in Redis zurückgeführt. Nach dem Leeren des technischen Cache und einem Directus-Neustart erkennt Directus `description_translations` als reguläres Feld. Der Editor von `JAZU Webdesign` wurde anschliessend als Eigentümer vollständig und ohne 404 oder Feldfehler im Browser geöffnet. Die öffentlichen oder internen Rechte mussten dafür nicht erweitert werden.
 
+## Öffentliche Inhalte, Navigation, Teilen und SEO
+
+Am 3. August 2026 umgesetzt und geprüft:
+
+- Die AGB und die Seite `So funktioniert Findelio für Firmen` sind in allen neun unterstützten Sprachen vorhanden. Beide erklären den Prüfprozess, Free und Premium sowie die optionale Verifizierung anhand offizieller Unternehmensnachweise.
+- Das neue horizontale Findelio-Logo wird im Header und in den Findelio-Mailvorlagen verwendet.
+- Der Header besitzt einen eigenen Startseitenlink, eine flackerfreie serverseitige Anmeldeanzeige und einen animierten Wechsel des mobilen Menüsymbols zwischen Hamburger und Schliessen.
+- Öffentliche Seiten und Firmeneinträge können über die Web-Share-Funktion beziehungsweise durch Kopieren des Links geteilt werden.
+- Alle öffentlichen Seiten besitzen Canonical-URLs und Sprachalternativen für neun Sprachen plus `x-default`.
+- Startseite, Firmensuche, Registrierung, Kontakt, Rechtseiten, Firmenanleitung und Firmeneinträge liefern passende Titel, Beschreibungen sowie Open-Graph- und Twitter-Daten.
+- Für jede Sprache wird ein eigenes Findelio-Vorschaubild im Format `1200 × 630 px` erzeugt.
+- Strukturierte Daten beschreiben Findelio als Organisation und Website sowie veröffentlichte Einträge als `LocalBusiness` mit Breadcrumbs. Die gewählte Adresssichtbarkeit wird respektiert.
+- Gefilterte Suchseiten sowie Dashboard, Login, Bestätigungs- und Einrichtungsseiten werden nicht indexiert.
+- `robots.txt` schliesst interne Bereiche und API-Endpunkte aus. Die Sitemap enthält nur öffentliche Seiten, alle Sprachalternativen und die bekannten Veröffentlichungsdaten der Einträge.
+- `npx tsc --noEmit`, `npm run lint`, `npm run build`, Browserprüfung der Metadaten und `git diff --check` sind erfolgreich.
+
 ## Git- und Arbeitsstand
 
-- Branch: `main`
-- Aktueller lokaler Sicherungs-Commit mit der Stripe-Erweiterung: `8515165` (`feat: add per-listing Stripe subscriptions`)
-- Der aktuelle Gesamtstand mit Registrierung, Onboarding, Premium-Funktionen, Prüfworkflow, E-Mail-Vorlagen, öffentlichen Verzeichnisfunktionen sowie Kontakt- und Rechtseiten ist in einem lokalen Git-Commit gesichert.
-- `SKILLS.md` und `PROJECT_STATUS.md` wurden am 28. Juli 2026 zur Projektdokumentation angelegt.
-- Es wurde kein Push ausgeführt.
+- Branch: `agent/premium-listing-workflows`
+- Ausgangscommit dieses Sicherungsstands: `8badc05` (`feat: complete premium listing workflows`)
+- Der aktuelle Gesamtstand umfasst zusätzlich AGB, Firmenanleitung, aktualisiertes Branding, Navigation, Share-Funktion und den technischen SEO-Abschluss.
+- `SKILLS.md` und `PROJECT_STATUS.md` dokumentieren Arbeitsregeln und Projektstand; Geheimnisse bleiben ausgeschlossen.

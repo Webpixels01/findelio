@@ -13,6 +13,13 @@
     "menu": "Otwórz menu",
     "dashboard": "Panel"
   },
+  "Share": {
+    "page": "Udostępnij stronę",
+    "listing": "Udostępnij wpis",
+    "copied": "Link skopiowany",
+    "shared": "Udostępniono",
+    "error": "Nie można udostępnić"
+  },
   "Home": {
     "eyebrow": "Wielojęzyczne firmy w Szwajcarii",
     "title": "Znajdź firmy, które mówią w Twoim języku.",
@@ -51,6 +58,7 @@
   },
   "Company": {
     "back": "Powrót do wyszukiwania",
+    "metaDescription": "Profil firmy {company} w miejscowości {city} na Findelio: kontakt, branże i obsługiwane języki.",
     "about": "O firmie",
     "contact": "Kontakt",
     "website": "Strona internetowa",
@@ -225,7 +233,23 @@
     "contact": "Kontakt",
     "imprint": "Dane firmy",
     "privacy": "Prywatność",
+    "howItWorks": "Jak Findelio działa dla firm",
+    "terms": "Regulamin",
     "copyright": "Wszelkie prawa zastrzeżone."
+  },
+  "CompanyGuide": {
+    "metaTitle": "Jak Findelio działa dla firm | Findelio", "metaDescription": "Od konta firmowego do opublikowanego wpisu: zobacz, jak firmy korzystają z Findelio i co daje Premium.", "eyebrow": "Dla firm", "title": "Wpis Findelio w kilku krokach.", "intro": "Findelio łączy Twoją firmę z osobami szukającymi usług w swoim języku. Zachowujesz kontrolę nad danymi i wybierasz Free lub Premium dla każdego wpisu.", "stepsTitle": "Jak wygląda publikacja",
+    "steps": { "register": { "title": "Utwórz konto", "text": "Zarejestruj się adresem e-mail i potwierdź go linkiem z wiadomości." }, "organization": { "title": "Utwórz organizację", "text": "Dodaj organizację, do której należą wpisy firmowe, a później także członkowie zespołu." }, "listing": { "title": "Utwórz wpis", "text": "Dodaj firmę, wybierz branże i języki oraz pakiet Free lub Premium." }, "complete": { "title": "Uzupełnij profil", "text": "Dodaj opis, kontakt i adres. Premium obejmuje też logo, galerię, godziny, social media i tłumaczenia." }, "review": { "title": "Wyślij do weryfikacji", "text": "Findelio sprawdza nowe i zmienione dane, aby katalog był wiarygodny i aktualny." }, "publish": { "title": "Publikuj i rozwijaj się", "text": "Po zatwierdzeniu wpis jest widoczny. Dopiero wtedy aktywujesz Premium, wpisy aktualności i statystyki." } },
+    "packagesEyebrow": "Pakiet dla każdego wpisu", "packagesTitle": "Zacznij Free lub pokaż więcej z Premium",
+    "free": { "title": "Free", "price": "CHF 0", "description": "Solidna podstawa widocznego i zweryfikowanego wpisu.", "features": { "profile": "Nazwa firmy i pełny opis", "classification": "Branże i obsługiwane języki", "contact": "Kontakt, strona i lokalizacja" } },
+    "premium": { "title": "Premium", "price": "CHF 9.90 miesięcznie lub CHF 99 rocznie", "description": "Dla firm, które chcą lepszej prezentacji, aktualnych treści i danych o zasięgu.", "features": { "media": "Logo i galeria zdjęć", "details": "Godziny otwarcia, social media i własny przycisk", "translations": "Własne opisy we wszystkich językach Findelio", "posts": "Aktualności, promocje i wydarzenia", "ranking": "Lepsza pozycja pasujących wpisów Premium", "statistics": "Statystyki i miesięczny raport" } },
+    "reviewTitle": "Dlaczego wpisy są sprawdzane?", "reviewText": "Weryfikacja chroni odwiedzających i rzetelne firmy. Findelio sprawdza wiarygodność danych i wysyła wiadomość w razie pytań lub odrzucenia.", "verificationEyebrow": "Dobrowolna dodatkowa weryfikacja", "verificationTitle": "Status Zweryfikowany na podstawie urzędowego dokumentu", "verificationText": "Możesz dobrowolnie przesłać Findelio aktualny urzędowy dokument potwierdzający działalność firmy. Po pomyślnej kontroli oznaczymy wpis jako „Zweryfikowany”.", "verificationProofs": "Może to być na przykład aktualny wyciąg z rejestru handlowego lub rejestru UID. W przypadku jednoosobowej działalności niewpisanej do rejestru handlowego można również wykorzystać potwierdzenie właściwej instytucji ubezpieczeń społecznych o uznaniu samozatrudnienia.", "verificationNote": "Odznaka Zweryfikowany potwierdza wyłącznie, że Findelio sprawdziło istnienie lub powiązanie firmy na podstawie dokumentu. Nie gwarantuje jakości, wypłacalności, zezwoleń ani usług.", "verificationCta": "Wyślij dokument e-mailem", "ctaTitle": "Gotowi dodać firmę?", "ctaText": "Utwórz bezpłatne konto, uzupełnij profil i docieraj do właściwych klientów.", "ctaButton": "Dodaj firmę"
+  },
+  "Terms": {
+    "metaTitle": "Regulamin | Findelio", "metaDescription": "Regulamin kont firmowych, wpisów i subskrypcji Premium w Findelio.", "eyebrow": "Informacje prawne", "title": "Ogólne warunki korzystania", "lastUpdated": "Stan na 3 sierpnia 2026 r.", "intro": "Niniejszy regulamin określa zasady korzystania z Findelio przez firmy, organizacje i ich upoważnionych użytkowników.",
+    "sections": { "scope": { "title": "Usługodawca i zakres", "body": "Findelio prowadzi Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Szwajcaria. Regulamin dotyczy kont, organizacji, wpisów oraz funkcji bezpłatnych i płatnych." }, "services": { "title": "Usługi Findelio", "body": "Findelio prowadzi wielojęzyczny katalog firm i narzędzia do tworzenia, kontroli i zarządzania wpisami. Nie jest stroną umów między odwiedzającymi a firmami." }, "accounts": { "title": "Konto i uprawnienia", "body": "Dane muszą być prawdziwe i aktualne, a dane logowania poufne. Osoba działająca za organizację potwierdza swoje uprawnienie i odpowiada za działania na koncie." }, "content": { "title": "Treści i licencja", "body": "Firma odpowiada za teksty, zdjęcia, logo i linki oraz ich zgodność z prawem. Findelio otrzymuje niewyłączne prawa konieczne do przechowywania i wyświetlania treści w okresie publikacji." }, "review": { "title": "Weryfikacja i blokada", "body": "Treści nielegalne, mylące, niepełne lub stanowiące nadużycie mogą zostać odrzucone, zawieszone albo usunięte. W odpowiednich przypadkach Findelio podaje powód i umożliwia poprawę." }, "packages": { "title": "Free i Premium", "body": "Free obejmuje wskazane funkcje podstawowe. Premium dotyczy jednego wpisu i zawiera dodatki opisane na stronie oferty i rozliczeń." }, "contract": { "title": "Umowa, ceny i płatność", "body": "Ceny są podawane we frankach szwajcarskich. Umowa Premium rozpoczyna się po potwierdzeniu płatności. Subskrypcja miesięczna lub roczna odnawia się, jeżeli nie zostanie anulowana przed końcem okresu." }, "cancellation": { "title": "Anulowanie i nieudana płatność", "body": "Premium można anulować na koniec okresu i do tego czasu pozostaje aktywne. Po nieudanej płatności dostęp może zostać zablokowany na koniec okresu. Zwroty proporcjonalne co do zasady nie przysługują; prawa bezwzględnie obowiązujące pozostają." }, "availability": { "title": "Dostępność", "body": "Nie gwarantujemy ciągłego działania bez błędów. Konserwacja, bezpieczeństwo, dostawcy zewnętrzni lub siła wyższa mogą powodować przerwy." }, "liability": { "title": "Odpowiedzialność", "body": "Findelio odpowiada w obowiązkowym zakresie prawa. W dozwolonym zakresie wyłącza się odpowiedzialność za lekkie niedbalstwo, szkody pośrednie, utracone korzyści i dane." }, "termination": { "title": "Zakończenie i usunięcie konta", "body": "Usunięcie konta nie zastępuje anulowania aktywnego Premium. Poważne lub powtarzające się naruszenia mogą skutkować blokadą albo zakończeniem dostępu." }, "privacy": { "title": "Prywatność", "body": "Przetwarzanie danych osobowych odbywa się zgodnie z aktualną polityką prywatności Findelio." }, "changes": { "title": "Zmiany regulaminu", "body": "Findelio może zmienić regulamin na przyszłość z powodów prawnych, technicznych lub biznesowych. Istotne zmiany zostaną zakomunikowane." }, "law": { "title": "Prawo i jurysdykcja", "body": "Obowiązuje prawo szwajcarskie. W zakresie dozwolonym właściwe są sądy siedziby Webpixels. Bezwzględnie obowiązujące zasady pozostają; w razie rozbieżności rozstrzyga wersja niemiecka." } },
+    "verification": { "title": "Zweryfikowane wpisy firm", "body": "Firmy mogą dobrowolnie przesłać aktualny wyciąg z rejestru handlowego, rejestru UID lub porównywalny urzędowy dokument. W przypadku jednoosobowej działalności niewpisanej do rejestru handlowego Findelio może w szczególności zaakceptować potwierdzenie właściwej instytucji ubezpieczeń społecznych o uznaniu samozatrudnienia. Po pomyślnej kontroli Findelio może oznaczyć wpis jako „Zweryfikowany”. Odznaka potwierdza jedynie istnienie lub powiązanie firmy sprawdzone na podstawie dokumentu; nie gwarantuje jakości, wypłacalności, zezwoleń ani usług. Findelio może zażądać dodatkowych informacji lub odebrać status, gdy dane są nieaktualne, sprzeczne albo nieprawdziwe. Dokumenty są używane wyłącznie do weryfikacji, udostępniane tylko upoważnionym osobom i usuwane, gdy nie są już potrzebne do tego celu, chyba że obowiązuje wymóg przechowywania." },
+    "contact": "Pytania dotyczące regulaminu prosimy kierować do zespołu Findelio:"
   },
   "Contact": {
     "metaTitle": "Kontakt | Findelio",
@@ -633,6 +657,8 @@
       }
     },
     "terms": "Bez bezpłatnego okresu próbnego. Anulowanie następuje na koniec bieżącego okresu rozliczeniowego. W razie nieudanej płatności dostęp pozostaje do końca okresu, a następnie zostaje zablokowany.",
+    "termsNotice": "Kończąc płatną subskrypcję, akceptujesz",
+    "termsLink": "Regulamin",
     "premium": {
       "badge": "Premium",
       "title": "Wpis firmy Premium",
