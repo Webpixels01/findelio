@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     `/${locale}/login`,
     `/${locale}/registrierung-bestaetigen`,
     `/${locale}/firmenkonto-einrichten`,
+    `/${locale}/team/einladung`,
   ]);
 
   return {

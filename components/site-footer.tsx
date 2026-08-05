@@ -17,6 +17,7 @@ export default async function SiteFooter() {
             <Link href="/unternehmen" className="hover:text-white">{t("findCompanies")}</Link>
             <Link href="/firma-eintragen" className="hover:text-white">{t("registerCompany")}</Link>
             <Link href="/fuer-unternehmen" className="hover:text-white">{t("howItWorks")}</Link>
+            <Link href="/blog" className="hover:text-white">{t("blog")}</Link>
           </div>
         </div>
         <div>
@@ -25,6 +26,7 @@ export default async function SiteFooter() {
             <Link href="/kontakt" className="hover:text-white">{t("contact")}</Link>
             <Link href="/impressum" className="hover:text-white">{t("imprint")}</Link>
             <Link href="/datenschutz" className="hover:text-white">{t("privacy")}</Link>
+            <Link href="/cookies" className="hover:text-white">{t("cookies")}</Link>
             <Link href="/agb" className="hover:text-white">{t("terms")}</Link>
           </div>
         </div>

@@ -18,12 +18,18 @@ function isValidPassword(password: string): boolean {
   );
 }
 
-export default function RegisterForm() {
+export default function RegisterForm({
+  initialEmail = "",
+  invitationToken = "",
+}: {
+  initialEmail?: string;
+  invitationToken?: string;
+}) {
   const t = useTranslations("Register");
   const locale = useLocale();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
@@ -58,6 +64,7 @@ export default function RegisterForm() {
           email,
           password,
           locale,
+          invitationToken,
         }),
       });
 
@@ -71,6 +78,8 @@ export default function RegisterForm() {
           setError(t("passwordError"));
         } else if (result.error === "INVALID_EMAIL") {
           setError(t("emailError"));
+        } else if (result.error === "INVALID_INVITATION") {
+          setError(t("invitationError"));
         } else if (response.status >= 500) {
           setError(t("serverError"));
         } else {
@@ -90,8 +99,12 @@ export default function RegisterForm() {
   if (isSubmitted) {
     return (
       <div className="rounded-3xl border border-[#bfe4ca] bg-[#eefaf2] p-8 text-[#135f30]">
-        <h2 className="text-2xl font-extrabold">{t("successTitle")}</h2>
-        <p className="mt-3 leading-7">{t("successText")}</p>
+        <h2 className="text-2xl font-extrabold">
+          {t(invitationToken ? "invitationSuccessTitle" : "successTitle")}
+        </h2>
+        <p className="mt-3 leading-7">
+          {t(invitationToken ? "invitationSuccessText" : "successText")}
+        </p>
         <p className="mt-3 text-sm">{t("successHint")}</p>
       </div>
     );
@@ -144,6 +157,8 @@ export default function RegisterForm() {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           disabled={isLoading}
+          readOnly={Boolean(invitationToken)}
+          aria-readonly={Boolean(invitationToken)}
         />
       </label>
 
@@ -186,7 +201,9 @@ export default function RegisterForm() {
         className="primary-button h-12 px-6 md:col-span-2 md:justify-self-start"
         disabled={isLoading}
       >
-        {isLoading ? t("loading") : t("submit")}
+        {isLoading
+          ? t("loading")
+          : t(invitationToken ? "invitationSubmit" : "submit")}
       </button>
 
       {error && (
@@ -200,7 +217,14 @@ export default function RegisterForm() {
 
       <p className="text-sm text-[var(--muted)] md:col-span-2">
         {t("loginPrompt")} {" "}
-        <Link href="/login" className="font-bold text-[#0277ee] hover:underline">
+        <Link
+          href={
+            invitationToken
+              ? `/login?next=${encodeURIComponent(`/${locale}/team/einladung?token=${invitationToken}`)}`
+              : "/login"
+          }
+          className="font-bold text-[#0277ee] hover:underline"
+        >
           {t("loginLink")}
         </Link>
       </p>

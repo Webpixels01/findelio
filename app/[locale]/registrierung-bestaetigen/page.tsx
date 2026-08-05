@@ -8,7 +8,10 @@ export const metadata = privatePageMetadata;
 
 type VerificationPageProps = {
   params: Promise<{ locale: AppLocale }>;
-  searchParams: Promise<{ token?: string | string[] }>;
+  searchParams: Promise<{
+    token?: string | string[];
+    invitation?: string | string[];
+  }>;
 };
 
 export default async function VerificationPage({
@@ -16,7 +19,7 @@ export default async function VerificationPage({
   searchParams,
 }: VerificationPageProps) {
   const { locale } = await params;
-  const { token } = await searchParams;
+  const { token, invitation } = await searchParams;
   setRequestLocale(locale);
 
   return (
@@ -26,6 +29,10 @@ export default async function VerificationPage({
         <div className="site-container max-w-xl">
           <RegistrationVerification
             token={typeof token === "string" ? token : ""}
+            invitationToken={
+              typeof invitation === "string" ? invitation : ""
+            }
+            locale={locale}
           />
         </div>
       </main>

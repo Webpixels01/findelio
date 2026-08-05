@@ -1,4 +1,5 @@
 import "server-only";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { sendListingReviewNotification } from "@/lib/mail";
 
 export type AccountOrganization = {
@@ -1725,10 +1726,7 @@ export async function uploadAccountListingImages(
 
     uploadedImages.push({
       id: uploadedFile.id,
-      assetUrl: new URL(
-        `/assets/${encodeURIComponent(uploadedFile.id)}`,
-        getDirectusUrl(),
-      ).toString(),
+      assetUrl: getDirectusAssetUrl(uploadedFile.id),
     });
   }
 

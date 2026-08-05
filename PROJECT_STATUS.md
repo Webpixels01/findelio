@@ -1,6 +1,6 @@
 # Findelio – Projektstatus
 
-Stand: 3. August 2026
+Stand: 5. August 2026
 
 ## Technischer Rahmen
 
@@ -432,6 +432,82 @@ Am 3. August 2026 umgesetzt und geprüft:
 - Gefilterte Suchseiten sowie Dashboard, Login, Bestätigungs- und Einrichtungsseiten werden nicht indexiert.
 - `robots.txt` schliesst interne Bereiche und API-Endpunkte aus. Die Sitemap enthält nur öffentliche Seiten, alle Sprachalternativen und die bekannten Veröffentlichungsdaten der Einträge.
 - `npx tsc --noEmit`, `npm run lint`, `npm run build`, Browserprüfung der Metadaten und `git diff --check` sind erfolgreich.
+
+## Teamverwaltung und Einladungen
+
+Am 4. August 2026 abgeschlossen und nach einem unterbrochenen lokalen Lauf repariert:
+
+- Inhaber können Administratoren und Bearbeiter per E-Mail zu einer Organisation einladen; Administratoren können Bearbeiter einladen.
+- Einladungen sind sieben Tage gültig, an die eingeladene E-Mail-Adresse gebunden und lassen sich vor der Annahme zurückziehen.
+- Der Einladungslink führt neue Teammitglieder direkt zu einer eigenen Registrierungsansicht mit fest vorgegebener eingeladener E-Mail-Adresse. Bestehende Konten können stattdessen zur Anmeldung wechseln.
+- Nach der E-Mail-Bestätigung werden Kontoaktivierung, Einladungsannahme, aktive Organisationsmitgliedschaft und Findelio-Sitzung atomar abgeschlossen. Danach öffnet sich ohne erneute Anmeldung und ohne Organisations-Onboarding direkt die Übersicht der Firmeneinträge.
+- Inhaber können die Rollen von Administratoren und Bearbeitern ändern und beide Rollen entfernen. Administratoren können Bearbeiter entfernen.
+- Entfernte Mitgliedschaften bleiben für eine spätere sichere Reaktivierung gespeichert, erscheinen aber nicht mehr als aktive Teammitglieder.
+- Teamübersicht, Einladungsseite, Statusmeldungen und E-Mail-Inhalte sind in allen neun unterstützten Sprachen vorhanden.
+- Der Next.js-Endpunkt prüft Sitzung, Anfrageherkunft und Eingaben; der Directus-Endpunkt prüft Organisationsmitgliedschaft und Rollen bei jeder Aktion erneut.
+- Die Migration `20260803_team_management.sql` wurde lokal angewendet. Directus lädt die Team-Erweiterung, die neue Sammlung und deren Indizes fehlerfrei.
+- Ein vollständiger Test mit temporärem unbestätigtem Konto, echtem Directus-Bestätigungstoken und offener Einladung bestätigte Mitgliedschaft, Zugriffstoken, erneuerbare Sitzung und den direkten HTTP-200-Zugriff auf die Firmeneinträge ohne Einrichtungsumleitung. Sämtliche Testdaten und Sitzungen wurden danach vollständig entfernt, ohne eine E-Mail auszulösen.
+- Desktop- und Mobilansicht besitzen genau eine Fusszeile, keinen horizontalen Überlauf und keine Browserkonsolenfehler.
+
+## Löschanfragen für Firmeneinträge und Organisationen
+
+Am 4. August 2026 umgesetzt und geprüft:
+
+- Aktive Organisationsmitglieder können für einen Firmeneintrag eine Löschanfrage stellen; für eine ganze Organisation ist dies ausschliesslich dem Inhaber erlaubt.
+- Die Anfrage archiviert oder versteckt Inhalte nicht sofort. Offene Anfragen erscheinen direkt beim betroffenen Eintrag beziehungsweise bei der Organisation und lassen sich über den bewusst als Textbutton gestalteten Link `Anfrage zurückziehen` widerrufen.
+- Ein aktives Premium-Abo muss vor der Anfrage fristgerecht zur Kündigung vorgemerkt sein. Eine bereits vorgemerkte Kündigung erlaubt die Anfrage, die administrative Archivierung bleibt jedoch bis zum Ende der bezahlten Laufzeit gesperrt.
+- Findelio-Administratoren sehen offene Löschanfragen im bestehenden Prüfbereich mit Organisation, Ziel, anfragender Person, Datum und optionalem Grund. Ablehnungen benötigen eine Begründung.
+- Bei jeder neuen Löschanfrage erhält die konfigurierte Findelio-Administrator-Adresse eine gebrandete E-Mail mit Typ, Organisation, betroffenem Inhalt, anfragender Person, optionalem Grund und einem direkten Link zum Prüfbereich.
+- Falls die Administrator-Benachrichtigung nicht versendet werden kann, bleibt keine unbemerkte offene Anfrage bestehen: Der neue Datensatz wird sofort zurückgezogen und im Kundendashboard erscheint eine lokalisierte Fehlermeldung mit der Aufforderung, die Anfrage erneut zu senden.
+- Eine bestätigte Eintragsanfrage archiviert den Firmeneintrag sowie noch offene Revisionen und Beiträge. Eine bestätigte Organisationsanfrage archiviert die Organisation und sämtliche zugehörigen Einträge; Datensätze werden nicht physisch gelöscht.
+- Firmenkonten besitzen weiterhin keinerlei direkte Lösch- oder Archivierungsrechte. Sämtliche Rollen-, Eigentums-, Status- und Abo-Prüfungen erfolgen bei jeder Aktion erneut in der abgesicherten Directus-Extension.
+- Die reproduzierbare Migration `20260804_deletion_requests.sql` wurde lokal angewendet. Directus lädt `directus-extension-findelio-deletion-requests` fehlerfrei.
+- Ein isolierter End-to-End-Test bestätigte Bearbeiter-Anfrage, Rückzug, Premium-Kündigungspflicht, Sperre während der bezahlten Laufzeit, Admin-Ablehnung, Eintragsarchivierung, reine Inhaberberechtigung für Organisationen und Organisationsarchivierung. Sämtliche temporären Daten wurden danach entfernt.
+- Ein zusätzlicher realer Versandtest wurde vom konfigurierten Mailserver angenommen. Die dafür angelegte, klar als Versandtest bezeichnete Löschanfrage sowie alle übrigen temporären Datensätze wurden anschliessend vollständig entfernt.
+- Desktop- und Mobilansicht sowie der administrative Prüfbereich wurden im Browser geprüft. Die Mobilansicht besitzt keinen horizontalen Überlauf. Sämtliche Texte sind in allen neun unterstützten Sprachen vorhanden.
+
+## Cookie-Hinweis und Cookie-Unterseite
+
+Am 5. August 2026 umgesetzt und geprüft:
+
+- Beim ersten Besuch erscheint ein ruhiger, barrierearm beschrifteter Hinweis, dass Findelio ausschliesslich technisch notwendige Cookies für Anmeldung, sichere Sitzungen und Sprachwahl verwendet und keine Werbe- oder Analyse-Cookies setzt.
+- Da keine einwilligungspflichtigen Cookies eingesetzt werden, verlangt der Hinweis keine irreführende Zustimmung. Die Aktion `Verstanden` schliesst ihn; die Bestätigung wird für höchstens zwölf Monate im lokalen Browserspeicher hinterlegt.
+- Die neue öffentliche Seite `/[locale]/cookies` dokumentiert die beiden Findelio-Anmelde-Cookies, das Sprach-Cookie, den lokalen Eintrag für den Hinweis, ihre Zwecke, Speicherdauern und die Verwaltung über den Browser.
+- Die Cookie-Seite ist im Footer und in der Sitemap verlinkt, besitzt lokalisierte Metadaten und ist vollständig in allen neun unterstützten Sprachen vorhanden.
+- Schliessen, Navigation, deutscher und englischer Inhalt sowie das responsive Layout wurden im Browser geprüft. `npm run lint`, `npx tsc --noEmit`, Übersetzungsparität, `npm run build` und der anschliessende HTTP-200-Aufruf im neu gestarteten Entwicklungsserver sind erfolgreich.
+
+## Produktionsbetrieb und spätere Aktualisierungen
+
+Am 5. August 2026 vorbereitet und lokal geprüft:
+
+- Eine eigenständige Produktionsumgebung bündelt Next.js, Directus, PostgreSQL, Redis und Caddy in `compose.production.yaml`. Nur Caddy veröffentlicht HTTP und HTTPS; Datenbank, Cache und interne Dienstverbindungen bleiben in einem abgeschotteten Docker-Netz.
+- Caddy übernimmt automatische TLS-Zertifikate, die Weiterleitung der `www`-Adresse, Kompression, Sicherheitsheader und getrennte Zugänge für Website und Directus.
+- Das Next.js-Image wird mehrstufig und als schlankes Standalone-Image gebaut, läuft ohne Root-Rechte und besitzt einen Healthcheck, der auch die Erreichbarkeit von Directus prüft.
+- `.env.production.example` dokumentiert sämtliche benötigten Produktionsvariablen, enthält aber bewusst keine echten Geheimnisse. Ein Prüfskript verhindert Starts mit fehlenden Werten oder offensichtlichen Platzhaltern.
+- Wiederholbare Skripte decken Deployment, vorgängiges Datenbank- und Upload-Backup, nachvollziehbare SQL-Migrationen mit Prüfsummen und Rollback ab. Backups enthalten keine Umgebungsdateien oder Geheimnisse und werden nicht automatisch gelöscht.
+- Da das bisherige Basisschema und die Directus-Rechte nicht vollständig aus SQL-Migrationen rekonstruiert werden können, ist für die erste Liveschaltung eine einmalige, beaufsichtigte Übertragung der bestehenden PostgreSQL-Datenbank und Directus-Uploads vorgesehen. Diese Übertragung wurde noch nicht ausgeführt.
+- `DEPLOYMENT.md` beschreibt DNS, Servervorbereitung, ersten Datenumzug, reguläre Updates, Sicherungen, Wiederherstellung und Rollback. Damit können spätere Änderungen nach Git-Push mit einem reproduzierbaren Deploy-Befehl eingespielt werden.
+- Next.js und `eslint-config-next` wurden gemeinsam auf die stabile Version 16.3.0 aktualisiert. Die dadurch aktualisierten PostCSS-, Sharp- und Entwicklungsabhängigkeiten ergeben bei `npm audit` keine bekannten Sicherheitswarnungen.
+- Compose-Auflösung, Caddy-Konfiguration, Shell-Syntax der Betriebsskripte, ESLint, TypeScript und der vollständige Docker-Produktionsbuild sind erfolgreich.
+
+## Blog und redaktionelle Ratgeberartikel
+
+Am 5. August 2026 vorbereitet und geprüft:
+
+- Die neuen öffentlichen Routen `/[locale]/blog` und `/[locale]/blog/[slug]` bieten eine ruhige Ratgeberübersicht, hervorgehobene Beiträge, gut lesbare Artikelseiten, Lesezeit, Teilen-Funktion, verwandte Beiträge und einen passenden Übergang zur Firmensuche.
+- Header, mobiles Menü und Footer verlinken den Blog. Die gesamte Blog-Oberfläche, leere Zustände, Metadaten und Handlungsaufforderungen sind in allen neun Findelio-Sprachen vorhanden.
+- Veröffentlichte Beiträge erhalten Canonical-URL, Open-Graph- und Twitter-Metadaten sowie strukturierte Daten als `BlogPosting`, Breadcrumbs und eine Sammlungsliste. Sprachspezifische Artikel erzeugen keine falschen Sprachalternativen.
+- Die Sitemap enthält die Blogübersicht in jeder Sprache und ergänzt automatisch jeden veröffentlichten, datierten Artikel in seiner tatsächlichen Sprache.
+- Die Directus-Migration `20260805_blog_posts.sql` legt eine redaktionelle Sammlung mit Entwurf-, Veröffentlicht- und Archivstatus, Sprache, URL-Kennung, Markdown-Inhalt, Kategorie, Autor, Titelbild, Bildalternative, Hervorhebung und optionalen SEO-Feldern an. Sie wurde nach einer lokalen Datenbanksicherung erfolgreich angewendet.
+- Die ergänzende Migration `20260805_blog_server_access.sql` erlaubt dem technischen Website-Konto ausschliesslich das Lesen veröffentlichter und bereits terminlich freigegebener Artikel. Titelbilder werden im bestehenden öffentlichen Directus-Dateiordner ausgewählt; Entwürfe bleiben für die Website unsichtbar.
+- Die Migration `20260805_blog_status_publication.sql` setzt beim Wechsel auf `Veröffentlicht` automatisch das Veröffentlichungsdatum, sofern kein Termin vorgegeben wurde. Damit genügt der verständliche Statuswechsel für eine sofortige Veröffentlichung; ein zukünftiges Datum bleibt für geplante Beiträge möglich.
+- Drei vollständige deutschsprachige Artikel zu mehrsprachiger Kundschaft, lokaler Online-Sichtbarkeit und vertrauenswürdigen Firmenprofilen wurden aus `content/blog-import-de-ch.json` importiert, mit Veröffentlichungsdaten versehen und veröffentlicht.
+- Drei zusammengehörige, textfreie 16:9-Titelbilder wurden generiert, im Projekt unter `public/blog/` gesichert, in den öffentlichen Directus-Dateiordner geladen und inklusive beschreibender Bildalternativen den Beiträgen zugeordnet.
+- Die in Directus gepflegten Kategorien sind im Blogarchiv als URL-basierte Filter verfügbar. Kategorien auf Blogkarten und Artikelseiten verlinken direkt zum passenden Filter; neue Kategorien erscheinen automatisch. Auswahlzustand, Tastaturzugänglichkeit und umbrechende Darstellung wurden auf Desktop und Mobilgerät geprüft.
+- Der Rücklink am Artikelende und die Links `Artikel lesen` in Übersicht, Archiv sowie verwandten Beiträgen unterstreichen nur noch den eigentlichen Linktext. Die Pfeile bleiben bewusst ohne Unterstreichung, wodurch die zuvor sichtbaren Linienunterbrüche entfallen. Unterstreichung und Farbwechsel verhalten sich im Normal- und Hoverzustand auf allen Blogflächen identisch.
+- `BLOG.md` beschreibt Erstellung, JSON-Import, Mehrsprachigkeit, Titelbilder, Veröffentlichung und einen kurzen SEO-Qualitätscheck. Importierte Dateien können direkt in Directus bearbeitet werden; Binärbilder werden separat hochgeladen.
+- Markdown wird ohne ausführbares eingebettetes HTML gerendert. Überschriften, Listen, Links, Zitate, Tabellen und Code besitzen eine responsive Findelio-Darstellung.
+- Alle neun Sprachdateien und der JSON-Import sind syntaktisch gültig und besitzen identische Blog-Schlüssel. ESLint, TypeScript, `npm audit` und der vollständige Next.js-Produktionsbuild mit 199 statisch vorbereiteten Seiten sind erfolgreich. Die aktuelle Browserprüfung bestätigt drei veröffentlichte Beiträge, drei öffentlich ladbare Titelbilder, den korrigierten Rücklink sowie eine saubere Darstellung auf Desktop und Mobilgerät.
 
 ## Git- und Arbeitsstand
 

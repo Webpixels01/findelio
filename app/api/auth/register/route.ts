@@ -4,6 +4,10 @@ import {
   DirectusAuthError,
   registerDirectusUser,
 } from "@/lib/directus-auth";
+import {
+  DirectusTeamError,
+  getPublicTeamInvitation,
+} from "@/lib/directus-team";
 
 type RegisterBody = {
   firstName?: string;
@@ -11,12 +15,14 @@ type RegisterBody = {
   email?: string;
   password?: string;
   locale?: string;
+  invitationToken?: string;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LETTER_PATTERN = /[A-Za-z]/;
 const NUMBER_PATTERN = /\d/;
 const SPECIAL_CHARACTER_PATTERN = /[^A-Za-z0-9]/;
+const INVITATION_TOKEN_PATTERN = /^[A-Za-z0-9_-]{40,100}$/;
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -60,6 +66,7 @@ export async function POST(request: Request) {
     const lastName = body.lastName?.trim();
     const email = body.email?.trim().toLowerCase();
     const password = body.password ?? "";
+    const invitationToken = body.invitationToken?.trim() ?? "";
     const locale = isAppLocale(body.locale)
       ? body.locale
       : routing.defaultLocale;
@@ -80,6 +87,33 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "INVALID_PASSWORD" }, { status: 400 });
     }
 
+    if (invitationToken) {
+      if (!INVITATION_TOKEN_PATTERN.test(invitationToken)) {
+        return NextResponse.json(
+          { error: "INVALID_INVITATION" },
+          { status: 400 },
+        );
+      }
+
+      try {
+        const invitation = await getPublicTeamInvitation(invitationToken);
+        if (invitation.email.toLowerCase() !== email) {
+          return NextResponse.json(
+            { error: "INVALID_INVITATION" },
+            { status: 400 },
+          );
+        }
+      } catch (error) {
+        if (error instanceof DirectusTeamError) {
+          return NextResponse.json(
+            { error: "INVALID_INVITATION" },
+            { status: 400 },
+          );
+        }
+        throw error;
+      }
+    }
+
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
     if (!siteUrl) {
@@ -89,7 +123,10 @@ export async function POST(request: Request) {
     const verificationUrl = new URL(
       `/${locale}/registrierung-bestaetigen`,
       siteUrl,
-    ).toString();
+    );
+    if (invitationToken) {
+      verificationUrl.searchParams.set("invitation", invitationToken);
+    }
 
     try {
       await registerDirectusUser({
@@ -97,7 +134,7 @@ export async function POST(request: Request) {
         lastName,
         email,
         password,
-        verificationUrl,
+        verificationUrl: verificationUrl.toString(),
       });
     } catch (error) {
       if (error instanceof DirectusAuthError && error.status < 500) {

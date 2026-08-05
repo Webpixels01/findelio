@@ -1,0 +1,206 @@
+name: findelio-production
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+services:
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:?SITE_DOMAIN fehlt}
+      CMS_DOMAIN: ${CMS_DOMAIN:?CMS_DOMAIN fehlt}
+      ACME_EMAIL: ${ACME_EMAIL:?ACME_EMAIL fehlt}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./infra/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+      directus:
+        condition: service_healthy
+    networks:
+      - edge
+    logging: *default-logging
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
+        DIRECTUS_URL: http://directus:8055
+        DIRECTUS_PUBLIC_URL: https://${CMS_DOMAIN:?CMS_DOMAIN fehlt}
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_SITE_URL: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
+      DIRECTUS_URL: http://directus:8055
+      DIRECTUS_PUBLIC_URL: https://${CMS_DOMAIN:?CMS_DOMAIN fehlt}
+      DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:?DIRECTUS_TOKEN fehlt}
+      AUTH_REFRESH_COOKIE_TTL_SECONDS: ${AUTH_REFRESH_COOKIE_TTL_SECONDS:-604800}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:?STRIPE_SECRET_KEY fehlt}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:?STRIPE_WEBHOOK_SECRET fehlt}
+      STRIPE_PRICE_PREMIUM_MONTHLY: ${STRIPE_PRICE_PREMIUM_MONTHLY:?STRIPE_PRICE_PREMIUM_MONTHLY fehlt}
+      STRIPE_PRICE_PREMIUM_YEARLY: ${STRIPE_PRICE_PREMIUM_YEARLY:?STRIPE_PRICE_PREMIUM_YEARLY fehlt}
+    expose:
+      - "3000"
+    depends_on:
+      directus:
+        condition: service_healthy
+    networks:
+      - edge
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:3000/api/health"]
+      interval: 20s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    logging: *default-logging
+
+  database:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB fehlt}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER fehlt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD fehlt}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+  cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging: *default-logging
+
+  directus:
+    image: directus/directus:11.17.4
+    restart: unless-stopped
+    environment:
+      SECRET: ${DIRECTUS_SECRET:?DIRECTUS_SECRET fehlt}
+      PUBLIC_URL: https://${CMS_DOMAIN:?CMS_DOMAIN fehlt}
+      IP_TRUST_PROXY: "true"
+
+      DB_CLIENT: pg
+      DB_HOST: database
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:?POSTGRES_DB fehlt}
+      DB_USER: ${POSTGRES_USER:?POSTGRES_USER fehlt}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD fehlt}
+
+      CACHE_ENABLED: "true"
+      CACHE_AUTO_PURGE: "true"
+      CACHE_STORE: redis
+      REDIS: redis://cache:6379
+
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?DIRECTUS_ADMIN_EMAIL fehlt}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?DIRECTUS_ADMIN_PASSWORD fehlt}
+
+      EMAIL_FROM: info@findelio.ch
+      EMAIL_TEMPLATES_PATH: /directus/templates
+      EMAIL_TRANSPORT: smtp
+      EMAIL_SMTP_HOST: mail.infomaniak.com
+      EMAIL_SMTP_PORT: "587"
+      EMAIL_SMTP_SECURE: "false"
+      EMAIL_SMTP_USER: ${DIRECTUS_EMAIL_SMTP_USER:?DIRECTUS_EMAIL_SMTP_USER fehlt}
+      EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD:?DIRECTUS_EMAIL_SMTP_PASSWORD fehlt}
+
+      ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL:?ADMIN_NOTIFICATION_EMAIL fehlt}
+      FINDELIO_SITE_URL: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
+      USER_REGISTER_URL_ALLOW_LIST: >-
+        https://${SITE_DOMAIN}/de-ch/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/en/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/sk/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/cs/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/hu/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/pl/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/ru/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/pt-pt/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/ro/registrierung-bestaetigen
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
+      CORS_CREDENTIALS: "true"
+      FILES_MAX_UPLOAD_SIZE: 8mb
+      TELEMETRY: "false"
+      WEBSOCKETS_ENABLED: "true"
+    expose:
+      - "8055"
+    volumes:
+      - directus-uploads:/directus/uploads
+      - ./infra/directus/extensions:/directus/extensions:ro
+      - ./infra/directus/templates:/directus/templates:ro
+    depends_on:
+      database:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    networks:
+      - edge
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8055/server/ping || exit 1"]
+      interval: 20s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    logging: *default-logging
+
+  migrate:
+    image: postgres:17-alpine
+    profiles: ["tools"]
+    environment:
+      PGHOST: database
+      PGPORT: "5432"
+      PGDATABASE: ${POSTGRES_DB:?POSTGRES_DB fehlt}
+      PGUSER: ${POSTGRES_USER:?POSTGRES_USER fehlt}
+      PGPASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD fehlt}
+      MIGRATION_BASELINE: ${MIGRATION_BASELINE:-}
+      MIGRATION_BASELINE_CHECK_TABLE: ${MIGRATION_BASELINE_CHECK_TABLE:-}
+    volumes:
+      - ./infra/directus/migrations:/migrations:ro
+      - ./ops/apply-migrations.sh:/apply-migrations.sh:ro
+    entrypoint: ["/bin/sh", "/apply-migrations.sh"]
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - backend
+    logging: *default-logging
+
+networks:
+  edge:
+  backend:
+    internal: true
+
+volumes:
+  postgres-data:
+  redis-data:
+  directus-uploads:
+  caddy-data:
+  caddy-config:

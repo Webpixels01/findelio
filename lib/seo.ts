@@ -78,6 +78,8 @@ type PageMetadataInput = {
   image?: string | null;
   imageAlt?: string;
   noIndex?: boolean;
+  includeLanguageAlternates?: boolean;
+  openGraphType?: "website" | "article";
 };
 
 export function buildPageMetadata({
@@ -88,6 +90,8 @@ export function buildPageMetadata({
   image,
   imageAlt = SITE_NAME,
   noIndex = false,
+  includeLanguageAlternates = true,
+  openGraphType = "website",
 }: PageMetadataInput): Metadata {
   const pageUrl = localizedUrl(locale, path);
   const imageUrl = image
@@ -103,7 +107,9 @@ export function buildPageMetadata({
       ? undefined
       : {
           canonical: pageUrl,
-          languages: languageAlternates(path),
+          ...(includeLanguageAlternates
+            ? { languages: languageAlternates(path) }
+            : {}),
         },
     robots: noIndex
       ? {
@@ -118,7 +124,7 @@ export function buildPageMetadata({
     openGraph: {
       title,
       description,
-      type: "website",
+      type: openGraphType,
       siteName: SITE_NAME,
       url: pageUrl,
       locale: openGraphLocales[locale],

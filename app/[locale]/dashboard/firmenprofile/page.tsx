@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { getAccountOrganizationOverview } from "@/lib/directus-account";
+import { getAccountDeletionRequests } from "@/lib/directus-deletion";
+import DeletionRequestAction from "@/components/deletion-request-action";
 
 function translateValue(
   value: string | null | undefined,
@@ -31,9 +33,12 @@ export default async function ListingsPage({
   ]);
 
   const accessToken = await getAccessToken();
-  const organizations = accessToken
-    ? await getAccountOrganizationOverview(accessToken)
-    : [];
+  const [organizations, deletionRequests] = accessToken
+    ? await Promise.all([
+        getAccountOrganizationOverview(accessToken),
+        getAccountDeletionRequests(accessToken),
+      ])
+    : [[], []];
   const listings = organizations.flatMap((membership) =>
     membership.listings.map((listing) => ({
       ...listing,
@@ -173,6 +178,26 @@ export default async function ListingsPage({
                     </p>
                   )}
                 </div>
+
+                <DeletionRequestAction
+                  entityType="listing"
+                  targetId={listing.id}
+                  targetName={listing.name}
+                  request={
+                    deletionRequests.find(
+                      (request) => request.listing_id === listing.id,
+                    ) ?? null
+                  }
+                  canRequest={true}
+                  premiumMustBeCancelled={Boolean(
+                    listing.subscription &&
+                      ["active", "past_due"].includes(
+                        listing.subscription.status,
+                      ) &&
+                      !listing.subscription.cancel_at_period_end,
+                  )}
+                  subscriptionHref={`/dashboard/firmenprofile/${listing.id}/abo`}
+                />
               </article>
             );
           })}

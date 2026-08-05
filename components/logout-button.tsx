@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type LogoutButtonProps = {
@@ -18,6 +19,7 @@ export default function LogoutButton({
 }: LogoutButtonProps) {
   const t = useTranslations("Dashboard");
   const locale = useLocale();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogout() {
@@ -32,7 +34,8 @@ export default function LogoutButton({
         throw new Error("Logout fehlgeschlagen.");
       }
 
-      window.location.assign(`/${locale}/login`);
+      router.push(`/${locale}/login`);
+      router.refresh();
     } catch (error) {
       console.error(error);
       setIsLoading(false);

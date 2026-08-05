@@ -1,20 +1,21 @@
 import "server-only";
 import type { AppLocale } from "@/i18n/routing";
 
-const directusUrl = process.env.DIRECTUS_URL;
-const directusToken = process.env.DIRECTUS_TOKEN;
-
-if (!directusUrl) {
-  throw new Error("DIRECTUS_URL fehlt in der Datei .env.local");
+function getDirectusUrl(): string {
+  const directusUrl = process.env.DIRECTUS_URL?.trim();
+  if (!directusUrl) {
+    throw new Error("DIRECTUS_URL fehlt in der Laufzeitumgebung");
+  }
+  return directusUrl;
 }
 
-if (!directusToken) {
-  throw new Error("DIRECTUS_TOKEN fehlt in der Datei .env.local");
+function getDirectusHeaders(): HeadersInit {
+  const directusToken = process.env.DIRECTUS_TOKEN?.trim();
+  if (!directusToken) {
+    throw new Error("DIRECTUS_TOKEN fehlt in der Laufzeitumgebung");
+  }
+  return { Authorization: `Bearer ${directusToken}` };
 }
-
-const directusHeaders = {
-  Authorization: `Bearer ${directusToken}`,
-};
 
 const PUBLIC_LISTING_STATUS = "published" as const;
 
@@ -190,7 +191,7 @@ function getGalleryFileId(
 async function getPublicListingGallery(
   listingId: string,
 ): Promise<GalleryItem[]> {
-  const url = new URL("/items/listings_files", directusUrl);
+  const url = new URL("/items/listings_files", getDirectusUrl());
 
   url.searchParams.set("fields", "id,directus_files_id");
   url.searchParams.set("sort", "id");
@@ -205,7 +206,7 @@ async function getPublicListingGallery(
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -234,7 +235,7 @@ async function getDirectoryTranslationMap(
   collection: TranslatableDirectoryCollection,
   locale: AppLocale,
 ): Promise<Map<string, string>> {
-  const url = new URL(`/items/${collection}`, directusUrl);
+  const url = new URL(`/items/${collection}`, getDirectusUrl());
 
   url.searchParams.set(
     "fields",
@@ -243,7 +244,7 @@ async function getDirectoryTranslationMap(
   url.searchParams.set("limit", "-1");
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -335,7 +336,7 @@ function subscriptionListingId(
 }
 
 async function getActivePremiumListingIds(): Promise<Set<string>> {
-  const url = new URL("/items/subscriptions", directusUrl);
+  const url = new URL("/items/subscriptions", getDirectusUrl());
 
   url.searchParams.set(
     "fields",
@@ -353,7 +354,7 @@ async function getActivePremiumListingIds(): Promise<Set<string>> {
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -482,7 +483,7 @@ export async function getListings(
     });
   }
 
-  const url = new URL("/items/listings", directusUrl);
+  const url = new URL("/items/listings", getDirectusUrl());
 
   url.searchParams.set("fields", fields);
   url.searchParams.set("sort", "name");
@@ -501,7 +502,7 @@ export async function getListings(
   ] =
     await Promise.all([
       fetch(url, {
-        headers: directusHeaders,
+        headers: getDirectusHeaders(),
         cache: "no-store",
       }),
       getDirectoryTranslationMap("industries", locale),
@@ -595,7 +596,7 @@ export async function getListingBySlug(
     "industries.industries_id.name",
   ].join(",");
 
-  const url = new URL("/items/listings", directusUrl);
+  const url = new URL("/items/listings", getDirectusUrl());
 
   url.searchParams.set("fields", fields);
   url.searchParams.set("limit", "1");
@@ -625,7 +626,7 @@ export async function getListingBySlug(
   ] =
     await Promise.all([
       fetch(url, {
-        headers: directusHeaders,
+        headers: getDirectusHeaders(),
         cache: "no-store",
       }),
       getDirectoryTranslationMap("industries", locale),
@@ -682,7 +683,7 @@ export type PublishedListingSitemapEntry = {
 export async function getPublishedListingSitemapEntries(): Promise<
   PublishedListingSitemapEntry[]
 > {
-  const url = new URL("/items/listings", directusUrl);
+  const url = new URL("/items/listings", getDirectusUrl());
 
   url.searchParams.set("fields", "slug,published_at");
   url.searchParams.set("sort", "slug");
@@ -697,7 +698,7 @@ export async function getPublishedListingSitemapEntries(): Promise<
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -725,7 +726,7 @@ export async function getPublishedListingSitemapEntries(): Promise<
 export async function getPublicListingPosts(
   listingId: string,
 ): Promise<ListingPost[]> {
-  const url = new URL("/items/listing_posts", directusUrl);
+  const url = new URL("/items/listing_posts", getDirectusUrl());
   url.searchParams.set(
     "fields",
     "id,listing,type,title,body,image,cta_label,cta_url,starts_at,ends_at,published_at",
@@ -743,7 +744,7 @@ export async function getPublicListingPosts(
     }),
   );
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
   if (!response.ok) return [];
@@ -754,7 +755,7 @@ export async function getPublicListingPosts(
 export async function getListingOpeningHours(
   listingId: string,
 ): Promise<ListingOpeningHour[]> {
-  const url = new URL("/items/listing_opening_hours", directusUrl);
+  const url = new URL("/items/listing_opening_hours", getDirectusUrl());
 
   url.searchParams.set(
     "fields",
@@ -771,7 +772,7 @@ export async function getListingOpeningHours(
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -791,13 +792,13 @@ export async function getListingOpeningHours(
 async function getDirectoryOptions(
   collection: DirectoryCollection,
 ): Promise<DirectoryOption[]> {
-  const url = new URL(`/items/${collection}`, directusUrl);
+  const url = new URL(`/items/${collection}`, getDirectusUrl());
 
   url.searchParams.set("fields", "id,code,name");
   url.searchParams.set("sort", "name");
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -821,7 +822,7 @@ export function getCantons(): Promise<DirectoryOption[]> {
 export async function getCantonIdByCode(
   code: string,
 ): Promise<string | null> {
-  const url = new URL("/items/cantons", directusUrl);
+  const url = new URL("/items/cantons", getDirectusUrl());
 
   url.searchParams.set("fields", "id");
   url.searchParams.set("limit", "1");
@@ -835,7 +836,7 @@ export async function getCantonIdByCode(
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 

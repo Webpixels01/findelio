@@ -12,6 +12,8 @@ import { getPendingListingRevisions } from "@/lib/directus-review";
 import { getPendingListingPosts } from "@/lib/directus-growth";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import ListingPostReviewActions from "@/components/listing-post-review-actions";
+import DeletionRequestReviewCard from "@/components/deletion-request-review-card";
+import { getPendingDeletionRequests } from "@/lib/directus-deletion";
 
 function removeHtml(value: string): string {
   return value
@@ -50,9 +52,10 @@ export default async function ListingReviewPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t, tg] = await Promise.all([
+  const [t, tg, td] = await Promise.all([
     getTranslations("ListingReview"),
     getTranslations("Growth"),
+    getTranslations("DeletionRequests.admin"),
     requireCurrentUser({
       locale,
       nextPath: `/${locale}/dashboard/pruefung`,
@@ -69,9 +72,10 @@ export default async function ListingReviewPage({
     redirect(`/${locale}/dashboard`);
   }
 
-  const [revisions, posts] = await Promise.all([
+  const [revisions, posts, deletionRequests] = await Promise.all([
     getPendingListingRevisions(accessToken),
     getPendingListingPosts(accessToken),
+    getPendingDeletionRequests(accessToken),
   ]);
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
@@ -90,7 +94,9 @@ export default async function ListingReviewPage({
         </p>
       </header>
 
-      {revisions.length === 0 && posts.length === 0 ? (
+      {revisions.length === 0 &&
+      posts.length === 0 &&
+      deletionRequests.length === 0 ? (
         <div className="mt-8 rounded-3xl border border-[var(--border)] bg-white p-7 shadow-xl shadow-[#001734]/6">
           <h2 className="text-xl font-bold">{t("emptyTitle")}</h2>
           <p className="mt-2 text-[var(--muted)]">{t("emptyDescription")}</p>
@@ -239,6 +245,23 @@ export default async function ListingReviewPage({
                 </article>
               );
             })}
+          </div>
+        </section>
+      )}
+
+      {deletionRequests.length > 0 && (
+        <section className="mt-10">
+          <p className="eyebrow">{td("eyebrow")}</p>
+          <h2 className="mt-3 text-3xl font-extrabold">
+            {td("title")}
+          </h2>
+          <p className="mt-3 max-w-3xl text-[var(--muted)]">
+            {td("description")}
+          </p>
+          <div className="mt-6 grid gap-5">
+            {deletionRequests.map((request) => (
+              <DeletionRequestReviewCard key={request.id} request={request} />
+            ))}
           </div>
         </section>
       )}

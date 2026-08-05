@@ -6,6 +6,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import SiteFooter from "@/components/site-footer";
+import CookieNotice from "@/components/cookie-notice";
 import StructuredData from "@/components/structured-data";
 import {
   absoluteUrl,
@@ -95,13 +96,14 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={htmlLanguageTags[locale]} data-scroll-behavior="smooth">
-      <body>
+      <body suppressHydrationWarning>
         <StructuredData data={organizationData} />
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
             {children}
             <SiteFooter />
           </div>
+          <CookieNotice />
         </NextIntlClientProvider>
       </body>
     </html>

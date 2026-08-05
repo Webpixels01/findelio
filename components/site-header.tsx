@@ -76,6 +76,9 @@ export default async function SiteHeader() {
           <Link href="/firma-eintragen" className="nav-link">
             {t("registerCompany")}
           </Link>
+          <Link href="/blog" className="nav-link">
+            {t("blog")}
+          </Link>
           {isAuthenticated ? (
             <>
               <Link href="/dashboard" className="nav-link">
@@ -117,6 +120,9 @@ export default async function SiteHeader() {
               </Link>
               <Link href="/firma-eintragen" className="mobile-nav-link">
                 {t("registerCompany")}
+              </Link>
+              <Link href="/blog" className="mobile-nav-link">
+                {t("blog")}
               </Link>
               {isAuthenticated ? (
                 <>
