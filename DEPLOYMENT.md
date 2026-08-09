@@ -92,6 +92,39 @@ Zusätzlich im Browser testen:
 - Admin-Prüfbereich
 - Zahlungsabschluss und Live-Webhook
 
+## Homeserver mit vorhandenem Nginx Proxy Manager
+
+Wenn auf dem Zielsystem bereits Nginx Proxy Manager und ein Cloudflare Tunnel
+laufen, darf der Caddy-Service aus der Basis-Compose nicht zusätzlich auf den
+Ports 80 und 443 gestartet werden. Für diesen Fall liegt das Overlay
+`compose.production.external-proxy.yaml` bereit.
+
+In `.env.production` bleibt dafür diese Einstellung erhalten:
+
+```dotenv
+COMPOSE_OVERLAY_FILE=compose.production.external-proxy.yaml
+```
+
+Das Overlay verbindet `app` und `directus` mit dem bereits vorhandenen externen
+Docker-Netzwerk `nginx-proxy_default`. PostgreSQL und Redis bleiben weiterhin
+ausschliesslich im internen Backend-Netzwerk. Das Netzwerk muss vor dem ersten
+Start existieren:
+
+```bash
+docker network inspect nginx-proxy_default
+```
+
+Im Nginx Proxy Manager werden danach zwei Proxy Hosts angelegt:
+
+- `findelio.ch` und `www.findelio.ch` → Hostname `app`, Port `3000`, Schema `http`
+- `cms.findelio.ch` → Hostname `directus`, Port `8055`, Schema `http`
+
+Der Cloudflare Tunnel verwendet für diese Hostnamen denselben internen
+Nginx-Zielweg wie die bereits laufenden Websites. Erst wenn beide Proxy Hosts
+intern mit HTTP 200 antworten, werden die öffentlichen Hostnamen im Tunnel und
+die DNS-Einträge aktiviert. Findelio selbst veröffentlicht in dieser Variante
+keine zusätzlichen Host-Ports.
+
 ## Absenderlogo in Mailübersichten (BIMI)
 
 Das quadratische Findelio-Absenderlogo liegt als SVG Tiny PS unter `public/bimi-logo.svg`. Nach dem Deployment muss es öffentlich und ohne Anmeldung unter `https://findelio.ch/bimi-logo.svg` erreichbar sein.
