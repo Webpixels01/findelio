@@ -512,6 +512,7 @@
       "imageCurrent": "Obecny obraz zostanie zachowany",
       "editTitle": "Edytuj wpis",
       "editPublishedHint": "Dotychczasowy wpis pozostanie widoczny. Zmiany zostaną ponownie sprawdzone przed publikacją.",
+      "editArchivedHint": "Ten wpis nie jest widoczny publicznie. Możesz zapisać go jako wersję roboczą lub ponownie przesłać do sprawdzenia.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -532,12 +533,19 @@
       "cancel": "Anuluj",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Archiwizuj",
       "edit": "Edytuj",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "Wpis został zarchiwizowany. Nie jest już widoczny publicznie i pozostaje zapisany w panelu.",
+      "archivedHint": "Niewidoczny publicznie. Możesz edytować wpis i później ponownie przesłać go do sprawdzenia.",
+      "archiveDialogEyebrow": "Archiwizuj wpis",
+      "archiveDialogTitle": "Zarchiwizować „{title}”?",
+      "archiveConfirm": "Wpis zostanie natychmiast usunięty z publicznego profilu firmy. Pozostanie zapisany tutaj w panelu i będzie można go później edytować oraz ponownie przesłać do sprawdzenia.",
+      "archiveKeep": "Zachowaj wpis",
+      "archiving": "Archiwizowanie …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "Nie udało się zarchiwizować wpisu."
       }
     },
     "statistics": {

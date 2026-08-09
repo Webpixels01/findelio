@@ -96,6 +96,59 @@ summary { user-select: none; }
   transition: border-color 180ms ease, color 180ms ease;
 }
 .secondary-button:hover { border-color: var(--accent); color: var(--accent); }
+.danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2a6a6;
+  border-radius: 0.75rem;
+  background: white;
+  color: #9d1c1c;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+.danger-button:hover {
+  border-color: #c96e6e;
+  background: #fff0f0;
+  color: #7f1717;
+  transform: translateY(-1px);
+}
+.danger-button:focus-visible {
+  outline: 3px solid rgb(169 35 35 / 20%);
+  outline-offset: 2px;
+}
+.danger-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+.danger-button-solid {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #a92323;
+  border-radius: 0.75rem;
+  background: #a92323;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.danger-button-solid:hover {
+  border-color: #7f1717;
+  background: #7f1717;
+  transform: translateY(-1px);
+}
+.danger-button-solid:focus-visible {
+  outline: 3px solid rgb(169 35 35 / 22%);
+  outline-offset: 2px;
+}
+.danger-button-solid:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
 
 .page-shell { min-height: calc(100vh - 80px); }
 .eyebrow {
@@ -196,6 +249,8 @@ summary { user-select: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .primary-button,
+  .danger-button,
+  .danger-button-solid,
   .nav-link,
   .mobile-nav-link,
   .field-control {

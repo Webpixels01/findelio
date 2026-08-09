@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:webpack": "next dev --webpack",
-    "build": "next build",
+    "build": "npm run check:email-logo && next build",
+    "check:email-logo": "node scripts/check-email-logo.mjs",
     "start": "next start",
     "lint": "eslint"
   },

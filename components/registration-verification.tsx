@@ -31,8 +31,6 @@ export default function RegistrationVerification({
 
     window.history.replaceState({}, "", window.location.pathname);
 
-    const controller = new AbortController();
-
     async function verifyRegistration() {
       try {
         const response = await fetch("/api/auth/verify-registration", {
@@ -41,7 +39,6 @@ export default function RegistrationVerification({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ token, invitationToken, locale }),
-          signal: controller.signal,
         });
 
         const result = (await response.json()) as {
@@ -56,18 +53,15 @@ export default function RegistrationVerification({
         }
 
         setState(response.ok && result.success ? "success" : "error");
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
-          return;
-        }
-
+      } catch {
         setState("error");
       }
     }
 
+    // The verification token is single-use. React replays effects in
+    // development, so keep the first request alive while `started` prevents a
+    // duplicate submission.
     void verifyRegistration();
-
-    return () => controller.abort();
   }, [invitationToken, locale, router, token]);
 
   if (state === "loading") {

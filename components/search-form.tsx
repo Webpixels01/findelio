@@ -36,8 +36,8 @@ export default async function SearchForm({
       method="get"
       className={
         compact
-          ? "grid gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 md:grid-cols-2 xl:grid-cols-5"
-          : "mx-auto mt-12 grid max-w-6xl gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-2xl shadow-[#001734]/8 md:grid-cols-2 xl:grid-cols-5"
+          ? "grid gap-5 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 md:grid-cols-2 xl:grid-cols-5"
+          : "mx-auto mt-12 grid max-w-6xl gap-5 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-2xl shadow-[#001734]/8 md:grid-cols-2 xl:grid-cols-5"
       }
     >
       <label className="field-group">

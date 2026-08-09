@@ -512,6 +512,7 @@
       "imageCurrent": "A imagem atual será mantida",
       "editTitle": "Editar publicação",
       "editPublishedHint": "A publicação atual continuará visível. As alterações serão novamente revistas antes da publicação.",
+      "editArchivedHint": "Esta publicação não está visível publicamente. Pode guardá-la como rascunho ou voltar a enviá-la para revisão.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -532,12 +533,19 @@
       "cancel": "Cancelar",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Arquivar",
       "edit": "Editar",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "A publicação foi arquivada. Já não está visível publicamente e continua guardada no painel.",
+      "archivedHint": "Não está visível publicamente. Pode editar a publicação e voltar a enviá-la para revisão mais tarde.",
+      "archiveDialogEyebrow": "Arquivar publicação",
+      "archiveDialogTitle": "Arquivar «{title}»?",
+      "archiveConfirm": "A publicação será removida imediatamente do perfil público da empresa. Continuará guardada aqui no painel e poderá ser editada e novamente enviada para revisão mais tarde.",
+      "archiveKeep": "Manter publicação",
+      "archiving": "A arquivar …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "Não foi possível arquivar a publicação."
       }
     },
     "statistics": {

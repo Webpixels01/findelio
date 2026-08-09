@@ -252,7 +252,7 @@ export default function TeamManager({ organizations }: TeamManagerProps) {
                             {member.can_remove && (
                               <button
                                 type="button"
-                                className="inline-flex h-10 items-center justify-center rounded-xl border border-[#e7b0b0] px-3 font-bold text-[#9d1c1c] transition hover:bg-[#fff4f4]"
+                                className="danger-button h-10 px-3 text-sm"
                                 onClick={() =>
                                   setConfirmation({
                                     type: "member",
@@ -359,7 +359,7 @@ export default function TeamManager({ organizations }: TeamManagerProps) {
                             {canInvite && (
                               <button
                                 type="button"
-                                className="mt-2 text-sm font-extrabold text-[#9d1c1c]"
+                                className="danger-button mt-3 min-h-10 px-3 text-sm"
                                 onClick={() =>
                                   setConfirmation({
                                     type: "invitation",
@@ -430,7 +430,7 @@ export default function TeamManager({ organizations }: TeamManagerProps) {
               </button>
               <button
                 type="button"
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-[#a92323] px-5 font-extrabold text-white transition hover:bg-[#7f1717] disabled:opacity-60"
+                className="danger-button-solid h-11 px-5"
                 onClick={confirmAction}
                 disabled={Boolean(busyKey)}
               >

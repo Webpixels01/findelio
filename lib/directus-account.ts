@@ -569,6 +569,9 @@ async function getListingsForOrganizations(
           _in: organizationIds,
         },
       },
+      status: {
+        _neq: "archived",
+      },
     }),
   );
 
@@ -645,7 +648,10 @@ export async function getEditableAccountListing(
     response,
   );
 
-  if (!activeOrganizationIds.has(rawListing.organization?.id)) {
+  if (
+    rawListing.status === "archived" ||
+    !activeOrganizationIds.has(rawListing.organization?.id)
+  ) {
     return null;
   }
 

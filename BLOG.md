@@ -28,6 +28,12 @@ Die Datei [`content/blog-import-de-ch.json`](content/blog-import-de-ch.json) ent
 
 Die drei Artikel sind in der lokalen Directus-Umgebung bereits importiert und veröffentlicht. Die JSON-Datei bleibt als reproduzierbare Importvorlage für eine andere Umgebung erhalten. Dort in Directus die Sammlung **Blogbeiträge** öffnen, **Importieren/Exportieren** wählen und die Datei importieren. Neue Importe werden nicht automatisch veröffentlicht. Titelbilder müssen separat in die Directus-Dateiverwaltung hochgeladen und beim jeweiligen Artikel ausgewählt werden. Das Bildfeld verwendet automatisch den Ordner **Public**, damit ein veröffentlichtes Titelbild auch auf der öffentlichen Website geladen werden kann.
 
+Die Datei [`content/blog-import-translations.json`](content/blog-import-translations.json) ergänzt die bereits vorhandenen deutschen Beiträge um 24 Entwürfe: je drei Artikel auf Englisch, Slowakisch, Tschechisch, Ungarisch, Polnisch, Russisch, Portugiesisch und Rumänisch. Sie kann direkt in die Sammlung **Blogbeiträge** importiert werden, ohne deutsche Duplikate anzulegen. Titel, URL-Kennung, Zusammenfassung, Artikeltext, Kategorie, Autor, Bildbeschreibung und SEO-Angaben sind für jede Sprache lokalisiert.
+
+Die Übersetzungen verwenden die bestehenden Directus-Datei-IDs der drei deutschen Titelbilder. Das funktioniert unmittelbar in der aktuellen Umgebung und nach der geplanten vollständigen Datenübernahme auf den Server. Bei einem Import in eine davon unabhängige Directus-Installation müssen die Bilder zuerst mit denselben IDs übernommen oder die Werte in `cover_image` vor dem Import auf `null` gesetzt werden.
+
+Nach dem Import bleiben alle 24 Sprachfassungen im Status **Entwurf**. Vor der Veröffentlichung empfiehlt sich eine kurze redaktionelle Kontrolle je Sprache; danach können die geprüften Einträge in Directus gesammelt auf **Veröffentlicht** gesetzt werden.
+
 ## Titelbilder
 
 Die drei generierten 16:9-Originale liegen zusätzlich unter `public/blog/` und sind in Directus den passenden Beiträgen inklusive Bildbeschreibung zugeordnet:
@@ -43,6 +49,8 @@ Die Bildserie verwendet eine gemeinsame ruhige, redaktionelle Bildsprache in Dun
 Jede Sprachfassung ist ein eigener Beitrag. Dadurch können Titel, URL-Kennung, Inhalt und Suchmaschinenangaben natürlich für die jeweilige Sprache formuliert werden. Beim Import muss das Feld `locale` einen dieser Werte enthalten:
 
 `de-ch`, `en`, `sk`, `cs`, `hu`, `pl`, `ru`, `pt-pt` oder `ro`.
+
+Künftige Beiträge können weiterhin ausschliesslich auf Deutsch veröffentlicht werden. Die übrigen Spracharchive behalten dann diese drei grundlegenden Ratgeberartikel, während neue deutsche Inhalte nur unter `de-ch` erscheinen.
 
 ## SEO-Kurzcheck vor der Veröffentlichung
 

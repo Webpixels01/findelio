@@ -512,6 +512,7 @@
       "imageCurrent": "A jelenlegi kép megmarad",
       "editTitle": "Bejegyzés szerkesztése",
       "editPublishedHint": "A jelenlegi bejegyzés látható marad. A módosításokat közzététel előtt újra ellenőrizzük.",
+      "editArchivedHint": "Ez a bejegyzés nem látható nyilvánosan. Elmentheti piszkozatként, vagy újra beküldheti ellenőrzésre.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -532,12 +533,19 @@
       "cancel": "Mégse",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Archiválás",
       "edit": "Szerkesztés",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "A bejegyzést archiváltuk. Már nem látható nyilvánosan, és továbbra is megmarad az irányítópulton.",
+      "archivedHint": "Nem látható nyilvánosan. A bejegyzést szerkesztheti, és később újra beküldheti ellenőrzésre.",
+      "archiveDialogEyebrow": "Bejegyzés archiválása",
+      "archiveDialogTitle": "Archiválja ezt: „{title}”?",
+      "archiveConfirm": "A bejegyzés azonnal eltűnik a nyilvános cégprofilról. Itt, az irányítópulton továbbra is megmarad, később szerkeszthető és újra beküldhető ellenőrzésre.",
+      "archiveKeep": "Bejegyzés megtartása",
+      "archiving": "Archiválás …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "A bejegyzést nem sikerült archiválni."
       }
     },
     "statistics": {

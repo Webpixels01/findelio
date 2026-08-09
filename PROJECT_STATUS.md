@@ -388,6 +388,7 @@ Am 1. August 2026 umgesetzt:
 - Jeder Premium-Eintrag besitzt im Dashboard eine Statistikseite für 30, 90 oder 365 Tage.
 - Eine neue Directus-Zeitplanerweiterung versendet am ersten Tag jedes Monats einen lokalisierten Bericht für den Vormonat an aktive Organisationsinhaber. Ein Versandprotokoll mit Eindeutigkeitsregel verhindert doppelte Berichte.
 - Beim Einreichen eines Premium-Beitrags zur Prüfung erhält `info@findelio.ch` eine Findelio-Benachrichtigung mit direktem Link zum internen Prüfbereich. Nach Bestätigung oder Ablehnung erhält die einreichende Person eine Kundenmail mit öffentlichem Profillink beziehungsweise Begründung und Bearbeitungslink. Das Textfeld im Prüfbereich dient bei einer Freigabe als freiwillige Nachricht an den Kunden und bei einer Ablehnung als verpflichtende Begründung; der Inhalt wird in beiden Fällen in der E-Mail ausgegeben. Die zuvor ausgebliebenen Nachrichten für den Beitrag von `JAZU Webdesign` wurden erfolgreich nachgesendet.
+- Archivierte Premium-Beiträge verschwinden nur aus dem öffentlichen Firmenprofil. Der jeweils aktuelle Beitragsstand bleibt mit verständlichem Archivhinweis im Firmen-Dashboard sichtbar, kann als Entwurf weiterbearbeitet und später erneut zur administrativen Prüfung eingereicht werden. Ein Bestätigungsdialog erklärt diese Folgen vor der Archivierung; automatisch ersetzte ältere Beitragsversionen bleiben ausgeblendet.
 - Entscheidungsbenachrichtigungen für Eintragsänderungen können über den internen Serverzugang sicher nachgesendet werden. Die Bestätigung zur Spezialbutton-Änderung von `JAZU Webdesign` wurde am 2. August 2026 erneut an die in der Revision hinterlegte Kundenadresse übergeben; Directus bestätigte den Versand mit HTTP 204.
 - Die reproduzierbare Migration `20260801_premium_growth_features.sql` legt Felder, Sammlungen, Beziehungen, Indizes und die minimalen technischen Directus-Rechte an.
 - Die ergänzende Migration `20260802_listing_post_edits.sql` verknüpft neue Prüffassungen mit dem weiterhin veröffentlichten Original; sie wurde lokal erfolgreich angewendet und von Directus geladen.
@@ -423,6 +424,9 @@ Am 3. August 2026 umgesetzt und geprüft:
 
 - Die AGB und die Seite `So funktioniert Findelio für Firmen` sind in allen neun unterstützten Sprachen vorhanden. Beide erklären den Prüfprozess, Free und Premium sowie die optionale Verifizierung anhand offizieller Unternehmensnachweise.
 - Das neue horizontale Findelio-Logo wird im Header und in den Findelio-Mailvorlagen verwendet.
+- Die Logo-Darstellung in den Mailvorlagen verwendet passend zur Quelldatei mit `656 × 196 px` das exakt proportionale Anzeigemass `164 × 49 px`. Identische HTML- und Inline-CSS-Masse verhindern, dass Mailprogramme das Logo durch widersprüchliche Breiten- und Höhenangaben verzerren.
+- `npm run check:email-logo` liest die tatsächlichen PNG-Masse direkt aus der Datei und vergleicht sie mit den HTML- und CSS-Angaben der Mailvorlage. Der Produktions-Build führt diese Prüfung automatisch aus und bricht bei einer künftigen Verzerrung ab.
+- Für die Absenderdarstellung in unterstützten Mailübersichten ist zusätzlich ein quadratisches, BIMI-konformes Findelio-Logo als SVG Tiny PS unter `public/bimi-logo.svg` vorbereitet. SPF und DMARC (`p=reject`) sind für `findelio.ch` bereits öffentlich vorhanden; die Aktivierung benötigt nach dem Deployment noch die Markenzertifizierung und den BIMI-Eintrag im Infomaniak Manager.
 - Der Header besitzt einen eigenen Startseitenlink, eine flackerfreie serverseitige Anmeldeanzeige und einen animierten Wechsel des mobilen Menüsymbols zwischen Hamburger und Schliessen.
 - Öffentliche Seiten und Firmeneinträge können über die Web-Share-Funktion beziehungsweise durch Kopieren des Links geteilt werden.
 - Alle öffentlichen Seiten besitzen Canonical-URLs und Sprachalternativen für neun Sprachen plus `x-default`.
@@ -458,13 +462,16 @@ Am 4. August 2026 umgesetzt und geprüft:
 - Ein aktives Premium-Abo muss vor der Anfrage fristgerecht zur Kündigung vorgemerkt sein. Eine bereits vorgemerkte Kündigung erlaubt die Anfrage, die administrative Archivierung bleibt jedoch bis zum Ende der bezahlten Laufzeit gesperrt.
 - Findelio-Administratoren sehen offene Löschanfragen im bestehenden Prüfbereich mit Organisation, Ziel, anfragender Person, Datum und optionalem Grund. Ablehnungen benötigen eine Begründung.
 - Bei jeder neuen Löschanfrage erhält die konfigurierte Findelio-Administrator-Adresse eine gebrandete E-Mail mit Typ, Organisation, betroffenem Inhalt, anfragender Person, optionalem Grund und einem direkten Link zum Prüfbereich.
+- Die Löschanfragen-Mail bindet das aktuelle horizontale Findelio-PNG wie alle übrigen Findelio-Mailvorlagen per Content-ID ein. Der zuvor fehlende Vorlagenname im zentralen Mail-Hook wurde ergänzt, sodass Mailprogramme nicht mehr nur den Alternativtext anzeigen.
 - Falls die Administrator-Benachrichtigung nicht versendet werden kann, bleibt keine unbemerkte offene Anfrage bestehen: Der neue Datensatz wird sofort zurückgezogen und im Kundendashboard erscheint eine lokalisierte Fehlermeldung mit der Aufforderung, die Anfrage erneut zu senden.
 - Eine bestätigte Eintragsanfrage archiviert den Firmeneintrag sowie noch offene Revisionen und Beiträge. Eine bestätigte Organisationsanfrage archiviert die Organisation und sämtliche zugehörigen Einträge; Datensätze werden nicht physisch gelöscht.
+- Archivierte Firmeneinträge werden aus sämtlichen Firmenkonto-Übersichten und deren Zählern entfernt. Auch ein direkter Aufruf der Bearbeitungs-, Abo-, Beitrags- oder Statistikseite liefert für ein archiviertes Profil keinen Firmenkonto-Zugriff mehr.
 - Firmenkonten besitzen weiterhin keinerlei direkte Lösch- oder Archivierungsrechte. Sämtliche Rollen-, Eigentums-, Status- und Abo-Prüfungen erfolgen bei jeder Aktion erneut in der abgesicherten Directus-Extension.
 - Die reproduzierbare Migration `20260804_deletion_requests.sql` wurde lokal angewendet. Directus lädt `directus-extension-findelio-deletion-requests` fehlerfrei.
 - Ein isolierter End-to-End-Test bestätigte Bearbeiter-Anfrage, Rückzug, Premium-Kündigungspflicht, Sperre während der bezahlten Laufzeit, Admin-Ablehnung, Eintragsarchivierung, reine Inhaberberechtigung für Organisationen und Organisationsarchivierung. Sämtliche temporären Daten wurden danach entfernt.
 - Ein zusätzlicher realer Versandtest wurde vom konfigurierten Mailserver angenommen. Die dafür angelegte, klar als Versandtest bezeichnete Löschanfrage sowie alle übrigen temporären Datensätze wurden anschliessend vollständig entfernt.
 - Desktop- und Mobilansicht sowie der administrative Prüfbereich wurden im Browser geprüft. Die Mobilansicht besitzt keinen horizontalen Überlauf. Sämtliche Texte sind in allen neun unterstützten Sprachen vorhanden.
+- Sämtliche Lösch-, Entfernen-, Rückzugs- und Archivierungsaktionen werden visuell als Buttons dargestellt. Eine gemeinsame barrierearme Gefahren-Buttondarstellung vereinheitlicht Kunden-Dashboard, Teamverwaltung, Premium-Medien, Öffnungszeiten, Social Links, Beiträge und administrative Löschbestätigungen; endgültige Bestätigungen bleiben als rote Vollflächen-Buttons klar hervorgehoben.
 
 ## Cookie-Hinweis und Cookie-Unterseite
 
@@ -502,12 +509,24 @@ Am 5. August 2026 vorbereitet und geprüft:
 - Die ergänzende Migration `20260805_blog_server_access.sql` erlaubt dem technischen Website-Konto ausschliesslich das Lesen veröffentlichter und bereits terminlich freigegebener Artikel. Titelbilder werden im bestehenden öffentlichen Directus-Dateiordner ausgewählt; Entwürfe bleiben für die Website unsichtbar.
 - Die Migration `20260805_blog_status_publication.sql` setzt beim Wechsel auf `Veröffentlicht` automatisch das Veröffentlichungsdatum, sofern kein Termin vorgegeben wurde. Damit genügt der verständliche Statuswechsel für eine sofortige Veröffentlichung; ein zukünftiges Datum bleibt für geplante Beiträge möglich.
 - Drei vollständige deutschsprachige Artikel zu mehrsprachiger Kundschaft, lokaler Online-Sichtbarkeit und vertrauenswürdigen Firmenprofilen wurden aus `content/blog-import-de-ch.json` importiert, mit Veröffentlichungsdaten versehen und veröffentlicht.
+- `content/blog-import-translations.json` ergänzt diese drei Grundlagen als 24 direkt importierbare Entwürfe in den übrigen acht Findelio-Sprachen. Titel, Slugs, Kategorien, Bildalternativen und SEO-Felder sind lokalisiert; die bestehenden Directus-Titelbilder werden wiederverwendet. JSON-Syntax, Schema-Feldlängen, Sprachverteilung und eindeutige URL-Kennungen sind geprüft.
 - Drei zusammengehörige, textfreie 16:9-Titelbilder wurden generiert, im Projekt unter `public/blog/` gesichert, in den öffentlichen Directus-Dateiordner geladen und inklusive beschreibender Bildalternativen den Beiträgen zugeordnet.
 - Die in Directus gepflegten Kategorien sind im Blogarchiv als URL-basierte Filter verfügbar. Kategorien auf Blogkarten und Artikelseiten verlinken direkt zum passenden Filter; neue Kategorien erscheinen automatisch. Auswahlzustand, Tastaturzugänglichkeit und umbrechende Darstellung wurden auf Desktop und Mobilgerät geprüft.
 - Der Rücklink am Artikelende und die Links `Artikel lesen` in Übersicht, Archiv sowie verwandten Beiträgen unterstreichen nur noch den eigentlichen Linktext. Die Pfeile bleiben bewusst ohne Unterstreichung, wodurch die zuvor sichtbaren Linienunterbrüche entfallen. Unterstreichung und Farbwechsel verhalten sich im Normal- und Hoverzustand auf allen Blogflächen identisch.
 - `BLOG.md` beschreibt Erstellung, JSON-Import, Mehrsprachigkeit, Titelbilder, Veröffentlichung und einen kurzen SEO-Qualitätscheck. Importierte Dateien können direkt in Directus bearbeitet werden; Binärbilder werden separat hochgeladen.
 - Markdown wird ohne ausführbares eingebettetes HTML gerendert. Überschriften, Listen, Links, Zitate, Tabellen und Code besitzen eine responsive Findelio-Darstellung.
 - Alle neun Sprachdateien und der JSON-Import sind syntaktisch gültig und besitzen identische Blog-Schlüssel. ESLint, TypeScript, `npm audit` und der vollständige Next.js-Produktionsbuild mit 199 statisch vorbereiteten Seiten sind erfolgreich. Die aktuelle Browserprüfung bestätigt drei veröffentlichte Beiträge, drei öffentlich ladbare Titelbilder, den korrigierten Rücklink sowie eine saubere Darstellung auf Desktop und Mobilgerät.
+
+## Release-Vorbereitung
+
+Am 9. August 2026 abschliessend geprüft:
+
+- Der Einladungsabschluss lässt den einmal gestarteten Bestätigungsaufruf auch während der React-Entwicklungsprüfung weiterlaufen und verhindert gleichzeitig eine doppelte Verwendung des einmaligen Tokens. Der zuvor endlose Ladezustand ist behoben.
+- Die Suchfelder besitzen auf Startseite und Firmenverzeichnis einen etwas grösseren, einheitlichen Abstand. Desktop- und Mobilansicht wurden im Browser kontrolliert.
+- Zwei neu gemeldete Sicherheitsprobleme in indirekten Build-Abhängigkeiten wurden durch reine Patch-Updates von `js-yaml` und `nanoid` geschlossen. `npm audit` meldet keine bekannten Schwachstellen.
+- ESLint, TypeScript, JSON- und Übersetzungsdateien, Directus-Erweiterungen, Shell-Skripte, Produktions-Compose-Auflösung, Next.js-Produktionsbuild mit 199 Seiten und das vollständige Produktions-Docker-Image sind erfolgreich geprüft.
+- Ein aktuelles lokales PostgreSQL- und Directus-Upload-Backup für den ersten Serverumzug wurde mit SHA-256-Prüfsummen erstellt. Datenbank-Dump und Upload-Archiv sind lesbar; das Backup bleibt ausserhalb von Git.
+- Für die Liveschaltung fehlen noch die konkrete Server-IP samt SSH-Zugang, die DNS-Zuweisung der drei Webdomains und die Stripe-Livewerte.
 
 ## Git- und Arbeitsstand
 

@@ -583,6 +583,7 @@
       "imageCurrent": "Aktuelles Bild wird beibehalten",
       "editTitle": "Beitrag bearbeiten",
       "editPublishedHint": "Der bisherige Beitrag bleibt sichtbar. Die Änderungen werden vor der Veröffentlichung erneut geprüft.",
+      "editArchivedHint": "Dieser Beitrag ist nicht öffentlich sichtbar. Du kannst ihn als Entwurf speichern oder erneut zur Prüfung einreichen.",
       "startsAt": "Beginn",
       "endsAt": "Ende",
       "buttonLabel": "Button-Beschriftung",
@@ -605,10 +606,17 @@
       "empty": "Noch keine Beiträge vorhanden.",
       "archive": "Archivieren",
       "edit": "Bearbeiten",
-      "archiveConfirm": "Möchtest du diesen Beitrag wirklich archivieren?",
+      "archivedNotice": "Der Beitrag wurde archiviert. Er ist nicht mehr öffentlich sichtbar und bleibt im Dashboard gespeichert.",
+      "archivedHint": "Nicht öffentlich sichtbar. Du kannst den Beitrag bearbeiten und später erneut zur Prüfung einreichen.",
+      "archiveDialogEyebrow": "Beitrag archivieren",
+      "archiveDialogTitle": "„{title}“ archivieren?",
+      "archiveConfirm": "Der Beitrag wird sofort aus dem öffentlichen Firmenprofil entfernt. Er bleibt hier im Dashboard gespeichert und kann später bearbeitet und erneut zur Prüfung eingereicht werden.",
+      "archiveKeep": "Beitrag behalten",
+      "archiving": "Wird archiviert …",
       "errors": {
         "upload": "Das Bild konnte nicht hochgeladen werden.",
-        "save": "Der Beitrag konnte nicht gespeichert werden."
+        "save": "Der Beitrag konnte nicht gespeichert werden.",
+        "archive": "Der Beitrag konnte nicht archiviert werden."
       }
     },
     "statistics": {

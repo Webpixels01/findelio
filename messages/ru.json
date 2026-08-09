@@ -512,6 +512,7 @@
       "imageCurrent": "Текущее изображение будет сохранено",
       "editTitle": "Редактировать публикацию",
       "editPublishedHint": "Текущая публикация останется видимой. Изменения будут повторно проверены перед публикацией.",
+      "editArchivedHint": "Эта публикация не видна публично. Её можно сохранить как черновик или снова отправить на проверку.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -532,12 +533,19 @@
       "cancel": "Отмена",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Архивировать",
       "edit": "Редактировать",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "Публикация архивирована. Она больше не видна публично и остаётся сохранённой в панели управления.",
+      "archivedHint": "Не видна публично. Публикацию можно изменить и позже снова отправить на проверку.",
+      "archiveDialogEyebrow": "Архивировать публикацию",
+      "archiveDialogTitle": "Архивировать «{title}»?",
+      "archiveConfirm": "Публикация сразу исчезнет из публичного профиля компании. Она останется сохранённой здесь, в панели управления, и её можно будет позже изменить и снова отправить на проверку.",
+      "archiveKeep": "Оставить публикацию",
+      "archiving": "Архивирование …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "Не удалось архивировать публикацию."
       }
     },
     "statistics": {

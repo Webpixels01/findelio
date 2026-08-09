@@ -562,6 +562,7 @@
       "imageCurrent": "The current image will be kept",
       "editTitle": "Edit post",
       "editPublishedHint": "The current post remains visible. The changes will be reviewed again before publication.",
+      "editArchivedHint": "This post is not publicly visible. You can save it as a draft or submit it for review again.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -584,10 +585,17 @@
       "empty": "No posts yet.",
       "archive": "Archive",
       "edit": "Edit",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "The post was archived. It is no longer publicly visible and remains saved in the dashboard.",
+      "archivedHint": "Not publicly visible. You can edit the post and submit it for review again later.",
+      "archiveDialogEyebrow": "Archive post",
+      "archiveDialogTitle": "Archive “{title}”?",
+      "archiveConfirm": "The post will be removed from the public business profile immediately. It will remain saved here in the dashboard and can be edited and submitted for review again later.",
+      "archiveKeep": "Keep post",
+      "archiving": "Archiving …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "The post could not be archived."
       }
     },
     "statistics": {

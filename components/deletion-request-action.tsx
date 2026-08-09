@@ -112,7 +112,7 @@ export default function DeletionRequestAction({
         {request.can_cancel && (
           <button
             type="button"
-            className="mt-3 text-sm font-extrabold text-[#8d241f] underline decoration-1 underline-offset-4 disabled:opacity-50"
+            className="danger-button mt-3 min-h-10 px-3 text-sm"
             onClick={withdrawRequest}
             disabled={busy}
           >
@@ -155,7 +155,7 @@ export default function DeletionRequestAction({
     <>
       <button
         type="button"
-        className="mt-5 text-sm font-extrabold text-[#9d1c1c] underline decoration-1 underline-offset-4"
+        className="danger-button mt-5 min-h-11 px-4 text-sm"
         onClick={() => {
           setError("");
           setDialogOpen(true);
@@ -231,7 +231,7 @@ export default function DeletionRequestAction({
               </button>
               <button
                 type="button"
-                className="inline-flex h-11 items-center justify-center rounded-xl bg-[#a92323] px-5 font-extrabold text-white transition hover:bg-[#7f1717] disabled:opacity-60"
+                className="danger-button-solid h-11 px-5"
                 onClick={submitRequest}
                 disabled={busy}
               >

@@ -388,7 +388,7 @@ const ListingPremiumFields = forwardRef<
             {(logo || logoFile) && (
               <button
                 type="button"
-                className="rounded-xl border border-[#e2a6a6] px-4 py-2.5 font-bold text-[#9d1c1c]"
+                className="danger-button min-h-11 px-4"
                 onClick={() => setPendingImageRemoval({ type: "logo" })}
               >
                 {t("remove")}
@@ -428,7 +428,7 @@ const ListingPremiumFields = forwardRef<
                       imageId: image.id,
                     })
                   }
-                  className="absolute right-2 top-2 rounded-lg bg-white/95 px-3 py-1.5 text-xs font-extrabold text-[#9d1c1c] shadow"
+                  className="danger-button absolute right-2 top-2 min-h-10 bg-white/95 px-3 text-xs shadow"
                 >
                   {t("remove")}
                 </button>
@@ -448,7 +448,7 @@ const ListingPremiumFields = forwardRef<
                       index,
                     })
                   }
-                  className="mt-3 text-sm font-extrabold text-[#9d1c1c]"
+                  className="danger-button mt-3 min-h-10 px-3 text-sm"
                 >
                   {t("remove")}
                 </button>
@@ -558,7 +558,7 @@ const ListingPremiumFields = forwardRef<
                               ),
                             )
                           }
-                          className="px-2 py-2 text-sm font-extrabold text-[#9d1c1c]"
+                          className="danger-button min-h-10 px-3 text-sm"
                         >
                           {t("remove")}
                         </button>
@@ -647,7 +647,7 @@ const ListingPremiumFields = forwardRef<
                     current.filter((_, itemIndex) => itemIndex !== index),
                   )
                 }
-                className="px-3 py-2 font-extrabold text-[#9d1c1c]"
+                className="danger-button min-h-11 px-4"
               >
                 {t("remove")}
               </button>
@@ -747,7 +747,7 @@ const ListingPremiumFields = forwardRef<
               </button>
               <button
                 type="button"
-                className="h-11 rounded-xl bg-[#b42318] px-5 font-extrabold text-white transition hover:bg-[#8f1c13]"
+                className="danger-button-solid h-11 px-5"
                 onClick={confirmImageRemoval}
               >
                 {t("removeDialog.confirm")}

@@ -516,6 +516,7 @@
       "imageCurrent": "Aktuální obrázek zůstane zachován",
       "editTitle": "Upravit příspěvek",
       "editPublishedHint": "Dosavadní příspěvek zůstane viditelný. Změny budou před zveřejněním znovu zkontrolovány.",
+      "editArchivedHint": "Tento příspěvek není veřejně viditelný. Můžete ho uložit jako koncept nebo znovu odeslat ke kontrole.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -536,12 +537,19 @@
       "cancel": "Zrušit",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Archivovat",
       "edit": "Upravit",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "Příspěvek byl archivován. Již není veřejně viditelný a zůstává uložený na nástěnce.",
+      "archivedHint": "Není veřejně viditelný. Příspěvek můžete upravit a později ho znovu odeslat ke kontrole.",
+      "archiveDialogEyebrow": "Archivovat příspěvek",
+      "archiveDialogTitle": "Archivovat „{title}“?",
+      "archiveConfirm": "Příspěvek bude okamžitě odstraněn z veřejného firemního profilu. Zůstane uložený zde na nástěnce a později ho můžete upravit a znovu odeslat ke kontrole.",
+      "archiveKeep": "Ponechat příspěvek",
+      "archiving": "Archivuje se …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "Příspěvek se nepodařilo archivovat."
       }
     },
     "statistics": {

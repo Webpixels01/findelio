@@ -24,17 +24,17 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
   const [notice, setNotice] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<AccountListingPost | null>(null);
+  const [archiveCandidate, setArchiveCandidate] = useState<AccountListingPost | null>(null);
+  const [archiveError, setArchiveError] = useState<string | null>(null);
+  const [archiveNotice, setArchiveNotice] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const imageInputId = `listing-post-image-${listingId}`;
-  const activelyReplacedPostIds = new Set(
+  const replacedPostIds = new Set(
     posts
-      .filter((post) => post.status !== "archived")
       .map((post) => relationId(post.replaces_post))
       .filter((postId): postId is string => Boolean(postId)),
   );
-  const visiblePosts = posts.filter(
-    (post) => post.status !== "archived" && !activelyReplacedPostIds.has(post.id),
-  );
+  const visiblePosts = posts.filter((post) => !replacedPostIds.has(post.id));
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -75,16 +75,32 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
     router.refresh();
   }
 
-  async function archive(postId: string) {
-    if (!window.confirm(t("archiveConfirm"))) return;
+  async function archive() {
+    if (!archiveCandidate) return;
     setBusy(true);
-    await fetch(`/api/account/listings/${listingId}/posts/${postId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "archive" }),
-    });
-    setBusy(false);
-    router.refresh();
+    setArchiveError(null);
+    setArchiveNotice(null);
+    try {
+      const response = await fetch(
+        `/api/account/listings/${listingId}/posts/${archiveCandidate.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "archive" }),
+        },
+      );
+      if (!response.ok) {
+        setArchiveError(t("errors.archive"));
+        return;
+      }
+      setArchiveCandidate(null);
+      setArchiveNotice(t("archivedNotice"));
+      router.refresh();
+    } catch {
+      setArchiveError(t("errors.archive"));
+    } finally {
+      setBusy(false);
+    }
   }
 
   function edit(post: AccountListingPost) {
@@ -107,6 +123,11 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
         {editingPost?.status === "published" && (
           <p className="mt-4 rounded-xl border border-[#b9daf8] bg-[#eef7ff] p-4 text-sm font-semibold text-[#174f82]">
             {t("editPublishedHint")}
+          </p>
+        )}
+        {editingPost?.status === "archived" && (
+          <p className="mt-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 text-sm font-semibold text-[var(--muted)]">
+            {t("editArchivedHint")}
           </p>
         )}
         <div className="mt-6 grid gap-5">
@@ -142,7 +163,7 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
           </div>
           <div className="grid gap-4 sm:grid-cols-2"><label className="field-group"><span className="field-label">{t("startsAt")}</span><input name="starts_at" type="datetime-local" className="field-control" defaultValue={toDateTimeLocal(editingPost?.starts_at ?? null)} /></label><label className="field-group"><span className="field-label">{t("endsAt")}</span><input name="ends_at" type="datetime-local" className="field-control" defaultValue={toDateTimeLocal(editingPost?.ends_at ?? null)} /></label></div>
           <div className="grid gap-4 sm:grid-cols-2"><label className="field-group"><span className="field-label">{t("buttonLabel")}</span><input name="cta_label" className="field-control" maxLength={80} defaultValue={editingPost?.cta_label ?? ""} /></label><label className="field-group"><span className="field-label">{t("buttonUrl")}</span><input name="cta_url" className="field-control" placeholder="https://" maxLength={500} defaultValue={editingPost?.cta_url ?? ""} /></label></div>
-          <label className="field-group"><span className="field-label">{t("status")}</span><select name="status" className="field-control" defaultValue={editingPost?.status === "draft" ? "draft" : editingPost ? "pending" : "draft"}><option value="draft">{t("statuses.draft")}</option><option value="pending">{t("statuses.pending")}</option></select></label>
+          <label className="field-group"><span className="field-label">{t("status")}</span><select name="status" className="field-control" defaultValue={editingPost?.status === "draft" || editingPost?.status === "archived" ? "draft" : editingPost ? "pending" : "draft"}><option value="draft">{t("statuses.draft")}</option><option value="pending">{t("statuses.pending")}</option></select></label>
         </div>
         {notice && <p className="mt-5 rounded-xl bg-[var(--surface)] p-4 font-bold">{notice}</p>}
         <div className="mt-6 flex flex-wrap gap-3">
@@ -153,14 +174,58 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
 
       <section className="space-y-4">
         <h2 className="text-2xl font-extrabold">{t("existingTitle")}</h2>
+        {archiveNotice && (
+          <p role="status" className="rounded-xl border border-[#bfe4ca] bg-[#eefaf2] p-4 text-sm font-bold text-[#135f30]">
+            {archiveNotice}
+          </p>
+        )}
         {visiblePosts.length === 0 ? <p className="rounded-3xl bg-white p-6 text-[var(--muted)]">{t("empty")}</p> : visiblePosts.map((post) => (
-          <article key={post.id} className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5">
+          <article key={post.id} className={`rounded-3xl border border-[var(--border)] p-6 shadow-lg shadow-[#001734]/5 ${post.status === "archived" ? "bg-[var(--surface)]" : "bg-white"}`}>
             <div className="flex items-start justify-between gap-3"><div><p className="text-xs font-extrabold uppercase tracking-wide text-[var(--accent)]">{t(`types.${post.type}`)}</p><h3 className="mt-2 text-xl font-extrabold">{post.title}</h3></div><span className="rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold">{t(`statuses.${post.status}`)}</span></div>
             {post.rejection_reason && <p className="mt-3 rounded-xl bg-[#fff0f0] p-3 text-sm text-[#9d1c1c]">{post.rejection_reason}</p>}
-            {post.status !== "archived" && <div className="mt-5 flex flex-wrap gap-3"><button type="button" disabled={busy} onClick={() => edit(post)} className="inline-flex min-h-10 items-center justify-center rounded-xl border border-[var(--accent)] bg-white px-4 py-2 text-center text-sm font-extrabold text-[var(--accent)] transition hover:bg-[#eef7ff] disabled:cursor-not-allowed disabled:opacity-60">{t("edit")}</button><button type="button" disabled={busy} onClick={() => archive(post.id)} className="inline-flex min-h-10 items-center justify-center rounded-xl border border-[#d99090] bg-white px-4 py-2 text-center text-sm font-extrabold text-[#9d1c1c] transition hover:bg-[#fff0f0] disabled:cursor-not-allowed disabled:opacity-60">{t("archive")}</button></div>}
+            {post.status === "archived" && <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{t("archivedHint")}</p>}
+            <div className="mt-5 flex flex-wrap gap-3"><button type="button" disabled={busy} onClick={() => edit(post)} className="inline-flex min-h-10 items-center justify-center rounded-xl border border-[var(--accent)] bg-white px-4 py-2 text-center text-sm font-extrabold text-[var(--accent)] transition hover:bg-[#eef7ff] disabled:cursor-not-allowed disabled:opacity-60">{t("edit")}</button>{post.status !== "archived" && <button type="button" disabled={busy} onClick={() => { setArchiveError(null); setArchiveCandidate(post); }} className="danger-button min-h-10 px-4 text-sm">{t("archive")}</button>}</div>
           </article>
         ))}
       </section>
+
+      {archiveCandidate && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#001734]/65 p-4"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget && !busy) setArchiveCandidate(null);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Escape" && !busy) setArchiveCandidate(null);
+          }}
+        >
+          <section
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby={`archive-post-title-${archiveCandidate.id}`}
+            aria-describedby={`archive-post-description-${archiveCandidate.id}`}
+            className="w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl sm:p-7"
+          >
+            <p className="eyebrow">{t("archiveDialogEyebrow")}</p>
+            <h2 id={`archive-post-title-${archiveCandidate.id}`} className="mt-2 text-2xl font-extrabold">
+              {t("archiveDialogTitle", { title: archiveCandidate.title })}
+            </h2>
+            <p id={`archive-post-description-${archiveCandidate.id}`} className="mt-3 leading-7 text-[var(--muted)]">
+              {t("archiveConfirm")}
+            </p>
+            {archiveError && <p role="alert" className="mt-4 rounded-xl bg-[#fff0f0] px-4 py-3 text-sm font-bold text-[#9d1c1c]">{archiveError}</p>}
+            <div className="mt-6 flex flex-wrap justify-end gap-3">
+              <button type="button" className="secondary-button h-11 px-5" onClick={() => setArchiveCandidate(null)} disabled={busy} autoFocus>
+                {t("archiveKeep")}
+              </button>
+              <button type="button" className="danger-button-solid h-11 px-5" onClick={archive} disabled={busy}>
+                {busy ? t("archiving") : t("archive")}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

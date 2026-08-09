@@ -512,6 +512,7 @@
       "imageCurrent": "Imaginea actuală va fi păstrată",
       "editTitle": "Editează postarea",
       "editPublishedHint": "Postarea actuală rămâne vizibilă. Modificările vor fi verificate din nou înainte de publicare.",
+      "editArchivedHint": "Această postare nu este vizibilă public. O poți salva ca schiță sau o poți trimite din nou pentru verificare.",
       "startsAt": "Starts",
       "endsAt": "Ends",
       "buttonLabel": "Button label",
@@ -532,12 +533,19 @@
       "cancel": "Anulează",
       "existingTitle": "Existing posts",
       "empty": "No posts yet.",
-      "archive": "Archive",
+      "archive": "Arhivează",
       "edit": "Editează",
-      "archiveConfirm": "Do you really want to archive this post?",
+      "archivedNotice": "Postarea a fost arhivată. Nu mai este vizibilă public și rămâne salvată în panoul de administrare.",
+      "archivedHint": "Nu este vizibilă public. Poți edita postarea și o poți trimite din nou pentru verificare mai târziu.",
+      "archiveDialogEyebrow": "Arhivează postarea",
+      "archiveDialogTitle": "Arhivezi „{title}”?",
+      "archiveConfirm": "Postarea va fi eliminată imediat din profilul public al firmei. Va rămâne salvată aici, în panoul de administrare, și va putea fi editată și trimisă din nou pentru verificare mai târziu.",
+      "archiveKeep": "Păstrează postarea",
+      "archiving": "Se arhivează …",
       "errors": {
         "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved."
+        "save": "The post could not be saved.",
+        "archive": "Postarea nu a putut fi arhivată."
       }
     },
     "statistics": {

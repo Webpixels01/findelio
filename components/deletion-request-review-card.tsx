@@ -129,7 +129,7 @@ export default function DeletionRequestReviewCard({
       <div className="mt-5 flex flex-wrap gap-3">
         <button
           type="button"
-          className="primary-button h-11 px-5 disabled:cursor-not-allowed disabled:opacity-50"
+          className="danger-button-solid h-11 px-5"
           disabled={busy !== null || !request.can_approve}
           onClick={() => decide("approve")}
         >

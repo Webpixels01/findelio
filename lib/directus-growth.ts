@@ -122,7 +122,7 @@ export async function updateAccountListingPost(
   const posts = await getAccountListingPosts(accessToken, listingId);
   const current = posts.find((post) => post.id === postId);
 
-  if (!current || current.status === "archived") {
+  if (!current) {
     throw new DirectusAccountError("Nicht gefunden.", 404, "NOT_FOUND");
   }
 

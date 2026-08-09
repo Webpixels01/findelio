@@ -92,6 +92,20 @@ Zusätzlich im Browser testen:
 - Admin-Prüfbereich
 - Zahlungsabschluss und Live-Webhook
 
+## Absenderlogo in Mailübersichten (BIMI)
+
+Das quadratische Findelio-Absenderlogo liegt als SVG Tiny PS unter `public/bimi-logo.svg`. Nach dem Deployment muss es öffentlich und ohne Anmeldung unter `https://findelio.ch/bimi-logo.svg` erreichbar sein.
+
+Die Aktivierung erfolgt einmalig im Infomaniak Manager:
+
+1. **Service Mail → Globale Sicherheit** öffnen und prüfen, dass SPF, DKIM und DMARC grün sind.
+2. Im Bereich **BIMI** auf **Erstellen** klicken.
+3. Das Findelio-Logo sowie das von einer anerkannten Zertifizierungsstelle ausgestellte VMC beziehungsweise die von Infomaniak akzeptierte Markenzertifizierung hinterlegen.
+4. Den von Infomaniak erzeugten BIMI-DNS-Eintrag speichern.
+5. Nach der DNS-Verbreitung kontrollieren, dass `default._bimi.findelio.ch` einen gültigen TXT-Eintrag liefert und eine neue Mail von `info@findelio.ch` testen.
+
+Der vorgesehene Logo-Verweis lautet `https://findelio.ch/bimi-logo.svg`. Mailanbieter entscheiden selbst, ob und wann sie das Logo anzeigen; ältere, bereits empfangene Nachrichten werden dadurch nicht nachträglich verändert.
+
 ## Spätere Aktualisierungen
 
 Auf dem Entwicklungsrechner werden Änderungen getestet, committed und auf den freigegebenen Git-Branch übertragen. Auf dem Server:
