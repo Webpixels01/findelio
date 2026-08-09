@@ -32,6 +32,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     authors: [{ name: "Findelio", url: getSiteUrl() }],
     creator: "Findelio",
     publisher: "Findelio",
+    icons: {
+      icon: [
+        { url: "/favicon.ico", type: "image/x-icon" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+      ],
+      shortcut: ["/favicon.ico"],
+      apple: "/favicon.svg",
+    },
     formatDetection: {
       email: false,
       address: false,
