@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
+  const faviconVersion = "d70b58d";
 
   return {
     metadataBase: new URL(getSiteUrl()),
@@ -34,11 +35,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     publisher: "Findelio",
     icons: {
       icon: [
-        { url: "/favicon.ico", type: "image/x-icon" },
-        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: `/favicon.ico?v=${faviconVersion}`, type: "image/x-icon" },
+        { url: `/favicon.svg?v=${faviconVersion}`, type: "image/svg+xml" },
       ],
-      shortcut: ["/favicon.ico"],
-      apple: "/favicon.svg",
+      shortcut: [`/favicon.ico?v=${faviconVersion}`],
+      apple: `/favicon.svg?v=${faviconVersion}`,
     },
     formatDetection: {
       email: false,
