@@ -64,6 +64,16 @@ Der grundsätzliche Ablauf ist:
 7. Einen eigenen Directus-Servicebenutzer beziehungsweise ein eigenes statisches Produktionstoken setzen und `.env.production` aktualisieren.
 8. Erst danach `bash ops/deploy.sh` ausführen.
 
+Die geprüften Dateien werden mit dem einmaligen Hilfsskript importiert. Es
+startet zunächst nur Datenbank und Redis und bricht ab, wenn Datenbank oder
+Upload-Volume nicht leer sind:
+
+```bash
+BACKUP_DIR=/opt/findelio/backups/prelaunch-<zeitstempel> \
+  bash ops/restore-initial-data.sh
+bash ops/deploy.sh
+```
+
 Das in `.env.production.example` gesetzte `MIGRATION_BASELINE` markiert beim ersten Deployment die bereits im übernommenen Datenbestand vorhandenen Migrationen. Der Vorgang wird abgebrochen, falls die erwartete Tabelle `deletion_requests` fehlt. Dadurch kann die Baseline nicht versehentlich auf eine leere Datenbank angewendet werden.
 
 ## 3. Erstes Deployment
