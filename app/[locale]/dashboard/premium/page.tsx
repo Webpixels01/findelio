@@ -28,7 +28,7 @@ export default async function PremiumAdminPage({
     redirect(`/${locale}/dashboard`);
   }
 
-  const listings = await getAdminPremiumListings();
+  const listings = await getAdminPremiumListings(accessToken);
 
   return (
     <>

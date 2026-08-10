@@ -118,7 +118,9 @@ export async function getActivePremiumGrant(
   );
 }
 
-export async function getAdminPremiumListings(): Promise<AdminPremiumListing[]> {
+export async function getAdminPremiumListings(
+  listingAccessToken?: string,
+): Promise<AdminPremiumListing[]> {
   const [listings, grants] = await Promise.all([
     (async () => {
       const url = new URL("/items/listings", getDirectusUrl());
@@ -126,7 +128,9 @@ export async function getAdminPremiumListings(): Promise<AdminPremiumListing[]> 
       url.searchParams.set("limit", "-1");
       url.searchParams.set("sort", "organization.name,name");
       const response = await fetch(url, {
-        headers: getServerHeaders(),
+        headers: listingAccessToken
+          ? { Authorization: `Bearer ${listingAccessToken}` }
+          : getServerHeaders(),
         cache: "no-store",
       });
       return read<Array<Omit<AdminPremiumListing, "grants">>>(response);

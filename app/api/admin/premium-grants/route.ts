@@ -92,7 +92,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const listings = await getAdminPremiumListings();
+    const listings = await getAdminPremiumListings(auth.token);
     const listing = listings.find((item) => item.id === listingId);
     if (!listing || listing.status === "archived") {
       return NextResponse.json({ error: "not_found" }, { status: 404 });
