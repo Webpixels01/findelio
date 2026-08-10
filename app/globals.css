@@ -11,6 +11,7 @@
   --surface: #f4f8fc;
   --border: #dce6f0;
   --muted: #52657b;
+  --control-height: 3rem;
   --spacing: 0.2rem;
 }
 
@@ -55,7 +56,7 @@ summary { user-select: none; }
 .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
 .field-label { font-size: 0.875rem; font-weight: 700; }
 .field-control {
-  height: 3rem;
+  height: var(--control-height);
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
@@ -84,6 +85,7 @@ summary { user-select: none; }
   transition: background 180ms ease, transform 180ms ease;
 }
 .primary-button:hover { background: var(--foreground); transform: translateY(-1px); }
+.search-submit { height: var(--control-height); }
 .secondary-button {
   display: inline-flex;
   align-items: center;
