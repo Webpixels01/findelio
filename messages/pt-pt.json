@@ -66,6 +66,7 @@
     "email": "E-mail",
     "phone": "Telefone",
     "address": "Morada",
+    "openInGoogleMaps": "Abrir morada no Google Maps",
     "languages": "Línguas faladas",
     "industry": "Setor",
     "verified": "Empresa verificada",

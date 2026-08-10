@@ -485,7 +485,15 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 font-semibold">
-                          {visibleAddress}
+                          <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(visibleAddress)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`${visibleAddress} – ${t("openInGoogleMaps")}`}
+                            className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                          >
+                            {visibleAddress} <span aria-hidden="true">↗</span>
+                          </a>
                         </dd>
                       </div>
                     )}

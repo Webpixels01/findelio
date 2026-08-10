@@ -66,6 +66,7 @@
     "email": "Эл. почта",
     "phone": "Телефон",
     "address": "Адрес",
+    "openInGoogleMaps": "Открыть адрес в Google Картах",
     "languages": "Языки общения",
     "industry": "Отрасль",
     "verified": "Проверенная компания",

@@ -66,6 +66,7 @@
     "email": "Email",
     "phone": "Phone",
     "address": "Address",
+    "openInGoogleMaps": "Open address in Google Maps",
     "languages": "Spoken languages",
     "industry": "Industry",
     "verified": "Verified business",

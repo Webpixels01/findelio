@@ -66,6 +66,7 @@
     "email": "E-mail",
     "phone": "Telefon",
     "address": "Cím",
+    "openInGoogleMaps": "Cím megnyitása a Google Térképen",
     "languages": "Beszélt nyelvek",
     "industry": "Ágazat",
     "verified": "Ellenőrzött vállalkozás",
