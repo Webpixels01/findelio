@@ -47,8 +47,8 @@ site_domain=$(sed -n 's/^SITE_DOMAIN=//p' "$ENV_FILE" | tail -n 1 | tr -d '\r')
 cms_domain=$(sed -n 's/^CMS_DOMAIN=//p' "$ENV_FILE" | tail -n 1 | tr -d '\r')
 
 case "$site_domain$cms_domain" in
-  *://*|*/*|*' '*)
-    echo "SITE_DOMAIN und CMS_DOMAIN müssen reine Domainnamen ohne https://, Pfad oder Leerzeichen sein." >&2
+  *://*|*/*|*:*|*' '*|*localhost*|*0.0.0.0*)
+    echo "SITE_DOMAIN und CMS_DOMAIN müssen öffentliche Domainnamen ohne Protokoll, Port, Pfad, localhost oder 0.0.0.0 sein." >&2
     exit 1
     ;;
 esac
