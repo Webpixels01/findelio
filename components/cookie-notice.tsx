@@ -3,8 +3,11 @@
 import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import {
+  COOKIE_NOTICE_STORAGE_KEY,
+  setAnalyticsConsent,
+} from "@/components/google-analytics";
 
-const STORAGE_KEY = "findelio_cookie_notice_v1";
 const STORAGE_DURATION = 1000 * 60 * 60 * 24 * 365;
 const STORAGE_EVENT = "findelio-cookie-notice-change";
 let acknowledgedInMemory = false;
@@ -23,7 +26,9 @@ function getSnapshot() {
   if (acknowledgedInMemory) return false;
 
   try {
-    const acknowledgedAt = Number(window.localStorage.getItem(STORAGE_KEY));
+    const acknowledgedAt = Number(
+      window.localStorage.getItem(COOKIE_NOTICE_STORAGE_KEY),
+    );
     return !(
       Number.isFinite(acknowledgedAt) &&
       Date.now() - acknowledgedAt < STORAGE_DURATION
@@ -45,11 +50,15 @@ export default function CookieNotice() {
     getServerSnapshot,
   );
 
-  function acknowledge() {
+  function acknowledge(analytics: boolean) {
     acknowledgedInMemory = true;
+    setAnalyticsConsent(analytics ? "granted" : "denied");
 
     try {
-      window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
+      window.localStorage.setItem(
+        COOKIE_NOTICE_STORAGE_KEY,
+        String(Date.now()),
+      );
     } catch {
       // The notice can still be closed for the current page view.
     }
@@ -76,13 +85,20 @@ export default function CookieNotice() {
       >
         {t("description")}
       </p>
-      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <button
           type="button"
           className="primary-button min-h-11 px-5"
-          onClick={acknowledge}
+          onClick={() => acknowledge(true)}
         >
-          {t("acknowledge")}
+          {t("allowAnalytics")}
+        </button>
+        <button
+          type="button"
+          className="secondary-button min-h-11 px-5"
+          onClick={() => acknowledge(false)}
+        >
+          {t("necessaryOnly")}
         </button>
         <Link
           href="/cookies"

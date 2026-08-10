@@ -67,6 +67,10 @@ export default async function CookiePage({ params }: CookiePageProps) {
               <p>{t("necessaryText")}</p>
             </CookieSection>
 
+            <CookieSection title={t("analyticsTitle")}>
+              <p>{t("analyticsText")}</p>
+            </CookieSection>
+
             <CookieSection title={t("inventoryTitle")}>
               <p>{t("inventoryText")}</p>
               <div className="mt-6 grid gap-4">
@@ -101,12 +105,16 @@ export default async function CookiePage({ params }: CookiePageProps) {
               <p>{t("storageText")}</p>
               <dl className="mt-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
                 <dt className="break-all font-mono text-sm font-bold text-[var(--foreground)] sm:text-base">
-                  findelio_cookie_notice_v1
+                  findelio_cookie_notice_v2
                 </dt>
                 <dd className="mt-3">{t("storagePurpose")}</dd>
                 <dd className="mt-2 text-sm font-bold text-[var(--foreground)]">
                   {t("storageDuration")}
                 </dd>
+                <dt className="mt-6 break-all font-mono text-sm font-bold text-[var(--foreground)] sm:text-base">
+                  findelio_analytics_consent_v1
+                </dt>
+                <dd className="mt-3">{t("storagePurpose")}</dd>
               </dl>
             </CookieSection>
 

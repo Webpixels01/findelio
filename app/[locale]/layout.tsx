@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import SiteFooter from "@/components/site-footer";
 import CookieNotice from "@/components/cookie-notice";
+import GoogleAnalytics from "@/components/google-analytics";
 import StructuredData from "@/components/structured-data";
 import {
   absoluteUrl,
@@ -105,6 +106,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <html lang={htmlLanguageTags[locale]} data-scroll-behavior="smooth">
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body suppressHydrationWarning>
         <StructuredData data={organizationData} />
         <NextIntlClientProvider messages={messages}>
