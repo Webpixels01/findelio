@@ -47,7 +47,7 @@ export default async function ListingBillingPage({
     return notFound();
   }
 
-  const { listing, subscription, premiumEnabled } = billingData;
+  const { listing, subscription, premiumGrant, premiumEnabled } = billingData;
   const initialInterval = normalizeInterval(
     query.interval ??
       subscription?.billing_interval ??
@@ -179,6 +179,7 @@ export default async function ListingBillingPage({
               listingId={listing.id}
               locale={locale}
               premiumEnabled={false}
+              premiumGrant={Boolean(premiumGrant)}
               initialInterval={initialInterval}
             />
           )}
@@ -223,6 +224,20 @@ export default async function ListingBillingPage({
                 </div>
               )}
             </dl>
+          ) : premiumGrant ? (
+            <div className="mt-6 rounded-2xl border border-[#bfe4ca] bg-[#eefaf2] p-4 text-[var(--muted)]">
+              <p className="font-extrabold text-[#135f30]">{t("status.grantedTitle")}</p>
+              <p className="mt-2">{t("status.grantedDescription")}</p>
+              {premiumGrant.ends_at && (
+                <p className="mt-2 font-extrabold text-[#135f30]">
+                  {t("status.grantedUntil", {
+                    date: new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
+                      new Date(premiumGrant.ends_at),
+                    ),
+                  })}
+                </p>
+              )}
+            </div>
           ) : (
             <p className="mt-5 text-[var(--muted)]">{t("status.freeHint")}</p>
           )}
@@ -232,6 +247,7 @@ export default async function ListingBillingPage({
               listingId={listing.id}
               locale={locale}
               premiumEnabled
+              premiumGrant={Boolean(premiumGrant)}
               initialInterval={initialInterval}
             />
           )}

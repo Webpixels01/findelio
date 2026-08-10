@@ -197,7 +197,8 @@
       "organizations": "Organizações",
       "listings": "Registos empresariais",
       "team": "Equipa",
-      "review": "Revisão"
+      "review": "Revisão",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organizações",
@@ -214,6 +215,7 @@
       "editListing": "Editar",
       "createListing": "Novo registo empresarial",
       "manageSubscription": "Gerir subscrição",
+      "premiumGranted": "Acesso Premium",
       "choosePlan": "Escolher plano",
       "completeBeforeBilling": "Primeiro, completa e envia para revisão.",
       "billingAfterApproval": "Subscrição após a aprovação."
@@ -834,6 +836,9 @@
       "nextRenewal": "Próxima renovação",
       "accessUntil": "Acesso Premium até",
       "freeHint": "Este registo empresarial utiliza atualmente o plano gratuito.",
+      "grantedTitle": "Acesso Premium gratuito",
+      "grantedDescription": "O Findelio concedeu acesso Premium a este registo sem pagamento.",
+      "grantedUntil": "Acesso concedido até {date}",
       "values": {
         "pending": "Pendente",
         "active": "Ativa",
@@ -846,6 +851,7 @@
       "subscribe": "Subscrever Premium",
       "openingCheckout": "A abrir pagamento seguro …",
       "manage": "Gerir subscrição e método de pagamento",
+      "grantHint": "O Findelio concedeu o Premium gratuitamente. Não existe uma subscrição paga para gerir.",
       "openingPortal": "A abrir portal do cliente …",
       "portalHint": "A gestão da subscrição abre num novo separador. O Findelio permanece aberto."
     },
@@ -968,6 +974,34 @@
       "approve": "Confirmar arquivamento",
       "reject": "Rejeitar pedido"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Acesso Premium gratuito",
+    "title": "Conceder acesso Premium",
+    "description": "Conceda Premium a registos empresariais selecionados sem pagamento. Cada concessão fica registada com motivo e data final opcional.",
+    "grantTitle": "Conceder Premium",
+    "grantDescription": "O acesso começa imediatamente. Sem data final, permanece ativo até ser revogado.",
+    "listingLabel": "Registo empresarial",
+    "listingPlaceholder": "Selecionar registo",
+    "unknownOrganization": "Organização desconhecida",
+    "reasonLabel": "Motivo interno",
+    "unlimitedLabel": "Sem data final",
+    "endsAtLabel": "Data final",
+    "grantButton": "Conceder Premium",
+    "saving": "A guardar …",
+    "overviewTitle": "Concessões",
+    "overviewDescription": "As concessões ativas podem ser revogadas a qualquer momento. As subscrições pagas permanecem separadas.",
+    "active": "Ativo",
+    "notActive": "Inativo",
+    "noActiveGrant": "Sem concessão Premium gratuita.",
+    "unlimited": "Sem limite",
+    "revokeButton": "Revogar",
+    "revokeConfirm": "Revogar esta concessão Premium gratuita?",
+    "invalid_data": "Preencha corretamente todos os campos obrigatórios.",
+    "invalid_end_date": "A data final tem de ser no futuro.",
+    "already_active": "O Premium já está ativo neste registo.",
+    "save_failed": "Não foi possível guardar a concessão.",
+    "network": "Não foi possível ligar ao servidor."
   },
   "VerifyRegistration": {
     "loadingTitle": "A confirmar o endereço de e-mail",

@@ -197,7 +197,8 @@
       "organizations": "Szervezetek",
       "listings": "Cégbejegyzések",
       "team": "Csapat",
-      "review": "Ellenőrzés"
+      "review": "Ellenőrzés",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Szervezetek",
@@ -214,6 +215,7 @@
       "editListing": "Szerkesztés",
       "createListing": "Új cégbejegyzés",
       "manageSubscription": "Előfizetés kezelése",
+      "premiumGranted": "Premium hozzáférés",
       "choosePlan": "Csomag választása",
       "completeBeforeBilling": "Először fejezd be, majd küldd ellenőrzésre.",
       "billingAfterApproval": "Előfizetés a jóváhagyás után."
@@ -834,6 +836,9 @@
       "nextRenewal": "Következő megújítás",
       "accessUntil": "Premium hozzáférés eddig",
       "freeHint": "Ez a cégbejegyzés jelenleg az ingyenes csomagot használja.",
+      "grantedTitle": "Ingyenes Premium hozzáférés",
+      "grantedDescription": "A Findelio fizetés nélkül Premium hozzáférést adott ehhez a bejegyzéshez.",
+      "grantedUntil": "Hozzáférés eddig: {date}",
       "values": {
         "pending": "Függőben",
         "active": "Aktív",
@@ -846,6 +851,7 @@
       "subscribe": "Premium előfizetés",
       "openingCheckout": "Biztonságos fizetés megnyitása …",
       "manage": "Előfizetés és fizetési mód kezelése",
+      "grantHint": "A Findelio ingyenesen adta a Premiumot. Nincs kezelendő fizetős előfizetés.",
       "openingPortal": "Ügyfélportál megnyitása …",
       "portalHint": "Az előfizetés kezelése új lapon nyílik meg. A Findelio nyitva marad."
     },
@@ -968,6 +974,34 @@
       "approve": "Archiválás jóváhagyása",
       "reject": "Kérelem elutasítása"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Ingyenes Premium hozzáférés",
+    "title": "Premium hozzáférés adása",
+    "description": "Adjon Premiumot kiválasztott cégbejegyzésekhez fizetés nélkül. Minden engedély indokkal és opcionális lejárattal kerül naplózásra.",
+    "grantTitle": "Premium adása",
+    "grantDescription": "A hozzáférés azonnal indul. Lejárat nélkül visszavonásig aktív.",
+    "listingLabel": "Cégbejegyzés",
+    "listingPlaceholder": "Válasszon bejegyzést",
+    "unknownOrganization": "Ismeretlen szervezet",
+    "reasonLabel": "Belső indok",
+    "unlimitedLabel": "Nincs lejárat",
+    "endsAtLabel": "Lejárat",
+    "grantButton": "Premium adása",
+    "saving": "Mentés …",
+    "overviewTitle": "Engedélyek",
+    "overviewDescription": "Az aktív engedélyek bármikor visszavonhatók. A fizetős előfizetések ettől külön maradnak.",
+    "active": "Aktív",
+    "notActive": "Nem aktív",
+    "noActiveGrant": "Nincs ingyenes Premium engedély.",
+    "unlimited": "Korlátlan",
+    "revokeButton": "Visszavonás",
+    "revokeConfirm": "Visszavonja ezt az ingyenes Premium engedélyt?",
+    "invalid_data": "Töltse ki helyesen a kötelező mezőket.",
+    "invalid_end_date": "A lejáratnak a jövőben kell lennie.",
+    "already_active": "A Premium ehhez a bejegyzéshez már aktív.",
+    "save_failed": "Az engedély mentése sikertelen.",
+    "network": "A kapcsolat a szerverrel sikertelen."
   },
   "VerifyRegistration": {
     "loadingTitle": "E-mail-cím megerősítése",

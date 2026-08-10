@@ -1,5 +1,6 @@
 import "server-only";
 import type { AppLocale } from "@/i18n/routing";
+import { getActivePremiumGrantListingIds } from "@/lib/directus-premium";
 
 function getDirectusUrl(): string {
   const directusUrl = process.env.DIRECTUS_URL?.trim();
@@ -499,6 +500,7 @@ export async function getListings(
     industryNames,
     spokenLanguageNames,
     premiumListingIds,
+    premiumGrantListingIds,
   ] =
     await Promise.all([
       fetch(url, {
@@ -508,6 +510,7 @@ export async function getListings(
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
       getActivePremiumListingIds(),
+      getActivePremiumGrantListingIds(),
     ]);
 
   if (!response.ok) {
@@ -519,7 +522,9 @@ export async function getListings(
   const result = (await response.json()) as DirectusResponse<Listing[]>;
 
   const localizedListings = result.data.map((listing) => {
-    const premiumEnabled = premiumListingIds.has(listing.id);
+    const premiumEnabled =
+      premiumListingIds.has(listing.id) ||
+      premiumGrantListingIds.has(listing.id);
 
     return localizeListing(
       {
@@ -623,6 +628,7 @@ export async function getListingBySlug(
     industryNames,
     spokenLanguageNames,
     premiumListingIds,
+    premiumGrantListingIds,
   ] =
     await Promise.all([
       fetch(url, {
@@ -632,6 +638,7 @@ export async function getListingBySlug(
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
       getActivePremiumListingIds(),
+      getActivePremiumGrantListingIds(),
     ]);
 
   if (!response.ok) {
@@ -649,7 +656,8 @@ export async function getListingBySlug(
     return null;
   }
 
-  const premiumEnabled = premiumListingIds.has(listing.id);
+  const premiumEnabled =
+    premiumListingIds.has(listing.id) || premiumGrantListingIds.has(listing.id);
   const gallery = premiumEnabled
     ? await getPublicListingGallery(listing.id)
     : [];

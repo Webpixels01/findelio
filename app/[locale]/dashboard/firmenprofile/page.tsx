@@ -139,7 +139,7 @@ export default async function ListingsPage({
                     {t("listingsPage.editListing")}
                   </Link>
 
-                  {listing.subscription && ["active", "past_due"].includes(listing.subscription.status) && (
+                  {((listing.subscription && ["active", "past_due"].includes(listing.subscription.status)) || listing.premiumGrant) && (
                     <>
                       <Link href={`/dashboard/firmenprofile/${listing.id}/beitraege`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("posts.manage")}</Link>
                       <Link href={`/dashboard/firmenprofile/${listing.id}/statistik`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("statistics.link")}</Link>
@@ -154,7 +154,9 @@ export default async function ListingsPage({
                     >
                       {listing.subscription
                         ? t("listingsPage.manageSubscription")
-                        : t("listingsPage.choosePlan")}
+                        : listing.premiumGrant
+                          ? t("listingsPage.premiumGranted")
+                          : t("listingsPage.choosePlan")}
                     </Link>
                   ) : (
                     <p className="text-sm font-semibold text-[var(--muted)]">

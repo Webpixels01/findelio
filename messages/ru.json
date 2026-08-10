@@ -197,7 +197,8 @@
       "organizations": "Организации",
       "listings": "Карточки компаний",
       "team": "Команда",
-      "review": "Проверка"
+      "review": "Проверка",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Организации",
@@ -214,6 +215,7 @@
       "editListing": "Редактировать",
       "createListing": "Новая карточка компании",
       "manageSubscription": "Управлять подпиской",
+      "premiumGranted": "Доступ Premium",
       "choosePlan": "Выбрать тариф",
       "completeBeforeBilling": "Сначала заполните и отправьте на проверку.",
       "billingAfterApproval": "Подписка после одобрения."
@@ -834,6 +836,9 @@
       "nextRenewal": "Следующее продление",
       "accessUntil": "Доступ Premium до",
       "freeHint": "Эта карточка компании сейчас использует бесплатный тариф.",
+      "grantedTitle": "Бесплатный доступ Premium",
+      "grantedDescription": "Findelio предоставил этой карточке доступ Premium без оплаты.",
+      "grantedUntil": "Доступ предоставлен до {date}",
       "values": {
         "pending": "Ожидает",
         "active": "Активна",
@@ -846,6 +851,7 @@
       "subscribe": "Подписаться на Premium",
       "openingCheckout": "Открывается защищённая оплата …",
       "manage": "Управлять подпиской и способом оплаты",
+      "grantHint": "Findelio предоставил Premium бесплатно. Платной подпиской управлять не нужно.",
       "openingPortal": "Открывается клиентский портал …",
       "portalHint": "Управление подпиской откроется в новой вкладке. Findelio останется открытым."
     },
@@ -968,6 +974,34 @@
       "approve": "Подтвердить архивацию",
       "reject": "Отклонить запрос"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Бесплатный доступ Premium",
+    "title": "Предоставить доступ Premium",
+    "description": "Предоставляйте выбранным карточкам компаний Premium без оплаты. Каждое предоставление записывается с причиной и необязательной датой окончания.",
+    "grantTitle": "Предоставить Premium",
+    "grantDescription": "Доступ начинается сразу. Без даты окончания он действует до отзыва.",
+    "listingLabel": "Карточка компании",
+    "listingPlaceholder": "Выберите карточку",
+    "unknownOrganization": "Неизвестная организация",
+    "reasonLabel": "Внутренняя причина",
+    "unlimitedLabel": "Без даты окончания",
+    "endsAtLabel": "Дата окончания",
+    "grantButton": "Предоставить Premium",
+    "saving": "Сохранение …",
+    "overviewTitle": "Предоставления",
+    "overviewDescription": "Активный доступ можно отозвать в любой момент. Платные подписки остаются отдельными.",
+    "active": "Активен",
+    "notActive": "Неактивен",
+    "noActiveGrant": "Бесплатный Premium не предоставлен.",
+    "unlimited": "Без ограничений",
+    "revokeButton": "Отозвать",
+    "revokeConfirm": "Отозвать бесплатный Premium?",
+    "invalid_data": "Заполните все обязательные поля корректно.",
+    "invalid_end_date": "Дата окончания должна быть в будущем.",
+    "already_active": "Premium уже активен для этой карточки.",
+    "save_failed": "Не удалось сохранить предоставление.",
+    "network": "Не удалось подключиться к серверу."
   },
   "VerifyRegistration": {
     "loadingTitle": "Подтверждение электронной почты",

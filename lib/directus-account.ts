@@ -1,6 +1,12 @@
 import "server-only";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { sendListingReviewNotification } from "@/lib/mail";
+import {
+  getActivePremiumGrant,
+  getPremiumGrants,
+  isPremiumGrantActive,
+  type PremiumGrant,
+} from "@/lib/directus-premium";
 
 export type AccountOrganization = {
   id: string;
@@ -46,6 +52,7 @@ export type AccountSubscription = {
 
 export type AccountListingOverview = AccountListing & {
   subscription: AccountSubscription | null;
+  premiumGrant: PremiumGrant | null;
 };
 
 export type EditableAccountListing = AccountListing & {
@@ -193,6 +200,7 @@ export type AccountOrganizationOverview = AccountMembership & {
 export type AccountListingBillingData = {
   listing: EditableAccountListing;
   subscription: AccountSubscription | null;
+  premiumGrant: PremiumGrant | null;
   premiumEnabled: boolean;
 };
 
@@ -414,7 +422,11 @@ async function hasPremiumEditingAccess(
     return true;
   }
 
-  return hasActivePremiumSubscription(accessToken, listing.id);
+  if (await hasActivePremiumSubscription(accessToken, listing.id)) {
+    return true;
+  }
+
+  return Boolean(await getActivePremiumGrant(listing.id));
 }
 
 function subscriptionListingId(
@@ -500,13 +512,15 @@ export async function getAccountListingBillingData(
       (item) => subscriptionListingId(item) === listing.id,
     ),
   );
+  const premiumGrant = await getActivePremiumGrant(listing.id);
 
   return {
     listing,
     subscription,
-    premiumEnabled: subscription
-      ? isActivePremiumSubscription(subscription)
-      : false,
+    premiumGrant,
+    premiumEnabled:
+      (subscription ? isActivePremiumSubscription(subscription) : false) ||
+      Boolean(premiumGrant),
   };
 }
 
@@ -2150,6 +2164,12 @@ export async function getAccountOrganizationOverview(
     accessToken,
     organizationIds,
   );
+  let premiumGrants: PremiumGrant[] = [];
+  try {
+    premiumGrants = (await getPremiumGrants()).filter(isPremiumGrantActive);
+  } catch (error) {
+    console.warn("Premium-Freischaltungen konnten nicht geladen werden:", error);
+  }
 
   return uniqueMemberships.map((membership) => ({
     ...membership,
@@ -2165,6 +2185,13 @@ export async function getAccountOrganizationOverview(
               subscriptionListingId(subscription) === listing.id,
           ),
         ),
+        premiumGrant:
+          premiumGrants.find(
+            (grant) =>
+              (typeof grant.listing === "string"
+                ? grant.listing
+                : grant.listing.id) === listing.id,
+          ) ?? null,
       })),
   }));
 }

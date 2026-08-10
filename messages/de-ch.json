@@ -197,7 +197,8 @@
       "organizations": "Organisationen",
       "listings": "Firmeneinträge",
       "team": "Team",
-      "review": "Prüfbereich"
+      "review": "Prüfbereich",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organisationen",
@@ -214,6 +215,7 @@
       "editListing": "Bearbeiten",
       "createListing": "Neuer Firmeneintrag",
       "manageSubscription": "Abo verwalten",
+      "premiumGranted": "Premium-Freischaltung",
       "choosePlan": "Paket wählen",
       "completeBeforeBilling": "Zuerst vervollständigen und zur Prüfung einreichen.",
       "billingAfterApproval": "Abo-Abschluss nach der Freigabe."
@@ -904,6 +906,9 @@
       "nextRenewal": "Nächste Verlängerung",
       "accessUntil": "Premium-Zugang bis",
       "freeHint": "Dieser Firmeneintrag nutzt aktuell das kostenlose Paket.",
+      "grantedTitle": "Kostenlose Premium-Freischaltung",
+      "grantedDescription": "Findelio hat Premium für diesen Firmeneintrag administrativ freigeschaltet. Es wird keine Zahlung ausgelöst.",
+      "grantedUntil": "Freigeschaltet bis {date}",
       "values": {
         "pending": "Ausstehend",
         "active": "Aktiv",
@@ -916,6 +921,7 @@
       "subscribe": "Premium abonnieren",
       "openingCheckout": "Sichere Zahlung wird geöffnet …",
       "manage": "Abo und Zahlungsmittel verwalten",
+      "grantHint": "Premium wurde kostenlos durch Findelio freigeschaltet. Es gibt kein bezahltes Abo zu verwalten.",
       "openingPortal": "Kundenportal wird geöffnet …",
       "portalHint": "Die Aboverwaltung öffnet sich in einem neuen Tab. Findelio bleibt geöffnet."
     },
@@ -1040,6 +1046,34 @@
       "approve": "Archivierung bestätigen",
       "reject": "Anfrage ablehnen"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Kostenlose Premium-Freischaltungen",
+    "title": "Premium administrativ gewähren",
+    "description": "Gewähre ausgewählten Firmeneinträgen Premium ohne Stripe-Zahlung. Jede Freischaltung wird mit Grund und optionalem Enddatum protokolliert.",
+    "grantTitle": "Premium freischalten",
+    "grantDescription": "Die Freischaltung gilt sofort. Ohne Enddatum bleibt sie aktiv, bis du sie widerrufst.",
+    "listingLabel": "Firmeneintrag",
+    "listingPlaceholder": "Firmeneintrag auswählen",
+    "unknownOrganization": "Unbekannte Organisation",
+    "reasonLabel": "Interner Grund",
+    "unlimitedLabel": "Ohne Enddatum",
+    "endsAtLabel": "Enddatum",
+    "grantButton": "Premium gewähren",
+    "saving": "Wird gespeichert …",
+    "overviewTitle": "Freischaltungen",
+    "overviewDescription": "Aktive Freischaltungen können jederzeit widerrufen werden. Bezahlte Abos bleiben davon getrennt.",
+    "active": "Aktiv",
+    "notActive": "Nicht aktiv",
+    "noActiveGrant": "Keine kostenlose Premium-Freischaltung.",
+    "unlimited": "Unbefristet",
+    "revokeButton": "Widerrufen",
+    "revokeConfirm": "Kostenlose Premium-Freischaltung wirklich widerrufen?",
+    "invalid_data": "Bitte fülle alle Pflichtfelder korrekt aus.",
+    "invalid_end_date": "Das Enddatum muss in der Zukunft liegen.",
+    "already_active": "Für diesen Firmeneintrag ist Premium bereits aktiv.",
+    "save_failed": "Die Freischaltung konnte nicht gespeichert werden.",
+    "network": "Die Verbindung zum Server ist fehlgeschlagen."
   },
   "VerifyRegistration": {
     "loadingTitle": "E-Mail-Adresse wird bestätigt",

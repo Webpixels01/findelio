@@ -197,7 +197,8 @@
       "organizations": "Organizații",
       "listings": "Listări de firmă",
       "team": "Echipă",
-      "review": "Verificare"
+      "review": "Verificare",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organizații",
@@ -214,6 +215,7 @@
       "editListing": "Editează",
       "createListing": "Listare nouă de firmă",
       "manageSubscription": "Gestionează abonamentul",
+      "premiumGranted": "Acces Premium",
       "choosePlan": "Alege pachetul",
       "completeBeforeBilling": "Mai întâi completează și trimite pentru verificare.",
       "billingAfterApproval": "Abonament după aprobare."
@@ -834,6 +836,9 @@
       "nextRenewal": "Următoarea reînnoire",
       "accessUntil": "Acces Premium până la",
       "freeHint": "Această listare de firmă folosește în prezent pachetul gratuit.",
+      "grantedTitle": "Acces Premium gratuit",
+      "grantedDescription": "Findelio a acordat acces Premium acestei listări fără plată.",
+      "grantedUntil": "Acces acordat până la {date}",
       "values": {
         "pending": "În așteptare",
         "active": "Activ",
@@ -846,6 +851,7 @@
       "subscribe": "Abonează-te la Premium",
       "openingCheckout": "Se deschide plata securizată …",
       "manage": "Gestionează abonamentul și metoda de plată",
+      "grantHint": "Findelio a acordat Premium gratuit. Nu există un abonament plătit de gestionat.",
       "openingPortal": "Se deschide portalul pentru clienți …",
       "portalHint": "Gestionarea abonamentului se deschide într-o filă nouă. Findelio rămâne deschis."
     },
@@ -968,6 +974,34 @@
       "approve": "Confirmă arhivarea",
       "reject": "Respinge cererea"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Acces Premium gratuit",
+    "title": "Acordă acces Premium",
+    "description": "Acordă Premium listărilor selectate fără plată. Fiecare acordare este înregistrată cu motiv și dată finală opțională.",
+    "grantTitle": "Acordă Premium",
+    "grantDescription": "Accesul începe imediat. Fără dată finală, rămâne activ până la revocare.",
+    "listingLabel": "Listare de firmă",
+    "listingPlaceholder": "Selectează o listare",
+    "unknownOrganization": "Organizație necunoscută",
+    "reasonLabel": "Motiv intern",
+    "unlimitedLabel": "Fără dată finală",
+    "endsAtLabel": "Data finală",
+    "grantButton": "Acordă Premium",
+    "saving": "Se salvează …",
+    "overviewTitle": "Acordări",
+    "overviewDescription": "Acordările active pot fi revocate oricând. Abonamentele plătite rămân separate.",
+    "active": "Activ",
+    "notActive": "Inactiv",
+    "noActiveGrant": "Nicio acordare Premium gratuită.",
+    "unlimited": "Nelimitat",
+    "revokeButton": "Revocă",
+    "revokeConfirm": "Revoci această acordare Premium gratuită?",
+    "invalid_data": "Completează corect toate câmpurile obligatorii.",
+    "invalid_end_date": "Data finală trebuie să fie în viitor.",
+    "already_active": "Premium este deja activ pentru această listare.",
+    "save_failed": "Acordarea nu a putut fi salvată.",
+    "network": "Conexiunea cu serverul a eșuat."
   },
   "VerifyRegistration": {
     "loadingTitle": "Se confirmă adresa de e-mail",

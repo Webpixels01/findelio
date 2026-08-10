@@ -197,7 +197,8 @@
       "organizations": "Organizácie",
       "listings": "Firemné záznamy",
       "team": "Tím",
-      "review": "Kontrola"
+      "review": "Kontrola",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organizácie",
@@ -214,6 +215,7 @@
       "editListing": "Upraviť",
       "createListing": "Nový firemný záznam",
       "manageSubscription": "Spravovať predplatné",
+      "premiumGranted": "Premium prístup",
       "choosePlan": "Vybrať balík",
       "completeBeforeBilling": "Najprv dokončiť a odoslať na kontrolu.",
       "billingAfterApproval": "Predplatné po schválení."
@@ -859,6 +861,9 @@
       "nextRenewal": "Ďalšie obnovenie",
       "accessUntil": "Prístup Premium do",
       "freeHint": "Tento firemný záznam aktuálne používa bezplatný balík.",
+      "grantedTitle": "Bezplatný Premium prístup",
+      "grantedDescription": "Findelio poskytlo tomuto záznamu Premium bez platby.",
+      "grantedUntil": "Prístup do {date}",
       "values": {
         "pending": "Čaká sa",
         "active": "Aktívne",
@@ -871,6 +876,7 @@
       "subscribe": "Predplatiť Premium",
       "openingCheckout": "Otvára sa zabezpečená platba …",
       "manage": "Spravovať predplatné a platobnú metódu",
+      "grantHint": "Findelio poskytlo Premium bezplatne. Nie je potrebné spravovať platené predplatné.",
       "openingPortal": "Otvára sa zákaznícky portál …",
       "portalHint": "Správa predplatného sa otvorí na novej karte. Findelio zostane otvorené."
     },
@@ -993,6 +999,34 @@
       "approve": "Potvrdiť archiváciu",
       "reject": "Zamietnuť žiadosť"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Bezplatný Premium prístup",
+    "title": "Uděliť Premium prístup",
+    "description": "Udeľte vybraným záznamom Premium bez platby. Každé udelenie sa eviduje s dôvodom a voliteľným dátumom ukončenia.",
+    "grantTitle": "Udeliť Premium",
+    "grantDescription": "Prístup začne okamžite. Bez dátumu ukončenia zostane aktívny do odvolania.",
+    "listingLabel": "Firemný záznam",
+    "listingPlaceholder": "Vyberte záznam",
+    "unknownOrganization": "Neznáma organizácia",
+    "reasonLabel": "Interný dôvod",
+    "unlimitedLabel": "Bez dátumu ukončenia",
+    "endsAtLabel": "Dátum ukončenia",
+    "grantButton": "Udeliť Premium",
+    "saving": "Ukladanie …",
+    "overviewTitle": "Udelenia",
+    "overviewDescription": "Aktívne udelenia možno kedykoľvek odvolať. Platené predplatné zostáva oddelené.",
+    "active": "Aktívne",
+    "notActive": "Neaktívne",
+    "noActiveGrant": "Žiadne bezplatné Premium udelenie.",
+    "unlimited": "Neobmedzene",
+    "revokeButton": "Odvolať",
+    "revokeConfirm": "Naozaj odvolať toto bezplatné Premium?",
+    "invalid_data": "Vyplňte správne všetky povinné polia.",
+    "invalid_end_date": "Dátum ukončenia musí byť v budúcnosti.",
+    "already_active": "Premium je pre tento záznam už aktívne.",
+    "save_failed": "Udelenie sa nepodarilo uložiť.",
+    "network": "Spojenie so serverom zlyhalo."
   },
   "VerifyRegistration": {
     "loadingTitle": "Potvrdzujeme e-mailovú adresu",

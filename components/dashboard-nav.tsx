@@ -18,7 +18,11 @@ export default function DashboardNav({
   const t = useTranslations("Dashboard.navigation");
   const pathname = usePathname();
   const visibleItems = canReviewListings
-    ? [...navigationItems, { href: "/dashboard/pruefung", label: "review" } as const]
+    ? [
+        ...navigationItems,
+        { href: "/dashboard/pruefung", label: "review" } as const,
+        { href: "/dashboard/premium", label: "premium" } as const,
+      ]
     : navigationItems;
 
   return (

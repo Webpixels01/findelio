@@ -197,7 +197,8 @@
       "organizations": "Organizacje",
       "listings": "Wpisy firm",
       "team": "Zespół",
-      "review": "Weryfikacja"
+      "review": "Weryfikacja",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organizacje",
@@ -214,6 +215,7 @@
       "editListing": "Edytuj",
       "createListing": "Nowy wpis firmy",
       "manageSubscription": "Zarządzaj subskrypcją",
+      "premiumGranted": "Dostęp Premium",
       "choosePlan": "Wybierz pakiet",
       "completeBeforeBilling": "Najpierw uzupełnij i wyślij do weryfikacji.",
       "billingAfterApproval": "Subskrypcja po zatwierdzeniu."
@@ -834,6 +836,9 @@
       "nextRenewal": "Następne odnowienie",
       "accessUntil": "Dostęp Premium do",
       "freeHint": "Ten wpis firmy korzysta obecnie z bezpłatnego pakietu.",
+      "grantedTitle": "Bezpłatny dostęp Premium",
+      "grantedDescription": "Findelio przyznało temu wpisowi dostęp Premium bez płatności.",
+      "grantedUntil": "Dostęp do {date}",
       "values": {
         "pending": "Oczekuje",
         "active": "Aktywna",
@@ -846,6 +851,7 @@
       "subscribe": "Subskrybuj Premium",
       "openingCheckout": "Otwieranie bezpiecznej płatności …",
       "manage": "Zarządzaj subskrypcją i metodą płatności",
+      "grantHint": "Findelio przyznało Premium bez opłat. Nie ma płatnej subskrypcji do zarządzania.",
       "openingPortal": "Otwieranie portalu klienta …",
       "portalHint": "Zarządzanie subskrypcją otworzy się w nowej karcie. Findelio pozostanie otwarte."
     },
@@ -968,6 +974,34 @@
       "approve": "Potwierdź archiwizację",
       "reject": "Odrzuć wniosek"
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Bezpłatny dostęp Premium",
+    "title": "Przyznaj dostęp Premium",
+    "description": "Przyznaj wybranym wpisom firm dostęp Premium bez płatności. Każde przyznanie jest rejestrowane z powodem i opcjonalną datą końcową.",
+    "grantTitle": "Przyznaj Premium",
+    "grantDescription": "Dostęp zaczyna się natychmiast. Bez daty końcowej pozostaje aktywny do odwołania.",
+    "listingLabel": "Wpis firmy",
+    "listingPlaceholder": "Wybierz wpis",
+    "unknownOrganization": "Nieznana organizacja",
+    "reasonLabel": "Powód wewnętrzny",
+    "unlimitedLabel": "Bez daty końcowej",
+    "endsAtLabel": "Data końcowa",
+    "grantButton": "Przyznaj Premium",
+    "saving": "Zapisywanie …",
+    "overviewTitle": "Przyznania",
+    "overviewDescription": "Aktywne przyznania można w każdej chwili odwołać. Płatne subskrypcje pozostają oddzielne.",
+    "active": "Aktywne",
+    "notActive": "Nieaktywne",
+    "noActiveGrant": "Brak bezpłatnego przyznania Premium.",
+    "unlimited": "Bezterminowo",
+    "revokeButton": "Odwołaj",
+    "revokeConfirm": "Odwołać to bezpłatne przyznanie Premium?",
+    "invalid_data": "Uzupełnij poprawnie wszystkie wymagane pola.",
+    "invalid_end_date": "Data końcowa musi przypadać w przyszłości.",
+    "already_active": "Premium jest już aktywne dla tego wpisu.",
+    "save_failed": "Nie udało się zapisać przyznania.",
+    "network": "Połączenie z serwerem nie powiodło się."
   },
   "VerifyRegistration": {
     "loadingTitle": "Potwierdzanie adresu e-mail",

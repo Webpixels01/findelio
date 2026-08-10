@@ -15,11 +15,13 @@ export default function ListingBillingActions({
   listingId,
   locale,
   premiumEnabled,
+  premiumGrant = false,
   initialInterval,
 }: {
   listingId: string;
   locale: AppLocale;
   premiumEnabled: boolean;
+  premiumGrant?: boolean;
   initialInterval: "monthly" | "yearly";
 }) {
   const t = useTranslations("Billing");
@@ -100,6 +102,14 @@ export default function ListingBillingActions({
   }
 
   if (premiumEnabled) {
+    if (premiumGrant) {
+      return (
+        <p className="mt-6 rounded-2xl border border-[#bfdcff] bg-[#f5faff] p-4 text-sm text-[var(--muted)]">
+          {t("actions.grantHint")}
+        </p>
+      );
+    }
+
     return (
       <div className="mt-6">
         <button

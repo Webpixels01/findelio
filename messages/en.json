@@ -197,7 +197,8 @@
       "organizations": "Organizations",
       "listings": "Business listings",
       "team": "Team",
-      "review": "Review"
+      "review": "Review",
+      "premium": "Premium"
     },
     "summary": {
       "organizations": "Organizations",
@@ -214,6 +215,7 @@
       "editListing": "Edit",
       "createListing": "New business listing",
       "manageSubscription": "Manage subscription",
+      "premiumGranted": "Premium access",
       "choosePlan": "Choose plan",
       "completeBeforeBilling": "Complete it and submit it for review first.",
       "billingAfterApproval": "Subscription available after approval."
@@ -883,6 +885,9 @@
       "nextRenewal": "Next renewal",
       "accessUntil": "Premium access until",
       "freeHint": "This business listing currently uses the free plan.",
+      "grantedTitle": "Complimentary Premium access",
+      "grantedDescription": "Findelio has granted Premium access to this listing. No payment is collected.",
+      "grantedUntil": "Access granted until {date}",
       "values": {
         "pending": "Pending",
         "active": "Active",
@@ -895,6 +900,7 @@
       "subscribe": "Subscribe to Premium",
       "openingCheckout": "Opening secure payment …",
       "manage": "Manage subscription and payment method",
+      "grantHint": "Premium was granted by Findelio at no charge. There is no paid subscription to manage.",
       "openingPortal": "Opening customer portal …",
       "portalHint": "Subscription management opens in a new tab. Findelio stays open."
     },
@@ -912,6 +918,34 @@
       "network": "The connection to the server failed.",
       "unknown": "The subscription action could not be completed."
     }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Complimentary Premium access",
+    "title": "Grant Premium access",
+    "description": "Grant selected business listings Premium without a Stripe payment. Every grant is recorded with a reason and optional end date.",
+    "grantTitle": "Grant Premium",
+    "grantDescription": "Access starts immediately. Without an end date, it remains active until revoked.",
+    "listingLabel": "Business listing",
+    "listingPlaceholder": "Select a business listing",
+    "unknownOrganization": "Unknown organization",
+    "reasonLabel": "Internal reason",
+    "unlimitedLabel": "No end date",
+    "endsAtLabel": "End date",
+    "grantButton": "Grant Premium",
+    "saving": "Saving …",
+    "overviewTitle": "Grants",
+    "overviewDescription": "Active grants can be revoked at any time. Paid subscriptions remain separate.",
+    "active": "Active",
+    "notActive": "Not active",
+    "noActiveGrant": "No complimentary Premium grant.",
+    "unlimited": "Unlimited",
+    "revokeButton": "Revoke",
+    "revokeConfirm": "Revoke this complimentary Premium grant?",
+    "invalid_data": "Please complete all required fields correctly.",
+    "invalid_end_date": "The end date must be in the future.",
+    "already_active": "Premium is already active for this listing.",
+    "save_failed": "The grant could not be saved.",
+    "network": "The connection to the server failed."
   },
   "ListingReview": {
     "eyebrow": "Internal review",
