@@ -110,7 +110,7 @@ export default async function SearchForm({
         />
       </label>
 
-      <button type="submit" className="primary-button mt-auto h-12 px-5">
+      <button type="submit" className="primary-button mt-auto h-15 px-5">
         {t("submit")}
       </button>
     </form>
