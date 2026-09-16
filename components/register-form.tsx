@@ -21,17 +21,26 @@ function isValidPassword(password: string): boolean {
 export default function RegisterForm({
   initialEmail = "",
   invitationToken = "",
+  referralRegistrationEnabled = false,
+  initialReferralCode = "",
 }: {
   initialEmail?: string;
   invitationToken?: string;
+  referralRegistrationEnabled?: boolean;
+  initialReferralCode?: string;
 }) {
   const t = useTranslations("Register");
   const locale = useLocale();
+  const showReferralField =
+    referralRegistrationEnabled && !invitationToken;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [referralCode, setReferralCode] = useState(
+    showReferralField ? initialReferralCode : "",
+  );
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -65,6 +74,7 @@ export default function RegisterForm({
           password,
           locale,
           invitationToken,
+          referralCode: showReferralField ? referralCode : "",
         }),
       });
 
@@ -80,6 +90,8 @@ export default function RegisterForm({
           setError(t("emailError"));
         } else if (result.error === "INVALID_INVITATION") {
           setError(t("invitationError"));
+        } else if (result.error === "INVALID_REFERRAL") {
+          setError(t("referralError"));
         } else if (response.status >= 500) {
           setError(t("serverError"));
         } else {
@@ -195,6 +207,25 @@ export default function RegisterForm({
       <p className="text-sm leading-6 text-[var(--muted)] md:col-span-2">
         {t("passwordHint")}
       </p>
+
+      {showReferralField && (
+        <label className="field-group md:col-span-2">
+          <span className="field-label">{t("referralCode")}</span>
+          <input
+            type="text"
+            name="referralCode"
+            autoComplete="off"
+            maxLength={64}
+            className="field-control"
+            value={referralCode}
+            onChange={(event) => setReferralCode(event.target.value)}
+            disabled={isLoading}
+          />
+          <span className="mt-2 text-sm text-[var(--muted)]">
+            {t("referralCodeHint")}
+          </span>
+        </label>
+      )}
 
       <button
         type="submit"

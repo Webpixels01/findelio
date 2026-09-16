@@ -1,3 +1,5 @@
+import { referralMailContent } from "./referral-mail.js";
+
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -593,6 +595,7 @@ const findelioReviewNotificationEndpoint = {
               ) AS premium_active
             `),
             "submitter.email as recipient",
+            "submitter.language as recipient_language",
           )
           .where("revisions.id", revisionId);
 
@@ -633,12 +636,28 @@ const findelioReviewNotificationEndpoint = {
           return res.status(422).json({ error: "no_recipient" });
         }
 
+        let referralContent = { text: "", suppressCheckout: false };
+        let hasActiveGrant = false;
+        if (String(env.FINDELIO_REFERRAL_REGISTRATION_ENABLED ?? "").trim().toLowerCase() === "true" && action === "approve") {
+          // Read committed state; never accept activation outcomes from the caller.
+          const redemption = await database("referral_redemptions as r")
+            .leftJoin("premium_grants as g", "r.premium_grant", "g.id")
+            .where("r.trial_listing", revision.listing_id)
+            .select("r.status", "r.premium_grant", "g.starts_at as grant_starts_at",
+              "g.ends_at as grant_ends_at", "g.revoked_at as grant_revoked_at").first();
+          referralContent = referralMailContent(redemption, revision.recipient_language);
+          hasActiveGrant = Boolean(await database("premium_grants")
+            .where({ listing: revision.listing_id }).whereNull("revoked_at")
+            .where("starts_at", "<=", database.fn.now())
+            .where((q) => q.whereNull("ends_at").orWhere("ends_at", ">", database.fn.now())).first("id"));
+        }
+
         const needsPremiumCheckout =
           action === "approve" &&
           ["monthly", "yearly"].includes(
             revision.requested_billing_interval,
           ) &&
-          revision.premium_active !== true;
+          revision.premium_active !== true && !hasActiveGrant && !referralContent.suppressCheckout;
         const premiumBillingPath = `/de-ch/dashboard/firmenprofile/${revision.listing_id}/abo?interval=${encodeURIComponent(
           revision.requested_billing_interval ?? "monthly",
         )}&approved=1`;
@@ -681,6 +700,9 @@ const findelioReviewNotificationEndpoint = {
             )}&locale=de-ch`,
           },
         }[action];
+        if (action === "approve" && referralContent.text) {
+          decisionContent.intro += ` ${referralContent.text}`;
+        }
         const reason =
           action === "approve"
             ? requestedReason

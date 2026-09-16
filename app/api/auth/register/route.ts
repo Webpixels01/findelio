@@ -5,6 +5,15 @@ import {
   registerDirectusUser,
 } from "@/lib/directus-auth";
 import {
+  DirectusReferralError,
+  registerDirectusUserWithReferral,
+} from "@/lib/directus-referral";
+import {
+  isReferralRegistrationEnabled,
+  isValidReferralCodeFormat,
+  normalizeReferralCode,
+} from "@/lib/referral-registration";
+import {
   DirectusTeamError,
   getPublicTeamInvitation,
 } from "@/lib/directus-team";
@@ -16,6 +25,7 @@ type RegisterBody = {
   password?: string;
   locale?: string;
   invitationToken?: string;
+  referralCode?: string;
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,9 +77,11 @@ export async function POST(request: Request) {
     const email = body.email?.trim().toLowerCase();
     const password = body.password ?? "";
     const invitationToken = body.invitationToken?.trim() ?? "";
+    const referralCode = normalizeReferralCode(body.referralCode);
     const locale = isAppLocale(body.locale)
       ? body.locale
       : routing.defaultLocale;
+    const referralEnabled = isReferralRegistrationEnabled();
 
     if (!firstName || !lastName || !email || !password) {
       return NextResponse.json({ error: "REQUIRED_FIELDS" }, { status: 400 });
@@ -114,6 +126,19 @@ export async function POST(request: Request) {
       }
     }
 
+    // Team invitations never create a referral redemption. Ignore any code.
+    const effectiveReferralCode =
+      !invitationToken && referralEnabled ? referralCode : "";
+
+    if (effectiveReferralCode && !isValidReferralCodeFormat(effectiveReferralCode)) {
+      return NextResponse.json({ error: "INVALID_REFERRAL" }, { status: 400 });
+    }
+
+    // When the feature is off, never treat a submitted code as accepted.
+    if (!referralEnabled && referralCode) {
+      // Fall through to the standard registration path without redeeming.
+    }
+
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
     if (!siteUrl) {
@@ -129,19 +154,71 @@ export async function POST(request: Request) {
     }
 
     try {
-      await registerDirectusUser({
-        firstName,
-        lastName,
-        email,
-        password,
-        verificationUrl: verificationUrl.toString(),
-      });
+      if (effectiveReferralCode) {
+        await registerDirectusUserWithReferral({
+          firstName,
+          lastName,
+          email,
+          password,
+          verificationUrl: verificationUrl.toString(),
+          referralCode: effectiveReferralCode,
+        });
+      } else {
+        await registerDirectusUser({
+          firstName,
+          lastName,
+          email,
+          password,
+          verificationUrl: verificationUrl.toString(),
+        });
+      }
     } catch (error) {
-      if (error instanceof DirectusAuthError && error.status < 500) {
+      if (
+        error instanceof DirectusReferralError &&
+        error.code === "feature_disabled"
+      ) {
+        try {
+          await registerDirectusUser({
+            firstName,
+            lastName,
+            email,
+            password,
+            verificationUrl: verificationUrl.toString(),
+          });
+        } catch (fallbackError) {
+          if (
+            fallbackError instanceof DirectusAuthError &&
+            fallbackError.status < 500
+          ) {
+            console.warn(
+              "Directus-Registrierung abgelehnt:",
+              fallbackError.code ?? fallbackError.status,
+              fallbackError.message,
+            );
+          } else {
+            throw fallbackError;
+          }
+        }
+      } else if (error instanceof DirectusReferralError) {
+        if (error.code === "invalid_referral") {
+          return NextResponse.json(
+            { error: "INVALID_REFERRAL" },
+            { status: 400 },
+          );
+        }
+        if (error.status < 500) {
+          console.warn(
+            "Referral-Registrierung abgelehnt:",
+            error.code ?? error.status,
+          );
+        } else {
+          throw error;
+        }
+      } else if (error instanceof DirectusAuthError && error.status < 500) {
         console.warn(
           "Directus-Registrierung abgelehnt:",
-            error.code ?? error.status,
-            error.message,
+          error.code ?? error.status,
+          error.message,
         );
       } else {
         throw error;

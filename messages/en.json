@@ -114,6 +114,9 @@
     "passwordMismatch": "The passwords do not match.",
     "emailError": "Please enter a valid email address.",
     "invitationError": "This invitation is no longer valid. Ask the organization to send you a new invitation.",
+    "referralCode": "Referral code (optional)",
+    "referralCodeHint": "If you used a referral link, the code is already filled in. You can also enter it manually.",
+    "referralError": "This referral code is invalid or no longer active.",
     "errorFallback": "The registration could not be processed.",
     "serverError": "Registration is currently unavailable.",
     "connectionError": "The connection to the server failed."
@@ -198,7 +201,8 @@
       "listings": "Business listings",
       "team": "Team",
       "review": "Review",
-      "premium": "Premium"
+      "premium": "Premium",
+      "referrals": "Referrals"
     },
     "summary": {
       "organizations": "Organizations",
@@ -232,90 +236,90 @@
     "overviewOrganizationsLink": "View all organizations",
     "organizationListingsLink": "View business listings"
   },
-    "Team": {
-      "organization": "Organization",
-      "empty": "You currently do not belong to an active organization.",
-      "membersTitle": "Team members",
-      "membersCount": "{count, plural, one {# active member} other {# active members}}",
-      "roleFor": "Role for {name}",
-      "remove": "Remove",
-      "inviteTitle": "Invite a person",
-      "inviteDescription": "The invitation is valid for seven days and can only be accepted with the email address provided.",
-      "viewOnly": "Your role lets you view the team, but not change it.",
-      "email": "Email address",
-      "role": "Role",
-      "invite": "Send invitation",
-      "inviting": "Sending …",
-      "pendingTitle": "Pending invitations",
-      "pendingEmpty": "No pending invitations.",
-      "expires": "valid until {date}",
-      "cancelInvitation": "Withdraw invitation",
-      "confirmMemberTitle": "Remove team member?",
-      "confirmMemberDescription": "{name} will lose access to this organization and its company listings.",
-      "confirmInvitationTitle": "Withdraw invitation?",
-      "confirmInvitationDescription": "The invitation link for {name} will become invalid immediately.",
-      "keep": "Cancel",
-      "confirm": "Confirm",
-      "working": "Processing …",
-      "roles": {
-        "owner": "Owner",
-        "admin": "Administrator",
-        "editor": "Editor"
-      },
-      "messages": {
-        "invited": "The invitation was sent by email.",
-        "roleUpdated": "The role was updated.",
-        "memberRemoved": "The team member was removed.",
-        "invitationCancelled": "The invitation was withdrawn."
-      },
-      "errors": {
-        "invalid_data": "Please check the information you entered.",
-        "unauthorized": "Your session has expired. Please sign in again.",
-        "forbidden": "You do not have permission for this action.",
-        "member_exists": "This person is already a member of the organization.",
-        "invitation_exists": "A pending invitation already exists for this email address.",
-        "rate_limited": "Too many invitations were sent. Please try again later.",
-        "too_many_invitations": "This organization already has too many pending invitations.",
-        "send_failed": "The invitation could not be sent.",
-        "update_failed": "The change could not be saved.",
-        "not_found": "This item is no longer available.",
-        "network": "The connection failed. Please try again.",
-        "unknown": "Something went wrong. Please try again."
-      }
+  "Team": {
+    "organization": "Organization",
+    "empty": "You currently do not belong to an active organization.",
+    "membersTitle": "Team members",
+    "membersCount": "{count, plural, one {# active member} other {# active members}}",
+    "roleFor": "Role for {name}",
+    "remove": "Remove",
+    "inviteTitle": "Invite a person",
+    "inviteDescription": "The invitation is valid for seven days and can only be accepted with the email address provided.",
+    "viewOnly": "Your role lets you view the team, but not change it.",
+    "email": "Email address",
+    "role": "Role",
+    "invite": "Send invitation",
+    "inviting": "Sending …",
+    "pendingTitle": "Pending invitations",
+    "pendingEmpty": "No pending invitations.",
+    "expires": "valid until {date}",
+    "cancelInvitation": "Withdraw invitation",
+    "confirmMemberTitle": "Remove team member?",
+    "confirmMemberDescription": "{name} will lose access to this organization and its company listings.",
+    "confirmInvitationTitle": "Withdraw invitation?",
+    "confirmInvitationDescription": "The invitation link for {name} will become invalid immediately.",
+    "keep": "Cancel",
+    "confirm": "Confirm",
+    "working": "Processing …",
+    "roles": {
+      "owner": "Owner",
+      "admin": "Administrator",
+      "editor": "Editor"
     },
-    "TeamInvitation": {
-      "eyebrow": "Team invitation",
-      "title": "Invitation from {organization}",
-      "description": "By accepting, you gain access to the organization and can manage its Findelio content according to your role.",
-      "registrationDescription": "Create your personal account for {organization}. After confirming your email, the invitation will be accepted automatically and you will go directly to the business listings.",
-      "email": "Invited email address",
-      "role": "Role",
-      "validUntil": "Valid until",
-      "roles": {
-        "admin": "Administrator",
-        "editor": "Editor"
-      },
-      "signInTitle": "Sign in or create an account",
-      "signInDescription": "Sign in if you already have an account with {email}. Otherwise, create an account now; the invitation will be accepted automatically after email confirmation.",
-      "signIn": "Sign in",
-      "register": "Create account",
-      "wrongAccountTitle": "Wrong account signed in",
-      "wrongAccountDescription": "You are signed in as {current}. This invitation is for {invited}. Sign out and sign in again with the invited address.",
-      "accept": "Accept invitation",
-      "accepting": "Accepting …",
-      "acceptError": "The invitation could not be accepted. Please try again.",
-      "emailMismatch": "This invitation belongs to a different email address.",
-      "acceptedEyebrow": "Invitation accepted",
-      "acceptedTitle": "Welcome to the {organization} team",
-      "acceptedDescription": "You can now manage the organization and its company listings in the dashboard.",
-      "openTeam": "Open team management",
-      "invalidTitle": "Invitation not found",
-      "invalidDescription": "This invitation link is invalid or has been withdrawn.",
-      "expiredTitle": "Invitation expired",
-      "expiredDescription": "This invitation is no longer valid. Ask the organization to send you a new invitation.",
-      "home": "Go to homepage"
+    "messages": {
+      "invited": "The invitation was sent by email.",
+      "roleUpdated": "The role was updated.",
+      "memberRemoved": "The team member was removed.",
+      "invitationCancelled": "The invitation was withdrawn."
     },
-    "Footer": {
+    "errors": {
+      "invalid_data": "Please check the information you entered.",
+      "unauthorized": "Your session has expired. Please sign in again.",
+      "forbidden": "You do not have permission for this action.",
+      "member_exists": "This person is already a member of the organization.",
+      "invitation_exists": "A pending invitation already exists for this email address.",
+      "rate_limited": "Too many invitations were sent. Please try again later.",
+      "too_many_invitations": "This organization already has too many pending invitations.",
+      "send_failed": "The invitation could not be sent.",
+      "update_failed": "The change could not be saved.",
+      "not_found": "This item is no longer available.",
+      "network": "The connection failed. Please try again.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Team invitation",
+    "title": "Invitation from {organization}",
+    "description": "By accepting, you gain access to the organization and can manage its Findelio content according to your role.",
+    "registrationDescription": "Create your personal account for {organization}. After confirming your email, the invitation will be accepted automatically and you will go directly to the business listings.",
+    "email": "Invited email address",
+    "role": "Role",
+    "validUntil": "Valid until",
+    "roles": {
+      "admin": "Administrator",
+      "editor": "Editor"
+    },
+    "signInTitle": "Sign in or create an account",
+    "signInDescription": "Sign in if you already have an account with {email}. Otherwise, create an account now; the invitation will be accepted automatically after email confirmation.",
+    "signIn": "Sign in",
+    "register": "Create account",
+    "wrongAccountTitle": "Wrong account signed in",
+    "wrongAccountDescription": "You are signed in as {current}. This invitation is for {invited}. Sign out and sign in again with the invited address.",
+    "accept": "Accept invitation",
+    "accepting": "Accepting …",
+    "acceptError": "The invitation could not be accepted. Please try again.",
+    "emailMismatch": "This invitation belongs to a different email address.",
+    "acceptedEyebrow": "Invitation accepted",
+    "acceptedTitle": "Welcome to the {organization} team",
+    "acceptedDescription": "You can now manage the organization and its company listings in the dashboard.",
+    "openTeam": "Open team management",
+    "invalidTitle": "Invitation not found",
+    "invalidDescription": "This invitation link is invalid or has been withdrawn.",
+    "expiredTitle": "Invitation expired",
+    "expiredDescription": "This invitation is no longer valid. Ask the organization to send you a new invitation.",
+    "home": "Go to homepage"
+  },
+  "Footer": {
     "tagline": "Findelio connects people with businesses that speak their language.",
     "directory": "Directory",
     "findCompanies": "Find businesses",
@@ -378,9 +382,18 @@
     "purposeLabel": "Purpose",
     "durationLabel": "Storage period",
     "cookies": {
-      "access": { "purpose": "Keeps your secure sign-in active during the current session.", "duration": "Short-lived; expires automatically with the access token." },
-      "refresh": { "purpose": "Securely renews your sign-in without requiring your password on every page.", "duration": "Up to 7 days or until you sign out." },
-      "locale": { "purpose": "Remembers your chosen language during the browser session.", "duration": "Until the end of the browser session." }
+      "access": {
+        "purpose": "Keeps your secure sign-in active during the current session.",
+        "duration": "Short-lived; expires automatically with the access token."
+      },
+      "refresh": {
+        "purpose": "Securely renews your sign-in without requiring your password on every page.",
+        "duration": "Up to 7 days or until you sign out."
+      },
+      "locale": {
+        "purpose": "Remembers your chosen language during the browser session.",
+        "duration": "Until the end of the browser session."
+      }
     },
     "storageTitle": "Local browser storage",
     "storageText": "The cookie notice and your analytics choice are stored in your browser's local storage.",
@@ -400,17 +413,56 @@
     "intro": "Findelio connects your business with people looking for advice and services in their language. You stay in control of your information and choose Free or Premium for each listing.",
     "stepsTitle": "How publication works",
     "steps": {
-      "register": { "title": "Create an account", "text": "Register with your email address and confirm it using the link in the confirmation email." },
-      "organization": { "title": "Create an organisation", "text": "Add the organisation that owns your business listings and can later include additional team members." },
-      "listing": { "title": "Create a listing", "text": "Add your business listing, select relevant industries and languages, and choose Free or Premium." },
-      "complete": { "title": "Complete the profile", "text": "Add a description, contact details and address. Premium also includes a logo, gallery, opening hours, social links and translations." },
-      "review": { "title": "Submit for review", "text": "Findelio reviews new and changed content to keep the directory reliable, current and free from misuse." },
-      "publish": { "title": "Publish and grow", "text": "After approval your listing becomes visible. Only then do you activate a reserved Premium plan and gain access to posts and statistics." }
+      "register": {
+        "title": "Create an account",
+        "text": "Register with your email address and confirm it using the link in the confirmation email."
+      },
+      "organization": {
+        "title": "Create an organisation",
+        "text": "Add the organisation that owns your business listings and can later include additional team members."
+      },
+      "listing": {
+        "title": "Create a listing",
+        "text": "Add your business listing, select relevant industries and languages, and choose Free or Premium."
+      },
+      "complete": {
+        "title": "Complete the profile",
+        "text": "Add a description, contact details and address. Premium also includes a logo, gallery, opening hours, social links and translations."
+      },
+      "review": {
+        "title": "Submit for review",
+        "text": "Findelio reviews new and changed content to keep the directory reliable, current and free from misuse."
+      },
+      "publish": {
+        "title": "Publish and grow",
+        "text": "After approval your listing becomes visible. Only then do you activate a reserved Premium plan and gain access to posts and statistics."
+      }
     },
     "packagesEyebrow": "Plans per business listing",
     "packagesTitle": "Start Free or show more with Premium",
-    "free": { "title": "Free", "price": "CHF 0", "description": "A solid foundation for a searchable and reviewed business listing.", "features": { "profile": "Business name and full description", "classification": "Industries and spoken languages", "contact": "Contact details, website and location" } },
-    "premium": { "title": "Premium", "price": "CHF 9.90 monthly or CHF 99 yearly", "description": "For businesses that want a visual presence, current content and useful reach insights.", "features": { "media": "Business logo and image gallery", "details": "Opening hours, social links and a custom action button", "translations": "Custom descriptions in every Findelio language", "posts": "News, promotions and events", "ranking": "Priority placement for relevant Premium listings", "statistics": "Reach statistics and a monthly performance report" } },
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "A solid foundation for a searchable and reviewed business listing.",
+      "features": {
+        "profile": "Business name and full description",
+        "classification": "Industries and spoken languages",
+        "contact": "Contact details, website and location"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 monthly or CHF 99 yearly",
+      "description": "For businesses that want a visual presence, current content and useful reach insights.",
+      "features": {
+        "media": "Business logo and image gallery",
+        "details": "Opening hours, social links and a custom action button",
+        "translations": "Custom descriptions in every Findelio language",
+        "posts": "News, promotions and events",
+        "ranking": "Priority placement for relevant Premium listings",
+        "statistics": "Reach statistics and a monthly performance report"
+      }
+    },
     "reviewTitle": "Why are listings reviewed?",
     "reviewText": "Review protects visitors and reputable businesses. Findelio checks that information is plausible and belongs to a genuine business. You receive a message if we have questions or reject content.",
     "verificationEyebrow": "Optional additional check",
@@ -431,22 +483,67 @@
     "lastUpdated": "Last updated: 3 August 2026",
     "intro": "These Terms govern the use of Findelio by businesses, organisations and their authorised users. Please read them carefully before registering or purchasing a Premium subscription.",
     "sections": {
-      "scope": { "title": "Provider and scope", "body": "Findelio is provided by Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Switzerland. These Terms apply to business accounts, organisations, listings, and free and paid Findelio features." },
-      "services": { "title": "Findelio services", "body": "Findelio operates a multilingual business directory and provides tools to create, review, publish and manage business listings. Findelio facilitates visibility and contact but is not a party to contracts between visitors and listed businesses." },
-      "accounts": { "title": "Accounts and authority", "body": "Registration details must be accurate and current. Login credentials must be kept confidential. Anyone acting for an organisation confirms that they are authorised to do so. Account holders are responsible for activity performed through their account." },
-      "content": { "title": "Content and licence", "body": "Businesses are responsible for their text, contact details, images, logos, links and other content. They confirm that information is truthful, current and lawful and does not infringe third-party rights. For the publication period, Findelio receives the non-exclusive rights needed to store, display and technically process this content for the directory." },
-      "review": { "title": "Review, rejection and suspension", "body": "Findelio may review new and changed content before publication. Illegal, misleading, incomplete, abusive or insufficient-quality content may be rejected, deferred, suspended or deleted. Where appropriate, Findelio will explain the decision and allow corrections." },
-      "packages": { "title": "Free and Premium", "body": "The Free plan includes the displayed basic features. Premium applies per business listing and includes the additional features described on the offer and billing pages. Features may evolve without unreasonably reducing the essential value of a current paid period." },
-      "contract": { "title": "Contract, prices and payment", "body": "Current prices are displayed in Swiss francs including any applicable charges. Before purchase, the plan, billing interval and price are shown again. The Premium contract begins when payment is confirmed. Monthly and annual subscriptions renew for the selected interval unless cancelled before the end of the period." },
-      "cancellation": { "title": "Cancellation and failed payments", "body": "Premium can be cancelled through subscription management effective at the end of the current billing period. Features remain available until then. Following a failed payment, Premium access may be blocked no later than the end of the period. Used or partly used periods are generally not refunded; mandatory legal rights remain unaffected." },
-      "availability": { "title": "Availability and development", "body": "Findelio aims to operate reliably but does not guarantee uninterrupted or error-free availability. Maintenance, security measures, third-party outages or force majeure may cause interruptions. Features may be reasonably adapted or replaced." },
-      "liability": { "title": "Liability", "body": "Findelio remains liable where required by mandatory law. To the extent permitted, liability for slight negligence, indirect loss, lost profits and data loss is excluded. Businesses remain responsible for their content, offers and transactions with visitors." },
-      "termination": { "title": "Termination and account deletion", "body": "Users may request account deletion unless legal retention duties or open contractual relationships prevent it. Deleting an account does not cancel an active Premium subscription. Findelio may suspend or terminate access for serious or repeated violations after reasonably considering the interests involved." },
-      "privacy": { "title": "Privacy", "body": "Personal data is processed under the current Findelio Privacy Policy. Businesses are responsible for personal data they publish in their listings." },
-      "changes": { "title": "Changes to these Terms", "body": "Findelio may amend these Terms prospectively for legal, technical or business reasons. Material changes will be communicated appropriately. Paid periods will not be subject to unreasonable retroactive disadvantages." },
-      "law": { "title": "Governing law and jurisdiction", "body": "Swiss law applies, excluding conflict-of-law rules. Where legally permitted, the courts at the registered location of Webpixels have jurisdiction. Mandatory venues and protections remain unaffected. If translations conflict, the German version prevails." }
+      "scope": {
+        "title": "Provider and scope",
+        "body": "Findelio is provided by Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Switzerland. These Terms apply to business accounts, organisations, listings, and free and paid Findelio features."
+      },
+      "services": {
+        "title": "Findelio services",
+        "body": "Findelio operates a multilingual business directory and provides tools to create, review, publish and manage business listings. Findelio facilitates visibility and contact but is not a party to contracts between visitors and listed businesses."
+      },
+      "accounts": {
+        "title": "Accounts and authority",
+        "body": "Registration details must be accurate and current. Login credentials must be kept confidential. Anyone acting for an organisation confirms that they are authorised to do so. Account holders are responsible for activity performed through their account."
+      },
+      "content": {
+        "title": "Content and licence",
+        "body": "Businesses are responsible for their text, contact details, images, logos, links and other content. They confirm that information is truthful, current and lawful and does not infringe third-party rights. For the publication period, Findelio receives the non-exclusive rights needed to store, display and technically process this content for the directory."
+      },
+      "review": {
+        "title": "Review, rejection and suspension",
+        "body": "Findelio may review new and changed content before publication. Illegal, misleading, incomplete, abusive or insufficient-quality content may be rejected, deferred, suspended or deleted. Where appropriate, Findelio will explain the decision and allow corrections."
+      },
+      "packages": {
+        "title": "Free and Premium",
+        "body": "The Free plan includes the displayed basic features. Premium applies per business listing and includes the additional features described on the offer and billing pages. Features may evolve without unreasonably reducing the essential value of a current paid period."
+      },
+      "contract": {
+        "title": "Contract, prices and payment",
+        "body": "Current prices are displayed in Swiss francs including any applicable charges. Before purchase, the plan, billing interval and price are shown again. The Premium contract begins when payment is confirmed. Monthly and annual subscriptions renew for the selected interval unless cancelled before the end of the period."
+      },
+      "cancellation": {
+        "title": "Cancellation and failed payments",
+        "body": "Premium can be cancelled through subscription management effective at the end of the current billing period. Features remain available until then. Following a failed payment, Premium access may be blocked no later than the end of the period. Used or partly used periods are generally not refunded; mandatory legal rights remain unaffected."
+      },
+      "availability": {
+        "title": "Availability and development",
+        "body": "Findelio aims to operate reliably but does not guarantee uninterrupted or error-free availability. Maintenance, security measures, third-party outages or force majeure may cause interruptions. Features may be reasonably adapted or replaced."
+      },
+      "liability": {
+        "title": "Liability",
+        "body": "Findelio remains liable where required by mandatory law. To the extent permitted, liability for slight negligence, indirect loss, lost profits and data loss is excluded. Businesses remain responsible for their content, offers and transactions with visitors."
+      },
+      "termination": {
+        "title": "Termination and account deletion",
+        "body": "Users may request account deletion unless legal retention duties or open contractual relationships prevent it. Deleting an account does not cancel an active Premium subscription. Findelio may suspend or terminate access for serious or repeated violations after reasonably considering the interests involved."
+      },
+      "privacy": {
+        "title": "Privacy",
+        "body": "Personal data is processed under the current Findelio Privacy Policy. Businesses are responsible for personal data they publish in their listings."
+      },
+      "changes": {
+        "title": "Changes to these Terms",
+        "body": "Findelio may amend these Terms prospectively for legal, technical or business reasons. Material changes will be communicated appropriately. Paid periods will not be subject to unreasonable retroactive disadvantages."
+      },
+      "law": {
+        "title": "Governing law and jurisdiction",
+        "body": "Swiss law applies, excluding conflict-of-law rules. Where legally permitted, the courts at the registered location of Webpixels have jurisdiction. Mandatory venues and protections remain unaffected. If translations conflict, the German version prevails."
+      }
     },
-    "verification": { "title": "Verified business listings", "body": "Businesses may voluntarily submit a current commercial-register or UID-register extract or comparable official evidence. For sole proprietorships not entered in the commercial register, Findelio may in particular accept confirmation from the social-security compensation office recognising self-employed status. After a successful check, Findelio may mark the listing as ‘Verified’. The badge only confirms the existence or association of the business checked using the evidence; it is not a guarantee of quality, creditworthiness, licences or services. Findelio may request further information or remove the status if information becomes outdated, contradictory or false. Evidence is used solely for verification, made accessible only to authorised persons, and deleted when no longer required for that purpose unless a retention obligation applies." },
+    "verification": {
+      "title": "Verified business listings",
+      "body": "Businesses may voluntarily submit a current commercial-register or UID-register extract or comparable official evidence. For sole proprietorships not entered in the commercial register, Findelio may in particular accept confirmation from the social-security compensation office recognising self-employed status. After a successful check, Findelio may mark the listing as ‘Verified’. The badge only confirms the existence or association of the business checked using the evidence; it is not a guarantee of quality, creditworthiness, licences or services. Findelio may request further information or remove the status if information becomes outdated, contradictory or false. Evidence is used solely for verification, made accessible only to authorised persons, and deleted when no longer required for that purpose unless a retention obligation applies."
+    },
     "contact": "For questions about these Terms, contact the Findelio team at"
   },
   "Contact": {
@@ -995,9 +1092,9 @@
         "logo_id": "Company logo",
         "gallery_file_ids": "Image gallery",
         "social_links": "Social media links",
-        "opening_hours": "Opening hours"
-        ,"custom_cta_label": "Button label"
-        ,"custom_cta_value": "Button destination"
+        "opening_hours": "Opening hours",
+        "custom_cta_label": "Button label",
+        "custom_cta_value": "Button destination"
       }
     }
   },
@@ -1036,7 +1133,10 @@
       "eyebrow": "Deletion requests",
       "title": "Open deletion requests",
       "description": "Review the request and make sure no paid Premium period is still active before archiving.",
-      "types": { "listing": "Business listing", "organization": "Organization" },
+      "types": {
+        "listing": "Business listing",
+        "organization": "Organization"
+      },
       "submittedBy": "Requested by {name} on {date}",
       "unknownRequester": "Unknown user",
       "customerReason": "Reason for the request",
@@ -1065,5 +1165,70 @@
     "errorTitle": "Confirmation failed",
     "errorText": "The confirmation link is invalid, expired or has already been used.",
     "registerButton": "Back to registration"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSHIPS",
+    "title": "Referrals",
+    "description": "Manage referral codes and track which companies join Findelio through them. The Premium trial is for new organizations only.",
+    "activePartners": "Active partners",
+    "registrations": "Registrations (filtered)",
+    "pendingActivation": "Activation pending (filtered)",
+    "newPartner": "Add partner",
+    "editPartner": "Edit partner",
+    "partnerHelp": "One code per partner. They do not need their own Findelio account.",
+    "name": "Name",
+    "code": "Referral code",
+    "codeHelp": "3–64 characters: letters A–Z, numbers, hyphens or underscores. Codes are case-insensitive.",
+    "codeFixed": "The code cannot change, so shared links remain valid.",
+    "notes": "Internal notes",
+    "status": "Status",
+    "active": "Active",
+    "disabled": "Disabled",
+    "disableHelp": "Disabling stops new redemptions. Existing referrals and trials remain unchanged.",
+    "save": "Save",
+    "saving": "Saving …",
+    "cancel": "Cancel",
+    "partners": "Partners",
+    "noPartners": "No partners yet. Add the first using the form.",
+    "link": "Referral link",
+    "copyLink": "Copy link",
+    "copyCode": "Copy code",
+    "edit": "Edit",
+    "companies": "Referred companies",
+    "overviewHelp": "Times use Europe/Zurich. The trial starts with the first eligible company profile approval.",
+    "allPartners": "All partners",
+    "allStates": "All statuses",
+    "refresh": "Refresh",
+    "noCompanies": "No registrations match this selection yet.",
+    "company": "Organization / company profile",
+    "registered": "Registered",
+    "period": "Trial start / end",
+    "actions": "Actions",
+    "awaitingOrganization": "Organization not yet created",
+    "retry": "Retry activation",
+    "page": "Page {page} of {pages} · {total} registrations",
+    "previous": "Previous",
+    "next": "Next",
+    "revoked": "Trial revoked",
+    "expired": "Trial expired",
+    "previousPublication": "Previously published: no new trial.",
+    "existingPremium": "Premium already existed. No additional trial will be granted.",
+    "saved": "Saved.",
+    "copied": "Copied.",
+    "copy_failed": "Could not copy. Select and copy the displayed link manually.",
+    "load_failed": "Could not load the overview. Please try again.",
+    "save_failed": "Could not save. Check the inputs and try again.",
+    "code_exists": "This code is already in use.",
+    "retry_failed": "Activation failed. The reservation is preserved.",
+    "retry_done": "Activation was checked again. See the overview for the current status.",
+    "states": {
+      "pending_organization": "Awaiting organization",
+      "pending_approval": "Awaiting approval",
+      "pending_activation": "Activation pending",
+      "granted": "Trial granted",
+      "skipped_existing_premium": "Skipped: Premium existed",
+      "expired_unactivated": "Expired without activation",
+      "void": "Not eligible"
+    }
   }
 }

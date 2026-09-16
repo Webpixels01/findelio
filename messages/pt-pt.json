@@ -114,6 +114,9 @@
     "passwordMismatch": "As palavras-passe não coincidem.",
     "emailError": "Introduza um endereço de e-mail válido.",
     "invitationError": "Este convite já não é válido. Peça à organização que lhe envie um novo convite.",
+    "referralCode": "Código de recomendação (opcional)",
+    "referralCodeHint": "Se usou um link de recomendação, o código já está preenchido. Também o pode introduzir manualmente.",
+    "referralError": "Este código de recomendação é inválido ou já não está ativo.",
     "errorFallback": "Não foi possível processar o registo.",
     "serverError": "O registo está temporariamente indisponível.",
     "connectionError": "A ligação ao servidor falhou."
@@ -198,7 +201,8 @@
       "listings": "Registos empresariais",
       "team": "Equipa",
       "review": "Revisão",
-      "premium": "Premium"
+      "premium": "Premium",
+      "referrals": "Recomendações"
     },
     "summary": {
       "organizations": "Organizações",
@@ -232,83 +236,90 @@
     "overviewOrganizationsLink": "Ver todas as organizações",
     "organizationListingsLink": "Ver registos empresariais"
   },
-    "Team": {
-      "organization": "Organização",
-      "empty": "Atualmente não pertence a nenhuma organização ativa.",
-      "membersTitle": "Membros da equipa",
-      "membersCount": "{count, plural, one {# membro ativo} other {# membros ativos}}",
-      "roleFor": "Função de {name}",
-      "remove": "Remover",
-      "inviteTitle": "Convidar uma pessoa",
-      "inviteDescription": "O convite é válido durante sete dias e só pode ser aceite com o endereço de e-mail indicado.",
-      "viewOnly": "A sua função permite ver a equipa, mas não alterá-la.",
-      "email": "Endereço de e-mail",
-      "role": "Função",
-      "invite": "Enviar convite",
-      "inviting": "A enviar …",
-      "pendingTitle": "Convites pendentes",
-      "pendingEmpty": "Sem convites pendentes.",
-      "expires": "válido até {date}",
-      "cancelInvitation": "Retirar convite",
-      "confirmMemberTitle": "Remover membro da equipa?",
-      "confirmMemberDescription": "{name} perderá o acesso a esta organização e aos seus registos de empresa.",
-      "confirmInvitationTitle": "Retirar convite?",
-      "confirmInvitationDescription": "A ligação de convite de {name} ficará imediatamente inválida.",
-      "keep": "Cancelar",
-      "confirm": "Confirmar",
-      "working": "A processar …",
-      "roles": { "owner": "Proprietário", "admin": "Administrador", "editor": "Editor" },
-      "messages": {
-        "invited": "O convite foi enviado por e-mail.",
-        "roleUpdated": "A função foi atualizada.",
-        "memberRemoved": "O membro da equipa foi removido.",
-        "invitationCancelled": "O convite foi retirado."
-      },
-      "errors": {
-        "invalid_data": "Verifique os dados introduzidos.",
-        "unauthorized": "A sua sessão expirou. Inicie sessão novamente.",
-        "forbidden": "Não tem permissão para esta ação.",
-        "member_exists": "Esta pessoa já pertence à organização.",
-        "invitation_exists": "Já existe um convite pendente para este endereço de e-mail.",
-        "rate_limited": "Foram enviados demasiados convites. Tente novamente mais tarde.",
-        "too_many_invitations": "Esta organização já tem demasiados convites pendentes.",
-        "send_failed": "Não foi possível enviar o convite.",
-        "update_failed": "Não foi possível guardar a alteração.",
-        "not_found": "Este item já não está disponível.",
-        "network": "A ligação falhou. Tente novamente.",
-        "unknown": "Ocorreu um erro. Tente novamente."
-      }
+  "Team": {
+    "organization": "Organização",
+    "empty": "Atualmente não pertence a nenhuma organização ativa.",
+    "membersTitle": "Membros da equipa",
+    "membersCount": "{count, plural, one {# membro ativo} other {# membros ativos}}",
+    "roleFor": "Função de {name}",
+    "remove": "Remover",
+    "inviteTitle": "Convidar uma pessoa",
+    "inviteDescription": "O convite é válido durante sete dias e só pode ser aceite com o endereço de e-mail indicado.",
+    "viewOnly": "A sua função permite ver a equipa, mas não alterá-la.",
+    "email": "Endereço de e-mail",
+    "role": "Função",
+    "invite": "Enviar convite",
+    "inviting": "A enviar …",
+    "pendingTitle": "Convites pendentes",
+    "pendingEmpty": "Sem convites pendentes.",
+    "expires": "válido até {date}",
+    "cancelInvitation": "Retirar convite",
+    "confirmMemberTitle": "Remover membro da equipa?",
+    "confirmMemberDescription": "{name} perderá o acesso a esta organização e aos seus registos de empresa.",
+    "confirmInvitationTitle": "Retirar convite?",
+    "confirmInvitationDescription": "A ligação de convite de {name} ficará imediatamente inválida.",
+    "keep": "Cancelar",
+    "confirm": "Confirmar",
+    "working": "A processar …",
+    "roles": {
+      "owner": "Proprietário",
+      "admin": "Administrador",
+      "editor": "Editor"
     },
-    "TeamInvitation": {
-      "eyebrow": "Convite para a equipa",
-      "title": "Convite de {organization}",
-      "description": "Ao aceitar, obtém acesso à organização e pode gerir o respetivo conteúdo no Findelio de acordo com a sua função.",
-      "registrationDescription": "Crie a sua conta pessoal para {organization}. Após confirmar o e-mail, o convite será aceite automaticamente e seguirá diretamente para os anúncios empresariais.",
-      "email": "Endereço de e-mail convidado",
-      "role": "Função",
-      "validUntil": "Válido até",
-      "roles": { "admin": "Administrador", "editor": "Editor" },
-      "signInTitle": "Inicie sessão ou crie uma conta",
-      "signInDescription": "Inicie sessão se já tiver uma conta com {email}. Caso contrário, crie agora uma conta; após a confirmação do e-mail, o convite será aceite automaticamente.",
-      "signIn": "Iniciar sessão",
-      "register": "Criar conta",
-      "wrongAccountTitle": "Sessão iniciada na conta errada",
-      "wrongAccountDescription": "Tem sessão iniciada como {current}. Este convite destina-se a {invited}. Termine a sessão e entre com o endereço convidado.",
-      "accept": "Aceitar convite",
-      "accepting": "A aceitar …",
-      "acceptError": "Não foi possível aceitar o convite. Tente novamente.",
-      "emailMismatch": "Este convite pertence a outro endereço de e-mail.",
-      "acceptedEyebrow": "Convite aceite",
-      "acceptedTitle": "Bem-vindo à equipa de {organization}",
-      "acceptedDescription": "Já pode gerir a organização e os respetivos registos de empresa no painel.",
-      "openTeam": "Abrir gestão da equipa",
-      "invalidTitle": "Convite não encontrado",
-      "invalidDescription": "Esta ligação de convite é inválida ou foi retirada.",
-      "expiredTitle": "Convite expirado",
-      "expiredDescription": "Este convite já não é válido. Peça à organização para enviar um novo.",
-      "home": "Ir para a página inicial"
+    "messages": {
+      "invited": "O convite foi enviado por e-mail.",
+      "roleUpdated": "A função foi atualizada.",
+      "memberRemoved": "O membro da equipa foi removido.",
+      "invitationCancelled": "O convite foi retirado."
     },
-    "Footer": {
+    "errors": {
+      "invalid_data": "Verifique os dados introduzidos.",
+      "unauthorized": "A sua sessão expirou. Inicie sessão novamente.",
+      "forbidden": "Não tem permissão para esta ação.",
+      "member_exists": "Esta pessoa já pertence à organização.",
+      "invitation_exists": "Já existe um convite pendente para este endereço de e-mail.",
+      "rate_limited": "Foram enviados demasiados convites. Tente novamente mais tarde.",
+      "too_many_invitations": "Esta organização já tem demasiados convites pendentes.",
+      "send_failed": "Não foi possível enviar o convite.",
+      "update_failed": "Não foi possível guardar a alteração.",
+      "not_found": "Este item já não está disponível.",
+      "network": "A ligação falhou. Tente novamente.",
+      "unknown": "Ocorreu um erro. Tente novamente."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Convite para a equipa",
+    "title": "Convite de {organization}",
+    "description": "Ao aceitar, obtém acesso à organização e pode gerir o respetivo conteúdo no Findelio de acordo com a sua função.",
+    "registrationDescription": "Crie a sua conta pessoal para {organization}. Após confirmar o e-mail, o convite será aceite automaticamente e seguirá diretamente para os anúncios empresariais.",
+    "email": "Endereço de e-mail convidado",
+    "role": "Função",
+    "validUntil": "Válido até",
+    "roles": {
+      "admin": "Administrador",
+      "editor": "Editor"
+    },
+    "signInTitle": "Inicie sessão ou crie uma conta",
+    "signInDescription": "Inicie sessão se já tiver uma conta com {email}. Caso contrário, crie agora uma conta; após a confirmação do e-mail, o convite será aceite automaticamente.",
+    "signIn": "Iniciar sessão",
+    "register": "Criar conta",
+    "wrongAccountTitle": "Sessão iniciada na conta errada",
+    "wrongAccountDescription": "Tem sessão iniciada como {current}. Este convite destina-se a {invited}. Termine a sessão e entre com o endereço convidado.",
+    "accept": "Aceitar convite",
+    "accepting": "A aceitar …",
+    "acceptError": "Não foi possível aceitar o convite. Tente novamente.",
+    "emailMismatch": "Este convite pertence a outro endereço de e-mail.",
+    "acceptedEyebrow": "Convite aceite",
+    "acceptedTitle": "Bem-vindo à equipa de {organization}",
+    "acceptedDescription": "Já pode gerir a organização e os respetivos registos de empresa no painel.",
+    "openTeam": "Abrir gestão da equipa",
+    "invalidTitle": "Convite não encontrado",
+    "invalidDescription": "Esta ligação de convite é inválida ou foi retirada.",
+    "expiredTitle": "Convite expirado",
+    "expiredDescription": "Este convite já não é válido. Peça à organização para enviar um novo.",
+    "home": "Ir para a página inicial"
+  },
+  "Footer": {
     "tagline": "A Findelio liga pessoas a empresas que falam a sua língua.",
     "directory": "Diretório",
     "findCompanies": "Encontrar empresas",
@@ -371,9 +382,18 @@
     "purposeLabel": "Finalidade",
     "durationLabel": "Prazo de conservação",
     "cookies": {
-      "access": { "purpose": "Mantém o início de sessão seguro durante a sessão ativa.", "duration": "Curta duração; expira automaticamente com o token de acesso." },
-      "refresh": { "purpose": "Renova o início de sessão de forma segura sem pedir novamente a palavra-passe em cada página.", "duration": "Até 7 dias ou até terminar a sessão." },
-      "locale": { "purpose": "Memoriza o idioma escolhido durante a sessão do navegador.", "duration": "Até ao fim da sessão do navegador." }
+      "access": {
+        "purpose": "Mantém o início de sessão seguro durante a sessão ativa.",
+        "duration": "Curta duração; expira automaticamente com o token de acesso."
+      },
+      "refresh": {
+        "purpose": "Renova o início de sessão de forma segura sem pedir novamente a palavra-passe em cada página.",
+        "duration": "Até 7 dias ou até terminar a sessão."
+      },
+      "locale": {
+        "purpose": "Memoriza o idioma escolhido durante a sessão do navegador.",
+        "duration": "Até ao fim da sessão do navegador."
+      }
     },
     "storageTitle": "Armazenamento local do navegador",
     "storageText": "A confirmação do aviso de cookies não é guardada através de um cookie adicional. A Findelio utiliza o armazenamento local do navegador para esse efeito.",
@@ -386,17 +406,144 @@
     "privacyLink": "Abrir a política de privacidade"
   },
   "CompanyGuide": {
-    "metaTitle": "Como funciona a Findelio para empresas | Findelio", "metaDescription": "Da conta empresarial à ficha publicada: saiba como as empresas utilizam a Findelio e o que oferece o Premium.", "eyebrow": "Para empresas", "title": "A sua ficha Findelio em poucos passos.", "intro": "A Findelio liga a sua empresa a pessoas que procuram serviços na sua língua. Mantém o controlo dos dados e escolhe Free ou Premium para cada ficha.", "stepsTitle": "Como funciona a publicação",
-    "steps": { "register": { "title": "Criar uma conta", "text": "Registe-se com o seu e-mail e confirme o endereço através da ligação recebida." }, "organization": { "title": "Criar uma organização", "text": "Adicione a organização à qual pertencem as fichas e, mais tarde, os membros da equipa." }, "listing": { "title": "Criar uma ficha", "text": "Adicione a empresa, selecione setores e línguas e escolha Free ou Premium." }, "complete": { "title": "Completar o perfil", "text": "Adicione descrição, contacto e morada. O Premium inclui também logótipo, galeria, horários, redes sociais e traduções." }, "review": { "title": "Enviar para revisão", "text": "A Findelio verifica dados novos e alterados para manter o diretório fiável e atualizado." }, "publish": { "title": "Publicar e crescer", "text": "Após aprovação, a ficha fica visível. Só então ativa o Premium, publicações e estatísticas." } },
-    "packagesEyebrow": "Plano por ficha", "packagesTitle": "Comece com Free ou mostre mais com Premium",
-    "free": { "title": "Free", "price": "CHF 0", "description": "Uma base sólida para uma ficha pesquisável e verificada.", "features": { "profile": "Nome da empresa e descrição completa", "classification": "Setores e línguas faladas", "contact": "Contacto, site e localização" } },
-    "premium": { "title": "Premium", "price": "CHF 9.90 por mês ou CHF 99 por ano", "description": "Para empresas que querem apresentação visual, conteúdo atual e informação sobre alcance.", "features": { "media": "Logótipo e galeria de imagens", "details": "Horários, redes sociais e botão personalizado", "translations": "Descrições próprias em todas as línguas Findelio", "posts": "Notícias, promoções e eventos", "ranking": "Posição prioritária para fichas Premium relevantes", "statistics": "Estatísticas e relatório mensal" } },
-    "reviewTitle": "Porque são verificadas as fichas?", "reviewText": "A revisão protege visitantes e empresas sérias. A Findelio verifica a plausibilidade dos dados e envia uma mensagem em caso de dúvidas ou rejeição.", "verificationEyebrow": "Verificação adicional voluntária", "verificationTitle": "Obtenha o estado Verificado com um comprovativo oficial", "verificationText": "Pode enviar voluntariamente à Findelio um comprovativo oficial e atual da empresa. Após uma verificação bem-sucedida, marcamos a ficha como «Verificada».", "verificationProofs": "Pode ser, por exemplo, um extrato atual do registo comercial ou do registo UID. Para empresários em nome individual sem inscrição no registo comercial, também pode ser usada uma confirmação da entidade de segurança social competente que reconheça a atividade independente.", "verificationNote": "O selo Verificado confirma apenas que a Findelio verificou a existência ou associação da empresa através do comprovativo. Não garante qualidade, solvabilidade, licenças ou serviços.", "verificationCta": "Enviar comprovativo por e-mail", "ctaTitle": "Pronto para adicionar a sua empresa?", "ctaText": "Crie uma conta gratuita, complete o perfil e seja encontrado pelos clientes certos.", "ctaButton": "Registar empresa"
+    "metaTitle": "Como funciona a Findelio para empresas | Findelio",
+    "metaDescription": "Da conta empresarial à ficha publicada: saiba como as empresas utilizam a Findelio e o que oferece o Premium.",
+    "eyebrow": "Para empresas",
+    "title": "A sua ficha Findelio em poucos passos.",
+    "intro": "A Findelio liga a sua empresa a pessoas que procuram serviços na sua língua. Mantém o controlo dos dados e escolhe Free ou Premium para cada ficha.",
+    "stepsTitle": "Como funciona a publicação",
+    "steps": {
+      "register": {
+        "title": "Criar uma conta",
+        "text": "Registe-se com o seu e-mail e confirme o endereço através da ligação recebida."
+      },
+      "organization": {
+        "title": "Criar uma organização",
+        "text": "Adicione a organização à qual pertencem as fichas e, mais tarde, os membros da equipa."
+      },
+      "listing": {
+        "title": "Criar uma ficha",
+        "text": "Adicione a empresa, selecione setores e línguas e escolha Free ou Premium."
+      },
+      "complete": {
+        "title": "Completar o perfil",
+        "text": "Adicione descrição, contacto e morada. O Premium inclui também logótipo, galeria, horários, redes sociais e traduções."
+      },
+      "review": {
+        "title": "Enviar para revisão",
+        "text": "A Findelio verifica dados novos e alterados para manter o diretório fiável e atualizado."
+      },
+      "publish": {
+        "title": "Publicar e crescer",
+        "text": "Após aprovação, a ficha fica visível. Só então ativa o Premium, publicações e estatísticas."
+      }
+    },
+    "packagesEyebrow": "Plano por ficha",
+    "packagesTitle": "Comece com Free ou mostre mais com Premium",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Uma base sólida para uma ficha pesquisável e verificada.",
+      "features": {
+        "profile": "Nome da empresa e descrição completa",
+        "classification": "Setores e línguas faladas",
+        "contact": "Contacto, site e localização"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 por mês ou CHF 99 por ano",
+      "description": "Para empresas que querem apresentação visual, conteúdo atual e informação sobre alcance.",
+      "features": {
+        "media": "Logótipo e galeria de imagens",
+        "details": "Horários, redes sociais e botão personalizado",
+        "translations": "Descrições próprias em todas as línguas Findelio",
+        "posts": "Notícias, promoções e eventos",
+        "ranking": "Posição prioritária para fichas Premium relevantes",
+        "statistics": "Estatísticas e relatório mensal"
+      }
+    },
+    "reviewTitle": "Porque são verificadas as fichas?",
+    "reviewText": "A revisão protege visitantes e empresas sérias. A Findelio verifica a plausibilidade dos dados e envia uma mensagem em caso de dúvidas ou rejeição.",
+    "verificationEyebrow": "Verificação adicional voluntária",
+    "verificationTitle": "Obtenha o estado Verificado com um comprovativo oficial",
+    "verificationText": "Pode enviar voluntariamente à Findelio um comprovativo oficial e atual da empresa. Após uma verificação bem-sucedida, marcamos a ficha como «Verificada».",
+    "verificationProofs": "Pode ser, por exemplo, um extrato atual do registo comercial ou do registo UID. Para empresários em nome individual sem inscrição no registo comercial, também pode ser usada uma confirmação da entidade de segurança social competente que reconheça a atividade independente.",
+    "verificationNote": "O selo Verificado confirma apenas que a Findelio verificou a existência ou associação da empresa através do comprovativo. Não garante qualidade, solvabilidade, licenças ou serviços.",
+    "verificationCta": "Enviar comprovativo por e-mail",
+    "ctaTitle": "Pronto para adicionar a sua empresa?",
+    "ctaText": "Crie uma conta gratuita, complete o perfil e seja encontrado pelos clientes certos.",
+    "ctaButton": "Registar empresa"
   },
   "Terms": {
-    "metaTitle": "Termos e Condições | Findelio", "metaDescription": "Termos aplicáveis a contas empresariais, fichas e subscrições Premium na Findelio.", "eyebrow": "Informação legal", "title": "Termos e Condições", "lastUpdated": "Atualizado em 3 de agosto de 2026", "intro": "Estes Termos regulam a utilização da Findelio por empresas, organizações e respetivos utilizadores autorizados.",
-    "sections": { "scope": { "title": "Prestador e âmbito", "body": "A Findelio é disponibilizada por Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Suíça. Os Termos aplicam-se a contas, organizações, fichas e funções gratuitas e pagas." }, "services": { "title": "Serviços Findelio", "body": "A Findelio opera um diretório empresarial multilingue e ferramentas para criar, verificar e gerir fichas. Não é parte dos contratos entre visitantes e empresas." }, "accounts": { "title": "Conta e autorização", "body": "Os dados devem ser corretos e atuais e as credenciais confidenciais. Quem atua por uma organização confirma a sua autorização e responde pela atividade da conta." }, "content": { "title": "Conteúdo e licença", "body": "A empresa responde por textos, imagens, logótipos e ligações e confirma a sua legalidade. A Findelio recebe os direitos não exclusivos necessários para guardar e apresentar o conteúdo durante a publicação." }, "review": { "title": "Revisão e bloqueio", "body": "Conteúdo ilegal, enganador, incompleto ou abusivo pode ser rejeitado, suspenso ou eliminado. Quando adequado, a Findelio indica o motivo e permite correção." }, "packages": { "title": "Free e Premium", "body": "O Free inclui as funções básicas indicadas. O Premium aplica-se a uma ficha e inclui os extras descritos nas páginas de oferta e faturação." }, "contract": { "title": "Contrato, preços e pagamento", "body": "Os preços são apresentados em francos suíços. O contrato Premium inicia-se com a confirmação do pagamento. As subscrições mensais e anuais renovam-se se não forem canceladas antes do fim do período." }, "cancellation": { "title": "Cancelamento e pagamento falhado", "body": "O Premium pode ser cancelado para o fim do período e mantém-se ativo até lá. Após falha de pagamento, o acesso pode ser bloqueado no fim do período. Em regra não há reembolso proporcional; os direitos imperativos mantêm-se." }, "availability": { "title": "Disponibilidade", "body": "Não é garantido funcionamento contínuo e sem erros. Manutenção, segurança, terceiros ou força maior podem causar interrupções." }, "liability": { "title": "Responsabilidade", "body": "A Findelio responde no âmbito legal obrigatório. Na medida permitida, exclui-se responsabilidade por negligência ligeira, danos indiretos, lucros cessantes e perda de dados." }, "termination": { "title": "Cessação e eliminação da conta", "body": "Eliminar a conta não substitui o cancelamento de Premium ativo. Violações graves ou repetidas podem levar ao bloqueio ou cessação do acesso." }, "privacy": { "title": "Privacidade", "body": "Os dados pessoais são tratados segundo a Política de Privacidade atual da Findelio." }, "changes": { "title": "Alterações aos Termos", "body": "A Findelio pode alterar os Termos para o futuro por razões legais, técnicas ou comerciais. Alterações relevantes serão comunicadas." }, "law": { "title": "Lei e foro", "body": "Aplica-se a lei suíça. Quando legalmente permitido, são competentes os tribunais da sede da Webpixels. Regras imperativas mantêm-se; em divergências prevalece a versão alemã." } },
-    "verification": { "title": "Fichas empresariais verificadas", "body": "As empresas podem apresentar voluntariamente um extrato atual do registo comercial, do registo UID ou um comprovativo oficial comparável. Para empresários em nome individual sem inscrição no registo comercial, a Findelio pode aceitar, em especial, uma confirmação da entidade de segurança social competente que reconheça a atividade independente. Após uma verificação bem-sucedida, a Findelio pode marcar a ficha como «Verificada». O selo confirma apenas a existência ou associação da empresa verificada pelo documento; não garante qualidade, solvabilidade, licenças ou serviços. A Findelio pode solicitar mais dados ou retirar o estado se as informações estiverem desatualizadas, forem contraditórias ou falsas. Os comprovativos são utilizados exclusivamente para verificação, acessíveis apenas a pessoas autorizadas e eliminados quando deixam de ser necessários para esse fim, salvo obrigação de conservação." },
+    "metaTitle": "Termos e Condições | Findelio",
+    "metaDescription": "Termos aplicáveis a contas empresariais, fichas e subscrições Premium na Findelio.",
+    "eyebrow": "Informação legal",
+    "title": "Termos e Condições",
+    "lastUpdated": "Atualizado em 3 de agosto de 2026",
+    "intro": "Estes Termos regulam a utilização da Findelio por empresas, organizações e respetivos utilizadores autorizados.",
+    "sections": {
+      "scope": {
+        "title": "Prestador e âmbito",
+        "body": "A Findelio é disponibilizada por Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Suíça. Os Termos aplicam-se a contas, organizações, fichas e funções gratuitas e pagas."
+      },
+      "services": {
+        "title": "Serviços Findelio",
+        "body": "A Findelio opera um diretório empresarial multilingue e ferramentas para criar, verificar e gerir fichas. Não é parte dos contratos entre visitantes e empresas."
+      },
+      "accounts": {
+        "title": "Conta e autorização",
+        "body": "Os dados devem ser corretos e atuais e as credenciais confidenciais. Quem atua por uma organização confirma a sua autorização e responde pela atividade da conta."
+      },
+      "content": {
+        "title": "Conteúdo e licença",
+        "body": "A empresa responde por textos, imagens, logótipos e ligações e confirma a sua legalidade. A Findelio recebe os direitos não exclusivos necessários para guardar e apresentar o conteúdo durante a publicação."
+      },
+      "review": {
+        "title": "Revisão e bloqueio",
+        "body": "Conteúdo ilegal, enganador, incompleto ou abusivo pode ser rejeitado, suspenso ou eliminado. Quando adequado, a Findelio indica o motivo e permite correção."
+      },
+      "packages": {
+        "title": "Free e Premium",
+        "body": "O Free inclui as funções básicas indicadas. O Premium aplica-se a uma ficha e inclui os extras descritos nas páginas de oferta e faturação."
+      },
+      "contract": {
+        "title": "Contrato, preços e pagamento",
+        "body": "Os preços são apresentados em francos suíços. O contrato Premium inicia-se com a confirmação do pagamento. As subscrições mensais e anuais renovam-se se não forem canceladas antes do fim do período."
+      },
+      "cancellation": {
+        "title": "Cancelamento e pagamento falhado",
+        "body": "O Premium pode ser cancelado para o fim do período e mantém-se ativo até lá. Após falha de pagamento, o acesso pode ser bloqueado no fim do período. Em regra não há reembolso proporcional; os direitos imperativos mantêm-se."
+      },
+      "availability": {
+        "title": "Disponibilidade",
+        "body": "Não é garantido funcionamento contínuo e sem erros. Manutenção, segurança, terceiros ou força maior podem causar interrupções."
+      },
+      "liability": {
+        "title": "Responsabilidade",
+        "body": "A Findelio responde no âmbito legal obrigatório. Na medida permitida, exclui-se responsabilidade por negligência ligeira, danos indiretos, lucros cessantes e perda de dados."
+      },
+      "termination": {
+        "title": "Cessação e eliminação da conta",
+        "body": "Eliminar a conta não substitui o cancelamento de Premium ativo. Violações graves ou repetidas podem levar ao bloqueio ou cessação do acesso."
+      },
+      "privacy": {
+        "title": "Privacidade",
+        "body": "Os dados pessoais são tratados segundo a Política de Privacidade atual da Findelio."
+      },
+      "changes": {
+        "title": "Alterações aos Termos",
+        "body": "A Findelio pode alterar os Termos para o futuro por razões legais, técnicas ou comerciais. Alterações relevantes serão comunicadas."
+      },
+      "law": {
+        "title": "Lei e foro",
+        "body": "Aplica-se a lei suíça. Quando legalmente permitido, são competentes os tribunais da sede da Webpixels. Regras imperativas mantêm-se; em divergências prevalece a versão alemã."
+      }
+    },
+    "verification": {
+      "title": "Fichas empresariais verificadas",
+      "body": "As empresas podem apresentar voluntariamente um extrato atual do registo comercial, do registo UID ou um comprovativo oficial comparável. Para empresários em nome individual sem inscrição no registo comercial, a Findelio pode aceitar, em especial, uma confirmação da entidade de segurança social competente que reconheça a atividade independente. Após uma verificação bem-sucedida, a Findelio pode marcar a ficha como «Verificada». O selo confirma apenas a existência ou associação da empresa verificada pelo documento; não garante qualidade, solvabilidade, licenças ou serviços. A Findelio pode solicitar mais dados ou retirar o estado se as informações estiverem desatualizadas, forem contraditórias ou falsas. Os comprovativos são utilizados exclusivamente para verificação, acessíveis apenas a pessoas autorizadas e eliminados quando deixam de ser necessários para esse fim, salvo obrigação de conservação."
+    },
     "contact": "Para questões sobre estes Termos, contacte a equipa Findelio em"
   },
   "Contact": {
@@ -585,8 +732,7 @@
       "approve": "Approve post",
       "reject": "Reject post"
     }
-  }
-  ,
+  },
   "ListingEditor": {
     "eyebrow": "Editar registo empresarial",
     "title": "Editar {name}",
@@ -957,7 +1103,10 @@
       "eyebrow": "Pedidos de eliminação",
       "title": "Pedidos de eliminação em aberto",
       "description": "Analise o pedido e confirme que já não existe nenhum período Premium pago ativo antes de arquivar.",
-      "types": { "listing": "Ficha da empresa", "organization": "Organização" },
+      "types": {
+        "listing": "Ficha da empresa",
+        "organization": "Organização"
+      },
       "submittedBy": "Pedido por {name} em {date}",
       "unknownRequester": "Utilizador desconhecido",
       "customerReason": "Motivo do pedido",
@@ -1014,5 +1163,70 @@
     "errorTitle": "Não foi possível confirmar",
     "errorText": "A ligação de confirmação é inválida, expirou ou já foi utilizada.",
     "registerButton": "Voltar ao registo"
+  },
+  "Referrals": {
+    "eyebrow": "PARCERIAS",
+    "title": "Recomendações",
+    "description": "Gere códigos de recomendação e acompanha as empresas que chegam ao Findelio através deles. O período experimental Premium é apenas para novas organizações.",
+    "activePartners": "Parceiros ativos",
+    "registrations": "Registos (filtrados)",
+    "pendingActivation": "Ativação pendente (filtrada)",
+    "newPartner": "Adicionar parceiro",
+    "editPartner": "Editar parceiro",
+    "partnerHelp": "Um código por parceiro. Não é necessária uma conta Findelio própria.",
+    "name": "Nome",
+    "code": "Código de recomendação",
+    "codeHelp": "3–64 caracteres: letras A–Z, números, hífen ou sublinhado. Não distingue maiúsculas de minúsculas.",
+    "codeFixed": "O código não muda, para que os links partilhados continuem válidos.",
+    "notes": "Notas internas",
+    "status": "Estado",
+    "active": "Ativo",
+    "disabled": "Desativado",
+    "disableHelp": "Desativar impede novas utilizações. As associações e os períodos experimentais existentes mantêm-se.",
+    "save": "Guardar",
+    "saving": "A guardar …",
+    "cancel": "Cancelar",
+    "partners": "Parceiros",
+    "noPartners": "Ainda não há parceiros. Adiciona o primeiro através do formulário.",
+    "link": "Link de recomendação",
+    "copyLink": "Copiar link",
+    "copyCode": "Copiar código",
+    "edit": "Editar",
+    "companies": "Empresas recomendadas",
+    "overviewHelp": "As horas usam Europe/Zurich. O período experimental começa na primeira aprovação elegível do perfil da empresa.",
+    "allPartners": "Todos os parceiros",
+    "allStates": "Todos os estados",
+    "refresh": "Atualizar",
+    "noCompanies": "Ainda não há registos para esta seleção.",
+    "company": "Organização / perfil da empresa",
+    "registered": "Data de registo",
+    "period": "Início / fim do período",
+    "actions": "Ações",
+    "awaitingOrganization": "Organização ainda não criada",
+    "retry": "Tentar ativação novamente",
+    "page": "Página {page} de {pages} · {total} registos",
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "revoked": "Período revogado",
+    "expired": "Período expirado",
+    "previousPublication": "Já publicado anteriormente: sem novo período experimental.",
+    "existingPremium": "Já existia Premium. Não será atribuído um período experimental adicional.",
+    "saved": "Guardado.",
+    "copied": "Copiado.",
+    "copy_failed": "Não foi possível copiar. Seleciona e copia manualmente o link apresentado.",
+    "load_failed": "Não foi possível carregar o resumo. Tenta novamente.",
+    "save_failed": "Não foi possível guardar. Verifica os dados e tenta novamente.",
+    "code_exists": "Este código já está em utilização.",
+    "retry_failed": "A ativação falhou. A reserva mantém-se.",
+    "retry_done": "A ativação foi verificada novamente. Consulta o estado atual no resumo.",
+    "states": {
+      "pending_organization": "Aguarda organização",
+      "pending_approval": "Aguarda aprovação",
+      "pending_activation": "Ativação pendente",
+      "granted": "Período atribuído",
+      "skipped_existing_premium": "Ignorado: já existia Premium",
+      "expired_unactivated": "Expirado sem ativação",
+      "void": "Não elegível"
+    }
   }
 }

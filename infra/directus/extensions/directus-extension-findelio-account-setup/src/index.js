@@ -12,6 +12,14 @@ function slugify(value) {
   );
 }
 
+function isReferralRegistrationEnabled(env) {
+  return (
+    String(env?.FINDELIO_REFERRAL_REGISTRATION_ENABLED ?? "")
+      .trim()
+      .toLowerCase() === "true"
+  );
+}
+
 async function createUniqueSlug(trx, name) {
   const baseSlug = slugify(name);
 
@@ -40,7 +48,7 @@ async function createUniqueSlug(trx, name) {
 
 const findelioAccountSetupEndpoint = {
   id: "findelio-account-setup",
-  handler: (router, { database, getSchema, logger, services }) => {
+  handler: (router, { database, env, getSchema, logger, services }) => {
     const { ItemsService } = services;
 
     router.post("/", async (req, res) => {
@@ -119,6 +127,42 @@ const findelioAccountSetupEndpoint = {
             role: "owner",
             status: "active",
           });
+
+          // Bind a pending referral only when the feature is enabled and a
+          // redemption already exists for this authenticated user. Never create
+          // a redemption here (team invitations / existing orgs stay excluded).
+          if (isReferralRegistrationEnabled(env)) {
+            const redemption = await trx("referral_redemptions")
+              .select("id", "organization", "status")
+              .where({
+                user: userId,
+                status: "pending_organization",
+              })
+              .whereNull("organization")
+              .forUpdate()
+              .first();
+
+            if (redemption) {
+              const updated = await trx("referral_redemptions")
+                .where({
+                  id: redemption.id,
+                  status: "pending_organization",
+                })
+                .whereNull("organization")
+                .update({
+                  organization: organizationId,
+                  organization_bound_at: trx.fn.now(),
+                  status: "pending_approval",
+                  date_updated: trx.fn.now(),
+                });
+
+              if (!updated) {
+                const error = new Error("referral_bind_failed");
+                error.status = 500;
+                throw error;
+              }
+            }
+          }
 
           return {
             id: organizationId,

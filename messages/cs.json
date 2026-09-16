@@ -114,6 +114,9 @@
     "passwordMismatch": "Hesla se neshodují.",
     "emailError": "Zadejte platnou e-mailovou adresu.",
     "invitationError": "Tato pozvánka již není platná. Požádejte organizaci o zaslání nové pozvánky.",
+    "referralCode": "Doporučovací kód (volitelné)",
+    "referralCodeHint": "Pokud jste přišli přes doporučovací odkaz, kód je už vyplněný. Můžete ho zadat i ručně.",
+    "referralError": "Tento doporučovací kód je neplatný nebo již není aktivní.",
     "errorFallback": "Registraci se nepodařilo zpracovat.",
     "serverError": "Registrace momentálně není dostupná.",
     "connectionError": "Připojení k serveru se nezdařilo."
@@ -198,7 +201,8 @@
       "listings": "Firemní záznamy",
       "team": "Tým",
       "review": "Kontrola",
-      "premium": "Premium"
+      "premium": "Premium",
+      "referrals": "Doporučení"
     },
     "summary": {
       "organizations": "Organizace",
@@ -232,83 +236,90 @@
     "overviewOrganizationsLink": "Zobrazit všechny organizace",
     "organizationListingsLink": "Zobrazit firemní záznamy"
   },
-    "Team": {
-      "organization": "Organizace",
-      "empty": "Momentálně nejste členem žádné aktivní organizace.",
-      "membersTitle": "Členové týmu",
-      "membersCount": "{count, plural, one {# aktivní člen} few {# aktivní členové} other {# aktivních členů}}",
-      "roleFor": "Role pro {name}",
-      "remove": "Odebrat",
-      "inviteTitle": "Pozvat osobu",
-      "inviteDescription": "Pozvánka platí sedm dní a lze ji přijmout pouze pomocí uvedené e-mailové adresy.",
-      "viewOnly": "Vaše role umožňuje tým zobrazit, ale ne měnit.",
-      "email": "E-mailová adresa",
-      "role": "Role",
-      "invite": "Odeslat pozvánku",
-      "inviting": "Odesílá se …",
-      "pendingTitle": "Čekající pozvánky",
-      "pendingEmpty": "Žádné čekající pozvánky.",
-      "expires": "platí do {date}",
-      "cancelInvitation": "Zrušit pozvánku",
-      "confirmMemberTitle": "Odebrat člena týmu?",
-      "confirmMemberDescription": "{name} ztratí přístup k této organizaci a jejím firemním záznamům.",
-      "confirmInvitationTitle": "Zrušit pozvánku?",
-      "confirmInvitationDescription": "Odkaz pozvánky pro {name} bude okamžitě neplatný.",
-      "keep": "Zrušit",
-      "confirm": "Potvrdit",
-      "working": "Zpracovává se …",
-      "roles": { "owner": "Vlastník", "admin": "Administrátor", "editor": "Redaktor" },
-      "messages": {
-        "invited": "Pozvánka byla odeslána e-mailem.",
-        "roleUpdated": "Role byla aktualizována.",
-        "memberRemoved": "Člen týmu byl odebrán.",
-        "invitationCancelled": "Pozvánka byla zrušena."
-      },
-      "errors": {
-        "invalid_data": "Zkontrolujte zadané údaje.",
-        "unauthorized": "Vaše relace vypršela. Přihlaste se znovu.",
-        "forbidden": "K této akci nemáte oprávnění.",
-        "member_exists": "Tato osoba již je členem organizace.",
-        "invitation_exists": "Pro tuto e-mailovou adresu již existuje čekající pozvánka.",
-        "rate_limited": "Bylo odesláno příliš mnoho pozvánek. Zkuste to později.",
-        "too_many_invitations": "Tato organizace již má příliš mnoho čekajících pozvánek.",
-        "send_failed": "Pozvánku se nepodařilo odeslat.",
-        "update_failed": "Změnu se nepodařilo uložit.",
-        "not_found": "Tato položka již není dostupná.",
-        "network": "Připojení se nezdařilo. Zkuste to znovu.",
-        "unknown": "Něco se pokazilo. Zkuste to znovu."
-      }
+  "Team": {
+    "organization": "Organizace",
+    "empty": "Momentálně nejste členem žádné aktivní organizace.",
+    "membersTitle": "Členové týmu",
+    "membersCount": "{count, plural, one {# aktivní člen} few {# aktivní členové} other {# aktivních členů}}",
+    "roleFor": "Role pro {name}",
+    "remove": "Odebrat",
+    "inviteTitle": "Pozvat osobu",
+    "inviteDescription": "Pozvánka platí sedm dní a lze ji přijmout pouze pomocí uvedené e-mailové adresy.",
+    "viewOnly": "Vaše role umožňuje tým zobrazit, ale ne měnit.",
+    "email": "E-mailová adresa",
+    "role": "Role",
+    "invite": "Odeslat pozvánku",
+    "inviting": "Odesílá se …",
+    "pendingTitle": "Čekající pozvánky",
+    "pendingEmpty": "Žádné čekající pozvánky.",
+    "expires": "platí do {date}",
+    "cancelInvitation": "Zrušit pozvánku",
+    "confirmMemberTitle": "Odebrat člena týmu?",
+    "confirmMemberDescription": "{name} ztratí přístup k této organizaci a jejím firemním záznamům.",
+    "confirmInvitationTitle": "Zrušit pozvánku?",
+    "confirmInvitationDescription": "Odkaz pozvánky pro {name} bude okamžitě neplatný.",
+    "keep": "Zrušit",
+    "confirm": "Potvrdit",
+    "working": "Zpracovává se …",
+    "roles": {
+      "owner": "Vlastník",
+      "admin": "Administrátor",
+      "editor": "Redaktor"
     },
-    "TeamInvitation": {
-      "eyebrow": "Pozvánka do týmu",
-      "title": "Pozvánka od {organization}",
-      "description": "Přijetím získáte přístup k organizaci a podle své role můžete spravovat její obsah na Findelio.",
-      "registrationDescription": "Vytvořte si osobní účet pro organizaci {organization}. Po potvrzení e-mailu se pozvánka přijme automaticky a přejdete přímo k firemním záznamům.",
-      "email": "Pozvaná e-mailová adresa",
-      "role": "Role",
-      "validUntil": "Platí do",
-      "roles": { "admin": "Administrátor", "editor": "Redaktor" },
-      "signInTitle": "Přihlaste se nebo vytvořte účet",
-      "signInDescription": "Přihlaste se, pokud už máte účet s adresou {email}. Jinak si nyní vytvořte účet; po potvrzení e-mailu se pozvánka přijme automaticky.",
-      "signIn": "Přihlásit se",
-      "register": "Vytvořit účet",
-      "wrongAccountTitle": "Přihlášen nesprávný účet",
-      "wrongAccountDescription": "Jste přihlášeni jako {current}. Tato pozvánka platí pro {invited}. Odhlaste se a přihlaste pozvanou adresou.",
-      "accept": "Přijmout pozvánku",
-      "accepting": "Přijímá se …",
-      "acceptError": "Pozvánku se nepodařilo přijmout. Zkuste to znovu.",
-      "emailMismatch": "Tato pozvánka patří jiné e-mailové adrese.",
-      "acceptedEyebrow": "Pozvánka přijata",
-      "acceptedTitle": "Vítejte v týmu {organization}",
-      "acceptedDescription": "Organizaci a její firemní záznamy nyní můžete spravovat v ovládacím panelu.",
-      "openTeam": "Otevřít správu týmu",
-      "invalidTitle": "Pozvánka nenalezena",
-      "invalidDescription": "Tento odkaz pozvánky je neplatný nebo byl zrušen.",
-      "expiredTitle": "Pozvánka vypršela",
-      "expiredDescription": "Tato pozvánka již není platná. Požádejte organizaci o novou.",
-      "home": "Na domovskou stránku"
+    "messages": {
+      "invited": "Pozvánka byla odeslána e-mailem.",
+      "roleUpdated": "Role byla aktualizována.",
+      "memberRemoved": "Člen týmu byl odebrán.",
+      "invitationCancelled": "Pozvánka byla zrušena."
     },
-    "Footer": {
+    "errors": {
+      "invalid_data": "Zkontrolujte zadané údaje.",
+      "unauthorized": "Vaše relace vypršela. Přihlaste se znovu.",
+      "forbidden": "K této akci nemáte oprávnění.",
+      "member_exists": "Tato osoba již je členem organizace.",
+      "invitation_exists": "Pro tuto e-mailovou adresu již existuje čekající pozvánka.",
+      "rate_limited": "Bylo odesláno příliš mnoho pozvánek. Zkuste to později.",
+      "too_many_invitations": "Tato organizace již má příliš mnoho čekajících pozvánek.",
+      "send_failed": "Pozvánku se nepodařilo odeslat.",
+      "update_failed": "Změnu se nepodařilo uložit.",
+      "not_found": "Tato položka již není dostupná.",
+      "network": "Připojení se nezdařilo. Zkuste to znovu.",
+      "unknown": "Něco se pokazilo. Zkuste to znovu."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Pozvánka do týmu",
+    "title": "Pozvánka od {organization}",
+    "description": "Přijetím získáte přístup k organizaci a podle své role můžete spravovat její obsah na Findelio.",
+    "registrationDescription": "Vytvořte si osobní účet pro organizaci {organization}. Po potvrzení e-mailu se pozvánka přijme automaticky a přejdete přímo k firemním záznamům.",
+    "email": "Pozvaná e-mailová adresa",
+    "role": "Role",
+    "validUntil": "Platí do",
+    "roles": {
+      "admin": "Administrátor",
+      "editor": "Redaktor"
+    },
+    "signInTitle": "Přihlaste se nebo vytvořte účet",
+    "signInDescription": "Přihlaste se, pokud už máte účet s adresou {email}. Jinak si nyní vytvořte účet; po potvrzení e-mailu se pozvánka přijme automaticky.",
+    "signIn": "Přihlásit se",
+    "register": "Vytvořit účet",
+    "wrongAccountTitle": "Přihlášen nesprávný účet",
+    "wrongAccountDescription": "Jste přihlášeni jako {current}. Tato pozvánka platí pro {invited}. Odhlaste se a přihlaste pozvanou adresou.",
+    "accept": "Přijmout pozvánku",
+    "accepting": "Přijímá se …",
+    "acceptError": "Pozvánku se nepodařilo přijmout. Zkuste to znovu.",
+    "emailMismatch": "Tato pozvánka patří jiné e-mailové adrese.",
+    "acceptedEyebrow": "Pozvánka přijata",
+    "acceptedTitle": "Vítejte v týmu {organization}",
+    "acceptedDescription": "Organizaci a její firemní záznamy nyní můžete spravovat v ovládacím panelu.",
+    "openTeam": "Otevřít správu týmu",
+    "invalidTitle": "Pozvánka nenalezena",
+    "invalidDescription": "Tento odkaz pozvánky je neplatný nebo byl zrušen.",
+    "expiredTitle": "Pozvánka vypršela",
+    "expiredDescription": "Tato pozvánka již není platná. Požádejte organizaci o novou.",
+    "home": "Na domovskou stránku"
+  },
+  "Footer": {
     "tagline": "Findelio spojuje lidi s firmami, které mluví jejich jazykem.",
     "directory": "Adresář",
     "findCompanies": "Najít firmy",
@@ -371,9 +382,18 @@
     "purposeLabel": "Účel",
     "durationLabel": "Doba uložení",
     "cookies": {
-      "access": { "purpose": "Udržuje vaše bezpečné přihlášení během aktivní relace.", "duration": "Krátkodobě; automaticky vyprší spolu s přístupovým tokenem." },
-      "refresh": { "purpose": "Bezpečně obnovuje přihlášení bez opakovaného zadávání hesla na každé stránce.", "duration": "Nejvýše 7 dní nebo do odhlášení." },
-      "locale": { "purpose": "Pamatuje si zvolený jazyk během relace prohlížeče.", "duration": "Do konce relace prohlížeče." }
+      "access": {
+        "purpose": "Udržuje vaše bezpečné přihlášení během aktivní relace.",
+        "duration": "Krátkodobě; automaticky vyprší spolu s přístupovým tokenem."
+      },
+      "refresh": {
+        "purpose": "Bezpečně obnovuje přihlášení bez opakovaného zadávání hesla na každé stránce.",
+        "duration": "Nejvýše 7 dní nebo do odhlášení."
+      },
+      "locale": {
+        "purpose": "Pamatuje si zvolený jazyk během relace prohlížeče.",
+        "duration": "Do konce relace prohlížeče."
+      }
     },
     "storageTitle": "Místní úložiště prohlížeče",
     "storageText": "Upozornění na cookies a vaše volba analytiky se ukládají do místního úložiště prohlížeče.",
@@ -386,21 +406,144 @@
     "privacyLink": "Otevřít zásady ochrany soukromí"
   },
   "CompanyGuide": {
-    "metaTitle": "Jak Findelio funguje pro firmy | Findelio", "metaDescription": "Od firemního účtu po zveřejněný záznam: zjistěte, jak firmy používají Findelio a co nabízí Premium.", "eyebrow": "Pro firmy", "title": "Váš záznam na Findelio v několika krocích.", "intro": "Findelio spojuje vaši firmu s lidmi, kteří hledají služby ve svém jazyce. Údaje máte pod kontrolou a pro každý záznam volíte Free nebo Premium.", "stepsTitle": "Jak probíhá zveřejnění",
+    "metaTitle": "Jak Findelio funguje pro firmy | Findelio",
+    "metaDescription": "Od firemního účtu po zveřejněný záznam: zjistěte, jak firmy používají Findelio a co nabízí Premium.",
+    "eyebrow": "Pro firmy",
+    "title": "Váš záznam na Findelio v několika krocích.",
+    "intro": "Findelio spojuje vaši firmu s lidmi, kteří hledají služby ve svém jazyce. Údaje máte pod kontrolou a pro každý záznam volíte Free nebo Premium.",
+    "stepsTitle": "Jak probíhá zveřejnění",
     "steps": {
-      "register": { "title": "Vytvořte účet", "text": "Zaregistrujte se e-mailem a potvrďte adresu odkazem v potvrzovací zprávě." }, "organization": { "title": "Vytvořte organizaci", "text": "Přidejte organizaci, ke které patří firemní záznamy a později i členové týmu." }, "listing": { "title": "Vytvořte záznam", "text": "Zadejte firmu, vyberte obory a jazyky a zvolte Free nebo Premium." }, "complete": { "title": "Doplňte profil", "text": "Přidejte popis, kontakt a adresu. Premium navíc nabízí logo, galerii, otevírací dobu, sociální sítě a překlady." }, "review": { "title": "Odešlete ke kontrole", "text": "Findelio kontroluje nové a změněné údaje, aby byl katalog důvěryhodný a aktuální." }, "publish": { "title": "Zveřejněte a růstěte", "text": "Po schválení je záznam viditelný. Teprve potom aktivujete Premium a získáte příspěvky a statistiky." }
+      "register": {
+        "title": "Vytvořte účet",
+        "text": "Zaregistrujte se e-mailem a potvrďte adresu odkazem v potvrzovací zprávě."
+      },
+      "organization": {
+        "title": "Vytvořte organizaci",
+        "text": "Přidejte organizaci, ke které patří firemní záznamy a později i členové týmu."
+      },
+      "listing": {
+        "title": "Vytvořte záznam",
+        "text": "Zadejte firmu, vyberte obory a jazyky a zvolte Free nebo Premium."
+      },
+      "complete": {
+        "title": "Doplňte profil",
+        "text": "Přidejte popis, kontakt a adresu. Premium navíc nabízí logo, galerii, otevírací dobu, sociální sítě a překlady."
+      },
+      "review": {
+        "title": "Odešlete ke kontrole",
+        "text": "Findelio kontroluje nové a změněné údaje, aby byl katalog důvěryhodný a aktuální."
+      },
+      "publish": {
+        "title": "Zveřejněte a růstěte",
+        "text": "Po schválení je záznam viditelný. Teprve potom aktivujete Premium a získáte příspěvky a statistiky."
+      }
     },
-    "packagesEyebrow": "Balíčky pro každý záznam", "packagesTitle": "Začněte Free nebo ukažte více s Premium",
-    "free": { "title": "Free", "price": "CHF 0", "description": "Pevný základ pro dohledatelný a zkontrolovaný záznam.", "features": { "profile": "Název firmy a úplný popis", "classification": "Obory a používané jazyky", "contact": "Kontakt, web a poloha" } },
-    "premium": { "title": "Premium", "price": "CHF 9.90 měsíčně nebo CHF 99 ročně", "description": "Pro firmy, které chtějí lepší prezentaci, aktuální obsah a přehled o dosahu.", "features": { "media": "Logo a fotogalerie", "details": "Otevírací doba, sociální sítě a vlastní tlačítko", "translations": "Vlastní popisy ve všech jazycích Findelio", "posts": "Novinky, akce a události", "ranking": "Přednostní umístění relevantních Premium záznamů", "statistics": "Statistiky a měsíční report" } },
-    "reviewTitle": "Proč se záznamy kontrolují?", "reviewText": "Kontrola chrání návštěvníky i seriózní firmy. Findelio ověřuje věrohodnost údajů a při dotazech nebo odmítnutí zašle zprávu.", "verificationEyebrow": "Dobrovolné doplňkové ověření", "verificationTitle": "Získejte stav Ověřeno pomocí úředního dokladu", "verificationText": "Findelio můžete dobrovolně zaslat aktuální úřední doklad o firmě. Po úspěšné kontrole označíme firemní záznam jako „Ověřený“.", "verificationProofs": "Vhodný je například aktuální výpis z obchodního rejstříku nebo registru UID. U osoby samostatně výdělečně činné bez zápisu v obchodním rejstříku lze použít také potvrzení příslušné instituce sociálního zabezpečení o uznání samostatné výdělečné činnosti.", "verificationNote": "Odznak Ověřeno potvrzuje pouze to, že Findelio podle dokladu ověřilo existenci nebo příslušnost firmy. Nezaručuje kvalitu, bonitu, povolení ani služby.", "verificationCta": "Zaslat doklad e-mailem", "ctaTitle": "Připraveni přidat firmu?", "ctaText": "Vytvořte bezplatný účet, doplňte profil a oslovte správné zákazníky.", "ctaButton": "Přidat firmu"
+    "packagesEyebrow": "Balíčky pro každý záznam",
+    "packagesTitle": "Začněte Free nebo ukažte více s Premium",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Pevný základ pro dohledatelný a zkontrolovaný záznam.",
+      "features": {
+        "profile": "Název firmy a úplný popis",
+        "classification": "Obory a používané jazyky",
+        "contact": "Kontakt, web a poloha"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 měsíčně nebo CHF 99 ročně",
+      "description": "Pro firmy, které chtějí lepší prezentaci, aktuální obsah a přehled o dosahu.",
+      "features": {
+        "media": "Logo a fotogalerie",
+        "details": "Otevírací doba, sociální sítě a vlastní tlačítko",
+        "translations": "Vlastní popisy ve všech jazycích Findelio",
+        "posts": "Novinky, akce a události",
+        "ranking": "Přednostní umístění relevantních Premium záznamů",
+        "statistics": "Statistiky a měsíční report"
+      }
+    },
+    "reviewTitle": "Proč se záznamy kontrolují?",
+    "reviewText": "Kontrola chrání návštěvníky i seriózní firmy. Findelio ověřuje věrohodnost údajů a při dotazech nebo odmítnutí zašle zprávu.",
+    "verificationEyebrow": "Dobrovolné doplňkové ověření",
+    "verificationTitle": "Získejte stav Ověřeno pomocí úředního dokladu",
+    "verificationText": "Findelio můžete dobrovolně zaslat aktuální úřední doklad o firmě. Po úspěšné kontrole označíme firemní záznam jako „Ověřený“.",
+    "verificationProofs": "Vhodný je například aktuální výpis z obchodního rejstříku nebo registru UID. U osoby samostatně výdělečně činné bez zápisu v obchodním rejstříku lze použít také potvrzení příslušné instituce sociálního zabezpečení o uznání samostatné výdělečné činnosti.",
+    "verificationNote": "Odznak Ověřeno potvrzuje pouze to, že Findelio podle dokladu ověřilo existenci nebo příslušnost firmy. Nezaručuje kvalitu, bonitu, povolení ani služby.",
+    "verificationCta": "Zaslat doklad e-mailem",
+    "ctaTitle": "Připraveni přidat firmu?",
+    "ctaText": "Vytvořte bezplatný účet, doplňte profil a oslovte správné zákazníky.",
+    "ctaButton": "Přidat firmu"
   },
   "Terms": {
-    "metaTitle": "Všeobecné obchodní podmínky | Findelio", "metaDescription": "Podmínky pro firemní účty, záznamy a Premium předplatné na Findelio.", "eyebrow": "Právní informace", "title": "Všeobecné obchodní podmínky", "lastUpdated": "Stav k 3. srpnu 2026", "intro": "Tyto podmínky upravují používání Findelio firmami, organizacemi a jejich oprávněnými uživateli.",
+    "metaTitle": "Všeobecné obchodní podmínky | Findelio",
+    "metaDescription": "Podmínky pro firemní účty, záznamy a Premium předplatné na Findelio.",
+    "eyebrow": "Právní informace",
+    "title": "Všeobecné obchodní podmínky",
+    "lastUpdated": "Stav k 3. srpnu 2026",
+    "intro": "Tyto podmínky upravují používání Findelio firmami, organizacemi a jejich oprávněnými uživateli.",
     "sections": {
-      "scope": { "title": "Poskytovatel a rozsah", "body": "Findelio provozuje Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Švýcarsko. Podmínky platí pro účty, organizace, záznamy a bezplatné i placené funkce." }, "services": { "title": "Služby Findelio", "body": "Findelio provozuje vícejazyčný firemní katalog a nástroje pro tvorbu, kontrolu a správu záznamů. Není stranou smluv mezi návštěvníky a firmami." }, "accounts": { "title": "Účet a oprávnění", "body": "Údaje musí být správné a aktuální, přihlašovací údaje důvěrné. Osoba jednající za organizaci potvrzuje své oprávnění a odpovídá za činnost účtu." }, "content": { "title": "Obsah a licence", "body": "Firma odpovídá za texty, obrázky, loga a odkazy a potvrzuje jejich zákonnost. Findelio získává nevýhradní práva nutná k uložení a zobrazení obsahu po dobu zveřejnění." }, "review": { "title": "Kontrola a blokování", "body": "Nezákonný, zavádějící, neúplný nebo zneužívající obsah může být odmítnut, pozastaven či odstraněn. Je-li to přiměřené, Findelio sdělí důvod a umožní opravu." }, "packages": { "title": "Free a Premium", "body": "Free obsahuje uvedené základní funkce. Premium platí pro jeden záznam a obsahuje doplňky popsané na stránce nabídky a fakturace." }, "contract": { "title": "Smlouva, ceny a platba", "body": "Ceny jsou uvedeny ve švýcarských francích. Premium vzniká potvrzením platby. Měsíční a roční předplatné se obnovuje, pokud není zrušeno před koncem období." }, "cancellation": { "title": "Zrušení a neúspěšná platba", "body": "Premium lze zrušit ke konci období; do té doby zůstává aktivní. Po neúspěšné platbě může být přístup na konci období zablokován. Poměrné vratky se zpravidla neposkytují; povinná práva zůstávají zachována." }, "availability": { "title": "Dostupnost", "body": "Nepřetržitý bezchybný provoz není zaručen. Údržba, bezpečnostní opatření, třetí strany nebo vyšší moc mohou způsobit přerušení." }, "liability": { "title": "Odpovědnost", "body": "Findelio odpovídá v povinném zákonném rozsahu. Pokud je to dovoleno, neodpovídá za lehkou nedbalost, nepřímé škody, ušlý zisk a ztrátu dat." }, "termination": { "title": "Ukončení a smazání", "body": "Smazání účtu nenahrazuje zrušení aktivního Premium. Při závažném nebo opakovaném porušení může Findelio přístup zablokovat nebo ukončit." }, "privacy": { "title": "Ochrana údajů", "body": "Zpracování osobních údajů se řídí aktuálními zásadami ochrany soukromí Findelio." }, "changes": { "title": "Změny podmínek", "body": "Findelio může podmínky do budoucna měnit z právních, technických nebo obchodních důvodů. Podstatné změny budou oznámeny." }, "law": { "title": "Právo a soud", "body": "Platí švýcarské právo. Je-li to zákonně přípustné, příslušné jsou soudy v sídle Webpixels. Povinná pravidla zůstávají zachována; při rozporu překladů rozhoduje němčina." }
+      "scope": {
+        "title": "Poskytovatel a rozsah",
+        "body": "Findelio provozuje Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Švýcarsko. Podmínky platí pro účty, organizace, záznamy a bezplatné i placené funkce."
+      },
+      "services": {
+        "title": "Služby Findelio",
+        "body": "Findelio provozuje vícejazyčný firemní katalog a nástroje pro tvorbu, kontrolu a správu záznamů. Není stranou smluv mezi návštěvníky a firmami."
+      },
+      "accounts": {
+        "title": "Účet a oprávnění",
+        "body": "Údaje musí být správné a aktuální, přihlašovací údaje důvěrné. Osoba jednající za organizaci potvrzuje své oprávnění a odpovídá za činnost účtu."
+      },
+      "content": {
+        "title": "Obsah a licence",
+        "body": "Firma odpovídá za texty, obrázky, loga a odkazy a potvrzuje jejich zákonnost. Findelio získává nevýhradní práva nutná k uložení a zobrazení obsahu po dobu zveřejnění."
+      },
+      "review": {
+        "title": "Kontrola a blokování",
+        "body": "Nezákonný, zavádějící, neúplný nebo zneužívající obsah může být odmítnut, pozastaven či odstraněn. Je-li to přiměřené, Findelio sdělí důvod a umožní opravu."
+      },
+      "packages": {
+        "title": "Free a Premium",
+        "body": "Free obsahuje uvedené základní funkce. Premium platí pro jeden záznam a obsahuje doplňky popsané na stránce nabídky a fakturace."
+      },
+      "contract": {
+        "title": "Smlouva, ceny a platba",
+        "body": "Ceny jsou uvedeny ve švýcarských francích. Premium vzniká potvrzením platby. Měsíční a roční předplatné se obnovuje, pokud není zrušeno před koncem období."
+      },
+      "cancellation": {
+        "title": "Zrušení a neúspěšná platba",
+        "body": "Premium lze zrušit ke konci období; do té doby zůstává aktivní. Po neúspěšné platbě může být přístup na konci období zablokován. Poměrné vratky se zpravidla neposkytují; povinná práva zůstávají zachována."
+      },
+      "availability": {
+        "title": "Dostupnost",
+        "body": "Nepřetržitý bezchybný provoz není zaručen. Údržba, bezpečnostní opatření, třetí strany nebo vyšší moc mohou způsobit přerušení."
+      },
+      "liability": {
+        "title": "Odpovědnost",
+        "body": "Findelio odpovídá v povinném zákonném rozsahu. Pokud je to dovoleno, neodpovídá za lehkou nedbalost, nepřímé škody, ušlý zisk a ztrátu dat."
+      },
+      "termination": {
+        "title": "Ukončení a smazání",
+        "body": "Smazání účtu nenahrazuje zrušení aktivního Premium. Při závažném nebo opakovaném porušení může Findelio přístup zablokovat nebo ukončit."
+      },
+      "privacy": {
+        "title": "Ochrana údajů",
+        "body": "Zpracování osobních údajů se řídí aktuálními zásadami ochrany soukromí Findelio."
+      },
+      "changes": {
+        "title": "Změny podmínek",
+        "body": "Findelio může podmínky do budoucna měnit z právních, technických nebo obchodních důvodů. Podstatné změny budou oznámeny."
+      },
+      "law": {
+        "title": "Právo a soud",
+        "body": "Platí švýcarské právo. Je-li to zákonně přípustné, příslušné jsou soudy v sídle Webpixels. Povinná pravidla zůstávají zachována; při rozporu překladů rozhoduje němčina."
+      }
     },
-    "verification": { "title": "Ověřené firemní záznamy", "body": "Firmy mohou dobrovolně předložit aktuální výpis z obchodního rejstříku, registru UID nebo srovnatelný úřední doklad. U osoby samostatně výdělečně činné bez zápisu v obchodním rejstříku může Findelio přijmout zejména potvrzení příslušné instituce sociálního zabezpečení o uznání samostatné výdělečné činnosti. Po úspěšné kontrole může Findelio označit záznam jako „Ověřený“. Odznak potvrzuje jen existenci nebo příslušnost firmy ověřenou z dokladu; nezaručuje kvalitu, bonitu, povolení ani služby. Findelio může vyžádat další údaje nebo stav odebrat při zastaralých, rozporných či nepravdivých informacích. Doklady se používají výhradně k ověření, zpřístupňují se jen oprávněným osobám a po skončení účelu se smažou, pokud tomu nebrání povinnost uchování." },
+    "verification": {
+      "title": "Ověřené firemní záznamy",
+      "body": "Firmy mohou dobrovolně předložit aktuální výpis z obchodního rejstříku, registru UID nebo srovnatelný úřední doklad. U osoby samostatně výdělečně činné bez zápisu v obchodním rejstříku může Findelio přijmout zejména potvrzení příslušné instituce sociálního zabezpečení o uznání samostatné výdělečné činnosti. Po úspěšné kontrole může Findelio označit záznam jako „Ověřený“. Odznak potvrzuje jen existenci nebo příslušnost firmy ověřenou z dokladu; nezaručuje kvalitu, bonitu, povolení ani služby. Findelio může vyžádat další údaje nebo stav odebrat při zastaralých, rozporných či nepravdivých informacích. Doklady se používají výhradně k ověření, zpřístupňují se jen oprávněným osobám a po skončení účelu se smažou, pokud tomu nebrání povinnost uchování."
+    },
     "contact": "Dotazy k podmínkám zasílejte týmu Findelio na"
   },
   "Contact": {
@@ -589,8 +732,7 @@
       "approve": "Approve post",
       "reject": "Reject post"
     }
-  }
-  ,
+  },
   "ListingEditor": {
     "eyebrow": "Upravit firemní záznam",
     "title": "Upravit {name}",
@@ -961,7 +1103,10 @@
       "eyebrow": "Žádosti o odstranění",
       "title": "Otevřené žádosti o odstranění",
       "description": "Zkontrolujte žádost a před archivací ověřte, že již neběží žádné zaplacené období Premium.",
-      "types": { "listing": "Firemní záznam", "organization": "Organizace" },
+      "types": {
+        "listing": "Firemní záznam",
+        "organization": "Organizace"
+      },
       "submittedBy": "Požádal uživatel {name} dne {date}",
       "unknownRequester": "Neznámý uživatel",
       "customerReason": "Důvod žádosti",
@@ -1018,5 +1163,70 @@
     "errorTitle": "Potvrzení se nezdařilo",
     "errorText": "Potvrzovací odkaz je neplatný, vypršel nebo již byl použit.",
     "registerButton": "Zpět k registraci"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSTVÍ",
+    "title": "Doporučení",
+    "description": "Spravuj doporučovací kódy a sleduj firmy, které přes ně přicházejí na Findelio. Zkušební verze Premium platí jen pro nové organizace.",
+    "activePartners": "Aktivní partneři",
+    "registrations": "Registrace (filtrované)",
+    "pendingActivation": "Čeká na aktivaci (filtrované)",
+    "newPartner": "Přidat partnera",
+    "editPartner": "Upravit partnera",
+    "partnerHelp": "Jeden kód pro každého partnera. Vlastní účet Findelio nepotřebuje.",
+    "name": "Jméno",
+    "code": "Doporučovací kód",
+    "codeHelp": "3–64 znaků: písmena A–Z, číslice, pomlčka nebo podtržítko. Na velikosti písmen nezáleží.",
+    "codeFixed": "Kód zůstává stejný, aby sdílené odkazy zůstaly platné.",
+    "notes": "Interní poznámky",
+    "status": "Stav",
+    "active": "Aktivní",
+    "disabled": "Deaktivovaný",
+    "disableHelp": "Deaktivace zastaví nová uplatnění. Existující přiřazení a zkušební období zůstanou zachována.",
+    "save": "Uložit",
+    "saving": "Ukládá se …",
+    "cancel": "Zrušit",
+    "partners": "Partneři",
+    "noPartners": "Zatím žádní partneři. Prvního přidej přes formulář.",
+    "link": "Doporučovací odkaz",
+    "copyLink": "Kopírovat odkaz",
+    "copyCode": "Kopírovat kód",
+    "edit": "Upravit",
+    "companies": "Doporučené firmy",
+    "overviewHelp": "Časy jsou v pásmu Europe/Zurich. Zkušební období začíná prvním oprávněným schválením profilu firmy.",
+    "allPartners": "Všichni partneři",
+    "allStates": "Všechny stavy",
+    "refresh": "Obnovit",
+    "noCompanies": "Pro tento výběr zatím nejsou žádné registrace.",
+    "company": "Organizace / profil firmy",
+    "registered": "Datum registrace",
+    "period": "Začátek / konec zkoušky",
+    "actions": "Akce",
+    "awaitingOrganization": "Organizace ještě nebyla vytvořena",
+    "retry": "Zopakovat aktivaci",
+    "page": "Strana {page} z {pages} · {total} registrací",
+    "previous": "Zpět",
+    "next": "Další",
+    "revoked": "Zkouška zrušena",
+    "expired": "Zkouška vypršela",
+    "previousPublication": "Již zveřejněno v minulosti: bez nové zkoušky.",
+    "existingPremium": "Premium již existovalo. Další zkouška nebude poskytnuta.",
+    "saved": "Uloženo.",
+    "copied": "Zkopírováno.",
+    "copy_failed": "Kopírování selhalo. Označ a zkopíruj zobrazený odkaz ručně.",
+    "load_failed": "Přehled se nepodařilo načíst. Zkus to znovu.",
+    "save_failed": "Uložení selhalo. Zkontroluj údaje a zkus to znovu.",
+    "code_exists": "Tento kód se již používá.",
+    "retry_failed": "Aktivace selhala. Rezervace zůstává zachována.",
+    "retry_done": "Aktivace byla znovu zkontrolována. Aktuální stav najdeš v přehledu.",
+    "states": {
+      "pending_organization": "Čeká na organizaci",
+      "pending_approval": "Čeká na schválení",
+      "pending_activation": "Čeká na aktivaci",
+      "granted": "Zkouška poskytnuta",
+      "skipped_existing_premium": "Přeskočeno: Premium existovalo",
+      "expired_unactivated": "Vypršelo bez aktivace",
+      "void": "Bez oprávnění"
+    }
   }
 }

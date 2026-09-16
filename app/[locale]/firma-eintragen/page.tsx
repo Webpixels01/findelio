@@ -10,11 +10,16 @@ import {
   getPublicTeamInvitation,
   type PublicTeamInvitation,
 } from "@/lib/directus-team";
+import { isReferralRegistrationEnabled } from "@/lib/referral-registration";
 import { buildPageMetadata } from "@/lib/seo";
 
 type RegisterPageProps = {
   params: Promise<{ locale: AppLocale }>;
-  searchParams?: Promise<{ email?: string; invitation?: string }>;
+  searchParams?: Promise<{
+    email?: string;
+    invitation?: string;
+    ref?: string;
+  }>;
 };
 
 const invitationTokenPattern = /^[A-Za-z0-9_-]{40,100}$/;
@@ -40,8 +45,8 @@ export default async function RegisterPage({
   const resolvedSearchParams: Promise<{
     email?: string;
     invitation?: string;
-  }> =
-    searchParams ?? Promise.resolve({});
+    ref?: string;
+  }> = searchParams ?? Promise.resolve({});
   const [{ locale }, query] = await Promise.all([
     params,
     resolvedSearchParams,
@@ -49,6 +54,11 @@ export default async function RegisterPage({
   setRequestLocale(locale);
   const invitationToken =
     typeof query.invitation === "string" ? query.invitation.trim() : "";
+  const referralRegistrationEnabled = isReferralRegistrationEnabled();
+  const initialReferralCode =
+    referralRegistrationEnabled && typeof query.ref === "string"
+      ? query.ref.trim().slice(0, 64)
+      : "";
   let invitation: PublicTeamInvitation | null = null;
 
   if (invitationTokenPattern.test(invitationToken)) {
@@ -108,6 +118,8 @@ export default async function RegisterPage({
                   : "")
               }
               invitationToken={invitation ? invitationToken : ""}
+              referralRegistrationEnabled={referralRegistrationEnabled}
+              initialReferralCode={invitation ? "" : initialReferralCode}
             />
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { buildPreservedLocaleSearch } from "@/lib/register-search-params";
 
 const labels: Record<AppLocale, string> = {
   "de-ch": "DE",
@@ -27,7 +28,11 @@ export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
       <select
         value={locale}
         onChange={(event) => {
-          router.replace(pathname, {
+          const preserved =
+            typeof window !== "undefined"
+              ? buildPreservedLocaleSearch(pathname, window.location.search)
+              : "";
+          router.replace(preserved ? `${pathname}?${preserved}` : pathname, {
             locale: event.target.value as AppLocale,
           });
         }}

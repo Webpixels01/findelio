@@ -114,6 +114,9 @@
     "passwordMismatch": "A jelszavak nem egyeznek.",
     "emailError": "Adjon meg érvényes e-mail-címet.",
     "invitationError": "Ez a meghívás már nem érvényes. Kérjen a szervezettől új meghívást.",
+    "referralCode": "Ajánlói kód (opcionális)",
+    "referralCodeHint": "Ha ajánlói linken keresztül érkeztél, a kód már ki van töltve. Manuálisan is megadhatod.",
+    "referralError": "Ez az ajánlói kód érvénytelen vagy már nem aktív.",
     "errorFallback": "A regisztrációt nem sikerült feldolgozni.",
     "serverError": "A regisztráció jelenleg nem érhető el.",
     "connectionError": "Nem sikerült kapcsolódni a szerverhez."
@@ -198,7 +201,8 @@
       "listings": "Cégbejegyzések",
       "team": "Csapat",
       "review": "Ellenőrzés",
-      "premium": "Premium"
+      "premium": "Premium",
+      "referrals": "Ajánlások"
     },
     "summary": {
       "organizations": "Szervezetek",
@@ -232,83 +236,90 @@
     "overviewOrganizationsLink": "Összes szervezet megtekintése",
     "organizationListingsLink": "Cégbejegyzések megtekintése"
   },
-    "Team": {
-      "organization": "Szervezet",
-      "empty": "Jelenleg nem tartozol aktív szervezethez.",
-      "membersTitle": "Csapattagok",
-      "membersCount": "{count} aktív tag",
-      "roleFor": "{name} szerepköre",
-      "remove": "Eltávolítás",
-      "inviteTitle": "Személy meghívása",
-      "inviteDescription": "A meghívó hét napig érvényes, és csak a megadott e-mail-címmel fogadható el.",
-      "viewOnly": "A szerepköröddel megtekintheted a csapatot, de nem módosíthatod.",
-      "email": "E-mail-cím",
-      "role": "Szerepkör",
-      "invite": "Meghívó küldése",
-      "inviting": "Küldés …",
-      "pendingTitle": "Függőben lévő meghívók",
-      "pendingEmpty": "Nincs függőben lévő meghívó.",
-      "expires": "érvényes eddig: {date}",
-      "cancelInvitation": "Meghívó visszavonása",
-      "confirmMemberTitle": "Eltávolítod a csapattagot?",
-      "confirmMemberDescription": "{name} elveszíti a hozzáférést ehhez a szervezethez és a céges bejegyzéseihez.",
-      "confirmInvitationTitle": "Visszavonod a meghívót?",
-      "confirmInvitationDescription": "{name} meghívólinkje azonnal érvénytelenné válik.",
-      "keep": "Mégse",
-      "confirm": "Megerősítés",
-      "working": "Feldolgozás …",
-      "roles": { "owner": "Tulajdonos", "admin": "Adminisztrátor", "editor": "Szerkesztő" },
-      "messages": {
-        "invited": "A meghívót elküldtük e-mailben.",
-        "roleUpdated": "A szerepkör frissült.",
-        "memberRemoved": "A csapattagot eltávolítottuk.",
-        "invitationCancelled": "A meghívót visszavontuk."
-      },
-      "errors": {
-        "invalid_data": "Ellenőrizd a megadott adatokat.",
-        "unauthorized": "A munkameneted lejárt. Jelentkezz be újra.",
-        "forbidden": "Nincs jogosultságod ehhez a művelethez.",
-        "member_exists": "Ez a személy már a szervezet tagja.",
-        "invitation_exists": "Ehhez az e-mail-címhez már tartozik függőben lévő meghívó.",
-        "rate_limited": "Túl sok meghívót küldtél. Próbáld újra később.",
-        "too_many_invitations": "A szervezetnek már túl sok függőben lévő meghívója van.",
-        "send_failed": "A meghívót nem sikerült elküldeni.",
-        "update_failed": "A módosítást nem sikerült menteni.",
-        "not_found": "Ez az elem már nem érhető el.",
-        "network": "A kapcsolat megszakadt. Próbáld újra.",
-        "unknown": "Hiba történt. Próbáld újra."
-      }
+  "Team": {
+    "organization": "Szervezet",
+    "empty": "Jelenleg nem tartozol aktív szervezethez.",
+    "membersTitle": "Csapattagok",
+    "membersCount": "{count} aktív tag",
+    "roleFor": "{name} szerepköre",
+    "remove": "Eltávolítás",
+    "inviteTitle": "Személy meghívása",
+    "inviteDescription": "A meghívó hét napig érvényes, és csak a megadott e-mail-címmel fogadható el.",
+    "viewOnly": "A szerepköröddel megtekintheted a csapatot, de nem módosíthatod.",
+    "email": "E-mail-cím",
+    "role": "Szerepkör",
+    "invite": "Meghívó küldése",
+    "inviting": "Küldés …",
+    "pendingTitle": "Függőben lévő meghívók",
+    "pendingEmpty": "Nincs függőben lévő meghívó.",
+    "expires": "érvényes eddig: {date}",
+    "cancelInvitation": "Meghívó visszavonása",
+    "confirmMemberTitle": "Eltávolítod a csapattagot?",
+    "confirmMemberDescription": "{name} elveszíti a hozzáférést ehhez a szervezethez és a céges bejegyzéseihez.",
+    "confirmInvitationTitle": "Visszavonod a meghívót?",
+    "confirmInvitationDescription": "{name} meghívólinkje azonnal érvénytelenné válik.",
+    "keep": "Mégse",
+    "confirm": "Megerősítés",
+    "working": "Feldolgozás …",
+    "roles": {
+      "owner": "Tulajdonos",
+      "admin": "Adminisztrátor",
+      "editor": "Szerkesztő"
     },
-    "TeamInvitation": {
-      "eyebrow": "Csapatmeghívó",
-      "title": "Meghívó ettől: {organization}",
-      "description": "Elfogadás után hozzáférsz a szervezethez, és a szerepköröd szerint kezelheted a Findelio-tartalmait.",
-      "registrationDescription": "Hozd létre személyes fiókodat a(z) {organization} szervezethez. Az e-mail-cím megerősítése után a meghívás automatikusan elfogadásra kerül, és közvetlenül a cégbejegyzésekhez jutsz.",
-      "email": "Meghívott e-mail-cím",
-      "role": "Szerepkör",
-      "validUntil": "Érvényes eddig",
-      "roles": { "admin": "Adminisztrátor", "editor": "Szerkesztő" },
-      "signInTitle": "Jelentkezz be vagy hozz létre fiókot",
-      "signInDescription": "Jelentkezz be, ha már van fiókod a(z) {email} címmel. Ellenkező esetben hozz létre most egy fiókot; az e-mail megerősítése után a meghívás automatikusan elfogadásra kerül.",
-      "signIn": "Bejelentkezés",
-      "register": "Fiók létrehozása",
-      "wrongAccountTitle": "Nem a megfelelő fiókkal jelentkeztél be",
-      "wrongAccountDescription": "Jelenleg {current} fiókkal vagy bejelentkezve. A meghívó ehhez tartozik: {invited}. Jelentkezz ki, majd be a meghívott címmel.",
-      "accept": "Meghívó elfogadása",
-      "accepting": "Elfogadás …",
-      "acceptError": "A meghívót nem sikerült elfogadni. Próbáld újra.",
-      "emailMismatch": "Ez a meghívó másik e-mail-címhez tartozik.",
-      "acceptedEyebrow": "Meghívó elfogadva",
-      "acceptedTitle": "Üdvözlünk {organization} csapatában",
-      "acceptedDescription": "A szervezetet és céges bejegyzéseit mostantól a vezérlőpulton kezelheted.",
-      "openTeam": "Csapatkezelés megnyitása",
-      "invalidTitle": "A meghívó nem található",
-      "invalidDescription": "Ez a meghívólink érvénytelen vagy visszavonták.",
-      "expiredTitle": "A meghívó lejárt",
-      "expiredDescription": "Ez a meghívó már nem érvényes. Kérj újat a szervezettől.",
-      "home": "A kezdőlapra"
+    "messages": {
+      "invited": "A meghívót elküldtük e-mailben.",
+      "roleUpdated": "A szerepkör frissült.",
+      "memberRemoved": "A csapattagot eltávolítottuk.",
+      "invitationCancelled": "A meghívót visszavontuk."
     },
-    "Footer": {
+    "errors": {
+      "invalid_data": "Ellenőrizd a megadott adatokat.",
+      "unauthorized": "A munkameneted lejárt. Jelentkezz be újra.",
+      "forbidden": "Nincs jogosultságod ehhez a művelethez.",
+      "member_exists": "Ez a személy már a szervezet tagja.",
+      "invitation_exists": "Ehhez az e-mail-címhez már tartozik függőben lévő meghívó.",
+      "rate_limited": "Túl sok meghívót küldtél. Próbáld újra később.",
+      "too_many_invitations": "A szervezetnek már túl sok függőben lévő meghívója van.",
+      "send_failed": "A meghívót nem sikerült elküldeni.",
+      "update_failed": "A módosítást nem sikerült menteni.",
+      "not_found": "Ez az elem már nem érhető el.",
+      "network": "A kapcsolat megszakadt. Próbáld újra.",
+      "unknown": "Hiba történt. Próbáld újra."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Csapatmeghívó",
+    "title": "Meghívó ettől: {organization}",
+    "description": "Elfogadás után hozzáférsz a szervezethez, és a szerepköröd szerint kezelheted a Findelio-tartalmait.",
+    "registrationDescription": "Hozd létre személyes fiókodat a(z) {organization} szervezethez. Az e-mail-cím megerősítése után a meghívás automatikusan elfogadásra kerül, és közvetlenül a cégbejegyzésekhez jutsz.",
+    "email": "Meghívott e-mail-cím",
+    "role": "Szerepkör",
+    "validUntil": "Érvényes eddig",
+    "roles": {
+      "admin": "Adminisztrátor",
+      "editor": "Szerkesztő"
+    },
+    "signInTitle": "Jelentkezz be vagy hozz létre fiókot",
+    "signInDescription": "Jelentkezz be, ha már van fiókod a(z) {email} címmel. Ellenkező esetben hozz létre most egy fiókot; az e-mail megerősítése után a meghívás automatikusan elfogadásra kerül.",
+    "signIn": "Bejelentkezés",
+    "register": "Fiók létrehozása",
+    "wrongAccountTitle": "Nem a megfelelő fiókkal jelentkeztél be",
+    "wrongAccountDescription": "Jelenleg {current} fiókkal vagy bejelentkezve. A meghívó ehhez tartozik: {invited}. Jelentkezz ki, majd be a meghívott címmel.",
+    "accept": "Meghívó elfogadása",
+    "accepting": "Elfogadás …",
+    "acceptError": "A meghívót nem sikerült elfogadni. Próbáld újra.",
+    "emailMismatch": "Ez a meghívó másik e-mail-címhez tartozik.",
+    "acceptedEyebrow": "Meghívó elfogadva",
+    "acceptedTitle": "Üdvözlünk {organization} csapatában",
+    "acceptedDescription": "A szervezetet és céges bejegyzéseit mostantól a vezérlőpulton kezelheted.",
+    "openTeam": "Csapatkezelés megnyitása",
+    "invalidTitle": "A meghívó nem található",
+    "invalidDescription": "Ez a meghívólink érvénytelen vagy visszavonták.",
+    "expiredTitle": "A meghívó lejárt",
+    "expiredDescription": "Ez a meghívó már nem érvényes. Kérj újat a szervezettől.",
+    "home": "A kezdőlapra"
+  },
+  "Footer": {
     "tagline": "A Findelio összeköti az embereket az általuk beszélt nyelven kommunikáló cégekkel.",
     "directory": "Cégjegyzék",
     "findCompanies": "Cégek keresése",
@@ -371,9 +382,18 @@
     "purposeLabel": "Cél",
     "durationLabel": "Tárolási idő",
     "cookies": {
-      "access": { "purpose": "Fenntartja a biztonságos bejelentkezést az aktív munkamenet alatt.", "duration": "Rövid ideig; a hozzáférési tokennel együtt automatikusan lejár." },
-      "refresh": { "purpose": "Biztonságosan megújítja a bejelentkezést anélkül, hogy minden oldalon újra meg kellene adni a jelszót.", "duration": "Legfeljebb 7 napig vagy kijelentkezésig." },
-      "locale": { "purpose": "Megjegyzi a kiválasztott nyelvet a böngészési munkamenet során.", "duration": "A böngészési munkamenet végéig." }
+      "access": {
+        "purpose": "Fenntartja a biztonságos bejelentkezést az aktív munkamenet alatt.",
+        "duration": "Rövid ideig; a hozzáférési tokennel együtt automatikusan lejár."
+      },
+      "refresh": {
+        "purpose": "Biztonságosan megújítja a bejelentkezést anélkül, hogy minden oldalon újra meg kellene adni a jelszót.",
+        "duration": "Legfeljebb 7 napig vagy kijelentkezésig."
+      },
+      "locale": {
+        "purpose": "Megjegyzi a kiválasztott nyelvet a böngészési munkamenet során.",
+        "duration": "A böngészési munkamenet végéig."
+      }
     },
     "storageTitle": "Helyi böngészőtárhely",
     "storageText": "A cookie-tájékoztató elfogadását nem egy további cookie tárolja. A Findelio ehhez a böngésző helyi tárhelyét használja.",
@@ -386,17 +406,144 @@
     "privacyLink": "Adatvédelmi tájékoztató megnyitása"
   },
   "CompanyGuide": {
-    "metaTitle": "Hogyan működik a Findelio cégeknek | Findelio", "metaDescription": "A céges fióktól a közzétett adatlapig: ismerje meg a Findelio használatát és a Premium előnyeit.", "eyebrow": "Cégeknek", "title": "Findelio-adatlap néhány lépésben.", "intro": "A Findelio összeköti cégét azokkal, akik saját nyelvükön keresnek szolgáltatásokat. Az adatokat Ön kezeli, és adatlaponként választhat Free vagy Premium csomagot.", "stepsTitle": "A közzététel menete",
-    "steps": { "register": { "title": "Fiók létrehozása", "text": "Regisztráljon e-mail-címmel, majd erősítse meg a kapott hivatkozással." }, "organization": { "title": "Szervezet létrehozása", "text": "Adja meg a szervezetet, amelyhez az adatlapok és később a csapattagok tartoznak." }, "listing": { "title": "Adatlap létrehozása", "text": "Rögzítse a céget, válasszon ágazatokat és nyelveket, majd Free vagy Premium csomagot." }, "complete": { "title": "Profil kiegészítése", "text": "Adjon meg leírást, elérhetőséget és címet. A Premium logót, galériát, nyitvatartást, közösségi linkeket és fordításokat is kínál." }, "review": { "title": "Beküldés ellenőrzésre", "text": "A Findelio ellenőrzi az új és módosított adatokat, hogy a címtár megbízható és naprakész maradjon." }, "publish": { "title": "Közzététel és növekedés", "text": "Jóváhagyás után az adatlap látható. Ezután aktiválható a Premium, a bejegyzések és a statisztikák." } },
-    "packagesEyebrow": "Csomag adatlaponként", "packagesTitle": "Kezdjen Free csomaggal, vagy mutasson többet Premiummal",
-    "free": { "title": "Free", "price": "CHF 0", "description": "Megbízható alap egy kereshető és ellenőrzött cégadatlaphoz.", "features": { "profile": "Cégnév és teljes leírás", "classification": "Ágazatok és beszélt nyelvek", "contact": "Elérhetőség, weboldal és hely" } },
-    "premium": { "title": "Premium", "price": "Havi CHF 9.90 vagy évi CHF 99", "description": "Azoknak a cégeknek, amelyek látványos megjelenést, friss tartalmat és elérési adatokat szeretnének.", "features": { "media": "Céglogó és képgaléria", "details": "Nyitvatartás, közösségi linkek és egyéni gomb", "translations": "Saját leírás minden Findelio-nyelven", "posts": "Hírek, akciók és események", "ranking": "Releváns Premium adatlapok előnyös helyezése", "statistics": "Elérési statisztika és havi jelentés" } },
-    "reviewTitle": "Miért ellenőrizzük az adatlapokat?", "reviewText": "Az ellenőrzés védi a látogatókat és a tisztességes cégeket. A Findelio megvizsgálja az adatok hitelességét, és kérdés vagy elutasítás esetén üzenetet küld.", "verificationEyebrow": "Önkéntes kiegészítő ellenőrzés", "verificationTitle": "Hivatalos igazolással Ellenőrzött státusz", "verificationText": "Önkéntesen elküldheti a Findeliónak cége aktuális hivatalos igazolását. Sikeres ellenőrzés után a cégadatlapot „Ellenőrzött” jelöléssel látjuk el.", "verificationProofs": "Megfelelő lehet például egy friss cégjegyzék- vagy UID-nyilvántartási kivonat. A cégjegyzékben nem szereplő egyéni vállalkozóknál az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentuma is használható.", "verificationNote": "Az Ellenőrzött jelvény csak azt igazolja, hogy a Findelio dokumentum alapján ellenőrizte a vállalkozás létezését vagy kapcsolatát. Nem jelent garanciát a minőségre, fizetőképességre, engedélyekre vagy szolgáltatásokra.", "verificationCta": "Igazolás küldése e-mailben", "ctaTitle": "Készen áll cége felvételére?", "ctaText": "Hozzon létre ingyenes fiókot, töltse ki profilját, és találják meg a megfelelő ügyfelek.", "ctaButton": "Cég hozzáadása"
+    "metaTitle": "Hogyan működik a Findelio cégeknek | Findelio",
+    "metaDescription": "A céges fióktól a közzétett adatlapig: ismerje meg a Findelio használatát és a Premium előnyeit.",
+    "eyebrow": "Cégeknek",
+    "title": "Findelio-adatlap néhány lépésben.",
+    "intro": "A Findelio összeköti cégét azokkal, akik saját nyelvükön keresnek szolgáltatásokat. Az adatokat Ön kezeli, és adatlaponként választhat Free vagy Premium csomagot.",
+    "stepsTitle": "A közzététel menete",
+    "steps": {
+      "register": {
+        "title": "Fiók létrehozása",
+        "text": "Regisztráljon e-mail-címmel, majd erősítse meg a kapott hivatkozással."
+      },
+      "organization": {
+        "title": "Szervezet létrehozása",
+        "text": "Adja meg a szervezetet, amelyhez az adatlapok és később a csapattagok tartoznak."
+      },
+      "listing": {
+        "title": "Adatlap létrehozása",
+        "text": "Rögzítse a céget, válasszon ágazatokat és nyelveket, majd Free vagy Premium csomagot."
+      },
+      "complete": {
+        "title": "Profil kiegészítése",
+        "text": "Adjon meg leírást, elérhetőséget és címet. A Premium logót, galériát, nyitvatartást, közösségi linkeket és fordításokat is kínál."
+      },
+      "review": {
+        "title": "Beküldés ellenőrzésre",
+        "text": "A Findelio ellenőrzi az új és módosított adatokat, hogy a címtár megbízható és naprakész maradjon."
+      },
+      "publish": {
+        "title": "Közzététel és növekedés",
+        "text": "Jóváhagyás után az adatlap látható. Ezután aktiválható a Premium, a bejegyzések és a statisztikák."
+      }
+    },
+    "packagesEyebrow": "Csomag adatlaponként",
+    "packagesTitle": "Kezdjen Free csomaggal, vagy mutasson többet Premiummal",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Megbízható alap egy kereshető és ellenőrzött cégadatlaphoz.",
+      "features": {
+        "profile": "Cégnév és teljes leírás",
+        "classification": "Ágazatok és beszélt nyelvek",
+        "contact": "Elérhetőség, weboldal és hely"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "Havi CHF 9.90 vagy évi CHF 99",
+      "description": "Azoknak a cégeknek, amelyek látványos megjelenést, friss tartalmat és elérési adatokat szeretnének.",
+      "features": {
+        "media": "Céglogó és képgaléria",
+        "details": "Nyitvatartás, közösségi linkek és egyéni gomb",
+        "translations": "Saját leírás minden Findelio-nyelven",
+        "posts": "Hírek, akciók és események",
+        "ranking": "Releváns Premium adatlapok előnyös helyezése",
+        "statistics": "Elérési statisztika és havi jelentés"
+      }
+    },
+    "reviewTitle": "Miért ellenőrizzük az adatlapokat?",
+    "reviewText": "Az ellenőrzés védi a látogatókat és a tisztességes cégeket. A Findelio megvizsgálja az adatok hitelességét, és kérdés vagy elutasítás esetén üzenetet küld.",
+    "verificationEyebrow": "Önkéntes kiegészítő ellenőrzés",
+    "verificationTitle": "Hivatalos igazolással Ellenőrzött státusz",
+    "verificationText": "Önkéntesen elküldheti a Findeliónak cége aktuális hivatalos igazolását. Sikeres ellenőrzés után a cégadatlapot „Ellenőrzött” jelöléssel látjuk el.",
+    "verificationProofs": "Megfelelő lehet például egy friss cégjegyzék- vagy UID-nyilvántartási kivonat. A cégjegyzékben nem szereplő egyéni vállalkozóknál az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentuma is használható.",
+    "verificationNote": "Az Ellenőrzött jelvény csak azt igazolja, hogy a Findelio dokumentum alapján ellenőrizte a vállalkozás létezését vagy kapcsolatát. Nem jelent garanciát a minőségre, fizetőképességre, engedélyekre vagy szolgáltatásokra.",
+    "verificationCta": "Igazolás küldése e-mailben",
+    "ctaTitle": "Készen áll cége felvételére?",
+    "ctaText": "Hozzon létre ingyenes fiókot, töltse ki profilját, és találják meg a megfelelő ügyfelek.",
+    "ctaButton": "Cég hozzáadása"
   },
   "Terms": {
-    "metaTitle": "Általános Szerződési Feltételek | Findelio", "metaDescription": "A Findelio céges fiókjaira, adatlapjaira és Premium előfizetéseire vonatkozó feltételek.", "eyebrow": "Jogi információk", "title": "Általános Szerződési Feltételek", "lastUpdated": "Hatályos: 2026. augusztus 3.", "intro": "Ezek a feltételek szabályozzák a Findelio használatát cégek, szervezetek és meghatalmazott felhasználóik számára.",
-    "sections": { "scope": { "title": "Szolgáltató és hatály", "body": "A Findelio szolgáltatója: Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Svájc. A feltételek a fiókokra, szervezetekre, adatlapokra, valamint az ingyenes és fizetős funkciókra vonatkoznak." }, "services": { "title": "A Findelio szolgáltatásai", "body": "A Findelio többnyelvű cégjegyzéket és adatlap-kezelő eszközöket működtet. Nem részese a látogatók és a cégek közötti szerződéseknek." }, "accounts": { "title": "Fiók és jogosultság", "body": "Az adatoknak pontosnak és naprakésznek, a belépési adatoknak bizalmasnak kell lenniük. A szervezet nevében eljáró személy igazolja jogosultságát és felel a fiók használatáért." }, "content": { "title": "Tartalom és felhasználási jog", "body": "A cég felel a szövegekért, képekért, logókért és linkekért, valamint azok jogszerűségéért. A Findelio a közzétételhez szükséges nem kizárólagos tárolási és megjelenítési jogot kapja." }, "review": { "title": "Ellenőrzés és felfüggesztés", "body": "A jogellenes, félrevezető, hiányos vagy visszaélésszerű tartalom elutasítható, felfüggeszthető vagy törölhető. Indokolt esetben a Findelio megadja az okot és javítást tesz lehetővé." }, "packages": { "title": "Free és Premium", "body": "A Free a feltüntetett alapfunkciókat tartalmazza. A Premium egy adatlapra érvényes, és az ajánlati, illetve számlázási oldalon leírt extrákat biztosítja." }, "contract": { "title": "Szerződés, árak és fizetés", "body": "Az árak svájci frankban jelennek meg. A Premium-szerződés a fizetés visszaigazolásával jön létre. A havi és éves előfizetés megújul, ha az időszak vége előtt nem mondják le." }, "cancellation": { "title": "Lemondás és sikertelen fizetés", "body": "A Premium az aktuális időszak végére mondható le, addig használható. Sikertelen fizetés után a hozzáférés az időszak végén zárolható. Időarányos visszatérítés általában nincs; a kötelező jogok változatlanok." }, "availability": { "title": "Elérhetőség", "body": "A megszakítás nélküli, hibamentes működés nem garantált. Karbantartás, biztonsági intézkedés, külső szolgáltató vagy vis maior kiesést okozhat." }, "liability": { "title": "Felelősség", "body": "A Findelio a kötelező jogszabályi körben felel. Amennyiben megengedett, kizárt az enyhe gondatlanságért, közvetett kárért, elmaradt haszonért és adatvesztésért való felelősség." }, "termination": { "title": "Megszüntetés és fióktörlés", "body": "A fiók törlése nem helyettesíti az aktív Premium lemondását. Súlyos vagy ismételt szabálysértés esetén a hozzáférés felfüggeszthető vagy megszüntethető." }, "privacy": { "title": "Adatvédelem", "body": "A személyes adatok kezelése a Findelio aktuális adatvédelmi tájékoztatója szerint történik." }, "changes": { "title": "A feltételek módosítása", "body": "A Findelio jogi, műszaki vagy üzleti okból a jövőre nézve módosíthatja a feltételeket. A lényeges változásokról értesítést ad." }, "law": { "title": "Jog és illetékesség", "body": "A svájci jog alkalmazandó. Amennyiben jogszerű, a Webpixels székhelye szerinti bíróság illetékes. A kötelező szabályok fennmaradnak; eltérő fordítás esetén a német változat irányadó." } },
-    "verification": { "title": "Ellenőrzött cégadatlapok", "body": "A cégek önkéntesen benyújthatnak friss cégjegyzék- vagy UID-nyilvántartási kivonatot, illetve hasonló hivatalos igazolást. A cégjegyzékben nem szereplő egyéni vállalkozóknál a Findelio különösen az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentumát fogadhatja el. Sikeres ellenőrzés után a Findelio „Ellenőrzött” jelöléssel láthatja el az adatlapot. A jelvény csak a dokumentummal ellenőrzött létezést vagy kapcsolatot igazolja; nem garantál minőséget, fizetőképességet, engedélyeket vagy szolgáltatásokat. A Findelio további adatokat kérhet, illetve elavult, ellentmondásos vagy valótlan információ esetén visszavonhatja a státuszt. Az igazolásokat kizárólag ellenőrzésre használjuk, csak jogosult személyek férhetnek hozzá, és a cél megszűnésekor töröljük, kivéve, ha megőrzési kötelezettség áll fenn." },
+    "metaTitle": "Általános Szerződési Feltételek | Findelio",
+    "metaDescription": "A Findelio céges fiókjaira, adatlapjaira és Premium előfizetéseire vonatkozó feltételek.",
+    "eyebrow": "Jogi információk",
+    "title": "Általános Szerződési Feltételek",
+    "lastUpdated": "Hatályos: 2026. augusztus 3.",
+    "intro": "Ezek a feltételek szabályozzák a Findelio használatát cégek, szervezetek és meghatalmazott felhasználóik számára.",
+    "sections": {
+      "scope": {
+        "title": "Szolgáltató és hatály",
+        "body": "A Findelio szolgáltatója: Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Svájc. A feltételek a fiókokra, szervezetekre, adatlapokra, valamint az ingyenes és fizetős funkciókra vonatkoznak."
+      },
+      "services": {
+        "title": "A Findelio szolgáltatásai",
+        "body": "A Findelio többnyelvű cégjegyzéket és adatlap-kezelő eszközöket működtet. Nem részese a látogatók és a cégek közötti szerződéseknek."
+      },
+      "accounts": {
+        "title": "Fiók és jogosultság",
+        "body": "Az adatoknak pontosnak és naprakésznek, a belépési adatoknak bizalmasnak kell lenniük. A szervezet nevében eljáró személy igazolja jogosultságát és felel a fiók használatáért."
+      },
+      "content": {
+        "title": "Tartalom és felhasználási jog",
+        "body": "A cég felel a szövegekért, képekért, logókért és linkekért, valamint azok jogszerűségéért. A Findelio a közzétételhez szükséges nem kizárólagos tárolási és megjelenítési jogot kapja."
+      },
+      "review": {
+        "title": "Ellenőrzés és felfüggesztés",
+        "body": "A jogellenes, félrevezető, hiányos vagy visszaélésszerű tartalom elutasítható, felfüggeszthető vagy törölhető. Indokolt esetben a Findelio megadja az okot és javítást tesz lehetővé."
+      },
+      "packages": {
+        "title": "Free és Premium",
+        "body": "A Free a feltüntetett alapfunkciókat tartalmazza. A Premium egy adatlapra érvényes, és az ajánlati, illetve számlázási oldalon leírt extrákat biztosítja."
+      },
+      "contract": {
+        "title": "Szerződés, árak és fizetés",
+        "body": "Az árak svájci frankban jelennek meg. A Premium-szerződés a fizetés visszaigazolásával jön létre. A havi és éves előfizetés megújul, ha az időszak vége előtt nem mondják le."
+      },
+      "cancellation": {
+        "title": "Lemondás és sikertelen fizetés",
+        "body": "A Premium az aktuális időszak végére mondható le, addig használható. Sikertelen fizetés után a hozzáférés az időszak végén zárolható. Időarányos visszatérítés általában nincs; a kötelező jogok változatlanok."
+      },
+      "availability": {
+        "title": "Elérhetőség",
+        "body": "A megszakítás nélküli, hibamentes működés nem garantált. Karbantartás, biztonsági intézkedés, külső szolgáltató vagy vis maior kiesést okozhat."
+      },
+      "liability": {
+        "title": "Felelősség",
+        "body": "A Findelio a kötelező jogszabályi körben felel. Amennyiben megengedett, kizárt az enyhe gondatlanságért, közvetett kárért, elmaradt haszonért és adatvesztésért való felelősség."
+      },
+      "termination": {
+        "title": "Megszüntetés és fióktörlés",
+        "body": "A fiók törlése nem helyettesíti az aktív Premium lemondását. Súlyos vagy ismételt szabálysértés esetén a hozzáférés felfüggeszthető vagy megszüntethető."
+      },
+      "privacy": {
+        "title": "Adatvédelem",
+        "body": "A személyes adatok kezelése a Findelio aktuális adatvédelmi tájékoztatója szerint történik."
+      },
+      "changes": {
+        "title": "A feltételek módosítása",
+        "body": "A Findelio jogi, műszaki vagy üzleti okból a jövőre nézve módosíthatja a feltételeket. A lényeges változásokról értesítést ad."
+      },
+      "law": {
+        "title": "Jog és illetékesség",
+        "body": "A svájci jog alkalmazandó. Amennyiben jogszerű, a Webpixels székhelye szerinti bíróság illetékes. A kötelező szabályok fennmaradnak; eltérő fordítás esetén a német változat irányadó."
+      }
+    },
+    "verification": {
+      "title": "Ellenőrzött cégadatlapok",
+      "body": "A cégek önkéntesen benyújthatnak friss cégjegyzék- vagy UID-nyilvántartási kivonatot, illetve hasonló hivatalos igazolást. A cégjegyzékben nem szereplő egyéni vállalkozóknál a Findelio különösen az illetékes társadalombiztosítási szerv önálló vállalkozói státuszt igazoló dokumentumát fogadhatja el. Sikeres ellenőrzés után a Findelio „Ellenőrzött” jelöléssel láthatja el az adatlapot. A jelvény csak a dokumentummal ellenőrzött létezést vagy kapcsolatot igazolja; nem garantál minőséget, fizetőképességet, engedélyeket vagy szolgáltatásokat. A Findelio további adatokat kérhet, illetve elavult, ellentmondásos vagy valótlan információ esetén visszavonhatja a státuszt. Az igazolásokat kizárólag ellenőrzésre használjuk, csak jogosult személyek férhetnek hozzá, és a cél megszűnésekor töröljük, kivéve, ha megőrzési kötelezettség áll fenn."
+    },
     "contact": "A feltételekkel kapcsolatos kérdéseket küldje a Findelio csapatának:"
   },
   "Contact": {
@@ -585,8 +732,7 @@
       "approve": "Approve post",
       "reject": "Reject post"
     }
-  }
-  ,
+  },
   "ListingEditor": {
     "eyebrow": "Cégbejegyzés szerkesztése",
     "title": "{name} szerkesztése",
@@ -957,7 +1103,10 @@
       "eyebrow": "Törlési kérelmek",
       "title": "Nyitott törlési kérelmek",
       "description": "Ellenőrizd a kérelmet, és archiválás előtt győződj meg arról, hogy nincs aktív, kifizetett Premium-időszak.",
-      "types": { "listing": "Cégadatlap", "organization": "Szervezet" },
+      "types": {
+        "listing": "Cégadatlap",
+        "organization": "Szervezet"
+      },
       "submittedBy": "Kérelmező: {name}, dátum: {date}",
       "unknownRequester": "Ismeretlen felhasználó",
       "customerReason": "A kérelem indoka",
@@ -1014,5 +1163,70 @@
     "errorTitle": "A megerősítés sikertelen",
     "errorText": "A megerősítő link érvénytelen, lejárt vagy már felhasználták.",
     "registerButton": "Vissza a regisztrációhoz"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSÉGEK",
+    "title": "Ajánlások",
+    "description": "Kezeld az ajánlókódokat, és kövesd a rajtuk keresztül csatlakozó cégeket. A Premium próbaidőszak csak új szervezeteknek jár.",
+    "activePartners": "Aktív partnerek",
+    "registrations": "Regisztrációk (szűrve)",
+    "pendingActivation": "Aktiválásra vár (szűrve)",
+    "newPartner": "Partner hozzáadása",
+    "editPartner": "Partner szerkesztése",
+    "partnerHelp": "Partnerenként egy kód. Saját Findelio-fiók nem szükséges.",
+    "name": "Név",
+    "code": "Ajánlókód",
+    "codeHelp": "3–64 karakter: A–Z betűk, számok, kötőjel vagy aláhúzás. A kis- és nagybetűk azonosnak számítanak.",
+    "codeFixed": "A kód nem változtatható, így a megosztott linkek érvényesek maradnak.",
+    "notes": "Belső megjegyzések",
+    "status": "Állapot",
+    "active": "Aktív",
+    "disabled": "Inaktív",
+    "disableHelp": "A kikapcsolás leállítja az új beváltásokat. A meglévő hozzárendelések és próbaidőszakok megmaradnak.",
+    "save": "Mentés",
+    "saving": "Mentés …",
+    "cancel": "Mégse",
+    "partners": "Partnerek",
+    "noPartners": "Még nincsenek partnerek. Add hozzá az elsőt az űrlappal.",
+    "link": "Ajánlólink",
+    "copyLink": "Link másolása",
+    "copyCode": "Kód másolása",
+    "edit": "Szerkesztés",
+    "companies": "Ajánlott cégek",
+    "overviewHelp": "Az időpontok Europe/Zurich szerint értendők. A próba az első jogosult cégprofil jóváhagyásakor indul.",
+    "allPartners": "Minden partner",
+    "allStates": "Minden állapot",
+    "refresh": "Frissítés",
+    "noCompanies": "Ehhez a szűréshez még nincsenek regisztrációk.",
+    "company": "Szervezet / cégprofil",
+    "registered": "Regisztrálva",
+    "period": "Próba kezdete / vége",
+    "actions": "Műveletek",
+    "awaitingOrganization": "A szervezet még nem jött létre",
+    "retry": "Aktiválás újrapróbálása",
+    "page": "{page}. oldal / {pages} · {total} regisztráció",
+    "previous": "Előző",
+    "next": "Következő",
+    "revoked": "Próba visszavonva",
+    "expired": "Próba lejárt",
+    "previousPublication": "Korábban már közzétéve: nincs új próba.",
+    "existingPremium": "Már volt Premium. Nem jár további próbaidőszak.",
+    "saved": "Mentve.",
+    "copied": "Másolva.",
+    "copy_failed": "A másolás sikertelen. Jelöld ki és másold ki a megjelenített linket.",
+    "load_failed": "Az áttekintés nem tölthető be. Próbáld újra.",
+    "save_failed": "A mentés sikertelen. Ellenőrizd az adatokat, és próbáld újra.",
+    "code_exists": "Ez a kód már foglalt.",
+    "retry_failed": "Az aktiválás sikertelen. A foglalás megmarad.",
+    "retry_done": "Az aktiválást újra ellenőriztük. Az aktuális állapot az áttekintésben látható.",
+    "states": {
+      "pending_organization": "Szervezetre vár",
+      "pending_approval": "Jóváhagyásra vár",
+      "pending_activation": "Aktiválásra vár",
+      "granted": "Próba biztosítva",
+      "skipped_existing_premium": "Kihagyva: már volt Premium",
+      "expired_unactivated": "Aktiválás nélkül lejárt",
+      "void": "Nem jogosult"
+    }
   }
 }

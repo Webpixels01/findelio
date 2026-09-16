@@ -1,5 +1,6 @@
 import "server-only";
 import type { AppLocale } from "@/i18n/routing";
+import { isReferralRegistrationEnabled } from "@/lib/referral-registration";
 
 export type ListingRevisionChangedValue = {
   old: unknown;
@@ -609,6 +610,19 @@ export async function approveListingRevision(
   revisionId: string,
   reviewedBy: string,
 ): Promise<void> {
+  if (isReferralRegistrationEnabled()) {
+    // Directus derives reviewer, organization, listing and trial dates itself.
+    // Approval + reservation commit before the independently retryable grant.
+    await readItemResponse(
+      await fetch(new URL("/findelio-referrals/approve-revision", getDirectusUrl()), {
+        method: "POST",
+        headers: { ...authorizationHeaders(accessToken), "Content-Type": "application/json" },
+        body: JSON.stringify({ revision_id: revisionId }),
+        cache: "no-store",
+      }),
+    );
+    return;
+  }
   const revision = await getPendingListingRevision(accessToken, revisionId);
 
   if (!revision) {

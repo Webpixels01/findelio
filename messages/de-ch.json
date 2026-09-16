@@ -114,6 +114,9 @@
     "passwordMismatch": "Die Passwörter stimmen nicht überein.",
     "emailError": "Bitte gib eine gültige E-Mail-Adresse ein.",
     "invitationError": "Diese Einladung ist nicht mehr gültig. Bitte die Organisation, dir eine neue Einladung zu senden.",
+    "referralCode": "Empfehlungscode (optional)",
+    "referralCodeHint": "Falls du einen Empfehlungslink erhalten hast, ist der Code bereits ausgefüllt. Du kannst ihn auch manuell eingeben.",
+    "referralError": "Dieser Empfehlungscode ist ungültig oder nicht mehr aktiv.",
     "errorFallback": "Die Registrierung konnte nicht verarbeitet werden.",
     "serverError": "Die Registrierung ist momentan nicht verfügbar.",
     "connectionError": "Die Verbindung zum Server ist fehlgeschlagen."
@@ -198,7 +201,8 @@
       "listings": "Firmeneinträge",
       "team": "Team",
       "review": "Prüfbereich",
-      "premium": "Premium"
+      "premium": "Premium",
+      "referrals": "Empfehlungen"
     },
     "summary": {
       "organizations": "Organisationen",
@@ -232,90 +236,90 @@
     "overviewOrganizationsLink": "Alle Organisationen anzeigen",
     "organizationListingsLink": "Firmeneinträge anzeigen"
   },
-    "Team": {
-      "organization": "Organisation",
-      "empty": "Du gehörst aktuell keiner aktiven Organisation an.",
-      "membersTitle": "Teammitglieder",
-      "membersCount": "{count, plural, one {# aktives Mitglied} other {# aktive Mitglieder}}",
-      "roleFor": "Rolle für {name}",
-      "remove": "Entfernen",
-      "inviteTitle": "Person einladen",
-      "inviteDescription": "Die Einladung ist sieben Tage gültig und kann nur mit der angegebenen E-Mail-Adresse angenommen werden.",
-      "viewOnly": "Mit deiner Rolle kannst du das Team ansehen, aber nicht verändern.",
-      "email": "E-Mail-Adresse",
-      "role": "Rolle",
-      "invite": "Einladung senden",
-      "inviting": "Wird gesendet …",
-      "pendingTitle": "Offene Einladungen",
-      "pendingEmpty": "Keine offenen Einladungen.",
-      "expires": "gültig bis {date}",
-      "cancelInvitation": "Einladung zurückziehen",
-      "confirmMemberTitle": "Teammitglied entfernen?",
-      "confirmMemberDescription": "{name} verliert den Zugriff auf diese Organisation und ihre Firmeneinträge.",
-      "confirmInvitationTitle": "Einladung zurückziehen?",
-      "confirmInvitationDescription": "Der Einladungslink für {name} wird sofort ungültig.",
-      "keep": "Abbrechen",
-      "confirm": "Bestätigen",
-      "working": "Wird verarbeitet …",
-      "roles": {
-        "owner": "Inhaber",
-        "admin": "Administrator",
-        "editor": "Bearbeiter"
-      },
-      "messages": {
-        "invited": "Die Einladung wurde per E-Mail verschickt.",
-        "roleUpdated": "Die Rolle wurde aktualisiert.",
-        "memberRemoved": "Das Teammitglied wurde entfernt.",
-        "invitationCancelled": "Die Einladung wurde zurückgezogen."
-      },
-      "errors": {
-        "invalid_data": "Bitte prüfe die eingegebenen Angaben.",
-        "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
-        "forbidden": "Du hast für diese Aktion nicht die nötige Berechtigung.",
-        "member_exists": "Diese Person ist bereits Mitglied der Organisation.",
-        "invitation_exists": "Für diese E-Mail-Adresse besteht bereits eine offene Einladung.",
-        "rate_limited": "Es wurden zu viele Einladungen versendet. Bitte versuche es später erneut.",
-        "too_many_invitations": "Für diese Organisation bestehen bereits zu viele offene Einladungen.",
-        "send_failed": "Die Einladung konnte nicht verschickt werden.",
-        "update_failed": "Die Änderung konnte nicht gespeichert werden.",
-        "not_found": "Dieser Eintrag ist nicht mehr verfügbar.",
-        "network": "Die Verbindung ist fehlgeschlagen. Bitte versuche es erneut.",
-        "unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
-      }
+  "Team": {
+    "organization": "Organisation",
+    "empty": "Du gehörst aktuell keiner aktiven Organisation an.",
+    "membersTitle": "Teammitglieder",
+    "membersCount": "{count, plural, one {# aktives Mitglied} other {# aktive Mitglieder}}",
+    "roleFor": "Rolle für {name}",
+    "remove": "Entfernen",
+    "inviteTitle": "Person einladen",
+    "inviteDescription": "Die Einladung ist sieben Tage gültig und kann nur mit der angegebenen E-Mail-Adresse angenommen werden.",
+    "viewOnly": "Mit deiner Rolle kannst du das Team ansehen, aber nicht verändern.",
+    "email": "E-Mail-Adresse",
+    "role": "Rolle",
+    "invite": "Einladung senden",
+    "inviting": "Wird gesendet …",
+    "pendingTitle": "Offene Einladungen",
+    "pendingEmpty": "Keine offenen Einladungen.",
+    "expires": "gültig bis {date}",
+    "cancelInvitation": "Einladung zurückziehen",
+    "confirmMemberTitle": "Teammitglied entfernen?",
+    "confirmMemberDescription": "{name} verliert den Zugriff auf diese Organisation und ihre Firmeneinträge.",
+    "confirmInvitationTitle": "Einladung zurückziehen?",
+    "confirmInvitationDescription": "Der Einladungslink für {name} wird sofort ungültig.",
+    "keep": "Abbrechen",
+    "confirm": "Bestätigen",
+    "working": "Wird verarbeitet …",
+    "roles": {
+      "owner": "Inhaber",
+      "admin": "Administrator",
+      "editor": "Bearbeiter"
     },
-    "TeamInvitation": {
-      "eyebrow": "Teameinladung",
-      "title": "Einladung von {organization}",
-      "description": "Mit der Annahme erhältst du Zugriff auf die Organisation und kannst ihre Findelio-Inhalte entsprechend deiner Rolle verwalten.",
-      "registrationDescription": "Erstelle dein persönliches Konto für {organization}. Nach der E-Mail-Bestätigung wird die Einladung automatisch angenommen und du gelangst direkt zu den Firmeneinträgen.",
-      "email": "Eingeladene E-Mail-Adresse",
-      "role": "Rolle",
-      "validUntil": "Gültig bis",
-      "roles": {
-        "admin": "Administrator",
-        "editor": "Bearbeiter"
-      },
-      "signInTitle": "Anmelden oder Konto erstellen",
-      "signInDescription": "Melde dich an, wenn du bereits ein Konto mit {email} hast. Andernfalls erstellst du jetzt ein Konto; nach der E-Mail-Bestätigung wird die Einladung automatisch angenommen.",
-      "signIn": "Anmelden",
-      "register": "Konto erstellen",
-      "wrongAccountTitle": "Falsches Konto angemeldet",
-      "wrongAccountDescription": "Du bist als {current} angemeldet. Diese Einladung gilt für {invited}. Melde dich ab und mit der eingeladenen Adresse wieder an.",
-      "accept": "Einladung annehmen",
-      "accepting": "Wird angenommen …",
-      "acceptError": "Die Einladung konnte nicht angenommen werden. Bitte versuche es erneut.",
-      "emailMismatch": "Diese Einladung gehört zu einer anderen E-Mail-Adresse.",
-      "acceptedEyebrow": "Einladung angenommen",
-      "acceptedTitle": "Willkommen im Team von {organization}",
-      "acceptedDescription": "Du kannst die Organisation und ihre Firmeneinträge jetzt im Dashboard verwalten.",
-      "openTeam": "Teamverwaltung öffnen",
-      "invalidTitle": "Einladung nicht gefunden",
-      "invalidDescription": "Dieser Einladungslink ist ungültig oder wurde zurückgezogen.",
-      "expiredTitle": "Einladung abgelaufen",
-      "expiredDescription": "Diese Einladung ist nicht mehr gültig. Bitte die Organisation, dir eine neue Einladung zu senden.",
-      "home": "Zur Startseite"
+    "messages": {
+      "invited": "Die Einladung wurde per E-Mail verschickt.",
+      "roleUpdated": "Die Rolle wurde aktualisiert.",
+      "memberRemoved": "Das Teammitglied wurde entfernt.",
+      "invitationCancelled": "Die Einladung wurde zurückgezogen."
     },
-    "Footer": {
+    "errors": {
+      "invalid_data": "Bitte prüfe die eingegebenen Angaben.",
+      "unauthorized": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "forbidden": "Du hast für diese Aktion nicht die nötige Berechtigung.",
+      "member_exists": "Diese Person ist bereits Mitglied der Organisation.",
+      "invitation_exists": "Für diese E-Mail-Adresse besteht bereits eine offene Einladung.",
+      "rate_limited": "Es wurden zu viele Einladungen versendet. Bitte versuche es später erneut.",
+      "too_many_invitations": "Für diese Organisation bestehen bereits zu viele offene Einladungen.",
+      "send_failed": "Die Einladung konnte nicht verschickt werden.",
+      "update_failed": "Die Änderung konnte nicht gespeichert werden.",
+      "not_found": "Dieser Eintrag ist nicht mehr verfügbar.",
+      "network": "Die Verbindung ist fehlgeschlagen. Bitte versuche es erneut.",
+      "unknown": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Teameinladung",
+    "title": "Einladung von {organization}",
+    "description": "Mit der Annahme erhältst du Zugriff auf die Organisation und kannst ihre Findelio-Inhalte entsprechend deiner Rolle verwalten.",
+    "registrationDescription": "Erstelle dein persönliches Konto für {organization}. Nach der E-Mail-Bestätigung wird die Einladung automatisch angenommen und du gelangst direkt zu den Firmeneinträgen.",
+    "email": "Eingeladene E-Mail-Adresse",
+    "role": "Rolle",
+    "validUntil": "Gültig bis",
+    "roles": {
+      "admin": "Administrator",
+      "editor": "Bearbeiter"
+    },
+    "signInTitle": "Anmelden oder Konto erstellen",
+    "signInDescription": "Melde dich an, wenn du bereits ein Konto mit {email} hast. Andernfalls erstellst du jetzt ein Konto; nach der E-Mail-Bestätigung wird die Einladung automatisch angenommen.",
+    "signIn": "Anmelden",
+    "register": "Konto erstellen",
+    "wrongAccountTitle": "Falsches Konto angemeldet",
+    "wrongAccountDescription": "Du bist als {current} angemeldet. Diese Einladung gilt für {invited}. Melde dich ab und mit der eingeladenen Adresse wieder an.",
+    "accept": "Einladung annehmen",
+    "accepting": "Wird angenommen …",
+    "acceptError": "Die Einladung konnte nicht angenommen werden. Bitte versuche es erneut.",
+    "emailMismatch": "Diese Einladung gehört zu einer anderen E-Mail-Adresse.",
+    "acceptedEyebrow": "Einladung angenommen",
+    "acceptedTitle": "Willkommen im Team von {organization}",
+    "acceptedDescription": "Du kannst die Organisation und ihre Firmeneinträge jetzt im Dashboard verwalten.",
+    "openTeam": "Teamverwaltung öffnen",
+    "invalidTitle": "Einladung nicht gefunden",
+    "invalidDescription": "Dieser Einladungslink ist ungültig oder wurde zurückgezogen.",
+    "expiredTitle": "Einladung abgelaufen",
+    "expiredDescription": "Diese Einladung ist nicht mehr gültig. Bitte die Organisation, dir eine neue Einladung zu senden.",
+    "home": "Zur Startseite"
+  },
+  "Footer": {
     "tagline": "Findelio verbindet Menschen mit Unternehmen, die ihre Sprache sprechen.",
     "directory": "Verzeichnis",
     "findCompanies": "Unternehmen finden",
@@ -378,9 +382,18 @@
     "purposeLabel": "Zweck",
     "durationLabel": "Speicherdauer",
     "cookies": {
-      "access": { "purpose": "Hält deine sichere Anmeldung während der aktiven Sitzung aufrecht.", "duration": "Kurzzeitig; endet automatisch mit dem Zugriffstoken." },
-      "refresh": { "purpose": "Erneuert deine Anmeldung sicher, ohne dass du dein Passwort auf jeder Seite erneut eingeben musst.", "duration": "Bis zu 7 Tage oder bis zur Abmeldung." },
-      "locale": { "purpose": "Merkt sich deine gewählte Sprache während der Browsersitzung.", "duration": "Bis zum Ende der Browsersitzung." }
+      "access": {
+        "purpose": "Hält deine sichere Anmeldung während der aktiven Sitzung aufrecht.",
+        "duration": "Kurzzeitig; endet automatisch mit dem Zugriffstoken."
+      },
+      "refresh": {
+        "purpose": "Erneuert deine Anmeldung sicher, ohne dass du dein Passwort auf jeder Seite erneut eingeben musst.",
+        "duration": "Bis zu 7 Tage oder bis zur Abmeldung."
+      },
+      "locale": {
+        "purpose": "Merkt sich deine gewählte Sprache während der Browsersitzung.",
+        "duration": "Bis zum Ende der Browsersitzung."
+      }
     },
     "storageTitle": "Lokaler Browserspeicher",
     "storageText": "Der Cookie-Hinweis und deine Analyseauswahl werden im lokalen Speicher deines Browsers hinterlegt.",
@@ -400,12 +413,30 @@
     "intro": "Findelio bringt dein Unternehmen mit Menschen zusammen, die Beratung und Dienstleistungen in ihrer Sprache suchen. Du behältst die Kontrolle über deine Angaben und entscheidest pro Eintrag zwischen Free und Premium.",
     "stepsTitle": "So funktioniert die Veröffentlichung",
     "steps": {
-      "register": { "title": "Konto erstellen", "text": "Registriere dich mit deiner E-Mail-Adresse und bestätige sie über den Link in der Bestätigungsmail." },
-      "organization": { "title": "Organisation anlegen", "text": "Erfasse die Organisation, der deine Firmeneinträge und später auch weitere Teammitglieder zugeordnet werden." },
-      "listing": { "title": "Eintrag erstellen", "text": "Lege deinen Firmeneintrag an, wähle passende Branchen und Sprachen und entscheide dich für Free oder Premium." },
-      "complete": { "title": "Profil vervollständigen", "text": "Ergänze Beschreibung, Kontakt und Adresse. Bei Premium kannst du zusätzlich Logo, Galerie, Öffnungszeiten, Social Media und Übersetzungen pflegen." },
-      "review": { "title": "Zur Prüfung einreichen", "text": "Findelio prüft neue und geänderte Inhalte, damit das Verzeichnis verlässlich, aktuell und frei von missbräuchlichen Einträgen bleibt." },
-      "publish": { "title": "Veröffentlichen und wachsen", "text": "Nach der Freigabe ist dein Eintrag sichtbar. Ein vorgemerktes Premium-Abo schliesst du erst jetzt ab und kannst danach Beiträge und Statistiken nutzen." }
+      "register": {
+        "title": "Konto erstellen",
+        "text": "Registriere dich mit deiner E-Mail-Adresse und bestätige sie über den Link in der Bestätigungsmail."
+      },
+      "organization": {
+        "title": "Organisation anlegen",
+        "text": "Erfasse die Organisation, der deine Firmeneinträge und später auch weitere Teammitglieder zugeordnet werden."
+      },
+      "listing": {
+        "title": "Eintrag erstellen",
+        "text": "Lege deinen Firmeneintrag an, wähle passende Branchen und Sprachen und entscheide dich für Free oder Premium."
+      },
+      "complete": {
+        "title": "Profil vervollständigen",
+        "text": "Ergänze Beschreibung, Kontakt und Adresse. Bei Premium kannst du zusätzlich Logo, Galerie, Öffnungszeiten, Social Media und Übersetzungen pflegen."
+      },
+      "review": {
+        "title": "Zur Prüfung einreichen",
+        "text": "Findelio prüft neue und geänderte Inhalte, damit das Verzeichnis verlässlich, aktuell und frei von missbräuchlichen Einträgen bleibt."
+      },
+      "publish": {
+        "title": "Veröffentlichen und wachsen",
+        "text": "Nach der Freigabe ist dein Eintrag sichtbar. Ein vorgemerktes Premium-Abo schliesst du erst jetzt ab und kannst danach Beiträge und Statistiken nutzen."
+      }
     },
     "packagesEyebrow": "Pakete pro Firmeneintrag",
     "packagesTitle": "Free starten oder mit Premium mehr zeigen",
@@ -452,22 +483,67 @@
     "lastUpdated": "Stand: 3. August 2026",
     "intro": "Diese AGB regeln die Nutzung von Findelio durch Unternehmen, Organisationen und deren berechtigte Nutzerinnen und Nutzer. Bitte lies sie vor der Registrierung beziehungsweise dem Abschluss eines Premium-Abonnements sorgfältig.",
     "sections": {
-      "scope": { "title": "Anbieter und Geltungsbereich", "body": "Findelio ist ein Angebot von Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Schweiz. Diese AGB gelten für Firmenkonten, Organisationen, Firmeneinträge sowie kostenlose und kostenpflichtige Funktionen auf Findelio." },
-      "services": { "title": "Leistungen von Findelio", "body": "Findelio betreibt ein mehrsprachiges Firmenverzeichnis und stellt Funktionen zur Erfassung, Prüfung, Veröffentlichung und Verwaltung von Firmeneinträgen bereit. Findelio vermittelt Sichtbarkeit und Kontaktmöglichkeiten, wird aber nicht Partei von Verträgen zwischen Besuchern und eingetragenen Unternehmen." },
-      "accounts": { "title": "Konto und Berechtigung", "body": "Bei der Registrierung sind richtige und aktuelle Angaben zu machen. Zugangsdaten müssen vertraulich behandelt werden. Wer für eine Organisation handelt, bestätigt, dazu berechtigt zu sein. Für Handlungen über das eigene Konto ist die kontoinhabende Person verantwortlich." },
-      "content": { "title": "Inhalte und Nutzungsrechte", "body": "Unternehmen sind für Texte, Kontaktdaten, Bilder, Logos, Links und sonstige Inhalte selbst verantwortlich. Sie sichern zu, dass die Angaben wahr, aktuell und rechtmässig sind und keine Rechte Dritter verletzen. Findelio erhält für die Dauer der Veröffentlichung das notwendige, nicht ausschliessliche Recht, diese Inhalte technisch zu speichern, darzustellen und für die Verzeichnisfunktionen zu bearbeiten." },
-      "review": { "title": "Prüfung, Ablehnung und Sperrung", "body": "Findelio darf neue und geänderte Inhalte vor der Veröffentlichung prüfen. Rechtswidrige, irreführende, unvollständige, missbräuchliche oder qualitativ unzureichende Inhalte können abgelehnt, zurückgestellt, gesperrt oder gelöscht werden. Soweit angemessen, wird die Entscheidung begründet und eine Korrektur ermöglicht." },
-      "packages": { "title": "Free und Premium", "body": "Das Free-Paket enthält die jeweils ausgewiesenen Basisfunktionen. Premium gilt pro Firmeneintrag und umfasst die auf der Angebots- und Abrechnungsseite beschriebenen Zusatzfunktionen. Umfang und technische Ausgestaltung können weiterentwickelt werden, ohne den wesentlichen Nutzen eines laufenden bezahlten Zeitraums unangemessen zu vermindern." },
-      "contract": { "title": "Vertragsabschluss, Preise und Zahlung", "body": "Die aktuellen Preise werden in Schweizer Franken inklusive allfällig geschuldeter Abgaben angezeigt. Vor dem kostenpflichtigen Abschluss werden Paket, Abrechnungszeitraum und Preis nochmals dargestellt. Der Premium-Vertrag kommt mit der bestätigten Zahlung zustande. Monats- und Jahresabonnements verlängern sich um den gewählten Zeitraum, sofern sie nicht vor Periodenende gekündigt werden." },
-      "cancellation": { "title": "Kündigung und fehlgeschlagene Zahlung", "body": "Premium kann über die Aboverwaltung auf das Ende der laufenden Zahlungsperiode gekündigt werden. Die Funktionen bleiben bis dahin verfügbar. Bei fehlgeschlagener Zahlung kann der Premium-Zugang spätestens am Periodenende gesperrt werden. Bereits bezahlte, angebrochene Perioden werden grundsätzlich nicht anteilig zurückerstattet; zwingende gesetzliche Ansprüche bleiben vorbehalten." },
-      "availability": { "title": "Verfügbarkeit und Weiterentwicklung", "body": "Findelio bemüht sich um einen zuverlässigen Betrieb, garantiert jedoch keine ununterbrochene oder fehlerfreie Verfügbarkeit. Wartung, Sicherheitsmassnahmen, Störungen bei Drittanbietern oder höhere Gewalt können zu Unterbrüchen führen. Funktionen dürfen aus sachlichen Gründen angepasst oder ersetzt werden." },
-      "liability": { "title": "Haftung", "body": "Findelio haftet im gesetzlich zwingenden Umfang. Soweit rechtlich zulässig, ist die Haftung für leichte Fahrlässigkeit sowie für indirekte Schäden, entgangenen Gewinn und Datenverluste ausgeschlossen. Unternehmen bleiben für ihre Inhalte, Angebote und die Abwicklung von Geschäften mit Besuchern verantwortlich." },
-      "termination": { "title": "Beendigung und Kontolöschung", "body": "Nutzer können die Löschung ihres Kontos verlangen, sofern keine gesetzlichen Aufbewahrungspflichten oder offenen Vertragsverhältnisse entgegenstehen. Die Kontolöschung ersetzt nicht die Kündigung eines aktiven Premium-Abonnements. Bei schweren oder wiederholten Verstössen darf Findelio den Zugang nach angemessener Interessenabwägung sperren oder beenden." },
-      "privacy": { "title": "Datenschutz", "body": "Die Bearbeitung personenbezogener Daten richtet sich nach der jeweils aktuellen Datenschutzerklärung von Findelio. Für personenbezogene Daten, die Unternehmen in ihren Einträgen veröffentlichen, sind sie selbst verantwortlich." },
-      "changes": { "title": "Änderungen dieser AGB", "body": "Findelio kann diese AGB für die Zukunft ändern, wenn rechtliche, technische oder geschäftliche Gründe dies erfordern. Wesentliche Änderungen werden in geeigneter Form mitgeteilt. Für bereits bezahlte Perioden gelten keine unangemessenen rückwirkenden Verschlechterungen." },
-      "law": { "title": "Anwendbares Recht und Gerichtsstand", "body": "Es gilt Schweizer Recht unter Ausschluss kollisionsrechtlicher Bestimmungen. Gerichtsstand ist, soweit gesetzlich zulässig, der Sitz von Webpixels. Zwingende gesetzliche Gerichtsstände und Schutzbestimmungen bleiben vorbehalten. Bei Widersprüchen zwischen Übersetzungen ist die deutsche Fassung massgebend." }
+      "scope": {
+        "title": "Anbieter und Geltungsbereich",
+        "body": "Findelio ist ein Angebot von Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Schweiz. Diese AGB gelten für Firmenkonten, Organisationen, Firmeneinträge sowie kostenlose und kostenpflichtige Funktionen auf Findelio."
+      },
+      "services": {
+        "title": "Leistungen von Findelio",
+        "body": "Findelio betreibt ein mehrsprachiges Firmenverzeichnis und stellt Funktionen zur Erfassung, Prüfung, Veröffentlichung und Verwaltung von Firmeneinträgen bereit. Findelio vermittelt Sichtbarkeit und Kontaktmöglichkeiten, wird aber nicht Partei von Verträgen zwischen Besuchern und eingetragenen Unternehmen."
+      },
+      "accounts": {
+        "title": "Konto und Berechtigung",
+        "body": "Bei der Registrierung sind richtige und aktuelle Angaben zu machen. Zugangsdaten müssen vertraulich behandelt werden. Wer für eine Organisation handelt, bestätigt, dazu berechtigt zu sein. Für Handlungen über das eigene Konto ist die kontoinhabende Person verantwortlich."
+      },
+      "content": {
+        "title": "Inhalte und Nutzungsrechte",
+        "body": "Unternehmen sind für Texte, Kontaktdaten, Bilder, Logos, Links und sonstige Inhalte selbst verantwortlich. Sie sichern zu, dass die Angaben wahr, aktuell und rechtmässig sind und keine Rechte Dritter verletzen. Findelio erhält für die Dauer der Veröffentlichung das notwendige, nicht ausschliessliche Recht, diese Inhalte technisch zu speichern, darzustellen und für die Verzeichnisfunktionen zu bearbeiten."
+      },
+      "review": {
+        "title": "Prüfung, Ablehnung und Sperrung",
+        "body": "Findelio darf neue und geänderte Inhalte vor der Veröffentlichung prüfen. Rechtswidrige, irreführende, unvollständige, missbräuchliche oder qualitativ unzureichende Inhalte können abgelehnt, zurückgestellt, gesperrt oder gelöscht werden. Soweit angemessen, wird die Entscheidung begründet und eine Korrektur ermöglicht."
+      },
+      "packages": {
+        "title": "Free und Premium",
+        "body": "Das Free-Paket enthält die jeweils ausgewiesenen Basisfunktionen. Premium gilt pro Firmeneintrag und umfasst die auf der Angebots- und Abrechnungsseite beschriebenen Zusatzfunktionen. Umfang und technische Ausgestaltung können weiterentwickelt werden, ohne den wesentlichen Nutzen eines laufenden bezahlten Zeitraums unangemessen zu vermindern."
+      },
+      "contract": {
+        "title": "Vertragsabschluss, Preise und Zahlung",
+        "body": "Die aktuellen Preise werden in Schweizer Franken inklusive allfällig geschuldeter Abgaben angezeigt. Vor dem kostenpflichtigen Abschluss werden Paket, Abrechnungszeitraum und Preis nochmals dargestellt. Der Premium-Vertrag kommt mit der bestätigten Zahlung zustande. Monats- und Jahresabonnements verlängern sich um den gewählten Zeitraum, sofern sie nicht vor Periodenende gekündigt werden."
+      },
+      "cancellation": {
+        "title": "Kündigung und fehlgeschlagene Zahlung",
+        "body": "Premium kann über die Aboverwaltung auf das Ende der laufenden Zahlungsperiode gekündigt werden. Die Funktionen bleiben bis dahin verfügbar. Bei fehlgeschlagener Zahlung kann der Premium-Zugang spätestens am Periodenende gesperrt werden. Bereits bezahlte, angebrochene Perioden werden grundsätzlich nicht anteilig zurückerstattet; zwingende gesetzliche Ansprüche bleiben vorbehalten."
+      },
+      "availability": {
+        "title": "Verfügbarkeit und Weiterentwicklung",
+        "body": "Findelio bemüht sich um einen zuverlässigen Betrieb, garantiert jedoch keine ununterbrochene oder fehlerfreie Verfügbarkeit. Wartung, Sicherheitsmassnahmen, Störungen bei Drittanbietern oder höhere Gewalt können zu Unterbrüchen führen. Funktionen dürfen aus sachlichen Gründen angepasst oder ersetzt werden."
+      },
+      "liability": {
+        "title": "Haftung",
+        "body": "Findelio haftet im gesetzlich zwingenden Umfang. Soweit rechtlich zulässig, ist die Haftung für leichte Fahrlässigkeit sowie für indirekte Schäden, entgangenen Gewinn und Datenverluste ausgeschlossen. Unternehmen bleiben für ihre Inhalte, Angebote und die Abwicklung von Geschäften mit Besuchern verantwortlich."
+      },
+      "termination": {
+        "title": "Beendigung und Kontolöschung",
+        "body": "Nutzer können die Löschung ihres Kontos verlangen, sofern keine gesetzlichen Aufbewahrungspflichten oder offenen Vertragsverhältnisse entgegenstehen. Die Kontolöschung ersetzt nicht die Kündigung eines aktiven Premium-Abonnements. Bei schweren oder wiederholten Verstössen darf Findelio den Zugang nach angemessener Interessenabwägung sperren oder beenden."
+      },
+      "privacy": {
+        "title": "Datenschutz",
+        "body": "Die Bearbeitung personenbezogener Daten richtet sich nach der jeweils aktuellen Datenschutzerklärung von Findelio. Für personenbezogene Daten, die Unternehmen in ihren Einträgen veröffentlichen, sind sie selbst verantwortlich."
+      },
+      "changes": {
+        "title": "Änderungen dieser AGB",
+        "body": "Findelio kann diese AGB für die Zukunft ändern, wenn rechtliche, technische oder geschäftliche Gründe dies erfordern. Wesentliche Änderungen werden in geeigneter Form mitgeteilt. Für bereits bezahlte Perioden gelten keine unangemessenen rückwirkenden Verschlechterungen."
+      },
+      "law": {
+        "title": "Anwendbares Recht und Gerichtsstand",
+        "body": "Es gilt Schweizer Recht unter Ausschluss kollisionsrechtlicher Bestimmungen. Gerichtsstand ist, soweit gesetzlich zulässig, der Sitz von Webpixels. Zwingende gesetzliche Gerichtsstände und Schutzbestimmungen bleiben vorbehalten. Bei Widersprüchen zwischen Übersetzungen ist die deutsche Fassung massgebend."
+      }
     },
-    "verification": { "title": "Verifizierte Firmeneinträge", "body": "Unternehmen können freiwillig einen aktuellen Handelsregister- oder UID-Registerauszug oder einen vergleichbaren offiziellen Nachweis einreichen. Bei Einzelunternehmen ohne Handelsregistereintrag kann insbesondere eine Bestätigung der AHV-Ausgleichskasse über die Anerkennung als selbstständigerwerbend akzeptiert werden. Nach erfolgreicher Prüfung darf Findelio den Eintrag als „Verifiziert“ kennzeichnen. Das Badge bestätigt nur die anhand des Nachweises geprüfte Existenz beziehungsweise Zuordnung des Unternehmens und ist keine Garantie für Qualität, Bonität, Bewilligungen oder Leistungen. Findelio darf weitere Angaben verlangen oder den Status bei veralteten, widersprüchlichen oder falschen Informationen wieder entziehen. Nachweise werden ausschliesslich für die Verifizierung verwendet, nur befugten Personen zugänglich gemacht und gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind, soweit keine Aufbewahrungspflicht entgegensteht." },
+    "verification": {
+      "title": "Verifizierte Firmeneinträge",
+      "body": "Unternehmen können freiwillig einen aktuellen Handelsregister- oder UID-Registerauszug oder einen vergleichbaren offiziellen Nachweis einreichen. Bei Einzelunternehmen ohne Handelsregistereintrag kann insbesondere eine Bestätigung der AHV-Ausgleichskasse über die Anerkennung als selbstständigerwerbend akzeptiert werden. Nach erfolgreicher Prüfung darf Findelio den Eintrag als „Verifiziert“ kennzeichnen. Das Badge bestätigt nur die anhand des Nachweises geprüfte Existenz beziehungsweise Zuordnung des Unternehmens und ist keine Garantie für Qualität, Bonität, Bewilligungen oder Leistungen. Findelio darf weitere Angaben verlangen oder den Status bei veralteten, widersprüchlichen oder falschen Informationen wieder entziehen. Nachweise werden ausschliesslich für die Verifizierung verwendet, nur befugten Personen zugänglich gemacht und gelöscht, sobald sie für diesen Zweck nicht mehr erforderlich sind, soweit keine Aufbewahrungspflicht entgegensteht."
+    },
     "contact": "Fragen zu diesen AGB beantwortet das Findelio-Team unter"
   },
   "Contact": {
@@ -988,9 +1064,9 @@
         "logo_id": "Firmenlogo",
         "gallery_file_ids": "Bildergalerie",
         "social_links": "Social-Media-Links",
-        "opening_hours": "Öffnungszeiten"
-        ,"custom_cta_label": "Button-Beschriftung"
-        ,"custom_cta_value": "Button-Ziel"
+        "opening_hours": "Öffnungszeiten",
+        "custom_cta_label": "Button-Beschriftung",
+        "custom_cta_value": "Button-Ziel"
       }
     }
   },
@@ -1029,7 +1105,10 @@
       "eyebrow": "Löschanfragen",
       "title": "Offene Löschanfragen",
       "description": "Prüfe die Anfrage und stelle vor der Archivierung sicher, dass keine bezahlte Premium-Laufzeit mehr aktiv ist.",
-      "types": { "listing": "Firmeneintrag", "organization": "Organisation" },
+      "types": {
+        "listing": "Firmeneintrag",
+        "organization": "Organisation"
+      },
       "submittedBy": "Angefragt von {name} am {date}",
       "unknownRequester": "Unbekannter Benutzer",
       "customerReason": "Grund der Anfrage",
@@ -1086,5 +1165,70 @@
     "errorTitle": "Bestätigung nicht möglich",
     "errorText": "Der Bestätigungslink ist ungültig, abgelaufen oder wurde bereits verwendet.",
     "registerButton": "Zur Registrierung"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSCHAFTEN",
+    "title": "Empfehlungen",
+    "description": "Verwalte Empfehlungscodes und verfolge, welche Firmen darüber zu Findelio kommen. Der Premium-Test gilt nur für neue Organisationen.",
+    "activePartners": "Aktive Empfehlungsgeber",
+    "registrations": "Registrierungen (gefiltert)",
+    "pendingActivation": "Aktivierung ausstehend (gefiltert)",
+    "newPartner": "Empfehlungsgeber anlegen",
+    "editPartner": "Empfehlungsgeber bearbeiten",
+    "partnerHelp": "Ein Code pro Empfehlungsgeber. Ein eigenes Findelio-Konto ist dafür nicht nötig.",
+    "name": "Name",
+    "code": "Empfehlungscode",
+    "codeHelp": "3–64 Zeichen: Buchstaben A–Z, Zahlen, Bindestrich oder Unterstrich. Gross-/Kleinschreibung spielt keine Rolle.",
+    "codeFixed": "Der Code bleibt unverändert, damit verteilte Links gültig bleiben.",
+    "notes": "Interne Notizen",
+    "status": "Status",
+    "active": "Aktiv",
+    "disabled": "Deaktiviert",
+    "disableHelp": "Deaktivieren stoppt neue Einlösungen. Bestehende Zuordnungen und Testphasen bleiben erhalten.",
+    "save": "Speichern",
+    "saving": "Wird gespeichert …",
+    "cancel": "Abbrechen",
+    "partners": "Empfehlungsgeber",
+    "noPartners": "Noch keine Empfehlungsgeber. Lege den ersten über das Formular an.",
+    "link": "Empfehlungslink",
+    "copyLink": "Link kopieren",
+    "copyCode": "Code kopieren",
+    "edit": "Bearbeiten",
+    "companies": "Geworbene Firmen",
+    "overviewHelp": "Zeitangaben gelten für die Schweiz (Europe/Zurich). Der Test beginnt mit der ersten berechtigten Firmenfreigabe.",
+    "allPartners": "Alle Empfehlungsgeber",
+    "allStates": "Alle Status",
+    "refresh": "Aktualisieren",
+    "noCompanies": "Für diese Auswahl sind noch keine Registrierungen vorhanden.",
+    "company": "Organisation / Firmenprofil",
+    "registered": "Registriert am",
+    "period": "Testbeginn / Testende",
+    "actions": "Aktionen",
+    "awaitingOrganization": "Organisation noch nicht angelegt",
+    "retry": "Aktivierung erneut versuchen",
+    "page": "Seite {page} von {pages} · {total} Registrierungen",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "revoked": "Test widerrufen",
+    "expired": "Test abgelaufen",
+    "previousPublication": "Bereits zuvor veröffentlicht: kein neuer Test.",
+    "existingPremium": "Premium war bereits vorhanden. Es wird kein zusätzlicher Test gewährt.",
+    "saved": "Gespeichert.",
+    "copied": "Kopiert.",
+    "copy_failed": "Kopieren nicht möglich. Markiere und kopiere den angezeigten Link manuell.",
+    "load_failed": "Die Übersicht konnte nicht geladen werden. Bitte erneut versuchen.",
+    "save_failed": "Speichern fehlgeschlagen. Prüfe die Eingaben und versuche es erneut.",
+    "code_exists": "Dieser Code ist bereits vergeben.",
+    "retry_failed": "Aktivierung fehlgeschlagen. Die Reservierung bleibt erhalten.",
+    "retry_done": "Die Aktivierung wurde erneut geprüft. Der aktuelle Status steht in der Übersicht.",
+    "states": {
+      "pending_organization": "Wartet auf Organisation",
+      "pending_approval": "Wartet auf Freigabe",
+      "pending_activation": "Aktivierung ausstehend",
+      "granted": "Test gewährt",
+      "skipped_existing_premium": "Übersprungen: Premium vorhanden",
+      "expired_unactivated": "Ohne Aktivierung abgelaufen",
+      "void": "Nicht berechtigt"
+    }
   }
 }

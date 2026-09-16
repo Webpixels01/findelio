@@ -8,7 +8,13 @@
     "build": "npm run check:email-logo && next build",
     "check:email-logo": "node scripts/check-email-logo.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:referral-dates": "node --experimental-strip-types --test lib/referral-dates.test.ts",
+    "test:referral-registration": "node --experimental-strip-types --test lib/referral-registration.test.ts lib/register-search-params.test.ts && node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-utils.test.mjs",
+    "typecheck:referral-dates": "tsc --noEmit -p tsconfig.referral-dates.test.json",
+    "build:referral-extension": "node scripts/build-referral-extension.mjs",
+    "test:referral-approval": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-approval.test.mjs",
+    "test:referral-admin": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-admin.test.mjs tests/referral-admin-render.mjs"
   },
   "dependencies": {
     "@fontsource-variable/roboto-condensed": "^5.3.0",

@@ -77,6 +77,8 @@ services:
       EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD}
       ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL}
       FINDELIO_SITE_URL: http://localhost:3000
+      # Default off until migration is applied and the feature is intentionally enabled.
+      FINDELIO_REFERRAL_REGISTRATION_ENABLED: ${FINDELIO_REFERRAL_REGISTRATION_ENABLED:-false}
       USER_REGISTER_URL_ALLOW_LIST: http://localhost:3000/de-ch/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: http://localhost:3000
