@@ -8,10 +8,18 @@
     "navigation": "Hlavná navigácia",
     "findCompanies": "Nájsť firmy",
     "registerCompany": "Pridať firmu",
+    "blog": "Blog",
     "login": "Prihlásenie",
     "selectLanguage": "Vybrať jazyk",
     "menu": "Otvoriť menu",
     "dashboard": "Dashboard"
+  },
+  "Share": {
+    "page": "Zdieľať stránku",
+    "listing": "Zdieľať záznam",
+    "copied": "Odkaz skopírovaný",
+    "shared": "Zdieľané",
+    "error": "Zdieľanie nie je možné"
   },
   "Home": {
     "eyebrow": "Viacjazyčné firmy vo Švajčiarsku",
@@ -51,17 +59,26 @@
   },
   "Company": {
     "back": "Späť na vyhľadávanie",
+    "metaDescription": "Firemný profil {company} v meste {city} na Findelio: kontakt, odvetvia a hovorené jazyky.",
     "about": "O firme",
     "contact": "Kontakt",
     "website": "Webová stránka",
     "email": "E-mail",
     "phone": "Telefón",
     "address": "Adresa",
+    "openInGoogleMaps": "Otvoriť adresu v Google Maps",
     "languages": "Hovorené jazyky",
     "industry": "Odvetvie",
     "verified": "Overená firma",
     "openingHours": "Otváracie hodiny",
     "gallery": "Galéria",
+    "galleryImage": "{company} – obrázok {current} z {total}",
+    "galleryOpen": "Zobraziť obrázok {current} vo veľkom",
+    "galleryDialog": "Galéria obrázkov",
+    "galleryClose": "Zavrieť galériu",
+    "galleryPrevious": "Predchádzajúci obrázok",
+    "galleryNext": "Nasledujúci obrázok",
+    "socialMedia": "Sociálne siete",
     "closed": "Zatvorené",
     "weekdays": {
       "1": "Pondelok",
@@ -74,24 +91,35 @@
     }
   },
   "Register": {
-    "eyebrow": "Pridať firmu",
-    "title": "Zviditeľnite svoju firmu.",
-    "description": "Zadajte najdôležitejšie údaje. Pred zverejnením bude profil skontrolovaný.",
-    "companyName": "Názov firmy",
+    "eyebrow": "Vytvoriť firemný účet",
+    "title": "Vytvorte si účet Findelio.",
+    "description": "Najprv sa zaregistrujte ako používateľ. Po potvrdení e-mailu sa môžete prihlásiť a pridať svoju firmu.",
+    "firstName": "Meno",
+    "lastName": "Priezvisko",
     "email": "E-mail",
-    "phone": "Telefón",
-    "website": "Webová stránka",
-    "industry": "Odvetvie",
-    "canton": "Kantón",
-    "city": "Mesto",
-    "languages": "Hovorené jazyky",
-    "descriptionLabel": "Opis firmy",
-    "choose": "Vyberte možnosť",
-    "note": "Táto verzia ešte neukladá údaje natrvalo. Formulár už zobrazuje plánovaný postup.",
-    "submit": "Odoslať profil",
-    "successTitle": "Ďakujeme za váš profil.",
-    "successText": "Údaje boli v tejto ukážke úspešne skontrolované. Databáza bude pripojená v ďalšom kroku.",
-    "newEntry": "Pridať ďalšiu firmu"
+    "password": "Heslo",
+    "passwordConfirmation": "Zopakovať heslo",
+    "passwordHint": "Najmenej 8 znakov, aspoň jedno písmeno, jedno číslo a jeden špeciálny znak.",
+    "submit": "Vytvoriť účet",
+    "invitationSubmit": "Vytvoriť účet pre pozvánku",
+    "loading": "Účet sa vytvára …",
+    "successTitle": "Skontrolujte si e-mailovú schránku.",
+    "successText": "Ak bolo možné adresu zaregistrovať, poslali sme vám potvrdzovací odkaz. Kliknutím naň účet aktivujete.",
+    "invitationSuccessTitle": "Potvrďte teraz svoju e-mailovú adresu.",
+    "invitationSuccessText": "Kliknite na potvrdzovací odkaz v našom e-maile. Pozvánka sa potom prijme automaticky a prejdete priamo k firemným záznamom organizácie.",
+    "successHint": "Skontrolujte aj priečinok so spamom.",
+    "loginPrompt": "Už máte účet?",
+    "loginLink": "Prihlásiť sa",
+    "passwordError": "Heslo nespĺňa požiadavky.",
+    "passwordMismatch": "Heslá sa nezhodujú.",
+    "emailError": "Zadajte platnú e-mailovú adresu.",
+    "invitationError": "Táto pozvánka už nie je platná. Požiadajte organizáciu o zaslanie novej pozvánky.",
+    "referralCode": "Odporúčací kód (voliteľné)",
+    "referralCodeHint": "Ak ste prišli cez odporúčací odkaz, kód je už vyplnený. Môžete ho zadať aj ručne.",
+    "referralError": "Tento odporúčací kód je neplatný alebo už nie je aktívny.",
+    "errorFallback": "Registráciu nebolo možné spracovať.",
+    "serverError": "Registrácia momentálne nie je dostupná.",
+    "connectionError": "Pripojenie k serveru zlyhalo."
   },
   "Login": {
     "eyebrow": "Firemná zóna",
@@ -105,6 +133,24 @@
     "errorFallback": "E-mailová adresa alebo heslo nie sú správne.",
     "serverError": "Prihlásenie momentálne nie je možné spracovať.",
     "connectionError": "Pripojenie k serveru zlyhalo."
+  },
+  "AccountSetup": {
+    "eyebrow": "Nastavenie firemného účtu",
+    "title": "Vytvorte svoju organizáciu.",
+    "description": "Pred použitím ovládacieho panela potrebujeme názov vašej firmy.",
+    "sectionTitle": "Vaša organizácia",
+    "sectionDescription": "Organizácia prepojí váš účet s firemnými záznamami a členmi tímu.",
+    "companyName": "Názov firmy",
+    "companyNameHint": "Použite oficiálny názov firmy. Ďalšie údaje môžete doplniť neskôr.",
+    "submit": "Vytvoriť organizáciu",
+    "submitting": "Organizácia sa vytvára …",
+    "errors": {
+      "invalid_data": "Zadajte platný názov firmy.",
+      "unauthorized": "Vaša relácia vypršala. Prihláste sa znova.",
+      "forbidden": "Tento účet nemôže vytvoriť organizáciu.",
+      "create_failed": "Organizáciu sa nepodarilo vytvoriť.",
+      "network": "Pripojenie k serveru zlyhalo."
+    }
   },
   "Dashboard": {
     "eyebrow": "Firemná zóna",
@@ -121,16 +167,16 @@
     "logoutLoading": "Odhlasovanie …",
     "organizationsEyebrow": "Správa firiem",
     "organizationsTitle": "Vaše organizácie",
-    "organizationsDescription": "Tu vidíte všetky organizácie, v ktorých máte aktívne členstvo, a ich firemné profily.",
+    "organizationsDescription": "Tu vidíte všetky organizácie, v ktorých máte aktívne členstvo, a ich firemné záznamy.",
     "noOrganizationsTitle": "Nenašla sa žiadna aktívna organizácia",
     "noOrganizationsDescription": "Váš používateľský účet momentálne nie je priradený k žiadnej aktívnej organizácii. Skontrolujte členstvo v Directuse alebo kontaktujte administrátora.",
     "organizationLabel": "Organizácia",
     "membershipRole": "Rola člena",
     "organizationStatus": "Stav organizácie",
-    "listings": "Firemné profily",
+    "listings": "Firemné záznamy",
     "listingsCount": "Počet záznamov: {count}",
-    "listingsTitle": "Priradené firemné profily",
-    "noListings": "Pre túto organizáciu zatiaľ nebol vytvorený žiadny firemný profil.",
+    "listingsTitle": "Priradené firemné záznamy",
+    "noListings": "Pre túto organizáciu zatiaľ nebol vytvorený žiadny firemný záznam.",
     "locationUnknown": "Miesto nie je uvedené",
     "viewListing": "Zobraziť verejný profil",
     "roleValues": {
@@ -152,24 +198,31 @@
       "label": "Navigácia dashboardu",
       "overview": "Prehľad",
       "organizations": "Organizácie",
-      "listings": "Firemné profily",
+      "listings": "Firemné záznamy",
       "team": "Tím",
-      "review": "Kontrola"
+      "review": "Kontrola",
+      "premium": "Premium",
+      "referrals": "Odporúčania"
     },
     "summary": {
       "organizations": "Organizácie",
-      "listings": "Firemné profily",
+      "listings": "Firemné záznamy",
       "published": "Zverejnené"
     },
     "listingsPage": {
-      "eyebrow": "Firemné profily",
-      "title": "Vaše firemné profily",
-      "description": "Tu nájdete všetky profily vašich aktívnych organizácií a ich aktuálny stav zverejnenia.",
-      "emptyTitle": "Zatiaľ žiadne firemné profily",
-      "emptyDescription": "Pre vaše aktívne organizácie zatiaľ nebol vytvorený žiadny firemný profil.",
-      "notPublic": "Tento profil zatiaľ nie je verejne viditeľný.",
+      "eyebrow": "Firemné záznamy",
+      "title": "Vaše firemné záznamy",
+      "description": "Tu nájdete všetky záznamy vašich aktívnych organizácií a ich aktuálny stav zverejnenia.",
+      "emptyTitle": "Zatiaľ žiadne firemné záznamy",
+      "emptyDescription": "Pre vaše aktívne organizácie zatiaľ nebol vytvorený žiadny firemný záznam.",
+      "notPublic": "Tento záznam zatiaľ nie je verejne viditeľný.",
       "editListing": "Upraviť",
-      "createListing": "Nový profil firmy"
+      "createListing": "Nový firemný záznam",
+      "manageSubscription": "Spravovať predplatné",
+      "premiumGranted": "Premium prístup",
+      "choosePlan": "Vybrať balík",
+      "completeBeforeBilling": "Najprv dokončiť a odoslať na kontrolu.",
+      "billingAfterApproval": "Predplatné po schválení."
     },
     "teamPage": {
       "eyebrow": "Správa tímu",
@@ -181,7 +234,90 @@
     },
     "overviewOrganizationsTitle": "Prehľad organizácií",
     "overviewOrganizationsLink": "Zobraziť všetky organizácie",
-    "organizationListingsLink": "Zobraziť firemné profily"
+    "organizationListingsLink": "Zobraziť firemné záznamy"
+  },
+  "Team": {
+    "organization": "Organizácia",
+    "empty": "Momentálne nepatríte do žiadnej aktívnej organizácie.",
+    "membersTitle": "Členovia tímu",
+    "membersCount": "{count, plural, one {# aktívny člen} few {# aktívni členovia} other {# aktívnych členov}}",
+    "roleFor": "Rola pre {name}",
+    "remove": "Odstrániť",
+    "inviteTitle": "Pozvať osobu",
+    "inviteDescription": "Pozvánka platí sedem dní a možno ju prijať iba pomocou uvedenej e-mailovej adresy.",
+    "viewOnly": "Vaša rola umožňuje tím zobraziť, ale nie meniť.",
+    "email": "E-mailová adresa",
+    "role": "Rola",
+    "invite": "Odoslať pozvánku",
+    "inviting": "Odosiela sa …",
+    "pendingTitle": "Čakajúce pozvánky",
+    "pendingEmpty": "Žiadne čakajúce pozvánky.",
+    "expires": "platí do {date}",
+    "cancelInvitation": "Zrušiť pozvánku",
+    "confirmMemberTitle": "Odstrániť člena tímu?",
+    "confirmMemberDescription": "{name} stratí prístup k tejto organizácii a jej firemným záznamom.",
+    "confirmInvitationTitle": "Zrušiť pozvánku?",
+    "confirmInvitationDescription": "Odkaz pozvánky pre {name} bude okamžite neplatný.",
+    "keep": "Zrušiť",
+    "confirm": "Potvrdiť",
+    "working": "Spracúva sa …",
+    "roles": {
+      "owner": "Vlastník",
+      "admin": "Administrátor",
+      "editor": "Redaktor"
+    },
+    "messages": {
+      "invited": "Pozvánka bola odoslaná e-mailom.",
+      "roleUpdated": "Rola bola aktualizovaná.",
+      "memberRemoved": "Člen tímu bol odstránený.",
+      "invitationCancelled": "Pozvánka bola zrušená."
+    },
+    "errors": {
+      "invalid_data": "Skontrolujte zadané údaje.",
+      "unauthorized": "Vaša relácia vypršala. Prihláste sa znova.",
+      "forbidden": "Na túto akciu nemáte oprávnenie.",
+      "member_exists": "Táto osoba už je členom organizácie.",
+      "invitation_exists": "Pre túto e-mailovú adresu už existuje čakajúca pozvánka.",
+      "rate_limited": "Bolo odoslaných príliš veľa pozvánok. Skúste to neskôr.",
+      "too_many_invitations": "Táto organizácia už má príliš veľa čakajúcich pozvánok.",
+      "send_failed": "Pozvánku sa nepodarilo odoslať.",
+      "update_failed": "Zmenu sa nepodarilo uložiť.",
+      "not_found": "Táto položka už nie je dostupná.",
+      "network": "Pripojenie zlyhalo. Skúste to znova.",
+      "unknown": "Niečo sa pokazilo. Skúste to znova."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Pozvánka do tímu",
+    "title": "Pozvánka od {organization}",
+    "description": "Prijatím získate prístup k organizácii a podľa svojej roly môžete spravovať jej obsah na Findelio.",
+    "registrationDescription": "Vytvorte si osobný účet pre organizáciu {organization}. Po potvrdení e-mailu sa pozvánka prijme automaticky a prejdete priamo k firemným záznamom.",
+    "email": "Pozvaná e-mailová adresa",
+    "role": "Rola",
+    "validUntil": "Platí do",
+    "roles": {
+      "admin": "Administrátor",
+      "editor": "Redaktor"
+    },
+    "signInTitle": "Prihláste sa alebo vytvorte účet",
+    "signInDescription": "Prihláste sa, ak už máte účet s adresou {email}. V opačnom prípade si teraz vytvorte účet; po potvrdení e-mailu sa pozvánka prijme automaticky.",
+    "signIn": "Prihlásiť sa",
+    "register": "Vytvoriť účet",
+    "wrongAccountTitle": "Prihlásený nesprávny účet",
+    "wrongAccountDescription": "Ste prihlásený ako {current}. Táto pozvánka platí pre {invited}. Odhláste sa a prihláste pozvanou adresou.",
+    "accept": "Prijať pozvánku",
+    "accepting": "Prijíma sa …",
+    "acceptError": "Pozvánku sa nepodarilo prijať. Skúste to znova.",
+    "emailMismatch": "Táto pozvánka patrí inej e-mailovej adrese.",
+    "acceptedEyebrow": "Pozvánka prijatá",
+    "acceptedTitle": "Vitajte v tíme {organization}",
+    "acceptedDescription": "Organizáciu a jej firemné záznamy teraz môžete spravovať v ovládacom paneli.",
+    "openTeam": "Otvoriť správu tímu",
+    "invalidTitle": "Pozvánka sa nenašla",
+    "invalidDescription": "Tento odkaz pozvánky je neplatný alebo bol zrušený.",
+    "expiredTitle": "Pozvánka vypršala",
+    "expiredDescription": "Táto pozvánka už nie je platná. Požiadajte organizáciu o novú.",
+    "home": "Na domovskú stránku"
   },
   "Footer": {
     "tagline": "Findelio spája ľudí s firmami, ktoré hovoria ich jazykom.",
@@ -189,21 +325,419 @@
     "findCompanies": "Nájsť firmy",
     "registerCompany": "Pridať firmu",
     "legal": "Právne informácie",
+    "contact": "Kontakt",
     "imprint": "Impresum",
     "privacy": "Ochrana súkromia",
+    "cookies": "Informácie o cookies",
+    "howItWorks": "Ako Findelio funguje pre firmy",
+    "blog": "Poradňa a blog",
+    "terms": "VOP",
     "copyright": "Všetky práva vyhradené."
   },
+  "Blog": {
+    "metaTitle": "Praktické rady pre švajčiarske firmy | Findelio",
+    "metaDescription": "Praktické články o lokálnej viditeľnosti, viacjazyčnej komunikácii a dôveryhodných firemných profiloch vo Švajčiarsku.",
+    "eyebrow": "Poradňa Findelio",
+    "title": "Poznatky, ktoré posúvajú firmy vpred.",
+    "intro": "Zrozumiteľné a praktické články o viacjazyčnej komunikácii, lokálnej viditeľnosti a presvedčivej online prezentácii.",
+    "readingTime": "{minutes, plural, one {# minúta čítania} few {# minúty čítania} other {# minút čítania}}",
+    "readArticle": "Prečítať článok",
+    "moreArticles": "Ďalšie články",
+    "categoryFilterLabel": "Filtrovať články podľa témy",
+    "allCategories": "Všetky články",
+    "emptyTitle": "Prvé články pripravujeme.",
+    "emptyText": "Čoskoro tu nájdeš praktické tipy o viditeľnosti, viacjazyčných službách a presvedčivých firemných profiloch.",
+    "ctaTitle": "Hľadáš firmu, ktorá hovorí tvojím jazykom?",
+    "ctaText": "Nájdi vhodné firmy podľa jazyka, odvetvia, kantónu a lokality.",
+    "ctaButton": "Nájsť firmy",
+    "breadcrumbs": "Navigačná cesta",
+    "breadcrumbHome": "Domov",
+    "breadcrumbBlog": "Blog",
+    "byAuthor": "Autor: {author}",
+    "backToBlog": "Späť na blog",
+    "relatedArticles": "Mohlo by ťa tiež zaujímať"
+  },
+  "CookieNotice": {
+    "eyebrow": "Ochrana súkromia",
+    "title": "Cookies a meranie návštevnosti",
+    "description": "Findelio používa potrebné cookies na prihlásenie, relácie a výber jazyka. Voliteľná analytika sa načíta až po vašom výbere.",
+    "acknowledge": "Rozumiem",
+    "necessaryOnly": "Iba nevyhnutné",
+    "allowAnalytics": "Povoliť analytiku",
+    "details": "Informácie o cookies"
+  },
+  "CookiePolicy": {
+    "metaTitle": "Informácie o cookies | Findelio",
+    "metaDescription": "Ktoré technicky nevyhnutné cookies a lokálne úložisko prehliadača Findelio používa a ako dlho sa uchovávajú.",
+    "eyebrow": "Ochrana súkromia",
+    "title": "Informácie o cookies",
+    "lastUpdated": "Aktualizované: 5. augusta 2026",
+    "intro": "Na tejto stránke vysvetľujeme, ktoré cookies a podobné technológie ukladania Findelio používa. Voliteľné meranie Google Analytics sa aktivuje až po vašom výslovnom výbere.",
+    "necessaryTitle": "Nevyhnutné cookies",
+    "necessaryText": "Findelio používa technicky nevyhnutné cookies na prihlásenie, bezpečné relácie a výber jazyka. Nastavia sa automaticky, keď sú potrebné.",
+    "analyticsTitle": "Voliteľná analytika",
+    "analyticsText": "Ak povolíte analytiku, načítame Google Analytics (ID merania G-S9DSK103GX). Údaje o používaní a zariadení sa môžu odoslať spoločnosti Google a môžu sa nastaviť analytické cookies, napríklad _ga. Voľbu môžete obnoviť vymazaním miestnych údajov webu v prehliadači.",
+    "inventoryTitle": "Používané cookies",
+    "inventoryText": "Nevyhnutné cookies pochádzajú priamo od Findelio. Voliteľné analytické cookies Google sa nastavia až po vašom súhlase.",
+    "purposeLabel": "Účel",
+    "durationLabel": "Doba uchovávania",
+    "cookies": {
+      "access": {
+        "purpose": "Udržiava vaše bezpečné prihlásenie počas aktívnej relácie.",
+        "duration": "Krátkodobo; automaticky vyprší spolu s prístupovým tokenom."
+      },
+      "refresh": {
+        "purpose": "Bezpečne obnovuje prihlásenie bez opakovaného zadávania hesla na každej stránke.",
+        "duration": "Najviac 7 dní alebo do odhlásenia."
+      },
+      "locale": {
+        "purpose": "Pamätá si zvolený jazyk počas relácie prehliadača.",
+        "duration": "Do konca relácie prehliadača."
+      }
+    },
+    "storageTitle": "Lokálne úložisko prehliadača",
+    "storageText": "Samotné oznámenie o cookies sa neukladá pomocou ďalšieho cookie. Findelio namiesto toho používa lokálne úložisko prehliadača.",
+    "storagePurpose": "Ukladá iba čas potvrdenia tohto oznámenia, aby sa nezobrazovalo pri každom otvorení stránky.",
+    "storageDuration": "Najviac 12 mesiacov alebo do vymazania údajov prehliadača.",
+    "controlTitle": "Správa cookies a úložiska",
+    "controlText": "Cookies a lokálne údaje stránok môžete kedykoľvek zobraziť a vymazať v nastaveniach prehliadača. Ak nevyhnutné cookies zablokujete alebo vymažete, prihlásenie, výber jazyka alebo chránené časti nemusia fungovať spoľahlivo.",
+    "privacyTitle": "Ďalšie informácie o ochrane súkromia",
+    "privacyText": "V zásadách ochrany súkromia vysvetľujeme, ako Findelio spracúva osobné údaje a aké máte práva.",
+    "privacyLink": "Otvoriť zásady ochrany súkromia"
+  },
+  "CompanyGuide": {
+    "metaTitle": "Ako Findelio funguje pre firmy | Findelio",
+    "metaDescription": "Od firemného účtu po zverejnený záznam: zistite, ako firmy používajú Findelio a čo prináša Premium.",
+    "eyebrow": "Pre firmy",
+    "title": "Váš záznam na Findelio v niekoľkých krokoch.",
+    "intro": "Findelio spája vašu firmu s ľuďmi, ktorí hľadajú služby vo svojom jazyku. Údaje máte pod kontrolou a pre každý záznam si volíte Free alebo Premium.",
+    "stepsTitle": "Ako prebieha zverejnenie",
+    "steps": {
+      "register": {
+        "title": "Vytvorte účet",
+        "text": "Zaregistrujte sa e-mailom a potvrďte adresu cez odkaz v správe."
+      },
+      "organization": {
+        "title": "Vytvorte organizáciu",
+        "text": "Pridajte organizáciu, ku ktorej patria firemné záznamy a neskôr aj členovia tímu."
+      },
+      "listing": {
+        "title": "Vytvorte záznam",
+        "text": "Zadajte firmu, vyberte odvetvia a jazyky a zvoľte Free alebo Premium."
+      },
+      "complete": {
+        "title": "Doplňte profil",
+        "text": "Doplňte popis, kontakt a adresu. Premium pridáva logo, galériu, otváracie hodiny, sociálne siete a preklady."
+      },
+      "review": {
+        "title": "Odošlite na kontrolu",
+        "text": "Findelio kontroluje nové a zmenené údaje, aby bol katalóg dôveryhodný a aktuálny."
+      },
+      "publish": {
+        "title": "Zverejnite a rásťte",
+        "text": "Po schválení je záznam viditeľný. Až potom aktivujete Premium a získate príspevky a štatistiky."
+      }
+    },
+    "packagesEyebrow": "Balíky pre každý záznam",
+    "packagesTitle": "Začnite Free alebo ukážte viac s Premium",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Pevný základ pre vyhľadateľný a overený záznam.",
+      "features": {
+        "profile": "Názov firmy a úplný popis",
+        "classification": "Odvetvia a hovorené jazyky",
+        "contact": "Kontakt, web a poloha"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 mesačne alebo CHF 99 ročne",
+      "description": "Pre firmy, ktoré chcú lepšiu prezentáciu, aktuálny obsah a prehľad o dosahu.",
+      "features": {
+        "media": "Logo a fotogaléria",
+        "details": "Otváracie hodiny, sociálne siete a vlastné tlačidlo",
+        "translations": "Vlastné popisy vo všetkých jazykoch Findelio",
+        "posts": "Novinky, akcie a podujatia",
+        "ranking": "Prednostné umiestnenie relevantných Premium záznamov",
+        "statistics": "Štatistiky a mesačný report"
+      }
+    },
+    "reviewTitle": "Prečo sa záznamy kontrolujú?",
+    "reviewText": "Kontrola chráni návštevníkov aj seriózne firmy. Findelio overuje vierohodnosť údajov a pri otázkach alebo odmietnutí pošle správu.",
+    "verificationEyebrow": "Dobrovoľné doplnkové overenie",
+    "verificationTitle": "Získajte stav Overené pomocou úradného dokladu",
+    "verificationText": "Findelio môžete dobrovoľne poslať aktuálny úradný doklad o firme. Po úspešnej kontrole označíme firemný záznam ako „Overený“.",
+    "verificationProofs": "Vhodný je napríklad aktuálny výpis z obchodného registra alebo registra UID. Pri samostatne zárobkovo činnej osobe bez zápisu v obchodnom registri možno použiť aj potvrdenie príslušnej sociálnej poisťovne o uznaní samostatnej zárobkovej činnosti.",
+    "verificationNote": "Odznak Overené potvrdzuje len to, že Findelio na základe dokladu overilo existenciu alebo príslušnosť firmy. Nezaručuje kvalitu, bonitu, povolenia ani služby.",
+    "verificationCta": "Poslať doklad e-mailom",
+    "ctaTitle": "Pripravení pridať firmu?",
+    "ctaText": "Vytvorte si bezplatný účet, doplňte profil a oslovte správnych zákazníkov.",
+    "ctaButton": "Pridať firmu"
+  },
+  "Terms": {
+    "metaTitle": "Všeobecné obchodné podmienky | Findelio",
+    "metaDescription": "Podmienky pre firemné účty, záznamy a Premium predplatné na Findelio.",
+    "eyebrow": "Právne informácie",
+    "title": "Všeobecné obchodné podmienky",
+    "lastUpdated": "Stav k 3. augustu 2026",
+    "intro": "Tieto podmienky upravujú používanie Findelio firmami, organizáciami a ich oprávnenými používateľmi.",
+    "sections": {
+      "scope": {
+        "title": "Poskytovateľ a rozsah",
+        "body": "Findelio poskytuje Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Švajčiarsko. Podmienky platia pre účty, organizácie, záznamy a bezplatné aj platené funkcie."
+      },
+      "services": {
+        "title": "Služby Findelio",
+        "body": "Findelio prevádzkuje viacjazyčný firemný katalóg a nástroje na tvorbu, kontrolu a správu záznamov. Nie je stranou zmlúv medzi návštevníkmi a firmami."
+      },
+      "accounts": {
+        "title": "Účet a oprávnenie",
+        "body": "Údaje musia byť správne a aktuálne, prihlasovacie údaje dôverné. Osoba konajúca za organizáciu potvrdzuje svoje oprávnenie a zodpovedá za činnosť účtu."
+      },
+      "content": {
+        "title": "Obsah a licencia",
+        "body": "Firma zodpovedá za texty, obrázky, logá a odkazy a potvrdzuje ich zákonnosť. Findelio získava nevýhradné práva potrebné na uloženie a zobrazenie obsahu počas zverejnenia."
+      },
+      "review": {
+        "title": "Kontrola a blokovanie",
+        "body": "Nezákonný, zavádzajúci, neúplný alebo zneužívajúci obsah môže byť odmietnutý, pozastavený alebo odstránený. Ak je to primerané, Findelio uvedie dôvod a umožní opravu."
+      },
+      "packages": {
+        "title": "Free a Premium",
+        "body": "Free obsahuje uvedené základné funkcie. Premium platí pre jeden záznam a obsahuje doplnky opísané na stránke ponuky a fakturácie."
+      },
+      "contract": {
+        "title": "Zmluva, ceny a platba",
+        "body": "Ceny sú uvedené vo švajčiarskych frankoch. Premium vzniká potvrdením platby. Mesačné a ročné predplatné sa obnovuje, ak nie je zrušené pred koncom obdobia."
+      },
+      "cancellation": {
+        "title": "Zrušenie a neúspešná platba",
+        "body": "Premium možno zrušiť ku koncu obdobia; dovtedy zostáva aktívne. Po neúspešnej platbe môže byť prístup na konci obdobia zablokovaný. Pomerné refundácie sa spravidla neposkytujú; povinné práva zostávajú zachované."
+      },
+      "availability": {
+        "title": "Dostupnosť",
+        "body": "Nepretržitá bezchybná prevádzka nie je zaručená. Údržba, bezpečnostné opatrenia, tretie strany alebo vyššia moc môžu spôsobiť prerušenia."
+      },
+      "liability": {
+        "title": "Zodpovednosť",
+        "body": "Findelio zodpovedá v povinnom zákonnom rozsahu. Pokiaľ je to dovolené, nezodpovedá za ľahkú nedbanlivosť, nepriame škody, ušlý zisk a stratu údajov."
+      },
+      "termination": {
+        "title": "Ukončenie a vymazanie",
+        "body": "Vymazanie účtu nenahrádza zrušenie aktívneho Premium. Pri závažnom alebo opakovanom porušení môže Findelio prístup zablokovať alebo ukončiť."
+      },
+      "privacy": {
+        "title": "Ochrana údajov",
+        "body": "Spracovanie osobných údajov sa riadi aktuálnymi zásadami ochrany súkromia Findelio."
+      },
+      "changes": {
+        "title": "Zmeny podmienok",
+        "body": "Findelio môže podmienky do budúcna meniť z právnych, technických alebo obchodných dôvodov. Podstatné zmeny budú oznámené."
+      },
+      "law": {
+        "title": "Právo a súd",
+        "body": "Platí švajčiarske právo. Ak je to zákonne prípustné, príslušné sú súdy v sídle Webpixels. Povinné pravidlá zostávajú zachované; pri rozpore prekladov je rozhodujúca nemčina."
+      }
+    },
+    "verification": {
+      "title": "Overené firemné záznamy",
+      "body": "Firmy môžu dobrovoľne predložiť aktuálny výpis z obchodného registra, registra UID alebo porovnateľný úradný doklad. Pri samostatne zárobkovo činnej osobe bez zápisu v obchodnom registri môže Findelio akceptovať najmä potvrdenie príslušnej sociálnej poisťovne o uznaní samostatnej zárobkovej činnosti. Po úspešnej kontrole môže Findelio označiť záznam ako „Overený“. Odznak potvrdzuje len existenciu alebo príslušnosť firmy overenú z dokladu; nezaručuje kvalitu, bonitu, povolenia ani služby. Findelio môže vyžiadať ďalšie údaje alebo stav odobrať pri zastaraných, rozporných či nepravdivých informáciách. Doklady sa používajú výlučne na overenie, sprístupňujú sa len oprávneným osobám a po skončení účelu sa vymažú, ak tomu nebráni povinnosť uchovávania."
+    },
+    "contact": "Otázky k podmienkam pošlite tímu Findelio na"
+  },
+  "Contact": {
+    "metaTitle": "Kontakt | Findelio",
+    "metaDescription": "Kontaktujte tím Findelio s otázkami o firemných záznamoch, účtoch alebo partnerstvách.",
+    "eyebrow": "Kontakt",
+    "title": "Ako vám môžeme pomôcť?",
+    "description": "Pošlite nám svoju požiadavku prostredníctvom formulára. Ozveme sa vám čo najskôr.",
+    "directTitle": "Priamy kontakt",
+    "directText": "Tím Findelio môžete kontaktovať aj priamo e-mailom alebo telefonicky.",
+    "onlineTitle": "Pracujeme online",
+    "onlineText": "Findelio funguje digitálne. Osobné návštevy na obchodnej adrese nie sú určené.",
+    "fields": {
+      "name": "Meno",
+      "email": "E-mail",
+      "phone": "Telefón (voliteľné)",
+      "phoneLabel": "Telefón",
+      "subject": "Téma",
+      "message": "Správa"
+    },
+    "subjects": {
+      "general": "Všeobecná otázka",
+      "listing": "Otázka k firemnému záznamu",
+      "account": "Účet a prihlásenie",
+      "partnership": "Partnerstvo",
+      "other": "Iná požiadavka"
+    },
+    "messageHint": "Opíšte svoju požiadavku aspoň 20 znakmi.",
+    "privacyConsent": "Prečítal/-a som si <privacyLink>zásady ochrany osobných údajov</privacyLink> a súhlasím so spracovaním mojich údajov na zodpovedanie otázky.",
+    "send": "Odoslať správu",
+    "sending": "Odosiela sa …",
+    "success": "Ďakujeme. Vaša správa bola úspešne odoslaná.",
+    "error": "Správu sa nepodarilo odoslať. Skúste to znova alebo napíšte na info@findelio.ch."
+  },
   "Legal": {
+    "legalEyebrow": "Právne informácie",
+    "imprintMetaTitle": "Impresum | Findelio",
+    "imprintMetaDescription": "Údaje o prevádzkovateľovi a kontaktné údaje Findelio.",
     "imprintTitle": "Impresum",
-    "imprintText": "Pred zverejnením sem doplňte úplné údaje prevádzkovateľa podľa švajčiarskeho práva.",
+    "imprintIntro": "Findelio je služba spoločnosti Webpixels. Tu nájdete právne relevantné údaje o prevádzkovateľovi a kontaktné údaje.",
+    "operatorTitle": "Prevádzkovateľ webovej stránky",
+    "owner": "Majiteľ",
+    "switzerland": "Švajčiarsko",
+    "email": "E-mail",
+    "phone": "Telefón",
+    "website": "Webová stránka",
+    "contentResponsibilityTitle": "Zodpovednosť za obsah",
+    "contentResponsibilityText": "Za redakčný obsah Findelio zodpovedá Jan Cabanik, ktorého môžete kontaktovať prostredníctvom vyššie uvedených údajov.",
+    "liabilityTitle": "Zodpovednosť",
+    "liabilityText": "Obsah pripravujeme starostlivo. Webpixels však nezaručuje jeho správnosť, úplnosť, aktuálnosť ani nepretržitú dostupnosť. Povinné zákonné nároky na náhradu škody zostávajú nedotknuté.",
+    "externalLinksTitle": "Externé odkazy a firemné záznamy",
+    "externalLinksText": "Za obsah prepojených webových stránok a údaje poskytnuté firmami zodpovedajú príslušní prevádzkovatelia. Nezákonný obsah po oznámení a overení odstránime.",
+    "copyrightTitle": "Autorské právo",
+    "copyrightText": "Obsah a dizajn Findelio sú chránené autorským právom. Použitie nad rámec zákonných výnimiek si vyžaduje predchádzajúci súhlas príslušného nositeľa práv.",
+    "privacyMetaTitle": "Ochrana osobných údajov | Findelio",
+    "privacyMetaDescription": "Informácie o spracovaní osobných údajov službou Findelio.",
     "privacyTitle": "Ochrana osobných údajov",
-    "privacyText": "Pred zverejnením doplňte úplné zásady ochrany osobných údajov vrátane hostingu, formulárov, analytiky a služieb tretích strán."
+    "lastUpdated": "Aktualizované: 29. júla 2026",
+    "privacyIntro": "Tieto zásady vysvetľujú, aké osobné údaje Findelio spracúva, na aké účely a aké máte práva. Uplatňuje sa švajčiarsky zákon o ochrane údajov a v príslušných prípadoch aj GDPR.",
+    "controllerTitle": "1. Prevádzkovateľ",
+    "controllerText": "Za spracovanie údajov v súvislosti s Findelio zodpovedá:",
+    "processedDataTitle": "2. Spracúvané údaje",
+    "processedDataIntro": "Podľa spôsobu používania spracúvame tieto kategórie osobných údajov:",
+    "technicalData": "Technické údaje, ako IP adresa, čas, navštívená stránka, údaje o prehliadači a zariadení a serverové protokoly, na bezpečnú a stabilnú prevádzku.",
+    "accountData": "Pri registrácii a prihlásení: meno, e-mail, stav účtu a bezpečne uložené prihlasovacie údaje. Heslá sa neukladajú v čitateľnej podobe.",
+    "listingData": "Pri organizáciách a záznamoch: firemné, kontaktné a adresné údaje, opisy, odvetvia, jazyky a dobrovoľne nahraté médiá a profilové údaje.",
+    "contactData": "Pri kontaktnom formulári: meno, e-mail, voliteľný telefón, téma a správa. IP adresa sa krátkodobo používa na obmedzenie počtu požiadaviek a ochranu pred zneužitím.",
+    "purposesTitle": "3. Účely spracovania",
+    "purposesText": "Údaje spracúvame na poskytovanie adresára, správu účtov a záznamov, kontrolné a oznamovacie procesy, odpovedanie na otázky, prevenciu zneužitia a zabezpečenie bezpečnosti, stability a rozvoja služby.",
+    "legalBasisTitle": "4. Právny základ",
+    "legalBasisText": "Spracovanie prebieha na účely uzatvorenia a plnenia zmluvy, na základe oprávnených súkromných záujmov na bezpečnej službe, na splnenie právnych povinností alebo s vaším súhlasom, ak je potrebný.",
+    "cookiesTitle": "5. Súbory cookie a meranie návštevnosti",
+    "cookiesText": "Findelio používa technicky nevyhnutné súbory cookie na prihlásenie a správu relácie. Voliteľné meranie Google Analytics načítame iba po výslovnom súhlase a môže nastaviť analytické cookies. Mapu nevkladáme.",
+    "recipientsTitle": "6. Poskytovatelia služieb a príjemcovia",
+    "recipientsText": "Poskytovatelia infraštruktúry a hostingu môžu v potrebnom rozsahu spracúvať údaje ako sprostredkovatelia. Na odosielanie e-mailov používame Infomaniak Network SA vo Švajčiarsku. Ak povolíte voliteľnú analytiku, meracie údaje odosielame spoločnosti Google Ireland Limited a súvisiacim službám Google. Údaje odovzdávame iba vtedy, keď je to potrebné na prevádzku, vyžaduje to zákon, iniciovali ste to vy alebo to pokrýva váš súhlas. Pri spracovaní v zahraničí zabezpečujeme primeranú ochranu.",
+    "retentionTitle": "7. Uchovávanie",
+    "retentionText": "Osobné údaje uchovávame iba počas obdobia potrebného na daný účel, správu účtu, vybavenie otázky, bezpečnosť alebo zákonné povinnosti. Nepotrebné údaje vymažeme alebo anonymizujeme.",
+    "securityTitle": "8. Bezpečnosť údajov",
+    "securityText": "Používame primerané technické a organizačné opatrenia vrátane obmedzenia prístupu, šifrovaného prenosu a zabezpečených systémov. Úplne bezrizikový prenos údajov však nemožno zaručiť.",
+    "rightsTitle": "9. Vaše práva",
+    "rightsText": "Podľa platného práva môžete žiadať prístup, opravu, vymazanie, obmedzenie, vydanie alebo prenos údajov, namietať proti spracovaniu alebo odvolať súhlas. Kontaktujte info@findelio.ch. Môžete sa obrátiť aj na príslušný dozorný orgán.",
+    "thirdPartyTitle": "10. Externé odkazy a obsah",
+    "thirdPartyText": "Firemné záznamy môžu odkazovať na webové stránky a sociálne siete tretích strán. Ich podmienky ochrany osobných údajov platia až po otvorení odkazu. Findelio na kontaktnej stránke nevkladá mapu.",
+    "changesTitle": "11. Zmeny",
+    "changesText": "Tieto zásady môžeme upraviť pri zmene funkcií, poskytovateľov alebo právnych požiadaviek. Platí verzia zverejnená na tejto stránke."
+  },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Vybrať obrázok",
+      "imageEmpty": "Nie je vybratý žiadny obrázok",
+      "imageHint": "Odporúčané: 1200 × 675 px (pomer strán 16:9).",
+      "imageCurrent": "Aktuálny obrázok zostane zachovaný",
+      "editTitle": "Upraviť príspevok",
+      "editPublishedHint": "Doterajší príspevok zostane viditeľný. Zmeny budú pred zverejnením znova skontrolované.",
+      "editArchivedHint": "Tento príspevok nie je verejne viditeľný. Môžete ho uložiť ako koncept alebo ho znova odoslať na kontrolu.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Zmeny boli uložené.",
+      "update": "Uložiť zmeny",
+      "cancel": "Zrušiť",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archivovať",
+      "edit": "Upraviť",
+      "archivedNotice": "Príspevok bol archivovaný. Už nie je verejne viditeľný a zostáva uložený na nástenke.",
+      "archivedHint": "Nie je verejne viditeľný. Príspevok môžete upraviť a neskôr ho znova odoslať na kontrolu.",
+      "archiveDialogEyebrow": "Archivovať príspevok",
+      "archiveDialogTitle": "Archivovať „{title}“?",
+      "archiveConfirm": "Príspevok sa okamžite odstráni z verejného firemného profilu. Zostane uložený na tejto nástenke a neskôr ho môžete upraviť a znova odoslať na kontrolu.",
+      "archiveKeep": "Ponechať príspevok",
+      "archiving": "Archivuje sa …",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved.",
+        "archive": "Príspevok sa nepodarilo archivovať."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Správa pre zákazníka (povinná pri zamietnutí)",
+      "error": "Akciu sa nepodarilo vykonať. Pri zamietnutí príspevku je potrebné uviesť dôvod.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
   },
   "ListingEditor": {
-    "eyebrow": "Upraviť firemný profil",
+    "eyebrow": "Upraviť firemný záznam",
     "title": "Upraviť {name}",
-    "description": "Aktualizujte údaje firemného profilu. Zmeny môžete uložiť ako koncept alebo odoslať na kontrolu.",
-    "back": "Späť na firemné profily",
+    "description": "Aktualizujte údaje firemného záznamu. Zmeny môžete uložiť ako koncept alebo odoslať na kontrolu.",
+    "back": "Späť na firemné záznamy",
     "sections": {
       "general": "Základné údaje a popis",
       "classification": "Odvetvia a jazyky",
@@ -229,6 +763,67 @@
     },
     "industryHint": "Vyberte všetky odvetvia, v ktorých firma pôsobí.",
     "spokenLanguagesHint": "Vyberte všetky jazyky, v ktorých firma komunikuje so zákazníkmi.",
+    "industrySearch": "Hľadať v odvetviach",
+    "industrySearchPlaceholder": "Zadajte odvetvie",
+    "spokenLanguagesSearch": "Hľadať v jazykoch",
+    "spokenLanguagesSearchPlaceholder": "Zadajte jazyk",
+    "noSearchResults": "Nenašli sa žiadne zodpovedajúce položky.",
+    "translations": {
+      "title": "Viacjazyčný popis",
+      "description": "Doplňte hlavný nemecký popis vlastnými prekladmi do ďalších jazykov Findelio.",
+      "fallbackHint": "Ak preklad zostane prázdny, automaticky sa zobrazí nemecký popis.",
+      "fieldLabel": "Popis v jazyku {language}"
+    },
+    "premium": {
+      "badge": "Premium",
+      "title": "Prémiový firemný záznam",
+      "description": "Doplňte firemný záznam o logo, obrázky, otváracie hodiny, viacjazyčné popisy a odkazy na sociálne siete.",
+      "lockedDescription": "Tieto prémiové funkcie sú súčasťou aktívneho prémiového predplatného.",
+      "lockedHint": "Po aktivácii prémiového predplatného môžete tieto časti upravovať.",
+      "manageSubscription": "Aktivovať Premium",
+      "features": {
+        "logo": "Firemné logo",
+        "gallery": "Galéria obrázkov",
+        "openingHours": "Otváracie hodiny",
+        "socialLinks": "Odkazy na sociálne siete",
+        "translations": "Viacjazyčný popis"
+      },
+      "logoHint": "Nahrajte štvorcové alebo horizontálne firemné logo.",
+      "logoPreview": "Náhľad firemného loga",
+      "noLogo": "Zatiaľ bez loga",
+      "chooseLogo": "Vybrať logo",
+      "remove": "Odstrániť",
+      "removeDialog": {
+        "logoTitle": "Odstrániť firemné logo?",
+        "logoDescription": "Chystáte sa odstrániť firemné logo z tohto firemného záznamu. Zmena sa prejaví až po uložení.",
+        "galleryTitle": "Odstrániť obrázok z galérie?",
+        "galleryDescription": "Chystáte sa odstrániť tento obrázok z galérie. Zmena sa prejaví až po uložení.",
+        "cancel": "Zrušiť",
+        "confirm": "Odstrániť obrázok"
+      },
+      "galleryHint": "Pridajte najviac desať výstižných obrázkov svojej firmy.",
+      "galleryPreview": "Náhľad obrázka galérie",
+      "galleryLimit": "Galéria môže obsahovať najviac desať obrázkov.",
+      "addImages": "Pridať obrázky",
+      "openingHoursHint": "Pre každý deň pridajte najviac tri časové intervaly. Deň bez intervalu sa považuje za zatvorený.",
+      "closed": "Zatvorené",
+      "opensAt": "Čas otvorenia v deň {day}",
+      "closesAt": "Čas zatvorenia v deň {day}",
+      "addInterval": "Pridať časový interval",
+      "socialLinksHint": "Pridajte najviac jeden odkaz pre každú platformu.",
+      "platform": "Platforma",
+      "socialUrl": "Odkaz na profil sociálnej siete",
+      "platforms": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "x": "X"
+      },
+      "addSocialLink": "Pridať odkaz na sociálnu sieť",
+      "imageRules": "Povolené sú súbory JPEG, PNG a WebP s veľkosťou najviac 8 MB na obrázok."
+    },
     "addressVisibility": {
       "full": "Zobraziť úplnú adresu",
       "city": "Zobraziť iba mesto a kantón",
@@ -246,26 +841,32 @@
       "inactive": "Neaktívne"
     },
     "currentStatus": "Aktuálny stav",
-    "statusHint": "Profily odoslané na kontrolu môžu byť následne skontrolované a zverejnené.",
+    "statusHint": "Firemné záznamy odoslané na kontrolu môžu byť následne skontrolované a zverejnené.",
     "save": "Uložiť zmeny",
     "saving": "Ukladá sa …",
     "saved": "Zmeny boli uložené.",
     "errors": {
       "invalid_data": "Skontrolujte zadané údaje.",
       "unauthorized": "Vaša relácia vypršala. Prihláste sa znova.",
-      "forbidden": "Tento firemný profil nemôžete upravovať.",
-      "not_found": "Firemný profil sa nenašiel.",
+      "forbidden": "Tento firemný záznam nemôžete upravovať.",
+      "not_found": "Firemný záznam sa nenašiel.",
       "invalid_selection": "Jedno z vybraných odvetví alebo jazykov je neplatné. Obnovte stránku a skúste to znova.",
+      "invalid_image": "Aspoň jeden obrázok je neplatný alebo nepatrí k tomuto firemnému záznamu.",
+      "file_too_large": "Aspoň jeden obrázok je väčší ako 8 MB.",
+      "too_many_files": "Bolo vybraných príliš veľa obrázkov.",
+      "upload_failed": "Obrázky sa nepodarilo nahrať.",
+      "premium_required": "Pre tieto funkcie je potrebné aktívne prémiové predplatné.",
       "save_failed": "Zmeny sa nepodarilo uložiť.",
       "network": "Pripojenie k serveru zlyhalo."
     },
-    "createdNotice": "Profil firmy bol vytvorený ako koncept. Teraz môžeš pokračovať v úpravách."
+    "createdNotice": "Firemný záznam bol vytvorený ako koncept. Teraz môžeš pokračovať v úpravách.",
+    "createdPremiumNotice": "Firemný záznam bol vytvorený ako prémiový koncept. Doplň logo, galériu, otváracie hodiny a odkazy na sociálne siete a potom ho odošli na kontrolu. Predplatné dokončíš až po schválení."
   },
   "ListingCreator": {
-    "eyebrow": "Vytvoriť profil firmy",
-    "title": "Vytvoriť nový profil firmy",
-    "description": "Vytvor nový záznam pre jednu zo svojich aktívnych organizácií. Profil sa bezpečne uloží ako koncept.",
-    "back": "Späť na profily firiem",
+    "eyebrow": "Vytvoriť firemný záznam",
+    "title": "Vytvoriť nový firemný záznam",
+    "description": "Vytvor nový záznam pre jednu zo svojich aktívnych organizácií. Záznam sa bezpečne uloží ako koncept.",
+    "back": "Späť na firemné záznamy",
     "sections": {
       "organization": "Organizácia",
       "general": "Základné údaje a popis",
@@ -293,24 +894,134 @@
       "city": "Zobraziť iba mesto a kantón",
       "hidden": "Skryť adresu"
     },
-    "create": "Vytvoriť profil firmy",
+    "plan": {
+      "eyebrow": "Balík pre tento záznam",
+      "title": "Vyberte Free alebo Premium",
+      "description": "Vybraný balík platí iba pre tento firemný záznam. Ďalšie záznamy môžu mať vlastný balík.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Všetky základné údaje a zverejnenie v katalógu Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 mesačne",
+        "description": "Navyše logo, galéria obrázkov, otváracie hodiny a odkazy na sociálne siete."
+      },
+      "intervalTitle": "Fakturačné obdobie",
+      "intervals": {
+        "monthly": "Mesačne – CHF 9.90",
+        "yearly": "Ročne – CHF 99.00"
+      },
+      "cancellationHint": "Bez skúšobného obdobia. Predplatné možno zrušiť ku koncu aktuálneho fakturačného obdobia."
+    },
+    "create": "Vytvoriť firemný záznam",
     "creating": "Vytvára sa …",
     "noOrganizationsTitle": "Nenašla sa aktívna organizácia",
-    "noOrganizationsDescription": "Na vytvorenie profilu firmy potrebuješ aspoň jedno aktívne členstvo v organizácii.",
+    "noOrganizationsDescription": "Na vytvorenie firemného záznamu potrebuješ aspoň jedno aktívne členstvo v organizácii.",
     "errors": {
       "invalid_data": "Skontroluj zadané údaje.",
       "unauthorized": "Tvoja relácia vypršala. Prihlás sa znova.",
-      "forbidden": "Pre túto organizáciu nemôžeš vytvoriť profil firmy.",
-      "create_failed": "Profil firmy sa nepodarilo vytvoriť.",
+      "forbidden": "Pre túto organizáciu nemôžeš vytvoriť firemný záznam.",
+      "create_failed": "Firemný záznam sa nepodarilo vytvoriť.",
       "network": "Pripojenie k serveru zlyhalo."
+    }
+  },
+  "Billing": {
+    "back": "Späť na firemné záznamy",
+    "eyebrow": "Balík a fakturácia",
+    "title": "Predplatné pre {name}",
+    "description": "Spravujte balík tohto firemného záznamu. Premium sa aktivuje až po potvrdení platby.",
+    "listingCreated": "Firemný záznam bol uložený ako koncept. Teraz vyberte požadovaný balík.",
+    "checkoutSuccess": "Ďakujeme. Vaša platba bola úspešná. Aktivácia Premium sa potvrdzuje a môže chvíľu trvať.",
+    "checkoutCancelled": "Platobný proces bol zrušený. Firemný záznam zostáva v balíku Free.",
+    "approvedNotice": "Tvoj firemný záznam bol schválený. Teraz môžeš dokončiť pripravené prémiové predplatné.",
+    "preApproval": {
+      "eyebrow": "Pred platbou",
+      "draftTitle": "Najprv dokonči firemný záznam",
+      "draftDescription": "Doplň všetky požadované údaje, napríklad logo, galériu, otváracie hodiny a odkazy na sociálne siete, a potom záznam odošli na kontrolu. Premium sa platí až po schválení.",
+      "pendingTitle": "Tvoj firemný záznam sa kontroluje",
+      "pendingDescription": "Po schválení záznamu službou Findelio dostaneš e-mail a budeš môcť dokončiť pripravené prémiové predplatné.",
+      "unavailableTitle": "Premium ešte nie je dostupné",
+      "unavailableDescription": "Predplatné Premium môžeš uzavrieť až po schválení firemného záznamu.",
+      "edit": "Dokončiť záznam",
+      "back": "Späť na firemné záznamy"
+    },
+    "intervalTitle": "Fakturačné obdobie",
+    "intervals": {
+      "monthly": {
+        "title": "Mesačne",
+        "description": "CHF 9.90 mesačne"
+      },
+      "yearly": {
+        "title": "Ročne",
+        "description": "CHF 99.00 ročne"
+      }
+    },
+    "terms": "Bez bezplatného skúšobného obdobia. Zrušenie platí ku koncu aktuálneho fakturačného obdobia. Pri neúspešnej platbe zostáva prístup do konca obdobia a potom sa zablokuje.",
+    "termsNotice": "Dokončením plateného predplatného súhlasíte so",
+    "termsLink": "Všeobecnými obchodnými podmienkami",
+    "premium": {
+      "badge": "Premium",
+      "title": "Prémiový firemný záznam",
+      "description": "Prezentujte svoju firmu pomocou ďalších vizuálnych a praktických informácií.",
+      "features": {
+        "logo": "Logo firmy",
+        "gallery": "Galéria obrázkov",
+        "openingHours": "Otváracie hodiny",
+        "socialLinks": "Odkazy na sociálne siete",
+        "translations": "Viacjazyčný popis"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktuálny balík",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Stav predplatného",
+      "price": "Cena",
+      "nextRenewal": "Ďalšie obnovenie",
+      "accessUntil": "Prístup Premium do",
+      "freeHint": "Tento firemný záznam aktuálne používa bezplatný balík.",
+      "grantedTitle": "Bezplatný Premium prístup",
+      "grantedDescription": "Findelio poskytlo tomuto záznamu Premium bez platby.",
+      "grantedUntil": "Prístup do {date}",
+      "values": {
+        "pending": "Čaká sa",
+        "active": "Aktívne",
+        "past_due": "Platba čaká",
+        "cancelled": "Zrušené",
+        "expired": "Vypršané"
+      }
+    },
+    "actions": {
+      "subscribe": "Predplatiť Premium",
+      "openingCheckout": "Otvára sa zabezpečená platba …",
+      "manage": "Spravovať predplatné a platobnú metódu",
+      "grantHint": "Findelio poskytlo Premium bezplatne. Nie je potrebné spravovať platené predplatné.",
+      "openingPortal": "Otvára sa zákaznícky portál …",
+      "portalHint": "Správa predplatného sa otvorí na novej karte. Findelio zostane otvorené."
+    },
+    "errors": {
+      "invalid_data": "Vybraná fakturácia je neplatná.",
+      "unauthorized": "Vaša relácia vypršala. Prihláste sa znova.",
+      "forbidden": "Toto predplatné nemôžete spravovať.",
+      "not_found": "Firemný záznam sa nenašiel.",
+      "already_active": "Premium je pre tento firemný záznam už aktívne.",
+      "listing_not_published": "Firemný záznam musí byť najprv schválený.",
+      "billing_not_configured": "Platobná funkcia momentálne nie je dostupná.",
+      "portal_unavailable": "Správa tohto predplatného momentálne nie je dostupná.",
+      "checkout_failed": "Platobný proces sa nepodarilo spustiť.",
+      "portal_failed": "Správu predplatného sa nepodarilo otvoriť.",
+      "network": "Pripojenie k serveru zlyhalo.",
+      "unknown": "Akciu predplatného sa nepodarilo dokončiť."
     }
   },
   "ListingReview": {
     "eyebrow": "Interná kontrola",
-    "title": "Firemné profily na kontrolu",
-    "description": "Skontroluj nové a zmenené firemné profily pred ich zverejnením.",
+    "title": "Firemné záznamy na kontrolu",
+    "description": "Skontroluj nové a zmenené firemné záznamy pred ich zverejnením.",
     "emptyTitle": "Žiadne otvorené kontroly",
-    "emptyDescription": "Momentálne žiadne firemné profily nečakajú na schválenie.",
+    "emptyDescription": "Momentálne žiadne firemné záznamy nečakajú na schválenie.",
     "unknownDate": "Neznámy dátum",
     "unknownOrganization": "Neznáma organizácia",
     "unknownSubmitter": "Neznámy používateľ",
@@ -334,11 +1045,12 @@
       "processing": "Spracováva sa…",
       "approve": "Schváliť zmeny",
       "reject": "Zamietnuť zmeny",
-      "suspend": "Zablokovať profil",
+      "suspend": "Zablokovať firemný záznam",
       "fields": {
         "name": "Názov firmy",
         "short_description": "Krátky popis",
         "description": "Popis",
+        "description_translations": "Preložené popisy",
         "street": "Ulica",
         "postal_code": "PSČ",
         "city": "Mesto",
@@ -348,8 +1060,173 @@
         "website_url": "Webová stránka",
         "address_visibility": "Zobrazenie adresy",
         "industry_ids": "Odvetvia",
-        "spoken_language_ids": "Hovorené jazyky"
+        "spoken_language_ids": "Hovorené jazyky",
+        "logo_id": "Firemné logo",
+        "gallery_file_ids": "Galéria obrázkov",
+        "social_links": "Odkazy na sociálne siete",
+        "opening_hours": "Otváracie hodiny"
       }
+    }
+  },
+  "DeletionRequests": {
+    "customer": {
+      "eyebrow": "Žiadosť o odstránenie",
+      "requestButton": "Požiadať o odstránenie",
+      "listingTitle": "Požiadať o odstránenie {name}?",
+      "organizationTitle": "Požiadať o odstránenie {name}?",
+      "listingDescription": "Firemný záznam zostane viditeľný a upraviteľný, kým správca Findelio žiadosť nepotvrdí. Potom sa archivuje a prestane byť verejne viditeľný.",
+      "organizationDescription": "Organizácia a jej firemné záznamy zostanú zachované, kým správca Findelio žiadosť nepotvrdí. Potom sa archivujú a prestanú byť verejne viditeľné.",
+      "reasonLabel": "Dôvod (nepovinné)",
+      "reasonPlaceholder": "Čo máme pri posudzovaní zohľadniť?",
+      "keep": "Zrušiť",
+      "confirm": "Požiadať o odstránenie",
+      "submitting": "Odosiela sa …",
+      "pendingTitle": "Žiadosť o odstránenie sa posudzuje",
+      "pendingDescription": "Obsah zostane až do rozhodnutia nezmenený.",
+      "withdraw": "Stiahnuť žiadosť",
+      "withdrawing": "Sťahuje sa …",
+      "premiumTitle": "Najprv zrušte Premium",
+      "premiumDescription": "Aktívne predplatné Premium musí byť pred podaním žiadosti včas zrušené.",
+      "manageSubscription": "Spravovať predplatné",
+      "viewListings": "Zobraziť firemné záznamy a predplatné",
+      "errors": {
+        "premium_not_cancelled": "Najprv zrušte aktívne predplatné Premium.",
+        "request_exists": "Pre tento obsah už existuje otvorená žiadosť.",
+        "send_failed": "Upozornenie správcovi sa nepodarilo odoslať. Skúste to znova.",
+        "forbidden": "O odstránenie tohto obsahu nemôžete požiadať.",
+        "not_found": "Obsah sa nenašiel alebo je už archivovaný.",
+        "network": "Spojenie so serverom zlyhalo.",
+        "unknown": "Žiadosť o odstránenie sa nepodarilo spracovať."
+      }
+    },
+    "admin": {
+      "eyebrow": "Žiadosti o odstránenie",
+      "title": "Otvorené žiadosti o odstránenie",
+      "description": "Skontrolujte žiadosť a pred archiváciou overte, že už neprebieha žiadne zaplatené obdobie Premium.",
+      "types": {
+        "listing": "Firemný záznam",
+        "organization": "Organizácia"
+      },
+      "submittedBy": "Požiadal používateľ {name} dňa {date}",
+      "unknownRequester": "Neznámy používateľ",
+      "customerReason": "Dôvod žiadosti",
+      "noReason": "Dôvod nebol uvedený",
+      "waitingForSubscription": "Archivácia zatiaľ nie je možná",
+      "availableAfter": "Zaplatené obdobie Premium končí {date}. Potom možno žiadosť potvrdiť.",
+      "availableUnknown": "Aspoň jedno predplatné Premium nemá známy dátum ukončenia prístupu.",
+      "noteLabel": "Správa zákazníkovi",
+      "notePlaceholder": "Povinné pri zamietnutí",
+      "reasonRequired": "Pri zamietnutí uveďte dôvod s aspoň tromi znakmi.",
+      "premiumStillActive": "Archiváciu stále blokuje aktívne obdobie Premium.",
+      "actionFailed": "Žiadosť o odstránenie sa nepodarilo spracovať.",
+      "processing": "Spracúva sa …",
+      "approve": "Potvrdiť archiváciu",
+      "reject": "Zamietnuť žiadosť"
+    }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Bezplatný Premium prístup",
+    "title": "Uděliť Premium prístup",
+    "description": "Udeľte vybraným záznamom Premium bez platby. Každé udelenie sa eviduje s dôvodom a voliteľným dátumom ukončenia.",
+    "grantTitle": "Udeliť Premium",
+    "grantDescription": "Prístup začne okamžite. Bez dátumu ukončenia zostane aktívny do odvolania.",
+    "listingLabel": "Firemný záznam",
+    "listingPlaceholder": "Vyberte záznam",
+    "unknownOrganization": "Neznáma organizácia",
+    "reasonLabel": "Interný dôvod",
+    "unlimitedLabel": "Bez dátumu ukončenia",
+    "endsAtLabel": "Dátum ukončenia",
+    "grantButton": "Udeliť Premium",
+    "saving": "Ukladanie …",
+    "overviewTitle": "Udelenia",
+    "overviewDescription": "Aktívne udelenia možno kedykoľvek odvolať. Platené predplatné zostáva oddelené.",
+    "active": "Aktívne",
+    "notActive": "Neaktívne",
+    "noActiveGrant": "Žiadne bezplatné Premium udelenie.",
+    "unlimited": "Neobmedzene",
+    "revokeButton": "Odvolať",
+    "revokeConfirm": "Naozaj odvolať toto bezplatné Premium?",
+    "invalid_data": "Vyplňte správne všetky povinné polia.",
+    "invalid_end_date": "Dátum ukončenia musí byť v budúcnosti.",
+    "already_active": "Premium je pre tento záznam už aktívne.",
+    "save_failed": "Udelenie sa nepodarilo uložiť.",
+    "network": "Spojenie so serverom zlyhalo."
+  },
+  "VerifyRegistration": {
+    "loadingTitle": "Potvrdzujeme e-mailovú adresu",
+    "loadingText": "Počkajte chvíľu.",
+    "invitationLoadingTitle": "Nastavujeme účet a pozvánku",
+    "invitationLoadingText": "Potvrdzujeme váš e-mail, prijímame pozvánku a bezpečne vás prihlasujeme.",
+    "successTitle": "Vaša e-mailová adresa je potvrdená.",
+    "successText": "Váš účet Findelio je teraz aktívny. Môžete sa prihlásiť pomocou e-mailu a hesla.",
+    "loginButton": "Prihlásiť sa",
+    "errorTitle": "Potvrdenie sa nepodarilo",
+    "errorText": "Potvrdzovací odkaz je neplatný, vypršal alebo už bol použitý.",
+    "registerButton": "Späť na registráciu"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSTVÁ",
+    "title": "Odporúčania",
+    "description": "Spravuj odporúčacie kódy a sleduj firmy, ktoré cez ne prichádzajú na Findelio. Skúšobná verzia Premium je len pre nové organizácie.",
+    "activePartners": "Aktívni partneri",
+    "registrations": "Registrácie (filtrované)",
+    "pendingActivation": "Čaká na aktiváciu (filtrované)",
+    "newPartner": "Pridať partnera",
+    "editPartner": "Upraviť partnera",
+    "partnerHelp": "Jeden kód pre každého partnera. Vlastný účet Findelio nepotrebuje.",
+    "name": "Meno",
+    "code": "Odporúčací kód",
+    "codeHelp": "3–64 znakov: písmená A–Z, číslice, pomlčka alebo podčiarkovník. Veľkosť písmen nerozhoduje.",
+    "codeFixed": "Kód zostáva nezmenený, aby zdieľané odkazy zostali platné.",
+    "notes": "Interné poznámky",
+    "status": "Stav",
+    "active": "Aktívny",
+    "disabled": "Deaktivovaný",
+    "disableHelp": "Deaktivácia zastaví nové uplatnenia. Existujúce priradenia a skúšobné obdobia zostanú zachované.",
+    "save": "Uložiť",
+    "saving": "Ukladá sa …",
+    "cancel": "Zrušiť",
+    "partners": "Partneri",
+    "noPartners": "Zatiaľ žiadni partneri. Prvého pridaj cez formulár.",
+    "link": "Odporúčací odkaz",
+    "copyLink": "Kopírovať odkaz",
+    "copyCode": "Kopírovať kód",
+    "edit": "Upraviť",
+    "companies": "Odporúčané firmy",
+    "overviewHelp": "Časy sú v pásme Europe/Zurich. Skúšobné obdobie začína prvým oprávneným schválením profilu firmy.",
+    "allPartners": "Všetci partneri",
+    "allStates": "Všetky stavy",
+    "refresh": "Obnoviť",
+    "noCompanies": "Pre tento výber zatiaľ nie sú žiadne registrácie.",
+    "company": "Organizácia / profil firmy",
+    "registered": "Dátum registrácie",
+    "period": "Začiatok / koniec skúšky",
+    "actions": "Akcie",
+    "awaitingOrganization": "Organizácia ešte nebola vytvorená",
+    "retry": "Zopakovať aktiváciu",
+    "page": "Strana {page} z {pages} · {total} registrácií",
+    "previous": "Späť",
+    "next": "Ďalej",
+    "revoked": "Skúška zrušená",
+    "expired": "Skúška vypršala",
+    "previousPublication": "Už zverejnené v minulosti: bez novej skúšky.",
+    "existingPremium": "Premium už existovalo. Ďalšia skúška nebude poskytnutá.",
+    "saved": "Uložené.",
+    "copied": "Skopírované.",
+    "copy_failed": "Kopírovanie zlyhalo. Označ a skopíruj zobrazený odkaz ručne.",
+    "load_failed": "Prehľad sa nepodarilo načítať. Skús to znova.",
+    "save_failed": "Uloženie zlyhalo. Skontroluj údaje a skús to znova.",
+    "code_exists": "Tento kód sa už používa.",
+    "retry_failed": "Aktivácia zlyhala. Rezervácia zostáva zachovaná.",
+    "retry_done": "Aktivácia bola znovu skontrolovaná. Aktuálny stav nájdeš v prehľade.",
+    "states": {
+      "pending_organization": "Čaká na organizáciu",
+      "pending_approval": "Čaká na schválenie",
+      "pending_activation": "Čaká na aktiváciu",
+      "granted": "Skúška poskytnutá",
+      "skipped_existing_premium": "Vynechané: Premium existovalo",
+      "expired_unactivated": "Vypršalo bez aktivácie",
+      "void": "Bez oprávnenia"
     }
   }
 }

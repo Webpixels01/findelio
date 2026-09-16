@@ -1,8 +1,13 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
+import ListingPremiumFields, {
+  type PremiumListingFieldsHandle,
+  type PremiumListingPayload,
+} from "@/components/listing-premium-fields";
+import PremiumBadge from "@/components/premium-badge";
 
 type DirectoryOption = {
   id: string | number;
@@ -14,8 +19,8 @@ type ListingEditData = {
   id: string;
   name: string;
   status: string;
-  shortDescription: string;
   description: string;
+  descriptionTranslations: Record<string, string>;
   street: string;
   postalCode: string;
   city: string;
@@ -28,25 +33,80 @@ type ListingEditData = {
   spokenLanguageIds: string[];
 };
 
+const descriptionTranslationLocales = [
+  { code: "en", label: "English" },
+  { code: "sk", label: "Slovenčina" },
+  { code: "cs", label: "Čeština" },
+  { code: "hu", label: "Magyar" },
+  { code: "pl", label: "Polski" },
+  { code: "ru", label: "Русский" },
+  { code: "pt-pt", label: "Português" },
+  { code: "ro", label: "Română" },
+] as const;
+
 type SaveResult = {
   success?: boolean;
   error?: string;
 };
+
+type ListingPremiumData = {
+  enabled: boolean;
+  logo: {
+    id: string;
+    assetUrl: string;
+  } | null;
+  gallery: Array<{
+    id: string;
+    assetUrl: string;
+  }>;
+  socialLinks: Array<{
+    platform:
+      | "instagram"
+      | "facebook"
+      | "linkedin"
+      | "tiktok"
+      | "youtube"
+      | "x";
+    url: string;
+  }>;
+  openingHours: Array<{
+    day_of_week: number;
+    opens_at: string;
+    closes_at: string;
+  }>;
+  customCtaLabel: string;
+  customCtaValue: string;
+};
+
+function normalizeSearchValue(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase()
+    .trim();
+}
 
 export default function ListingEditForm({
   listing,
   cantons,
   industries,
   spokenLanguages,
+  premium,
 }: {
   listing: ListingEditData;
   cantons: DirectoryOption[];
   industries: DirectoryOption[];
   spokenLanguages: DirectoryOption[];
+  premium: ListingPremiumData;
 }) {
   const t = useTranslations("ListingEditor");
   const router = useRouter();
+  const premiumFieldsRef = useRef<PremiumListingFieldsHandle>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [industrySearch, setIndustrySearch] = useState("");
+  const [languageSearch, setLanguageSearch] = useState("");
+  const [activeTranslationLocale, setActiveTranslationLocale] =
+    useState<(typeof descriptionTranslationLocales)[number]["code"]>("en");
   const [notice, setNotice] = useState<
     | { type: "success"; text: string }
     | { type: "error"; text: string }
@@ -56,6 +116,14 @@ export default function ListingEditForm({
   const editableStatus = ["draft", "pending"].includes(listing.status)
     ? listing.status
     : "pending";
+  const normalizedIndustrySearch = normalizeSearchValue(industrySearch);
+  const normalizedLanguageSearch = normalizeSearchValue(languageSearch);
+  const matchingIndustryCount = industries.filter((industry) =>
+    normalizeSearchValue(industry.name).includes(normalizedIndustrySearch),
+  ).length;
+  const matchingLanguageCount = spokenLanguages.filter((language) =>
+    normalizeSearchValue(language.name).includes(normalizedLanguageSearch),
+  ).length;
 
   function getErrorMessage(code?: string): string {
     const knownCodes = new Set([
@@ -64,6 +132,11 @@ export default function ListingEditForm({
       "forbidden",
       "not_found",
       "invalid_selection",
+      "invalid_image",
+      "file_too_large",
+      "too_many_files",
+      "upload_failed",
+      "premium_required",
       "save_failed",
     ]);
 
@@ -78,9 +151,37 @@ export default function ListingEditForm({
     setNotice(null);
 
     const formData = new FormData(event.currentTarget);
+    let premiumPayload: PremiumListingPayload | undefined;
+
+    try {
+      premiumPayload = premium.enabled
+        ? await premiumFieldsRef.current?.preparePayload()
+        : undefined;
+    } catch (error) {
+      setNotice({
+        type: "error",
+        text: getErrorMessage(
+          error instanceof Error ? error.message : "upload_failed",
+        ),
+      });
+      setIsSaving(false);
+      return;
+    }
+
+    const descriptionTranslations = premium.enabled
+      ? Object.fromEntries(
+          descriptionTranslationLocales
+            .map(({ code }) => [
+              code,
+              String(
+                formData.get(`description_translation_${code}`) ?? "",
+              ).trim(),
+            ])
+            .filter(([, value]) => value),
+        )
+      : {};
     const payload = {
       name: formData.get("name"),
-      short_description: formData.get("short_description"),
       description: formData.get("description"),
       public_email: formData.get("public_email"),
       phone: formData.get("phone"),
@@ -95,6 +196,14 @@ export default function ListingEditForm({
       spoken_language_ids: formData
         .getAll("spoken_language_ids")
         .map(String),
+      ...(premiumPayload
+        ? {
+            premium: {
+              ...premiumPayload,
+              description_translations: descriptionTranslations,
+            },
+          }
+        : {}),
     };
 
     try {
@@ -140,17 +249,6 @@ export default function ListingEditForm({
           </label>
 
           <label className="field-group">
-            <span className="field-label">{t("fields.shortDescription")}</span>
-            <textarea
-              className="field-control field-textarea min-h-28"
-              name="short_description"
-              defaultValue={listing.shortDescription}
-              maxLength={500}
-              disabled={isSaving}
-            />
-          </label>
-
-          <label className="field-group">
             <span className="field-label">{t("fields.description")}</span>
             <textarea
               className="field-control field-textarea min-h-56"
@@ -162,6 +260,82 @@ export default function ListingEditForm({
           </label>
         </div>
       </section>
+
+      {premium.enabled && (
+        <section className="rounded-3xl border border-[#bfdcff] bg-[#f7fbff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
+          <div className="flex flex-wrap items-center gap-3">
+            <PremiumBadge>{t("premium.badge")}</PremiumBadge>
+            <h2 className="text-2xl font-extrabold">
+              {t("translations.title")}
+            </h2>
+          </div>
+          <p className="mt-3 max-w-3xl text-[var(--muted)]">
+            {t("translations.description")}
+          </p>
+          <p className="mt-2 text-sm font-bold text-[var(--accent)]">
+            {t("translations.fallbackHint")}
+          </p>
+
+          <div
+            className="mt-6 flex flex-wrap gap-2"
+            role="tablist"
+            aria-label={t("translations.title")}
+          >
+            {descriptionTranslationLocales.map(({ code, label }) => (
+              <button
+                key={code}
+                type="button"
+                role="tab"
+                aria-selected={activeTranslationLocale === code}
+                aria-controls={`description-translation-${code}`}
+                className={
+                  activeTranslationLocale === code
+                    ? "primary-button h-10 px-4"
+                    : "secondary-button h-10 px-4"
+                }
+                onClick={() => setActiveTranslationLocale(code)}
+                disabled={isSaving}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {descriptionTranslationLocales.map(({ code, label }) => (
+            <label
+              key={code}
+              id={`description-translation-${code}`}
+              role="tabpanel"
+              className="field-group mt-5"
+              hidden={activeTranslationLocale !== code}
+            >
+              <span className="field-label">
+                {t("translations.fieldLabel", { language: label })}
+              </span>
+              <textarea
+                className="field-control field-textarea min-h-56"
+                name={`description_translation_${code}`}
+                defaultValue={listing.descriptionTranslations[code] ?? ""}
+                maxLength={20000}
+                disabled={isSaving}
+              />
+            </label>
+          ))}
+        </section>
+      )}
+
+      <ListingPremiumFields
+        ref={premiumFieldsRef}
+        listingId={listing.id}
+        premiumEnabled={premium.enabled}
+        disabled={isSaving}
+        logo={premium.logo}
+        gallery={premium.gallery}
+        socialLinks={premium.socialLinks}
+        openingHours={premium.openingHours}
+        customCtaLabel={premium.customCtaLabel}
+        customCtaValue={premium.customCtaValue}
+      />
 
       <section className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
         <h2 className="text-2xl font-extrabold">
@@ -175,11 +349,28 @@ export default function ListingEditForm({
               {t("industryHint")}
             </p>
 
+            <label className="mt-4 block">
+              <span className="field-label">{t("industrySearch")}</span>
+              <input
+                className="field-control mt-2"
+                type="search"
+                value={industrySearch}
+                onChange={(event) => setIndustrySearch(event.target.value)}
+                placeholder={t("industrySearchPlaceholder")}
+                autoComplete="off"
+              />
+            </label>
+
             <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
               {industries.map((industry) => (
                 <label
                   key={String(industry.id)}
                   className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
+                  hidden={
+                    !normalizeSearchValue(industry.name).includes(
+                      normalizedIndustrySearch,
+                    )
+                  }
                 >
                   <input
                     type="checkbox"
@@ -193,6 +384,11 @@ export default function ListingEditForm({
                   <span className="block font-bold">{industry.name}</span>
                 </label>
               ))}
+              {matchingIndustryCount === 0 && (
+                <p className="px-3 py-2.5 text-sm text-[var(--muted)]">
+                  {t("noSearchResults")}
+                </p>
+              )}
             </div>
           </fieldset>
 
@@ -204,11 +400,28 @@ export default function ListingEditForm({
               {t("spokenLanguagesHint")}
             </p>
 
+            <label className="mt-4 block">
+              <span className="field-label">{t("spokenLanguagesSearch")}</span>
+              <input
+                className="field-control mt-2"
+                type="search"
+                value={languageSearch}
+                onChange={(event) => setLanguageSearch(event.target.value)}
+                placeholder={t("spokenLanguagesSearchPlaceholder")}
+                autoComplete="off"
+              />
+            </label>
+
             <div className="mt-4 max-h-80 space-y-2 overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3">
               {spokenLanguages.map((language) => (
                 <label
                   key={String(language.id)}
                   className="flex cursor-pointer items-start gap-3 rounded-xl bg-white px-3 py-2.5"
+                  hidden={
+                    !normalizeSearchValue(language.name).includes(
+                      normalizedLanguageSearch,
+                    )
+                  }
                 >
                   <input
                     type="checkbox"
@@ -222,6 +435,11 @@ export default function ListingEditForm({
                   <span className="block font-bold">{language.name}</span>
                 </label>
               ))}
+              {matchingLanguageCount === 0 && (
+                <p className="px-3 py-2.5 text-sm text-[var(--muted)]">
+                  {t("noSearchResults")}
+                </p>
+              )}
             </div>
           </fieldset>
         </div>

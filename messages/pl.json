@@ -8,10 +8,18 @@
     "navigation": "Nawigacja główna",
     "findCompanies": "Znajdź firmy",
     "registerCompany": "Dodaj firmę",
+    "blog": "Blog",
     "login": "Logowanie",
     "selectLanguage": "Wybierz język",
     "menu": "Otwórz menu",
     "dashboard": "Panel"
+  },
+  "Share": {
+    "page": "Udostępnij stronę",
+    "listing": "Udostępnij wpis",
+    "copied": "Link skopiowany",
+    "shared": "Udostępniono",
+    "error": "Nie można udostępnić"
   },
   "Home": {
     "eyebrow": "Wielojęzyczne firmy w Szwajcarii",
@@ -51,17 +59,26 @@
   },
   "Company": {
     "back": "Powrót do wyszukiwania",
+    "metaDescription": "Profil firmy {company} w miejscowości {city} na Findelio: kontakt, branże i obsługiwane języki.",
     "about": "O firmie",
     "contact": "Kontakt",
     "website": "Strona internetowa",
     "email": "E-mail",
     "phone": "Telefon",
     "address": "Adres",
+    "openInGoogleMaps": "Otwórz adres w Mapach Google",
     "languages": "Obsługiwane języki",
     "industry": "Branża",
     "verified": "Zweryfikowana firma",
     "openingHours": "Godziny otwarcia",
     "gallery": "Galeria",
+    "galleryImage": "{company} – zdjęcie {current} z {total}",
+    "galleryOpen": "Pokaż zdjęcie {current} w powiększeniu",
+    "galleryDialog": "Galeria zdjęć",
+    "galleryClose": "Zamknij galerię",
+    "galleryPrevious": "Poprzednie zdjęcie",
+    "galleryNext": "Następne zdjęcie",
+    "socialMedia": "Media społecznościowe",
     "closed": "Zamknięte",
     "weekdays": {
       "1": "Poniedziałek",
@@ -74,24 +91,35 @@
     }
   },
   "Register": {
-    "eyebrow": "Dodaj firmę",
-    "title": "Zwiększ widoczność swojej firmy.",
-    "description": "Wprowadź najważniejsze dane. Profil zostanie sprawdzony przed publikacją.",
-    "companyName": "Nazwa firmy",
+    "eyebrow": "Utwórz konto firmowe",
+    "title": "Utwórz konto Findelio.",
+    "description": "Najpierw zarejestruj się jako użytkownik. Po potwierdzeniu adresu e-mail możesz się zalogować i dodać firmę.",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
     "email": "E-mail",
-    "phone": "Telefon",
-    "website": "Strona internetowa",
-    "industry": "Branża",
-    "canton": "Kanton",
-    "city": "Miejscowość",
-    "languages": "Obsługiwane języki",
-    "descriptionLabel": "Opis firmy",
-    "choose": "Wybierz",
-    "note": "Ta wersja nie zapisuje jeszcze danych na stałe. Formularz pokazuje już planowany proces.",
-    "submit": "Wyślij profil",
-    "successTitle": "Dziękujemy za zgłoszenie.",
-    "successText": "Dane zostały poprawnie sprawdzone w wersji demonstracyjnej. Integracja z bazą danych nastąpi w kolejnym etapie.",
-    "newEntry": "Dodaj kolejną firmę"
+    "password": "Hasło",
+    "passwordConfirmation": "Powtórz hasło",
+    "passwordHint": "Co najmniej 8 znaków, w tym przynajmniej jedna litera, jedna cyfra i jeden znak specjalny.",
+    "submit": "Utwórz konto",
+    "invitationSubmit": "Utwórz konto do zaproszenia",
+    "loading": "Tworzenie konta …",
+    "successTitle": "Sprawdź swoją skrzynkę e-mail.",
+    "successText": "Jeżeli adres mógł zostać zarejestrowany, wysłaliśmy link potwierdzający. Kliknij go, aby aktywować konto.",
+    "invitationSuccessTitle": "Potwierdź teraz swój adres e-mail.",
+    "invitationSuccessText": "Kliknij link potwierdzający w naszej wiadomości. Zaproszenie zostanie następnie przyjęte automatycznie, a Ty przejdziesz bezpośrednio do wpisów firmowych organizacji.",
+    "successHint": "Sprawdź również folder ze spamem.",
+    "loginPrompt": "Masz już konto?",
+    "loginLink": "Zaloguj się",
+    "passwordError": "Hasło nie spełnia wymagań.",
+    "passwordMismatch": "Hasła nie są zgodne.",
+    "emailError": "Podaj prawidłowy adres e-mail.",
+    "invitationError": "To zaproszenie nie jest już ważne. Poproś organizację o wysłanie nowego zaproszenia.",
+    "referralCode": "Kod polecający (opcjonalnie)",
+    "referralCodeHint": "Jeśli skorzystano z linku polecającego, kod jest już uzupełniony. Możesz też wpisać go ręcznie.",
+    "referralError": "Ten kod polecający jest nieprawidłowy lub nieaktywny.",
+    "errorFallback": "Nie udało się przetworzyć rejestracji.",
+    "serverError": "Rejestracja jest obecnie niedostępna.",
+    "connectionError": "Połączenie z serwerem nie powiodło się."
   },
   "Login": {
     "eyebrow": "Strefa firmowa",
@@ -105,6 +133,24 @@
     "errorFallback": "Adres e-mail lub hasło są nieprawidłowe.",
     "serverError": "Logowanie nie może być teraz przetworzone.",
     "connectionError": "Połączenie z serwerem nie powiodło się."
+  },
+  "AccountSetup": {
+    "eyebrow": "Konfiguracja konta firmowego",
+    "title": "Utwórz swoją organizację.",
+    "description": "Zanim zaczniesz korzystać z panelu, potrzebujemy nazwy Twojej firmy.",
+    "sectionTitle": "Twoja organizacja",
+    "sectionDescription": "Organizacja połączy Twoje konto z wpisami firmowymi i członkami zespołu.",
+    "companyName": "Nazwa firmy",
+    "companyNameHint": "Podaj oficjalną nazwę firmy. Pozostałe dane możesz uzupełnić później.",
+    "submit": "Utwórz organizację",
+    "submitting": "Tworzenie organizacji …",
+    "errors": {
+      "invalid_data": "Podaj prawidłową nazwę firmy.",
+      "unauthorized": "Twoja sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "To konto nie może utworzyć organizacji.",
+      "create_failed": "Nie udało się utworzyć organizacji.",
+      "network": "Połączenie z serwerem nie powiodło się."
+    }
   },
   "Dashboard": {
     "eyebrow": "Strefa firmowa",
@@ -121,16 +167,16 @@
     "logoutLoading": "Wylogowywanie …",
     "organizationsEyebrow": "Zarządzanie firmami",
     "organizationsTitle": "Twoje organizacje",
-    "organizationsDescription": "Tutaj widzisz wszystkie organizacje, w których masz aktywne członkostwo, oraz powiązane profile firm.",
+    "organizationsDescription": "Tutaj widzisz wszystkie organizacje, w których masz aktywne członkostwo, oraz powiązane wpisy firm.",
     "noOrganizationsTitle": "Nie znaleziono aktywnej organizacji",
     "noOrganizationsDescription": "Twoje konto użytkownika nie jest obecnie przypisane do żadnej aktywnej organizacji. Sprawdź członkostwo w Directusie lub skontaktuj się z administratorem.",
     "organizationLabel": "Organizacja",
     "membershipRole": "Rola członka",
     "organizationStatus": "Status organizacji",
-    "listings": "Profile firm",
+    "listings": "Wpisy firm",
     "listingsCount": "Liczba wpisów: {count}",
-    "listingsTitle": "Powiązane profile firm",
-    "noListings": "Dla tej organizacji nie utworzono jeszcze profilu firmy.",
+    "listingsTitle": "Powiązane wpisy firm",
+    "noListings": "Dla tej organizacji nie utworzono jeszcze wpisu firmy.",
     "locationUnknown": "Nie podano lokalizacji",
     "viewListing": "Zobacz publiczny wpis",
     "roleValues": {
@@ -152,24 +198,31 @@
       "label": "Nawigacja panelu",
       "overview": "Przegląd",
       "organizations": "Organizacje",
-      "listings": "Profile firm",
+      "listings": "Wpisy firm",
       "team": "Zespół",
-      "review": "Weryfikacja"
+      "review": "Weryfikacja",
+      "premium": "Premium",
+      "referrals": "Polecenia"
     },
     "summary": {
       "organizations": "Organizacje",
-      "listings": "Profile firm",
+      "listings": "Wpisy firm",
       "published": "Opublikowane"
     },
     "listingsPage": {
-      "eyebrow": "Profile firm",
-      "title": "Twoje profile firm",
-      "description": "Tutaj znajdziesz wszystkie profile aktywnych organizacji i ich aktualny status publikacji.",
-      "emptyTitle": "Brak profili firm",
-      "emptyDescription": "Dla aktywnych organizacji nie utworzono jeszcze żadnego profilu firmy.",
-      "notPublic": "Ten profil nie jest jeszcze publicznie widoczny.",
+      "eyebrow": "Wpisy firm",
+      "title": "Twoje wpisy firm",
+      "description": "Tutaj znajdziesz wszystkie wpisy aktywnych organizacji i ich aktualny status publikacji.",
+      "emptyTitle": "Brak wpisów firm",
+      "emptyDescription": "Dla aktywnych organizacji nie utworzono jeszcze żadnego wpisu firmy.",
+      "notPublic": "Ten wpis nie jest jeszcze publicznie widoczny.",
       "editListing": "Edytuj",
-      "createListing": "Nowy profil firmy"
+      "createListing": "Nowy wpis firmy",
+      "manageSubscription": "Zarządzaj subskrypcją",
+      "premiumGranted": "Dostęp Premium",
+      "choosePlan": "Wybierz pakiet",
+      "completeBeforeBilling": "Najpierw uzupełnij i wyślij do weryfikacji.",
+      "billingAfterApproval": "Subskrypcja po zatwierdzeniu."
     },
     "teamPage": {
       "eyebrow": "Zarządzanie zespołem",
@@ -181,7 +234,90 @@
     },
     "overviewOrganizationsTitle": "Przegląd organizacji",
     "overviewOrganizationsLink": "Pokaż wszystkie organizacje",
-    "organizationListingsLink": "Pokaż profile firm"
+    "organizationListingsLink": "Pokaż wpisy firm"
+  },
+  "Team": {
+    "organization": "Organizacja",
+    "empty": "Obecnie nie należysz do żadnej aktywnej organizacji.",
+    "membersTitle": "Członkowie zespołu",
+    "membersCount": "{count, plural, one {# aktywny członek} few {# aktywnych członków} many {# aktywnych członków} other {# aktywnego członka}}",
+    "roleFor": "Rola dla {name}",
+    "remove": "Usuń",
+    "inviteTitle": "Zaproś osobę",
+    "inviteDescription": "Zaproszenie jest ważne przez siedem dni i można je przyjąć wyłącznie pod podanym adresem e-mail.",
+    "viewOnly": "Twoja rola pozwala wyświetlać zespół, ale nie wprowadzać zmian.",
+    "email": "Adres e-mail",
+    "role": "Rola",
+    "invite": "Wyślij zaproszenie",
+    "inviting": "Wysyłanie …",
+    "pendingTitle": "Oczekujące zaproszenia",
+    "pendingEmpty": "Brak oczekujących zaproszeń.",
+    "expires": "ważne do {date}",
+    "cancelInvitation": "Wycofaj zaproszenie",
+    "confirmMemberTitle": "Usunąć członka zespołu?",
+    "confirmMemberDescription": "{name} utraci dostęp do tej organizacji i jej wpisów firmowych.",
+    "confirmInvitationTitle": "Wycofać zaproszenie?",
+    "confirmInvitationDescription": "Link zaproszenia dla {name} natychmiast straci ważność.",
+    "keep": "Anuluj",
+    "confirm": "Potwierdź",
+    "working": "Przetwarzanie …",
+    "roles": {
+      "owner": "Właściciel",
+      "admin": "Administrator",
+      "editor": "Redaktor"
+    },
+    "messages": {
+      "invited": "Zaproszenie zostało wysłane e-mailem.",
+      "roleUpdated": "Rola została zaktualizowana.",
+      "memberRemoved": "Członek zespołu został usunięty.",
+      "invitationCancelled": "Zaproszenie zostało wycofane."
+    },
+    "errors": {
+      "invalid_data": "Sprawdź wprowadzone dane.",
+      "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "Nie masz uprawnień do tej czynności.",
+      "member_exists": "Ta osoba jest już członkiem organizacji.",
+      "invitation_exists": "Dla tego adresu e-mail istnieje już oczekujące zaproszenie.",
+      "rate_limited": "Wysłano zbyt wiele zaproszeń. Spróbuj ponownie później.",
+      "too_many_invitations": "Ta organizacja ma już zbyt wiele oczekujących zaproszeń.",
+      "send_failed": "Nie udało się wysłać zaproszenia.",
+      "update_failed": "Nie udało się zapisać zmiany.",
+      "not_found": "Ten element nie jest już dostępny.",
+      "network": "Połączenie nie powiodło się. Spróbuj ponownie.",
+      "unknown": "Coś poszło nie tak. Spróbuj ponownie."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Zaproszenie do zespołu",
+    "title": "Zaproszenie od {organization}",
+    "description": "Po przyjęciu uzyskasz dostęp do organizacji i możliwość zarządzania jej treściami w Findelio zgodnie ze swoją rolą.",
+    "registrationDescription": "Utwórz osobiste konto dla organizacji {organization}. Po potwierdzeniu adresu e-mail zaproszenie zostanie przyjęte automatycznie, a Ty przejdziesz bezpośrednio do wpisów firmowych.",
+    "email": "Zaproszony adres e-mail",
+    "role": "Rola",
+    "validUntil": "Ważne do",
+    "roles": {
+      "admin": "Administrator",
+      "editor": "Redaktor"
+    },
+    "signInTitle": "Zaloguj się lub utwórz konto",
+    "signInDescription": "Zaloguj się, jeśli masz już konto z adresem {email}. W przeciwnym razie utwórz konto teraz; po potwierdzeniu adresu zaproszenie zostanie przyjęte automatycznie.",
+    "signIn": "Zaloguj się",
+    "register": "Utwórz konto",
+    "wrongAccountTitle": "Zalogowano niewłaściwe konto",
+    "wrongAccountDescription": "Jesteś zalogowany jako {current}. Zaproszenie jest dla {invited}. Wyloguj się i zaloguj zaproszonym adresem.",
+    "accept": "Przyjmij zaproszenie",
+    "accepting": "Przyjmowanie …",
+    "acceptError": "Nie udało się przyjąć zaproszenia. Spróbuj ponownie.",
+    "emailMismatch": "To zaproszenie należy do innego adresu e-mail.",
+    "acceptedEyebrow": "Zaproszenie przyjęte",
+    "acceptedTitle": "Witaj w zespole {organization}",
+    "acceptedDescription": "Możesz teraz zarządzać organizacją i jej wpisami firmowymi w panelu.",
+    "openTeam": "Otwórz zarządzanie zespołem",
+    "invalidTitle": "Nie znaleziono zaproszenia",
+    "invalidDescription": "Ten link zaproszenia jest nieprawidłowy lub został wycofany.",
+    "expiredTitle": "Zaproszenie wygasło",
+    "expiredDescription": "To zaproszenie nie jest już ważne. Poproś organizację o nowe.",
+    "home": "Na stronę główną"
   },
   "Footer": {
     "tagline": "Findelio łączy ludzi z firmami, które mówią w ich języku.",
@@ -189,21 +325,419 @@
     "findCompanies": "Znajdź firmy",
     "registerCompany": "Dodaj firmę",
     "legal": "Informacje prawne",
+    "contact": "Kontakt",
     "imprint": "Dane firmy",
     "privacy": "Prywatność",
+    "cookies": "Informacje o plikach cookie",
+    "howItWorks": "Jak Findelio działa dla firm",
+    "blog": "Poradniki i blog",
+    "terms": "Regulamin",
     "copyright": "Wszelkie prawa zastrzeżone."
   },
+  "Blog": {
+    "metaTitle": "Poradniki dla szwajcarskich firm | Findelio",
+    "metaDescription": "Praktyczne artykuły o lokalnej widoczności, wielojęzycznej komunikacji i wiarygodnych profilach firm w Szwajcarii.",
+    "eyebrow": "Poradniki Findelio",
+    "title": "Wiedza, która pomaga firmom się rozwijać.",
+    "intro": "Konkretne artykuły o wielojęzycznej komunikacji, lokalnej widoczności i przekonującej obecności w internecie.",
+    "readingTime": "{minutes, plural, one {# minuta czytania} few {# minuty czytania} many {# minut czytania} other {# minuty czytania}}",
+    "readArticle": "Czytaj artykuł",
+    "moreArticles": "Więcej artykułów",
+    "categoryFilterLabel": "Filtruj artykuły według tematu",
+    "allCategories": "Wszystkie artykuły",
+    "emptyTitle": "Przygotowujemy pierwsze artykuły.",
+    "emptyText": "Już wkrótce znajdziesz tu praktyczne wskazówki dotyczące widoczności, wielojęzycznej obsługi i przekonujących profili firm.",
+    "ctaTitle": "Szukasz firmy, która mówi w Twoim języku?",
+    "ctaText": "Znajdź odpowiednie firmy według języka, branży, kantonu i lokalizacji.",
+    "ctaButton": "Znajdź firmy",
+    "breadcrumbs": "Nawigacja okruszkowa",
+    "breadcrumbHome": "Strona główna",
+    "breadcrumbBlog": "Blog",
+    "byAuthor": "Autor: {author}",
+    "backToBlog": "Wróć do bloga",
+    "relatedArticles": "To również może Cię zainteresować"
+  },
+  "CookieNotice": {
+    "eyebrow": "Prywatność",
+    "title": "Pliki cookie i pomiar",
+    "description": "Findelio używa niezbędnych plików cookie do logowania, sesji i wyboru języka. Opcjonalna analityka uruchamia się dopiero po Twoim wyborze.",
+    "acknowledge": "Rozumiem",
+    "necessaryOnly": "Tylko niezbędne",
+    "allowAnalytics": "Zezwól na analitykę",
+    "details": "Informacje o plikach cookie"
+  },
+  "CookiePolicy": {
+    "metaTitle": "Informacje o plikach cookie | Findelio",
+    "metaDescription": "Jakich technicznie niezbędnych plików cookie i lokalnej pamięci przeglądarki używa Findelio oraz jak długo są przechowywane.",
+    "eyebrow": "Prywatność",
+    "title": "Informacje o plikach cookie",
+    "lastUpdated": "Aktualizacja: 5 sierpnia 2026 r.",
+    "intro": "Na tej stronie wyjaśniamy, jakich plików cookie i podobnych technologii przechowywania używa Findelio. Opcjonalny pomiar Google Analytics jest aktywowany dopiero po wyraźnym wyborze.",
+    "necessaryTitle": "Niezbędne pliki cookie",
+    "necessaryText": "Findelio używa technicznie niezbędnych plików cookie do logowania, bezpiecznych sesji i wyboru języka. Są ustawiane automatycznie, gdy są potrzebne.",
+    "analyticsTitle": "Opcjonalna analityka",
+    "analyticsText": "Jeśli zezwolisz na analitykę, włączymy Google Analytics (identyfikator pomiaru G-S9DSK103GX). Dane o użytkowaniu i urządzeniu mogą trafić do Google, a także mogą zostać ustawione pliki cookie, takie jak _ga. Wybór można zresetować, usuwając lokalne dane witryny w przeglądarce.",
+    "inventoryTitle": "Używane pliki cookie",
+    "inventoryText": "Niezbędne pliki cookie pochodzą bezpośrednio od Findelio. Opcjonalne pliki analityczne Google są ustawiane tylko po zgodzie.",
+    "purposeLabel": "Cel",
+    "durationLabel": "Okres przechowywania",
+    "cookies": {
+      "access": {
+        "purpose": "Utrzymuje bezpieczne logowanie podczas aktywnej sesji.",
+        "duration": "Krótko; wygasa automatycznie wraz z tokenem dostępu."
+      },
+      "refresh": {
+        "purpose": "Bezpiecznie odnawia logowanie bez ponownego podawania hasła na każdej stronie.",
+        "duration": "Do 7 dni lub do wylogowania."
+      },
+      "locale": {
+        "purpose": "Zapamiętuje wybrany język podczas sesji przeglądarki.",
+        "duration": "Do końca sesji przeglądarki."
+      }
+    },
+    "storageTitle": "Lokalna pamięć przeglądarki",
+    "storageText": "Potwierdzenie komunikatu o plikach cookie nie jest zapisywane w dodatkowym pliku cookie. Findelio korzysta w tym celu z lokalnej pamięci przeglądarki.",
+    "storagePurpose": "Przechowuje wyłącznie czas potwierdzenia komunikatu, aby nie pojawiał się przy każdym otwarciu strony.",
+    "storageDuration": "Do 12 miesięcy lub do usunięcia danych przeglądarki.",
+    "controlTitle": "Zarządzanie plikami cookie i pamięcią",
+    "controlText": "Pliki cookie i lokalne dane witryn możesz w każdej chwili wyświetlić i usunąć w ustawieniach przeglądarki. Zablokowanie lub usunięcie niezbędnych plików cookie może zakłócić logowanie, wybór języka albo działanie chronionych obszarów.",
+    "privacyTitle": "Więcej informacji o prywatności",
+    "privacyText": "Polityka prywatności wyjaśnia, jak Findelio przetwarza dane osobowe i jakie prawa Ci przysługują.",
+    "privacyLink": "Otwórz politykę prywatności"
+  },
+  "CompanyGuide": {
+    "metaTitle": "Jak Findelio działa dla firm | Findelio",
+    "metaDescription": "Od konta firmowego do opublikowanego wpisu: zobacz, jak firmy korzystają z Findelio i co daje Premium.",
+    "eyebrow": "Dla firm",
+    "title": "Wpis Findelio w kilku krokach.",
+    "intro": "Findelio łączy Twoją firmę z osobami szukającymi usług w swoim języku. Zachowujesz kontrolę nad danymi i wybierasz Free lub Premium dla każdego wpisu.",
+    "stepsTitle": "Jak wygląda publikacja",
+    "steps": {
+      "register": {
+        "title": "Utwórz konto",
+        "text": "Zarejestruj się adresem e-mail i potwierdź go linkiem z wiadomości."
+      },
+      "organization": {
+        "title": "Utwórz organizację",
+        "text": "Dodaj organizację, do której należą wpisy firmowe, a później także członkowie zespołu."
+      },
+      "listing": {
+        "title": "Utwórz wpis",
+        "text": "Dodaj firmę, wybierz branże i języki oraz pakiet Free lub Premium."
+      },
+      "complete": {
+        "title": "Uzupełnij profil",
+        "text": "Dodaj opis, kontakt i adres. Premium obejmuje też logo, galerię, godziny, social media i tłumaczenia."
+      },
+      "review": {
+        "title": "Wyślij do weryfikacji",
+        "text": "Findelio sprawdza nowe i zmienione dane, aby katalog był wiarygodny i aktualny."
+      },
+      "publish": {
+        "title": "Publikuj i rozwijaj się",
+        "text": "Po zatwierdzeniu wpis jest widoczny. Dopiero wtedy aktywujesz Premium, wpisy aktualności i statystyki."
+      }
+    },
+    "packagesEyebrow": "Pakiet dla każdego wpisu",
+    "packagesTitle": "Zacznij Free lub pokaż więcej z Premium",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "Solidna podstawa widocznego i zweryfikowanego wpisu.",
+      "features": {
+        "profile": "Nazwa firmy i pełny opis",
+        "classification": "Branże i obsługiwane języki",
+        "contact": "Kontakt, strona i lokalizacja"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 miesięcznie lub CHF 99 rocznie",
+      "description": "Dla firm, które chcą lepszej prezentacji, aktualnych treści i danych o zasięgu.",
+      "features": {
+        "media": "Logo i galeria zdjęć",
+        "details": "Godziny otwarcia, social media i własny przycisk",
+        "translations": "Własne opisy we wszystkich językach Findelio",
+        "posts": "Aktualności, promocje i wydarzenia",
+        "ranking": "Lepsza pozycja pasujących wpisów Premium",
+        "statistics": "Statystyki i miesięczny raport"
+      }
+    },
+    "reviewTitle": "Dlaczego wpisy są sprawdzane?",
+    "reviewText": "Weryfikacja chroni odwiedzających i rzetelne firmy. Findelio sprawdza wiarygodność danych i wysyła wiadomość w razie pytań lub odrzucenia.",
+    "verificationEyebrow": "Dobrowolna dodatkowa weryfikacja",
+    "verificationTitle": "Status Zweryfikowany na podstawie urzędowego dokumentu",
+    "verificationText": "Możesz dobrowolnie przesłać Findelio aktualny urzędowy dokument potwierdzający działalność firmy. Po pomyślnej kontroli oznaczymy wpis jako „Zweryfikowany”.",
+    "verificationProofs": "Może to być na przykład aktualny wyciąg z rejestru handlowego lub rejestru UID. W przypadku jednoosobowej działalności niewpisanej do rejestru handlowego można również wykorzystać potwierdzenie właściwej instytucji ubezpieczeń społecznych o uznaniu samozatrudnienia.",
+    "verificationNote": "Odznaka Zweryfikowany potwierdza wyłącznie, że Findelio sprawdziło istnienie lub powiązanie firmy na podstawie dokumentu. Nie gwarantuje jakości, wypłacalności, zezwoleń ani usług.",
+    "verificationCta": "Wyślij dokument e-mailem",
+    "ctaTitle": "Gotowi dodać firmę?",
+    "ctaText": "Utwórz bezpłatne konto, uzupełnij profil i docieraj do właściwych klientów.",
+    "ctaButton": "Dodaj firmę"
+  },
+  "Terms": {
+    "metaTitle": "Regulamin | Findelio",
+    "metaDescription": "Regulamin kont firmowych, wpisów i subskrypcji Premium w Findelio.",
+    "eyebrow": "Informacje prawne",
+    "title": "Ogólne warunki korzystania",
+    "lastUpdated": "Stan na 3 sierpnia 2026 r.",
+    "intro": "Niniejszy regulamin określa zasady korzystania z Findelio przez firmy, organizacje i ich upoważnionych użytkowników.",
+    "sections": {
+      "scope": {
+        "title": "Usługodawca i zakres",
+        "body": "Findelio prowadzi Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Szwajcaria. Regulamin dotyczy kont, organizacji, wpisów oraz funkcji bezpłatnych i płatnych."
+      },
+      "services": {
+        "title": "Usługi Findelio",
+        "body": "Findelio prowadzi wielojęzyczny katalog firm i narzędzia do tworzenia, kontroli i zarządzania wpisami. Nie jest stroną umów między odwiedzającymi a firmami."
+      },
+      "accounts": {
+        "title": "Konto i uprawnienia",
+        "body": "Dane muszą być prawdziwe i aktualne, a dane logowania poufne. Osoba działająca za organizację potwierdza swoje uprawnienie i odpowiada za działania na koncie."
+      },
+      "content": {
+        "title": "Treści i licencja",
+        "body": "Firma odpowiada za teksty, zdjęcia, logo i linki oraz ich zgodność z prawem. Findelio otrzymuje niewyłączne prawa konieczne do przechowywania i wyświetlania treści w okresie publikacji."
+      },
+      "review": {
+        "title": "Weryfikacja i blokada",
+        "body": "Treści nielegalne, mylące, niepełne lub stanowiące nadużycie mogą zostać odrzucone, zawieszone albo usunięte. W odpowiednich przypadkach Findelio podaje powód i umożliwia poprawę."
+      },
+      "packages": {
+        "title": "Free i Premium",
+        "body": "Free obejmuje wskazane funkcje podstawowe. Premium dotyczy jednego wpisu i zawiera dodatki opisane na stronie oferty i rozliczeń."
+      },
+      "contract": {
+        "title": "Umowa, ceny i płatność",
+        "body": "Ceny są podawane we frankach szwajcarskich. Umowa Premium rozpoczyna się po potwierdzeniu płatności. Subskrypcja miesięczna lub roczna odnawia się, jeżeli nie zostanie anulowana przed końcem okresu."
+      },
+      "cancellation": {
+        "title": "Anulowanie i nieudana płatność",
+        "body": "Premium można anulować na koniec okresu i do tego czasu pozostaje aktywne. Po nieudanej płatności dostęp może zostać zablokowany na koniec okresu. Zwroty proporcjonalne co do zasady nie przysługują; prawa bezwzględnie obowiązujące pozostają."
+      },
+      "availability": {
+        "title": "Dostępność",
+        "body": "Nie gwarantujemy ciągłego działania bez błędów. Konserwacja, bezpieczeństwo, dostawcy zewnętrzni lub siła wyższa mogą powodować przerwy."
+      },
+      "liability": {
+        "title": "Odpowiedzialność",
+        "body": "Findelio odpowiada w obowiązkowym zakresie prawa. W dozwolonym zakresie wyłącza się odpowiedzialność za lekkie niedbalstwo, szkody pośrednie, utracone korzyści i dane."
+      },
+      "termination": {
+        "title": "Zakończenie i usunięcie konta",
+        "body": "Usunięcie konta nie zastępuje anulowania aktywnego Premium. Poważne lub powtarzające się naruszenia mogą skutkować blokadą albo zakończeniem dostępu."
+      },
+      "privacy": {
+        "title": "Prywatność",
+        "body": "Przetwarzanie danych osobowych odbywa się zgodnie z aktualną polityką prywatności Findelio."
+      },
+      "changes": {
+        "title": "Zmiany regulaminu",
+        "body": "Findelio może zmienić regulamin na przyszłość z powodów prawnych, technicznych lub biznesowych. Istotne zmiany zostaną zakomunikowane."
+      },
+      "law": {
+        "title": "Prawo i jurysdykcja",
+        "body": "Obowiązuje prawo szwajcarskie. W zakresie dozwolonym właściwe są sądy siedziby Webpixels. Bezwzględnie obowiązujące zasady pozostają; w razie rozbieżności rozstrzyga wersja niemiecka."
+      }
+    },
+    "verification": {
+      "title": "Zweryfikowane wpisy firm",
+      "body": "Firmy mogą dobrowolnie przesłać aktualny wyciąg z rejestru handlowego, rejestru UID lub porównywalny urzędowy dokument. W przypadku jednoosobowej działalności niewpisanej do rejestru handlowego Findelio może w szczególności zaakceptować potwierdzenie właściwej instytucji ubezpieczeń społecznych o uznaniu samozatrudnienia. Po pomyślnej kontroli Findelio może oznaczyć wpis jako „Zweryfikowany”. Odznaka potwierdza jedynie istnienie lub powiązanie firmy sprawdzone na podstawie dokumentu; nie gwarantuje jakości, wypłacalności, zezwoleń ani usług. Findelio może zażądać dodatkowych informacji lub odebrać status, gdy dane są nieaktualne, sprzeczne albo nieprawdziwe. Dokumenty są używane wyłącznie do weryfikacji, udostępniane tylko upoważnionym osobom i usuwane, gdy nie są już potrzebne do tego celu, chyba że obowiązuje wymóg przechowywania."
+    },
+    "contact": "Pytania dotyczące regulaminu prosimy kierować do zespołu Findelio:"
+  },
+  "Contact": {
+    "metaTitle": "Kontakt | Findelio",
+    "metaDescription": "Skontaktuj się z zespołem Findelio w sprawie wpisów firm, kont lub współpracy.",
+    "eyebrow": "Kontakt",
+    "title": "Jak możemy Ci pomóc?",
+    "description": "Wyślij nam swoją wiadomość przez formularz. Odpowiemy tak szybko, jak to możliwe.",
+    "directTitle": "Kontakt bezpośredni",
+    "directText": "Z zespołem Findelio możesz skontaktować się również bezpośrednio przez e-mail lub telefon.",
+    "onlineTitle": "Pracujemy online",
+    "onlineText": "Findelio działa cyfrowo. Wizyty osobiste pod adresem firmy nie są przewidziane.",
+    "fields": {
+      "name": "Imię i nazwisko",
+      "email": "E-mail",
+      "phone": "Telefon (opcjonalnie)",
+      "phoneLabel": "Telefon",
+      "subject": "Temat",
+      "message": "Wiadomość"
+    },
+    "subjects": {
+      "general": "Pytanie ogólne",
+      "listing": "Pytanie dotyczące wpisu firmy",
+      "account": "Konto i logowanie",
+      "partnership": "Współpraca",
+      "other": "Inna sprawa"
+    },
+    "messageHint": "Opisz swoją sprawę w co najmniej 20 znakach.",
+    "privacyConsent": "Zapoznałem(-am) się z <privacyLink>polityką prywatności</privacyLink> i zgadzam się na przetwarzanie moich danych w celu udzielenia odpowiedzi.",
+    "send": "Wyślij wiadomość",
+    "sending": "Wysyłanie …",
+    "success": "Dziękujemy. Wiadomość została wysłana.",
+    "error": "Nie udało się wysłać wiadomości. Spróbuj ponownie lub napisz na info@findelio.ch."
+  },
   "Legal": {
+    "legalEyebrow": "Informacje prawne",
+    "imprintMetaTitle": "Dane firmy | Findelio",
+    "imprintMetaDescription": "Dane operatora i dane kontaktowe Findelio.",
     "imprintTitle": "Dane firmy",
-    "imprintText": "Przed publikacją uzupełnij pełne dane operatora wymagane przez prawo szwajcarskie.",
+    "imprintIntro": "Findelio jest usługą firmy Webpixels. Tutaj znajdziesz wymagane prawem dane operatora i dane kontaktowe.",
+    "operatorTitle": "Operator strony",
+    "owner": "Właściciel",
+    "switzerland": "Szwajcaria",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Strona internetowa",
+    "contentResponsibilityTitle": "Odpowiedzialność za treść",
+    "contentResponsibilityText": "Za treści redakcyjne Findelio odpowiada Jan Cabanik, dostępny pod powyższymi danymi kontaktowymi.",
+    "liabilityTitle": "Odpowiedzialność",
+    "liabilityText": "Treści są przygotowywane z należytą starannością. Webpixels nie gwarantuje jednak ich poprawności, kompletności, aktualności ani stałej dostępności. Bezwzględnie obowiązująca odpowiedzialność ustawowa pozostaje bez zmian.",
+    "externalLinksTitle": "Linki zewnętrzne i wpisy firm",
+    "externalLinksText": "Za treści stron zewnętrznych i dane podane przez firmy odpowiadają ich operatorzy. Treści niezgodne z prawem zostaną usunięte po uzyskaniu informacji i weryfikacji.",
+    "copyrightTitle": "Prawo autorskie",
+    "copyrightText": "Treści i wygląd Findelio są chronione prawem autorskim. Wykorzystanie wykraczające poza wyjątki ustawowe wymaga uprzedniej zgody właściwego właściciela praw.",
+    "privacyMetaTitle": "Polityka prywatności | Findelio",
+    "privacyMetaDescription": "Informacje o przetwarzaniu danych osobowych przez Findelio.",
     "privacyTitle": "Polityka prywatności",
-    "privacyText": "Przed publikacją dodaj pełną politykę prywatności dotyczącą hostingu, formularzy, analityki i usług zewnętrznych."
+    "lastUpdated": "Aktualizacja: 29 lipca 2026 r.",
+    "privacyIntro": "Niniejsza polityka wyjaśnia, jakie dane osobowe przetwarza Findelio, w jakich celach i jakie prawa Ci przysługują. Zastosowanie ma szwajcarskie prawo ochrony danych, a tam, gdzie jest to właściwe, również RODO.",
+    "controllerTitle": "1. Administrator",
+    "controllerText": "Administratorem danych przetwarzanych w związku z Findelio jest:",
+    "processedDataTitle": "2. Przetwarzane dane",
+    "processedDataIntro": "W zależności od sposobu korzystania przetwarzamy następujące kategorie danych:",
+    "technicalData": "Dane techniczne, takie jak adres IP, czas, odwiedzana strona, informacje o przeglądarce i urządzeniu oraz logi serwera, służące bezpiecznemu i stabilnemu działaniu.",
+    "accountData": "Przy rejestracji i logowaniu: imię i nazwisko, e-mail, status konta oraz bezpiecznie przechowywane dane logowania. Hasła nie są przechowywane w postaci jawnej.",
+    "listingData": "W organizacjach i wpisach: dane firmy, kontaktowe i adresowe, opisy, branże, języki oraz dobrowolnie przesłane multimedia i dane profilu.",
+    "contactData": "W formularzu kontaktowym: imię i nazwisko, e-mail, opcjonalny telefon, temat i wiadomość. Adres IP jest krótko używany do ograniczania liczby żądań i zapobiegania nadużyciom.",
+    "purposesTitle": "3. Cele przetwarzania",
+    "purposesText": "Przetwarzamy dane w celu prowadzenia katalogu, zarządzania kontami i wpisami, realizacji procesów weryfikacji i powiadomień, odpowiadania na pytania, zapobiegania nadużyciom oraz zapewnienia bezpieczeństwa, stabilności i rozwoju usługi.",
+    "legalBasisTitle": "4. Podstawy przetwarzania",
+    "legalBasisText": "Przetwarzanie odbywa się w celu zawarcia i wykonania umowy, na podstawie nadrzędnego prywatnego interesu w zapewnieniu bezpiecznej usługi, obowiązków prawnych lub Twojej zgody, jeśli jest wymagana.",
+    "cookiesTitle": "5. Pliki cookie i pomiar zasięgu",
+    "cookiesText": "Findelio używa technicznie niezbędnych plików cookie do logowania i zarządzania sesją. Opcjonalny pomiar Google Analytics jest ładowany tylko po wyraźnej zgodzie i może ustawiać pliki analityczne. Nie osadzamy mapy.",
+    "recipientsTitle": "6. Usługodawcy i odbiorcy",
+    "recipientsText": "Dostawcy infrastruktury i hostingu mogą przetwarzać dane jako podmioty przetwarzające w niezbędnym zakresie. Do wysyłki e-maili korzystamy z Infomaniak Network SA w Szwajcarii. Jeśli zezwolisz na opcjonalną analitykę, dane pomiarowe są przekazywane do Google Ireland Limited i powiązanych usług Google. Dane przekazujemy tylko, gdy jest to konieczne do działania, wymagane prawem, zainicjowane przez Ciebie lub objęte zgodą. Przy przetwarzaniu za granicą zapewniamy odpowiednią ochronę.",
+    "retentionTitle": "7. Okres przechowywania",
+    "retentionText": "Dane przechowujemy tylko tak długo, jak wymaga tego cel, obsługa konta lub zapytania, bezpieczeństwo albo obowiązki prawne. Dane zbędne usuwamy lub anonimizujemy.",
+    "securityTitle": "8. Bezpieczeństwo danych",
+    "securityText": "Stosujemy odpowiednie środki techniczne i organizacyjne, w tym ograniczenia dostępu, szyfrowanie transmisji i zabezpieczone systemy. Nie można jednak zagwarantować przesyłania całkowicie wolnego od ryzyka.",
+    "rightsTitle": "9. Twoje prawa",
+    "rightsText": "Zgodnie z prawem możesz żądać dostępu, sprostowania, usunięcia, ograniczenia, wydania lub przeniesienia danych, wnieść sprzeciw albo wycofać zgodę. Napisz na info@findelio.ch. Możesz też zwrócić się do właściwego organu nadzorczego.",
+    "thirdPartyTitle": "10. Linki i treści zewnętrzne",
+    "thirdPartyText": "Wpisy firm mogą zawierać linki do stron i serwisów społecznościowych osób trzecich. Ich zasady prywatności obowiązują dopiero po otwarciu linku. Findelio nie osadza mapy na stronie kontaktowej.",
+    "changesTitle": "11. Zmiany",
+    "changesText": "Możemy aktualizować tę politykę po zmianie funkcji, usługodawców lub wymogów prawnych. Obowiązuje wersja opublikowana na tej stronie."
+  },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Wybierz obraz",
+      "imageEmpty": "Nie wybrano obrazu",
+      "imageHint": "Zalecane: 1200 × 675 px (proporcje 16:9).",
+      "imageCurrent": "Obecny obraz zostanie zachowany",
+      "editTitle": "Edytuj wpis",
+      "editPublishedHint": "Dotychczasowy wpis pozostanie widoczny. Zmiany zostaną ponownie sprawdzone przed publikacją.",
+      "editArchivedHint": "Ten wpis nie jest widoczny publicznie. Możesz zapisać go jako wersję roboczą lub ponownie przesłać do sprawdzenia.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Zmiany zostały zapisane.",
+      "update": "Zapisz zmiany",
+      "cancel": "Anuluj",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Archiwizuj",
+      "edit": "Edytuj",
+      "archivedNotice": "Wpis został zarchiwizowany. Nie jest już widoczny publicznie i pozostaje zapisany w panelu.",
+      "archivedHint": "Niewidoczny publicznie. Możesz edytować wpis i później ponownie przesłać go do sprawdzenia.",
+      "archiveDialogEyebrow": "Archiwizuj wpis",
+      "archiveDialogTitle": "Zarchiwizować „{title}”?",
+      "archiveConfirm": "Wpis zostanie natychmiast usunięty z publicznego profilu firmy. Pozostanie zapisany tutaj w panelu i będzie można go później edytować oraz ponownie przesłać do sprawdzenia.",
+      "archiveKeep": "Zachowaj wpis",
+      "archiving": "Archiwizowanie …",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved.",
+        "archive": "Nie udało się zarchiwizować wpisu."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Wiadomość dla klienta (wymagana przy odrzuceniu)",
+      "error": "Nie udało się wykonać działania. Przy odrzuceniu wpisu wymagane jest uzasadnienie.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
   },
   "ListingEditor": {
-    "eyebrow": "Edytuj profil firmy",
+    "eyebrow": "Edytuj wpis firmy",
     "title": "Edytuj {name}",
-    "description": "Zaktualizuj dane profilu firmy. Zmiany można zapisać jako wersję roboczą lub wysłać do weryfikacji.",
-    "back": "Wróć do profili firm",
+    "description": "Zaktualizuj dane wpisu firmy. Zmiany można zapisać jako wersję roboczą lub wysłać do weryfikacji.",
+    "back": "Wróć do wpisów firm",
     "sections": {
       "general": "Dane podstawowe i opis",
       "classification": "Branże i języki",
@@ -229,10 +763,92 @@
     },
     "industryHint": "Wybierz wszystkie branże, w których działa firma.",
     "spokenLanguagesHint": "Wybierz wszystkie języki, w których firma obsługuje klientów.",
+    "industrySearch": "Przeszukaj branże",
+    "industrySearchPlaceholder": "Wpisz branżę",
+    "spokenLanguagesSearch": "Przeszukaj języki",
+    "spokenLanguagesSearchPlaceholder": "Wpisz język",
+    "noSearchResults": "Nie znaleziono pasujących pozycji.",
+    "translations": {
+      "title": "Opis wielojęzyczny",
+      "description": "Uzupełnij główny opis w języku niemieckim własnymi tłumaczeniami na pozostałe języki Findelio.",
+      "fallbackHint": "Jeśli tłumaczenie pozostanie puste, automatycznie zostanie wyświetlony opis niemiecki.",
+      "fieldLabel": "Opis w języku {language}"
+    },
+    "premium": {
+      "badge": "Premium",
+      "title": "Wpis Premium",
+      "description": "Uzupełnij wpis firmy o logo, zdjęcia, godziny otwarcia, opisy wielojęzyczne i linki do mediów społecznościowych.",
+      "lockedDescription": "Te funkcje Premium są dostępne w ramach aktywnej subskrypcji Premium.",
+      "lockedHint": "Po aktywowaniu subskrypcji Premium możesz edytować te sekcje.",
+      "manageSubscription": "Aktywuj Premium",
+      "features": {
+        "logo": "Logo firmy",
+        "gallery": "Galeria zdjęć",
+        "openingHours": "Godziny otwarcia",
+        "socialLinks": "Linki do mediów społecznościowych",
+        "translations": "Opis wielojęzyczny"
+      },
+      "logoHint": "Prześlij kwadratowe lub poziome logo firmy.",
+      "logoPreview": "Podgląd logo firmy",
+      "noLogo": "Brak logo",
+      "chooseLogo": "Wybierz logo",
+      "remove": "Usuń",
+      "removeDialog": {
+        "logoTitle": "Usunąć logo firmy?",
+        "logoDescription": "Zamierzasz usunąć logo firmy z tego wpisu. Zmiana zostanie zastosowana dopiero po zapisaniu.",
+        "galleryTitle": "Usunąć zdjęcie z galerii?",
+        "galleryDescription": "Zamierzasz usunąć to zdjęcie z galerii. Zmiana zostanie zastosowana dopiero po zapisaniu.",
+        "cancel": "Anuluj",
+        "confirm": "Usuń zdjęcie"
+      },
+      "galleryHint": "Dodaj maksymalnie dziesięć zdjęć przedstawiających firmę.",
+      "galleryPreview": "Podgląd zdjęcia z galerii",
+      "galleryLimit": "Galeria może zawierać maksymalnie dziesięć zdjęć.",
+      "addImages": "Dodaj zdjęcia",
+      "openingHoursHint": "Dodaj maksymalnie trzy przedziały czasowe na każdy dzień. Dzień bez przedziału jest oznaczony jako zamknięty.",
+      "closed": "Zamknięte",
+      "opensAt": "Godzina otwarcia w dniu {day}",
+      "closesAt": "Godzina zamknięcia w dniu {day}",
+      "addInterval": "Dodaj przedział czasowy",
+      "socialLinksHint": "Dodaj maksymalnie jeden link dla każdej platformy.",
+      "platform": "Platforma",
+      "socialUrl": "Link do profilu społecznościowego",
+      "platforms": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "x": "X"
+      },
+      "addSocialLink": "Dodaj link do mediów społecznościowych",
+      "imageRules": "Dozwolone są pliki JPEG, PNG i WebP o rozmiarze do 8 MB na zdjęcie."
+    },
     "addressVisibility": {
       "full": "Pokaż pełny adres",
       "city": "Pokaż tylko miejscowość i kanton",
       "hidden": "Ukryj adres"
+    },
+    "plan": {
+      "eyebrow": "Pakiet dla tego wpisu",
+      "title": "Wybierz Free lub Premium",
+      "description": "Wybrany pakiet dotyczy tylko tego wpisu firmy. Kolejne wpisy mogą mieć własny pakiet.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Wszystkie podstawowe dane i publikacja w katalogu Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 miesięcznie",
+        "description": "Dodatkowo logo, galeria zdjęć, godziny otwarcia i linki do mediów społecznościowych."
+      },
+      "intervalTitle": "Okres rozliczeniowy",
+      "intervals": {
+        "monthly": "Miesięcznie – CHF 9.90",
+        "yearly": "Rocznie – CHF 99.00"
+      },
+      "cancellationHint": "Bez okresu próbnego. Subskrypcję można anulować ze skutkiem na koniec bieżącego okresu rozliczeniowego."
     },
     "statusValues": {
       "draft": "Wersja robocza",
@@ -246,26 +862,32 @@
       "inactive": "Nieaktywny"
     },
     "currentStatus": "Aktualny status",
-    "statusHint": "Profile wysłane do weryfikacji mogą zostać sprawdzone i opublikowane.",
+    "statusHint": "Wpisy wysłane do weryfikacji mogą zostać sprawdzone i opublikowane.",
     "save": "Zapisz zmiany",
     "saving": "Zapisywanie …",
     "saved": "Zmiany zostały zapisane.",
     "errors": {
       "invalid_data": "Sprawdź wprowadzone dane.",
       "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
-      "forbidden": "Nie masz uprawnień do edycji tego profilu firmy.",
-      "not_found": "Nie znaleziono profilu firmy.",
+      "forbidden": "Nie masz uprawnień do edycji tego wpisu firmy.",
+      "not_found": "Nie znaleziono wpisu firmy.",
       "invalid_selection": "Wybrana branża lub język jest nieprawidłowy. Odśwież stronę i spróbuj ponownie.",
+      "invalid_image": "Co najmniej jedno zdjęcie jest nieprawidłowe lub nie należy do tego wpisu firmy.",
+      "file_too_large": "Co najmniej jedno zdjęcie jest większe niż 8 MB.",
+      "too_many_files": "Wybrano zbyt wiele zdjęć.",
+      "upload_failed": "Nie udało się przesłać zdjęć.",
+      "premium_required": "Te funkcje wymagają aktywnej subskrypcji Premium.",
       "save_failed": "Nie udało się zapisać zmian.",
       "network": "Nie udało się połączyć z serwerem."
     },
-    "createdNotice": "Profil firmy został utworzony jako szkic. Możesz teraz kontynuować edycję."
+    "createdNotice": "Wpis firmy został utworzony jako szkic. Możesz teraz kontynuować edycję.",
+    "createdPremiumNotice": "Wpis firmy został utworzony jako szkic Premium. Uzupełnij logo, galerię, godziny otwarcia i linki do mediów społecznościowych, a następnie wyślij wpis do weryfikacji. Subskrypcję wykupisz dopiero po zatwierdzeniu."
   },
   "ListingCreator": {
-    "eyebrow": "Utwórz profil firmy",
-    "title": "Utwórz nowy profil firmy",
-    "description": "Utwórz nowy wpis dla jednej z aktywnych organizacji. Profil zostanie bezpiecznie zapisany jako szkic.",
-    "back": "Wróć do profili firm",
+    "eyebrow": "Utwórz wpis firmy",
+    "title": "Utwórz nowy wpis firmy",
+    "description": "Utwórz nowy wpis dla jednej z aktywnych organizacji. Wpis zostanie bezpiecznie zapisany jako szkic.",
+    "back": "Wróć do wpisów firm",
     "sections": {
       "organization": "Organizacja",
       "general": "Dane podstawowe i opis",
@@ -293,24 +915,113 @@
       "city": "Pokaż tylko miejscowość i kanton",
       "hidden": "Ukryj adres"
     },
-    "create": "Utwórz profil firmy",
+    "create": "Utwórz wpis firmy",
     "creating": "Tworzenie …",
     "noOrganizationsTitle": "Nie znaleziono aktywnej organizacji",
-    "noOrganizationsDescription": "Aby utworzyć profil firmy, potrzebujesz co najmniej jednego aktywnego członkostwa w organizacji.",
+    "noOrganizationsDescription": "Aby utworzyć wpis firmy, potrzebujesz co najmniej jednego aktywnego członkostwa w organizacji.",
     "errors": {
       "invalid_data": "Sprawdź wprowadzone dane.",
       "unauthorized": "Sesja wygasła. Zaloguj się ponownie.",
-      "forbidden": "Nie możesz utworzyć profilu firmy dla tej organizacji.",
-      "create_failed": "Nie udało się utworzyć profilu firmy.",
+      "forbidden": "Nie możesz utworzyć wpisu firmy dla tej organizacji.",
+      "create_failed": "Nie udało się utworzyć wpisu firmy.",
       "network": "Połączenie z serwerem nie powiodło się."
+    }
+  },
+  "Billing": {
+    "back": "Powrót do wpisów firm",
+    "eyebrow": "Pakiet i rozliczenia",
+    "title": "Subskrypcja dla {name}",
+    "description": "Zarządzaj pakietem tego wpisu firmy. Premium zostanie aktywowane dopiero po potwierdzeniu płatności.",
+    "listingCreated": "Wpis firmy zapisano jako wersję roboczą. Wybierz teraz odpowiedni pakiet.",
+    "checkoutSuccess": "Dziękujemy. Płatność zakończyła się pomyślnie. Potwierdzenie aktywacji Premium może chwilę potrwać.",
+    "checkoutCancelled": "Proces płatności został anulowany. Wpis firmy pozostaje w pakiecie Free.",
+    "approvedNotice": "Twój wpis firmy został zatwierdzony. Możesz teraz dokończyć wybraną subskrypcję Premium.",
+    "preApproval": {
+      "eyebrow": "Przed płatnością",
+      "draftTitle": "Najpierw uzupełnij wpis firmy",
+      "draftDescription": "Dodaj wszystkie potrzebne informacje, takie jak logo, galeria, godziny otwarcia i linki do mediów społecznościowych, a następnie wyślij wpis do weryfikacji. Premium opłacasz dopiero po zatwierdzeniu.",
+      "pendingTitle": "Twój wpis firmy jest weryfikowany",
+      "pendingDescription": "Po zatwierdzeniu wpisu przez Findelio otrzymasz wiadomość e-mail i będzie można dokończyć wybraną subskrypcję Premium.",
+      "unavailableTitle": "Premium nie jest jeszcze dostępne",
+      "unavailableDescription": "Wpis firmy musi zostać zatwierdzony, zanim będzie można wykupić Premium.",
+      "edit": "Uzupełnij wpis",
+      "back": "Wróć do wpisów firm"
+    },
+    "intervalTitle": "Okres rozliczeniowy",
+    "intervals": {
+      "monthly": {
+        "title": "Miesięcznie",
+        "description": "CHF 9.90 miesięcznie"
+      },
+      "yearly": {
+        "title": "Rocznie",
+        "description": "CHF 99.00 rocznie"
+      }
+    },
+    "terms": "Bez bezpłatnego okresu próbnego. Anulowanie następuje na koniec bieżącego okresu rozliczeniowego. W razie nieudanej płatności dostęp pozostaje do końca okresu, a następnie zostaje zablokowany.",
+    "termsNotice": "Kończąc płatną subskrypcję, akceptujesz",
+    "termsLink": "Regulamin",
+    "premium": {
+      "badge": "Premium",
+      "title": "Wpis firmy Premium",
+      "description": "Zaprezentuj firmę za pomocą dodatkowych informacji wizualnych i praktycznych.",
+      "features": {
+        "logo": "Logo firmy",
+        "gallery": "Galeria zdjęć",
+        "openingHours": "Godziny otwarcia",
+        "socialLinks": "Linki do mediów społecznościowych",
+        "translations": "Opis wielojęzyczny"
+      }
+    },
+    "status": {
+      "eyebrow": "Aktualny pakiet",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Status subskrypcji",
+      "price": "Cena",
+      "nextRenewal": "Następne odnowienie",
+      "accessUntil": "Dostęp Premium do",
+      "freeHint": "Ten wpis firmy korzysta obecnie z bezpłatnego pakietu.",
+      "grantedTitle": "Bezpłatny dostęp Premium",
+      "grantedDescription": "Findelio przyznało temu wpisowi dostęp Premium bez płatności.",
+      "grantedUntil": "Dostęp do {date}",
+      "values": {
+        "pending": "Oczekuje",
+        "active": "Aktywna",
+        "past_due": "Płatność oczekuje",
+        "cancelled": "Anulowana",
+        "expired": "Wygasła"
+      }
+    },
+    "actions": {
+      "subscribe": "Subskrybuj Premium",
+      "openingCheckout": "Otwieranie bezpiecznej płatności …",
+      "manage": "Zarządzaj subskrypcją i metodą płatności",
+      "grantHint": "Findelio przyznało Premium bez opłat. Nie ma płatnej subskrypcji do zarządzania.",
+      "openingPortal": "Otwieranie portalu klienta …",
+      "portalHint": "Zarządzanie subskrypcją otworzy się w nowej karcie. Findelio pozostanie otwarte."
+    },
+    "errors": {
+      "invalid_data": "Wybrana opcja rozliczenia jest nieprawidłowa.",
+      "unauthorized": "Twoja sesja wygasła. Zaloguj się ponownie.",
+      "forbidden": "Nie możesz zarządzać tą subskrypcją.",
+      "not_found": "Nie znaleziono wpisu firmy.",
+      "already_active": "Premium jest już aktywne dla tego wpisu firmy.",
+      "listing_not_published": "Wpis firmy musi najpierw zostać zatwierdzony.",
+      "billing_not_configured": "Funkcja płatności jest obecnie niedostępna.",
+      "portal_unavailable": "Zarządzanie tą subskrypcją jest obecnie niedostępne.",
+      "checkout_failed": "Nie udało się rozpocząć procesu płatności.",
+      "portal_failed": "Nie udało się otworzyć zarządzania subskrypcją.",
+      "network": "Połączenie z serwerem nie powiodło się.",
+      "unknown": "Nie udało się wykonać operacji subskrypcji."
     }
   },
   "ListingReview": {
     "eyebrow": "Weryfikacja wewnętrzna",
-    "title": "Profile firm do weryfikacji",
-    "description": "Sprawdź nowe i zmienione profile firm przed ich publikacją.",
+    "title": "Wpisy firm do weryfikacji",
+    "description": "Sprawdź nowe i zmienione wpisy firm przed ich publikacją.",
     "emptyTitle": "Brak oczekujących weryfikacji",
-    "emptyDescription": "Obecnie żadne profile firm nie oczekują na zatwierdzenie.",
+    "emptyDescription": "Obecnie żadne wpisy firm nie oczekują na zatwierdzenie.",
     "unknownDate": "Nieznana data",
     "unknownOrganization": "Nieznana organizacja",
     "unknownSubmitter": "Nieznany użytkownik",
@@ -339,6 +1050,7 @@
         "name": "Nazwa firmy",
         "short_description": "Krótki opis",
         "description": "Opis",
+        "description_translations": "Przetłumaczone opisy",
         "street": "Ulica",
         "postal_code": "Kod pocztowy",
         "city": "Miejscowość",
@@ -348,8 +1060,173 @@
         "website_url": "Strona internetowa",
         "address_visibility": "Widoczność adresu",
         "industry_ids": "Branże",
-        "spoken_language_ids": "Używane języki"
+        "spoken_language_ids": "Używane języki",
+        "logo_id": "Logo firmy",
+        "gallery_file_ids": "Galeria zdjęć",
+        "social_links": "Linki do mediów społecznościowych",
+        "opening_hours": "Godziny otwarcia"
       }
+    }
+  },
+  "DeletionRequests": {
+    "customer": {
+      "eyebrow": "Wniosek o usunięcie",
+      "requestButton": "Poproś o usunięcie",
+      "listingTitle": "Poprosić o usunięcie {name}?",
+      "organizationTitle": "Poprosić o usunięcie {name}?",
+      "listingDescription": "Wpis firmy pozostanie widoczny i możliwy do edycji, dopóki administrator Findelio nie zatwierdzi wniosku. Następnie zostanie zarchiwizowany i przestanie być publicznie widoczny.",
+      "organizationDescription": "Organizacja i jej wpisy pozostaną dostępne, dopóki administrator Findelio nie zatwierdzi wniosku. Następnie zostaną zarchiwizowane i przestaną być publicznie widoczne.",
+      "reasonLabel": "Powód (opcjonalnie)",
+      "reasonPlaceholder": "Co powinniśmy uwzględnić podczas weryfikacji?",
+      "keep": "Anuluj",
+      "confirm": "Poproś o usunięcie",
+      "submitting": "Wysyłanie …",
+      "pendingTitle": "Wniosek o usunięcie jest sprawdzany",
+      "pendingDescription": "Treść pozostanie bez zmian do czasu decyzji.",
+      "withdraw": "Wycofaj wniosek",
+      "withdrawing": "Wycofywanie …",
+      "premiumTitle": "Najpierw anuluj Premium",
+      "premiumDescription": "Aktywną subskrypcję Premium należy wypowiedzieć w terminie przed złożeniem wniosku.",
+      "manageSubscription": "Zarządzaj subskrypcją",
+      "viewListings": "Zobacz wpisy i subskrypcje",
+      "errors": {
+        "premium_not_cancelled": "Najpierw anuluj aktywną subskrypcję Premium.",
+        "request_exists": "Dla tej treści istnieje już otwarty wniosek.",
+        "send_failed": "Nie udało się wysłać powiadomienia do administratora. Spróbuj ponownie.",
+        "forbidden": "Nie możesz poprosić o usunięcie tej treści.",
+        "not_found": "Nie znaleziono treści lub została już zarchiwizowana.",
+        "network": "Połączenie z serwerem nie powiodło się.",
+        "unknown": "Nie udało się przetworzyć wniosku o usunięcie."
+      }
+    },
+    "admin": {
+      "eyebrow": "Wnioski o usunięcie",
+      "title": "Otwarte wnioski o usunięcie",
+      "description": "Sprawdź wniosek i przed archiwizacją upewnij się, że nie trwa już żaden opłacony okres Premium.",
+      "types": {
+        "listing": "Wpis firmy",
+        "organization": "Organizacja"
+      },
+      "submittedBy": "Wniosek od {name}, {date}",
+      "unknownRequester": "Nieznany użytkownik",
+      "customerReason": "Powód wniosku",
+      "noReason": "Nie podano powodu",
+      "waitingForSubscription": "Archiwizacja nie jest jeszcze możliwa",
+      "availableAfter": "Opłacony okres Premium kończy się {date}. Potem można zatwierdzić wniosek.",
+      "availableUnknown": "Co najmniej jedna subskrypcja Premium nie ma znanej daty końca dostępu.",
+      "noteLabel": "Wiadomość do klienta",
+      "notePlaceholder": "Wymagana przy odrzuceniu",
+      "reasonRequired": "Przy odrzuceniu podaj powód składający się z co najmniej trzech znaków.",
+      "premiumStillActive": "Archiwizację nadal blokuje aktywny okres Premium.",
+      "actionFailed": "Nie udało się przetworzyć wniosku o usunięcie.",
+      "processing": "Przetwarzanie …",
+      "approve": "Potwierdź archiwizację",
+      "reject": "Odrzuć wniosek"
+    }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Bezpłatny dostęp Premium",
+    "title": "Przyznaj dostęp Premium",
+    "description": "Przyznaj wybranym wpisom firm dostęp Premium bez płatności. Każde przyznanie jest rejestrowane z powodem i opcjonalną datą końcową.",
+    "grantTitle": "Przyznaj Premium",
+    "grantDescription": "Dostęp zaczyna się natychmiast. Bez daty końcowej pozostaje aktywny do odwołania.",
+    "listingLabel": "Wpis firmy",
+    "listingPlaceholder": "Wybierz wpis",
+    "unknownOrganization": "Nieznana organizacja",
+    "reasonLabel": "Powód wewnętrzny",
+    "unlimitedLabel": "Bez daty końcowej",
+    "endsAtLabel": "Data końcowa",
+    "grantButton": "Przyznaj Premium",
+    "saving": "Zapisywanie …",
+    "overviewTitle": "Przyznania",
+    "overviewDescription": "Aktywne przyznania można w każdej chwili odwołać. Płatne subskrypcje pozostają oddzielne.",
+    "active": "Aktywne",
+    "notActive": "Nieaktywne",
+    "noActiveGrant": "Brak bezpłatnego przyznania Premium.",
+    "unlimited": "Bezterminowo",
+    "revokeButton": "Odwołaj",
+    "revokeConfirm": "Odwołać to bezpłatne przyznanie Premium?",
+    "invalid_data": "Uzupełnij poprawnie wszystkie wymagane pola.",
+    "invalid_end_date": "Data końcowa musi przypadać w przyszłości.",
+    "already_active": "Premium jest już aktywne dla tego wpisu.",
+    "save_failed": "Nie udało się zapisać przyznania.",
+    "network": "Połączenie z serwerem nie powiodło się."
+  },
+  "VerifyRegistration": {
+    "loadingTitle": "Potwierdzanie adresu e-mail",
+    "loadingText": "Poczekaj chwilę.",
+    "invitationLoadingTitle": "Konfigurowanie konta i zaproszenia",
+    "invitationLoadingText": "Potwierdzamy Twój adres e-mail, przyjmujemy zaproszenie i bezpiecznie Cię logujemy.",
+    "successTitle": "Twój adres e-mail został potwierdzony.",
+    "successText": "Twoje konto Findelio jest już aktywne. Możesz zalogować się adresem e-mail i hasłem.",
+    "loginButton": "Zaloguj się",
+    "errorTitle": "Nie udało się potwierdzić",
+    "errorText": "Link potwierdzający jest nieprawidłowy, wygasł lub został już użyty.",
+    "registerButton": "Wróć do rejestracji"
+  },
+  "Referrals": {
+    "eyebrow": "PARTNERSTWA",
+    "title": "Polecenia",
+    "description": "Zarządzaj kodami polecającymi i śledź firmy dołączające przez nie do Findelio. Okres próbny Premium jest tylko dla nowych organizacji.",
+    "activePartners": "Aktywni partnerzy",
+    "registrations": "Rejestracje (filtrowane)",
+    "pendingActivation": "Oczekuje na aktywację (filtrowane)",
+    "newPartner": "Dodaj partnera",
+    "editPartner": "Edytuj partnera",
+    "partnerHelp": "Jeden kod na partnera. Własne konto Findelio nie jest potrzebne.",
+    "name": "Nazwa",
+    "code": "Kod polecający",
+    "codeHelp": "3–64 znaki: litery A–Z, cyfry, łącznik lub podkreślenie. Wielkość liter nie ma znaczenia.",
+    "codeFixed": "Kod pozostaje bez zmian, aby udostępnione linki nadal działały.",
+    "notes": "Notatki wewnętrzne",
+    "status": "Status",
+    "active": "Aktywny",
+    "disabled": "Wyłączony",
+    "disableHelp": "Wyłączenie zatrzymuje nowe użycia. Istniejące przypisania i okresy próbne pozostają bez zmian.",
+    "save": "Zapisz",
+    "saving": "Zapisywanie …",
+    "cancel": "Anuluj",
+    "partners": "Partnerzy",
+    "noPartners": "Brak partnerów. Dodaj pierwszego za pomocą formularza.",
+    "link": "Link polecający",
+    "copyLink": "Kopiuj link",
+    "copyCode": "Kopiuj kod",
+    "edit": "Edytuj",
+    "companies": "Polecone firmy",
+    "overviewHelp": "Godziny dotyczą strefy Europe/Zurich. Okres próbny rozpoczyna się przy pierwszym uprawnionym zatwierdzeniu profilu firmy.",
+    "allPartners": "Wszyscy partnerzy",
+    "allStates": "Wszystkie statusy",
+    "refresh": "Odśwież",
+    "noCompanies": "Brak rejestracji dla tego wyboru.",
+    "company": "Organizacja / profil firmy",
+    "registered": "Data rejestracji",
+    "period": "Początek / koniec próby",
+    "actions": "Działania",
+    "awaitingOrganization": "Organizacja jeszcze nie została utworzona",
+    "retry": "Ponów aktywację",
+    "page": "Strona {page} z {pages} · {total} rejestracji",
+    "previous": "Wstecz",
+    "next": "Dalej",
+    "revoked": "Próba cofnięta",
+    "expired": "Próba wygasła",
+    "previousPublication": "Wcześniej opublikowano: bez nowej próby.",
+    "existingPremium": "Premium już istniało. Dodatkowy okres próbny nie zostanie przyznany.",
+    "saved": "Zapisano.",
+    "copied": "Skopiowano.",
+    "copy_failed": "Nie można skopiować. Zaznacz i skopiuj wyświetlony link ręcznie.",
+    "load_failed": "Nie udało się wczytać przeglądu. Spróbuj ponownie.",
+    "save_failed": "Zapis nie powiódł się. Sprawdź dane i spróbuj ponownie.",
+    "code_exists": "Ten kod jest już używany.",
+    "retry_failed": "Aktywacja nie powiodła się. Rezerwacja pozostaje zachowana.",
+    "retry_done": "Aktywacja została ponownie sprawdzona. Aktualny status znajdziesz w przeglądzie.",
+    "states": {
+      "pending_organization": "Oczekuje na organizację",
+      "pending_approval": "Oczekuje na zatwierdzenie",
+      "pending_activation": "Oczekuje na aktywację",
+      "granted": "Próba przyznana",
+      "skipped_existing_premium": "Pominięto: Premium istniało",
+      "expired_unactivated": "Wygasło bez aktywacji",
+      "void": "Brak uprawnień"
     }
   }
 }

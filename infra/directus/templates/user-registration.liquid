@@ -1,0 +1,45 @@
+{% layout 'findelio-base' %}
+{% block content %}
+
+<h1 style="margin: 0 0 20px; color: #172940; font-size: 28px; line-height: 1.25;">
+  E-Mail-Adresse bestätigen
+</h1>
+
+<p style="margin: 0 0 18px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  Vielen Dank für deine Registrierung bei Findelio.
+</p>
+
+<p style="margin: 0 0 28px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  Bitte bestätige deine E-Mail-Adresse, um dein Firmenkonto zu aktivieren.
+  Falls du diese Registrierung nicht selbst gestartet hast, kannst du diese E-Mail ignorieren.
+</p>
+
+<a
+  class="button"
+  rel="noopener"
+  target="_blank"
+  href="{{ url }}"
+  style="
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 8px;
+    background: #0277EE;
+    border: 1px solid #0277EE;
+  "
+>
+  E-Mail-Adresse bestätigen
+</a>
+
+<p style="margin: 28px 0 8px; color: #525f70; font-size: 14px; line-height: 1.5;">
+  Falls der Button nicht funktioniert, öffne diesen Link:
+</p>
+
+<p style="margin: 0; font-size: 14px; line-height: 1.5; word-break: break-all;">
+  <a href="{{ url }}" style="color: #0277EE;">{{ url }}</a>
+</p>
+
+{% endblock %}

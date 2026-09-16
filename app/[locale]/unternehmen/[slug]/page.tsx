@@ -1,14 +1,23 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import {
   getListingBySlug,
   getListingOpeningHours,
+  getPublicListingPosts,
 } from "@/lib/directus";
 import SiteHeader from "@/components/site-header";
 import CompanyLogo from "@/components/company-logo";
 import CompanyGallery from "@/components/company-gallery";
 import { Link } from "@/i18n/navigation";
+import ListingMetricsTracker from "@/components/listing-metrics-tracker";
+import TrackedContactLink from "@/components/tracked-contact-link";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
+import Image from "next/image";
+import ShareButton from "@/components/share-button";
+import StructuredData from "@/components/structured-data";
+import { buildPageMetadata, localizedUrl } from "@/lib/seo";
 
 const htmlEntities: Record<string, string> = {
   amp: "&",
@@ -127,14 +136,50 @@ function formatTime(value: string): string {
   return value.slice(0, 5);
 }
 
-export default async function CompanyPage({
-  params,
-}: {
+type CompanyPageProps = {
   params: Promise<{
     locale: AppLocale;
     slug: string;
   }>;
-}) {
+};
+
+export async function generateMetadata({
+  params,
+}: CompanyPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const [company, t] = await Promise.all([
+    getListingBySlug(slug, locale),
+    getTranslations({ locale, namespace: "Company" }),
+  ]);
+
+  if (!company) return {};
+
+  const plainDescription = company.description
+    ? removeHtml(company.description)
+    : null;
+  const description = plainDescription
+    ? plainDescription.length > 160
+      ? `${plainDescription.slice(0, 157).trimEnd()}...`
+      : plainDescription
+    : t("metaDescription", { company: company.name, city: company.city });
+  const title = `${company.name} | Findelio`;
+  const logoId =
+    typeof company.logo === "string" ? company.logo : company.logo?.id;
+  const logoUrl = logoId ? getDirectusAssetUrl(logoId) : null;
+
+  return buildPageMetadata({
+    locale,
+    path: `/unternehmen/${company.slug}`,
+    title,
+    description,
+    image: logoUrl,
+    imageAlt: `${company.name} Logo`,
+  });
+}
+
+export default async function CompanyPage({
+  params,
+}: CompanyPageProps) {
   const { locale, slug } = await params;
 
   setRequestLocale(locale);
@@ -145,13 +190,19 @@ export default async function CompanyPage({
     notFound();
   }
 
-  const [t, openingHours] = await Promise.all([
+  const [t, tg, th, openingHours, posts] = await Promise.all([
     getTranslations("Company"),
-    getListingOpeningHours(company.id),
+    getTranslations("Growth"),
+    getTranslations("Header"),
+    company.premium_features_enabled
+      ? getListingOpeningHours(company.id)
+      : Promise.resolve([]),
+    company.premium_features_enabled
+      ? getPublicListingPosts(company.id)
+      : Promise.resolve([]),
   ]);
 
-  const primaryIndustry =
-    company.industries[0]?.industries_id.name ?? "";
+  const primaryIndustry = company.industries[0]?.industries_id;
 
   const languages = company.spoken_languages.map(
     (item) => item.spoken_languages_id,
@@ -161,7 +212,7 @@ export default async function CompanyPage({
 
   const description = company.description
     ? removeHtml(company.description)
-    : company.short_description;
+    : null;
 
   const fullAddress =
     company.address_visibility === "full"
@@ -186,6 +237,93 @@ export default async function CompanyPage({
 
   const visibleAddress = fullAddress ?? cityAddress;
 
+  const listingUrl = localizedUrl(
+    locale,
+    `/unternehmen/${company.slug}`,
+  );
+  const logoId =
+    typeof company.logo === "string" ? company.logo : company.logo?.id;
+  const logoUrl = logoId ? getDirectusAssetUrl(logoId) : undefined;
+  const sameAs = Array.from(
+    new Set(
+      [
+        company.website_url,
+        ...(company.social_links?.map((socialLink) => socialLink.url) ?? []),
+      ].filter((url): url is string => Boolean(url)),
+    ),
+  );
+  const schemaAddress =
+    company.address_visibility === "hidden"
+      ? undefined
+      : {
+          "@type": "PostalAddress",
+          ...(company.address_visibility === "full" && company.street
+            ? { streetAddress: company.street }
+            : {}),
+          ...(company.postal_code ? { postalCode: company.postal_code } : {}),
+          addressLocality: company.city,
+          addressRegion: company.canton.name,
+          addressCountry: "CH",
+        };
+  const openingHoursSpecification = openingHours.map((interval) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: `https://schema.org/${[
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ][interval.day_of_week - 1]}`,
+    opens: formatTime(interval.opens_at),
+    closes: formatTime(interval.closes_at),
+  }));
+  const businessData = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${listingUrl}#business`,
+    name: company.name,
+    url: listingUrl,
+    ...(description ? { description } : {}),
+    ...(logoUrl ? { logo: logoUrl, image: logoUrl } : {}),
+    ...(primaryIndustry ? { category: primaryIndustry.name } : {}),
+    ...(company.phone ? { telephone: company.phone } : {}),
+    ...(company.public_email ? { email: company.public_email } : {}),
+    ...(schemaAddress ? { address: schemaAddress } : {}),
+    ...(languages.length > 0
+      ? { knowsLanguage: languages.map((language) => language.name) }
+      : {}),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+    ...(openingHoursSpecification.length > 0
+      ? { openingHoursSpecification }
+      : {}),
+  };
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Findelio",
+        item: localizedUrl(locale),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: th("findCompanies"),
+        item: localizedUrl(locale, "/unternehmen"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: company.name,
+        item: listingUrl,
+      },
+    ],
+  };
+
   const hasContactInformation = Boolean(
     visibleAddress ||
       company.phone ||
@@ -206,16 +344,26 @@ export default async function CompanyPage({
 
   return (
     <>
+      <StructuredData data={[businessData, breadcrumbData]} />
       <SiteHeader />
 
       <main className="page-shell bg-[var(--surface)] py-12 lg:py-16">
+        {company.premium_features_enabled && (
+          <ListingMetricsTracker listingIds={[company.id]} event="profile_views" />
+        )}
+        {company.premium_features_enabled && posts.length > 0 && (
+          <ListingMetricsTracker listingIds={[company.id]} event="post_views" />
+        )}
         <div className="site-container">
-          <Link
-            href="/unternehmen"
-            className="font-bold text-[var(--accent)]"
-          >
-            ← {t("back")}
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <Link
+              href="/unternehmen"
+              className="font-bold text-[var(--accent)]"
+            >
+              ← {t("back")}
+            </Link>
+            <ShareButton variant="inline" kind="listing" />
+          </div>
 
           <div className="mt-7 grid gap-7 lg:grid-cols-[1.5fr_0.8fr]">
             <article className="rounded-3xl border border-[var(--border)] bg-white p-7 md:p-10">
@@ -240,9 +388,15 @@ export default async function CompanyPage({
                   </div>
 
                   {primaryIndustry && (
-                    <p className="mt-2 font-bold text-[var(--accent)]">
-                      {primaryIndustry}
-                    </p>
+                    <Link
+                      href={`/unternehmen?branche=${encodeURIComponent(
+                        primaryIndustry.code,
+                      )}`}
+                      locale={locale}
+                      className="mt-2 inline-flex font-bold text-[var(--accent)] hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                    >
+                      {primaryIndustry.name}
+                    </Link>
                   )}
 
                   <p className="mt-2 text-sm font-semibold text-[var(--muted)]">
@@ -287,6 +441,33 @@ export default async function CompanyPage({
                 title={t("gallery")}
                 companyName={company.name}
               />
+
+              {posts.length > 0 && (
+                <section className="mt-9 border-t border-[var(--border)] pt-8">
+                  <h2 className="text-2xl font-extrabold">{tg("publicPosts.title")}</h2>
+                  <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                    {posts.map((post) => (
+                      <article key={post.id} className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+                        {post.image && (
+                          <div className="relative aspect-[16/9]">
+                            <Image src={getDirectusAssetUrl(post.image)} alt="" fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover" />
+                          </div>
+                        )}
+                        <div className="p-5">
+                          <p className="text-xs font-extrabold uppercase tracking-wider text-[var(--accent)]">{tg(`posts.types.${post.type}`)}</p>
+                          <h3 className="mt-2 text-xl font-extrabold">{post.title}</h3>
+                          {post.body && <p className="mt-3 whitespace-pre-line text-[var(--muted)]">{removeHtml(post.body)}</p>}
+                          {post.cta_label && post.cta_url && (
+                            <TrackedContactLink listingId={company.id} metric="post_cta_clicks" href={post.cta_url} target="_blank" rel="noreferrer" className="primary-button mt-5 h-11 px-5">
+                              {post.cta_label}
+                            </TrackedContactLink>
+                          )}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </article>
 
             <div className="space-y-7">
@@ -304,7 +485,15 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 font-semibold">
-                          {visibleAddress}
+                          <a
+                            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(visibleAddress)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`${visibleAddress} – ${t("openInGoogleMaps")}`}
+                            className="text-[var(--accent)] underline decoration-[var(--accent)]/40 underline-offset-4 transition-colors hover:text-[var(--primary)] hover:decoration-[var(--primary)] focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                          >
+                            {visibleAddress} <span aria-hidden="true">↗</span>
+                          </a>
                         </dd>
                       </div>
                     )}
@@ -316,12 +505,14 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="phone_clicks"
                             href={`tel:${company.phone.replace(/\s/g, "")}`}
                             className="font-semibold text-[var(--accent)]"
                           >
                             {company.phone}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -333,12 +524,14 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 break-all">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="email_clicks"
                             href={`mailto:${company.public_email}`}
                             className="font-semibold text-[var(--accent)]"
                           >
                             {company.public_email}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -350,14 +543,16 @@ export default async function CompanyPage({
                         </dt>
 
                         <dd className="mt-1 break-all">
-                          <a
+                          <TrackedContactLink
+                            listingId={company.id}
+                            metric="website_clicks"
                             href={company.website_url}
                             target="_blank"
                             rel="noreferrer"
                             className="font-semibold text-[var(--accent)]"
                           >
                             {getWebsiteLabel(company.website_url)}
-                          </a>
+                          </TrackedContactLink>
                         </dd>
                       </div>
                     )}
@@ -366,12 +561,14 @@ export default async function CompanyPage({
                       company.social_links.length > 0 && (
                         <div>
                           <dt className="text-sm font-bold text-[var(--muted)]">
-                            Social Media
+                            {t("socialMedia")}
                           </dt>
 
                           <dd className="mt-2 flex flex-wrap gap-2">
                             {company.social_links.map((socialLink) => (
-                              <a
+                              <TrackedContactLink
+                                listingId={company.id}
+                                metric="social_clicks"
                                 key={`${socialLink.platform}-${socialLink.url}`}
                                 href={socialLink.url}
                                 target="_blank"
@@ -379,7 +576,7 @@ export default async function CompanyPage({
                                 className="rounded-xl bg-[var(--surface)] px-3 py-2 text-sm font-bold text-[var(--accent)]"
                               >
                                 {socialLink.platform}
-                              </a>
+                              </TrackedContactLink>
                             ))}
                           </dd>
                         </div>
@@ -388,43 +585,58 @@ export default async function CompanyPage({
                 )}
               </aside>
 
-              <aside className="rounded-3xl border border-[var(--border)] bg-white p-7">
-                <h2 className="text-2xl font-extrabold">
-                  {t("openingHours")}
-                </h2>
+              {company.custom_cta_label && company.custom_cta_value && (
+                <TrackedContactLink
+                  listingId={company.id}
+                  metric="custom_cta_clicks"
+                  href={company.custom_cta_value}
+                  target={company.custom_cta_value.startsWith("http") ? "_blank" : undefined}
+                  rel={company.custom_cta_value.startsWith("http") ? "noreferrer" : undefined}
+                  className="primary-button w-full min-h-12 px-6 text-center"
+                >
+                  {company.custom_cta_label}
+                </TrackedContactLink>
+              )}
 
-                <div className="mt-6 space-y-3">
-                  {weekdays.map((weekday) => {
-                    const intervals = openingHours.filter(
-                      (item) => item.day_of_week === weekday.number,
-                    );
+              {company.premium_features_enabled && (
+                <aside className="rounded-3xl border border-[var(--border)] bg-white p-7">
+                  <h2 className="text-2xl font-extrabold">
+                    {t("openingHours")}
+                  </h2>
 
-                    return (
-                      <div
-                        key={weekday.number}
-                        className="flex items-start justify-between gap-5 border-b border-[var(--border)] pb-3 last:border-b-0 last:pb-0"
-                      >
-                        <span className="font-semibold">
-                          {weekday.name}
-                        </span>
+                  <div className="mt-6 space-y-3">
+                    {weekdays.map((weekday) => {
+                      const intervals = openingHours.filter(
+                        (item) => item.day_of_week === weekday.number,
+                      );
 
-                        <span className="text-right text-sm text-[var(--muted)]">
-                          {intervals.length > 0
-                            ? intervals
-                                .map(
-                                  (interval) =>
-                                    `${formatTime(interval.opens_at)}–${formatTime(
-                                      interval.closes_at,
-                                    )}`,
-                                )
-                                .join(", ")
-                            : t("closed")}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </aside>
+                      return (
+                        <div
+                          key={weekday.number}
+                          className="flex items-start justify-between gap-5 border-b border-[var(--border)] pb-3 last:border-b-0 last:pb-0"
+                        >
+                          <span className="font-semibold">
+                            {weekday.name}
+                          </span>
+
+                          <span className="text-right text-sm text-[var(--muted)]">
+                            {intervals.length > 0
+                              ? intervals
+                                  .map(
+                                    (interval) =>
+                                      `${formatTime(interval.opens_at)}–${formatTime(
+                                        interval.closes_at,
+                                      )}`,
+                                  )
+                                  .join(", ")
+                              : t("closed")}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </aside>
+              )}
             </div>
           </div>
         </div>

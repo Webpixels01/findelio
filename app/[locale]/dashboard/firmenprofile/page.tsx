@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { getAccountOrganizationOverview } from "@/lib/directus-account";
+import { getAccountDeletionRequests } from "@/lib/directus-deletion";
+import DeletionRequestAction from "@/components/deletion-request-action";
 
 function translateValue(
   value: string | null | undefined,
@@ -21,8 +23,9 @@ export default async function ListingsPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [t] = await Promise.all([
+  const [t, tg] = await Promise.all([
     getTranslations("Dashboard"),
+    getTranslations("Growth"),
     requireCurrentUser({
       locale,
       nextPath: `/${locale}/dashboard/firmenprofile`,
@@ -30,9 +33,12 @@ export default async function ListingsPage({
   ]);
 
   const accessToken = await getAccessToken();
-  const organizations = accessToken
-    ? await getAccountOrganizationOverview(accessToken)
-    : [];
+  const [organizations, deletionRequests] = accessToken
+    ? await Promise.all([
+        getAccountOrganizationOverview(accessToken),
+        getAccountDeletionRequests(accessToken),
+      ])
+    : [[], []];
   const listings = organizations.flatMap((membership) =>
     membership.listings.map((listing) => ({
       ...listing,
@@ -133,6 +139,33 @@ export default async function ListingsPage({
                     {t("listingsPage.editListing")}
                   </Link>
 
+                  {((listing.subscription && ["active", "past_due"].includes(listing.subscription.status)) || listing.premiumGrant) && (
+                    <>
+                      <Link href={`/dashboard/firmenprofile/${listing.id}/beitraege`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("posts.manage")}</Link>
+                      <Link href={`/dashboard/firmenprofile/${listing.id}/statistik`} locale={locale} className="font-extrabold text-[var(--accent)] hover:underline">{tg("statistics.link")}</Link>
+                    </>
+                  )}
+
+                  {listing.status === "published" ? (
+                    <Link
+                      href={`/dashboard/firmenprofile/${listing.id}/abo`}
+                      locale={locale}
+                      className="font-extrabold text-[var(--accent)] hover:underline"
+                    >
+                      {listing.subscription
+                        ? t("listingsPage.manageSubscription")
+                        : listing.premiumGrant
+                          ? t("listingsPage.premiumGranted")
+                          : t("listingsPage.choosePlan")}
+                    </Link>
+                  ) : (
+                    <p className="text-sm font-semibold text-[var(--muted)]">
+                      {listing.status === "pending"
+                        ? t("listingsPage.billingAfterApproval")
+                        : t("listingsPage.completeBeforeBilling")}
+                    </p>
+                  )}
+
                   {listing.status === "published" ? (
                     <Link
                       href={`/unternehmen/${listing.slug}`}
@@ -147,6 +180,26 @@ export default async function ListingsPage({
                     </p>
                   )}
                 </div>
+
+                <DeletionRequestAction
+                  entityType="listing"
+                  targetId={listing.id}
+                  targetName={listing.name}
+                  request={
+                    deletionRequests.find(
+                      (request) => request.listing_id === listing.id,
+                    ) ?? null
+                  }
+                  canRequest={true}
+                  premiumMustBeCancelled={Boolean(
+                    listing.subscription &&
+                      ["active", "past_due"].includes(
+                        listing.subscription.status,
+                      ) &&
+                      !listing.subscription.cancel_at_period_end,
+                  )}
+                  subscriptionHref={`/dashboard/firmenprofile/${listing.id}/abo`}
+                />
               </article>
             );
           })}

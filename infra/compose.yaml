@@ -42,6 +42,7 @@ services:
     volumes:
       - ./directus/uploads:/directus/uploads
       - ./directus/extensions:/directus/extensions
+      - ./directus/templates:/directus/templates
     depends_on:
       database:
         condition: service_healthy
@@ -66,6 +67,19 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       PUBLIC_URL: http://localhost:8055
+      EMAIL_FROM: info@findelio.ch
+      EMAIL_TEMPLATES_PATH: /directus/templates
+      EMAIL_TRANSPORT: smtp
+      EMAIL_SMTP_HOST: mail.infomaniak.com
+      EMAIL_SMTP_PORT: "587"
+      EMAIL_SMTP_SECURE: "false"
+      EMAIL_SMTP_USER: ${DIRECTUS_EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD}
+      ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL}
+      FINDELIO_SITE_URL: http://localhost:3000
+      # Default off until migration is applied and the feature is intentionally enabled.
+      FINDELIO_REFERRAL_REGISTRATION_ENABLED: ${FINDELIO_REFERRAL_REGISTRATION_ENABLED:-false}
+      USER_REGISTER_URL_ALLOW_LIST: http://localhost:3000/de-ch/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: http://localhost:3000
 
@@ -73,7 +87,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "wget --spider -q http://localhost:8055/server/ping || exit 1",
+          "wget --spider -q http://127.0.0.1:8055/server/ping || exit 1",
         ]
       interval: 10s
       timeout: 5s

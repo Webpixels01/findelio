@@ -8,10 +8,18 @@
     "navigation": "Navigare principală",
     "findCompanies": "Găsește companii",
     "registerCompany": "Adaugă compania",
+    "blog": "Blog",
     "login": "Autentificare",
     "selectLanguage": "Selectează limba",
     "menu": "Deschide meniul",
     "dashboard": "Panou de control"
+  },
+  "Share": {
+    "page": "Distribuie pagina",
+    "listing": "Distribuie profilul",
+    "copied": "Link copiat",
+    "shared": "Distribuit",
+    "error": "Distribuirea nu este posibilă"
   },
   "Home": {
     "eyebrow": "Companii multilingve în Elveția",
@@ -51,17 +59,26 @@
   },
   "Company": {
     "back": "Înapoi la căutare",
+    "metaDescription": "Profilul firmei {company} din {city} pe Findelio: contact, domenii și limbi vorbite.",
     "about": "Despre companie",
     "contact": "Contact",
     "website": "Website",
     "email": "E-mail",
     "phone": "Telefon",
     "address": "Adresă",
+    "openInGoogleMaps": "Deschide adresa în Google Maps",
     "languages": "Limbi vorbite",
     "industry": "Domeniu",
     "verified": "Companie verificată",
     "openingHours": "Program de funcționare",
     "gallery": "Galerie",
+    "galleryImage": "{company} – imaginea {current} din {total}",
+    "galleryOpen": "Mărește imaginea {current}",
+    "galleryDialog": "Galerie de imagini",
+    "galleryClose": "Închide galeria",
+    "galleryPrevious": "Imaginea anterioară",
+    "galleryNext": "Imaginea următoare",
+    "socialMedia": "Rețele sociale",
     "closed": "Închis",
     "weekdays": {
       "1": "Luni",
@@ -74,24 +91,35 @@
     }
   },
   "Register": {
-    "eyebrow": "Adaugă compania",
-    "title": "Fă-ți compania vizibilă.",
-    "description": "Introdu datele principale. Profilul va fi verificat înainte de publicare.",
-    "companyName": "Numele companiei",
+    "eyebrow": "Creează un cont de companie",
+    "title": "Creează-ți contul Findelio.",
+    "description": "Înregistrează-te mai întâi ca utilizator. După confirmarea adresei de e-mail, te poți autentifica și adăuga compania.",
+    "firstName": "Prenume",
+    "lastName": "Nume",
     "email": "E-mail",
-    "phone": "Telefon",
-    "website": "Website",
-    "industry": "Domeniu",
-    "canton": "Canton",
-    "city": "Localitate",
-    "languages": "Limbi vorbite",
-    "descriptionLabel": "Descrierea companiei",
-    "choose": "Selectează",
-    "note": "Această versiune nu salvează încă datele permanent. Formularul prezintă deja fluxul planificat.",
-    "submit": "Trimite profilul",
-    "successTitle": "Îți mulțumim pentru înregistrare.",
-    "successText": "Datele au fost validate cu succes în această demonstrație. Baza de date va fi conectată în etapa următoare.",
-    "newEntry": "Adaugă altă companie"
+    "password": "Parolă",
+    "passwordConfirmation": "Repetă parola",
+    "passwordHint": "Cel puțin 8 caractere, inclusiv minimum o literă, o cifră și un caracter special.",
+    "submit": "Creează contul",
+    "invitationSubmit": "Creează contul pentru invitație",
+    "loading": "Se creează contul …",
+    "successTitle": "Verifică-ți căsuța de e-mail.",
+    "successText": "Dacă adresa a putut fi înregistrată, ți-am trimis un link de confirmare. Apasă pe el pentru a activa contul.",
+    "invitationSuccessTitle": "Confirmă acum adresa de e-mail.",
+    "invitationSuccessText": "Apasă linkul de confirmare din e-mailul nostru. Invitația va fi apoi acceptată automat și vei ajunge direct la profilurile companiilor organizației.",
+    "successHint": "Verifică și folderul de spam.",
+    "loginPrompt": "Ai deja un cont?",
+    "loginLink": "Autentifică-te",
+    "passwordError": "Parola nu îndeplinește cerințele.",
+    "passwordMismatch": "Parolele nu coincid.",
+    "emailError": "Introdu o adresă de e-mail validă.",
+    "invitationError": "Această invitație nu mai este valabilă. Cere organizației să îți trimită o invitație nouă.",
+    "referralCode": "Cod de recomandare (opțional)",
+    "referralCodeHint": "Dacă ați folosit un link de recomandare, codul este deja completat. Îl puteți introduce și manual.",
+    "referralError": "Acest cod de recomandare este invalid sau nu mai este activ.",
+    "errorFallback": "Înregistrarea nu a putut fi procesată.",
+    "serverError": "Înregistrarea nu este disponibilă momentan.",
+    "connectionError": "Conexiunea la server a eșuat."
   },
   "Login": {
     "eyebrow": "Zona pentru companii",
@@ -105,6 +133,24 @@
     "errorFallback": "Adresa de e-mail sau parola este incorectă.",
     "serverError": "Autentificarea nu poate fi procesată momentan.",
     "connectionError": "Conexiunea la server a eșuat."
+  },
+  "AccountSetup": {
+    "eyebrow": "Configurarea contului de companie",
+    "title": "Creează organizația ta.",
+    "description": "Înainte de a folosi panoul, avem nevoie de numele companiei tale.",
+    "sectionTitle": "Organizația ta",
+    "sectionDescription": "Organizația va conecta contul tău cu listările de firmă și membrii echipei.",
+    "companyName": "Numele companiei",
+    "companyNameHint": "Folosește numele oficial al companiei. Poți adăuga alte detalii mai târziu.",
+    "submit": "Creează organizația",
+    "submitting": "Se creează organizația …",
+    "errors": {
+      "invalid_data": "Introdu un nume valid al companiei.",
+      "unauthorized": "Sesiunea ta a expirat. Autentifică-te din nou.",
+      "forbidden": "Acest cont nu poate crea o organizație.",
+      "create_failed": "Organizația nu a putut fi creată.",
+      "network": "Conexiunea la server a eșuat."
+    }
   },
   "Dashboard": {
     "eyebrow": "Zona pentru companii",
@@ -121,16 +167,16 @@
     "logoutLoading": "Se deconectează …",
     "organizationsEyebrow": "Administrarea firmelor",
     "organizationsTitle": "Organizațiile tale",
-    "organizationsDescription": "Aici vezi toate organizațiile în care ai un statut de membru activ și profilurile de firmă asociate.",
+    "organizationsDescription": "Aici vezi toate organizațiile în care ai un statut de membru activ și listările de firmă asociate.",
     "noOrganizationsTitle": "Nu a fost găsită nicio organizație activă",
     "noOrganizationsDescription": "Contul tău nu este asociat momentan niciunei organizații active. Verifică apartenența în Directus sau contactează un administrator.",
     "organizationLabel": "Organizație",
     "membershipRole": "Rol în organizație",
     "organizationStatus": "Starea organizației",
-    "listings": "Profiluri de firmă",
+    "listings": "Listări de firmă",
     "listingsCount": "Înregistrări: {count}",
-    "listingsTitle": "Profiluri de firmă asociate",
-    "noListings": "Pentru această organizație nu a fost creat încă niciun profil de firmă.",
+    "listingsTitle": "Listări de firmă asociate",
+    "noListings": "Pentru această organizație nu a fost creată încă nicio listare de firmă.",
     "locationUnknown": "Locația nu este specificată",
     "viewListing": "Vezi profilul public",
     "roleValues": {
@@ -152,24 +198,31 @@
       "label": "Navigarea panoului",
       "overview": "Prezentare generală",
       "organizations": "Organizații",
-      "listings": "Profiluri de firmă",
+      "listings": "Listări de firmă",
       "team": "Echipă",
-      "review": "Verificare"
+      "review": "Verificare",
+      "premium": "Premium",
+      "referrals": "Recomandări"
     },
     "summary": {
       "organizations": "Organizații",
-      "listings": "Profiluri de firmă",
+      "listings": "Listări de firmă",
       "published": "Publicate"
     },
     "listingsPage": {
-      "eyebrow": "Profiluri de firmă",
-      "title": "Profilurile tale de firmă",
-      "description": "Aici găsești toate profilurile organizațiilor active și starea lor curentă de publicare.",
-      "emptyTitle": "Nu există încă profiluri de firmă",
-      "emptyDescription": "Nu a fost creat încă niciun profil de firmă pentru organizațiile tale active.",
-      "notPublic": "Acest profil nu este încă vizibil public.",
+      "eyebrow": "Listări de firmă",
+      "title": "Listările tale de firmă",
+      "description": "Aici găsești toate listările organizațiilor active și starea lor curentă de publicare.",
+      "emptyTitle": "Nu există încă listări de firmă",
+      "emptyDescription": "Nu a fost creată încă nicio listare de firmă pentru organizațiile tale active.",
+      "notPublic": "Această listare nu este încă vizibilă public.",
       "editListing": "Editează",
-      "createListing": "Profil nou de companie"
+      "createListing": "Listare nouă de firmă",
+      "manageSubscription": "Gestionează abonamentul",
+      "premiumGranted": "Acces Premium",
+      "choosePlan": "Alege pachetul",
+      "completeBeforeBilling": "Mai întâi completează și trimite pentru verificare.",
+      "billingAfterApproval": "Abonament după aprobare."
     },
     "teamPage": {
       "eyebrow": "Administrarea echipei",
@@ -181,7 +234,90 @@
     },
     "overviewOrganizationsTitle": "Prezentarea organizațiilor",
     "overviewOrganizationsLink": "Vezi toate organizațiile",
-    "organizationListingsLink": "Vezi profilurile de firmă"
+    "organizationListingsLink": "Vezi listările de firmă"
+  },
+  "Team": {
+    "organization": "Organizație",
+    "empty": "În prezent nu aparții niciunei organizații active.",
+    "membersTitle": "Membrii echipei",
+    "membersCount": "{count, plural, one {# membru activ} few {# membri activi} other {# de membri activi}}",
+    "roleFor": "Rol pentru {name}",
+    "remove": "Elimină",
+    "inviteTitle": "Invită o persoană",
+    "inviteDescription": "Invitația este valabilă șapte zile și poate fi acceptată doar cu adresa de e-mail indicată.",
+    "viewOnly": "Rolul tău îți permite să vezi echipa, dar nu să o modifici.",
+    "email": "Adresă de e-mail",
+    "role": "Rol",
+    "invite": "Trimite invitația",
+    "inviting": "Se trimite …",
+    "pendingTitle": "Invitații în așteptare",
+    "pendingEmpty": "Nu există invitații în așteptare.",
+    "expires": "valabilă până la {date}",
+    "cancelInvitation": "Retrage invitația",
+    "confirmMemberTitle": "Elimini membrul echipei?",
+    "confirmMemberDescription": "{name} va pierde accesul la această organizație și la profilurile sale de firmă.",
+    "confirmInvitationTitle": "Retragi invitația?",
+    "confirmInvitationDescription": "Linkul de invitație pentru {name} va deveni imediat nevalid.",
+    "keep": "Anulează",
+    "confirm": "Confirmă",
+    "working": "Se procesează …",
+    "roles": {
+      "owner": "Proprietar",
+      "admin": "Administrator",
+      "editor": "Editor"
+    },
+    "messages": {
+      "invited": "Invitația a fost trimisă prin e-mail.",
+      "roleUpdated": "Rolul a fost actualizat.",
+      "memberRemoved": "Membrul echipei a fost eliminat.",
+      "invitationCancelled": "Invitația a fost retrasă."
+    },
+    "errors": {
+      "invalid_data": "Verifică datele introduse.",
+      "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
+      "forbidden": "Nu ai permisiunea pentru această acțiune.",
+      "member_exists": "Această persoană este deja membră a organizației.",
+      "invitation_exists": "Există deja o invitație în așteptare pentru această adresă.",
+      "rate_limited": "Au fost trimise prea multe invitații. Încearcă din nou mai târziu.",
+      "too_many_invitations": "Această organizație are deja prea multe invitații în așteptare.",
+      "send_failed": "Invitația nu a putut fi trimisă.",
+      "update_failed": "Modificarea nu a putut fi salvată.",
+      "not_found": "Acest element nu mai este disponibil.",
+      "network": "Conexiunea a eșuat. Încearcă din nou.",
+      "unknown": "Ceva nu a funcționat. Încearcă din nou."
+    }
+  },
+  "TeamInvitation": {
+    "eyebrow": "Invitație în echipă",
+    "title": "Invitație de la {organization}",
+    "description": "Prin acceptare primești acces la organizație și îi poți administra conținutul Findelio conform rolului tău.",
+    "registrationDescription": "Creează-ți contul personal pentru {organization}. După confirmarea e-mailului, invitația va fi acceptată automat și vei ajunge direct la profilurile companiilor.",
+    "email": "Adresa de e-mail invitată",
+    "role": "Rol",
+    "validUntil": "Valabilă până la",
+    "roles": {
+      "admin": "Administrator",
+      "editor": "Editor"
+    },
+    "signInTitle": "Autentifică-te sau creează un cont",
+    "signInDescription": "Autentifică-te dacă ai deja un cont cu adresa {email}. În caz contrar, creează acum un cont; după confirmarea e-mailului, invitația va fi acceptată automat.",
+    "signIn": "Autentificare",
+    "register": "Creează cont",
+    "wrongAccountTitle": "Este autentificat contul greșit",
+    "wrongAccountDescription": "Ești autentificat ca {current}. Invitația este pentru {invited}. Deconectează-te și autentifică-te cu adresa invitată.",
+    "accept": "Acceptă invitația",
+    "accepting": "Se acceptă …",
+    "acceptError": "Invitația nu a putut fi acceptată. Încearcă din nou.",
+    "emailMismatch": "Această invitație aparține altei adrese de e-mail.",
+    "acceptedEyebrow": "Invitație acceptată",
+    "acceptedTitle": "Bun venit în echipa {organization}",
+    "acceptedDescription": "Acum poți administra organizația și profilurile sale de firmă în panoul de control.",
+    "openTeam": "Deschide administrarea echipei",
+    "invalidTitle": "Invitația nu a fost găsită",
+    "invalidDescription": "Acest link de invitație este nevalid sau a fost retras.",
+    "expiredTitle": "Invitație expirată",
+    "expiredDescription": "Această invitație nu mai este valabilă. Cere organizației una nouă.",
+    "home": "La pagina principală"
   },
   "Footer": {
     "tagline": "Findelio conectează oamenii cu firme care vorbesc limba lor.",
@@ -189,21 +325,419 @@
     "findCompanies": "Găsește companii",
     "registerCompany": "Adaugă compania",
     "legal": "Informații juridice",
+    "contact": "Contact",
     "imprint": "Date legale",
     "privacy": "Confidențialitate",
+    "cookies": "Informații despre cookie-uri",
+    "howItWorks": "Cum funcționează Findelio pentru firme",
+    "blog": "Ghiduri și blog",
+    "terms": "Termeni",
     "copyright": "Toate drepturile rezervate."
   },
+  "Blog": {
+    "metaTitle": "Ghiduri pentru companii elvețiene | Findelio",
+    "metaDescription": "Articole practice despre vizibilitate locală, comunicare multilingvă și profiluri de companie credibile în Elveția.",
+    "eyebrow": "Ghiduri Findelio",
+    "title": "Informații utile pentru companii în dezvoltare.",
+    "intro": "Articole clare și practice despre comunicare multilingvă, vizibilitate locală și o prezență online convingătoare.",
+    "readingTime": "{minutes, plural, one {# minut de lectură} few {# minute de lectură} other {# de minute de lectură}}",
+    "readArticle": "Citește articolul",
+    "moreArticles": "Mai multe articole",
+    "categoryFilterLabel": "Filtrează articolele după subiect",
+    "allCategories": "Toate articolele",
+    "emptyTitle": "Pregătim primele articole.",
+    "emptyText": "În curând vei găsi aici idei practice despre vizibilitate, servicii multilingve și profiluri de companie convingătoare.",
+    "ctaTitle": "Cauți o companie care vorbește limba ta?",
+    "ctaText": "Găsește companii potrivite după limbă, domeniu, canton și localitate.",
+    "ctaButton": "Găsește companii",
+    "breadcrumbs": "Navigare ierarhică",
+    "breadcrumbHome": "Acasă",
+    "breadcrumbBlog": "Blog",
+    "byAuthor": "De {author}",
+    "backToBlog": "Înapoi la blog",
+    "relatedArticles": "Te-ar mai putea interesa"
+  },
+  "CookieNotice": {
+    "eyebrow": "Confidențialitate",
+    "title": "Cookie-uri și măsurare",
+    "description": "Findelio folosește cookie-uri necesare pentru autentificare, sesiuni și selectarea limbii. Analiza opțională se încarcă doar după alegerea ta.",
+    "acknowledge": "Am înțeles",
+    "necessaryOnly": "Doar necesare",
+    "allowAnalytics": "Permite analiza",
+    "details": "Informații despre cookie-uri"
+  },
+  "CookiePolicy": {
+    "metaTitle": "Informații despre cookie-uri | Findelio",
+    "metaDescription": "Ce cookie-uri necesare din punct de vedere tehnic și ce stocare locală a browserului folosește Findelio și cât timp sunt păstrate.",
+    "eyebrow": "Confidențialitate",
+    "title": "Informații despre cookie-uri",
+    "lastUpdated": "Actualizat: 5 august 2026",
+    "intro": "Aici afli ce cookie-uri și tehnologii similare de stocare folosește Findelio. Măsurarea opțională Google Analytics se activează doar după alegerea ta expresă.",
+    "necessaryTitle": "Cookie-uri necesare",
+    "necessaryText": "Findelio folosește cookie-uri necesare tehnic pentru autentificare, sesiuni sigure și selectarea limbii. Sunt setate automat când sunt necesare.",
+    "analyticsTitle": "Analiză opțională",
+    "analyticsText": "Dacă permiți analiza, încărcăm Google Analytics (ID de măsurare G-S9DSK103GX). Datele de utilizare și dispozitiv pot fi trimise către Google și pot fi setate cookie-uri precum _ga. Poți reseta alegerea ștergând datele locale ale site-ului din browser.",
+    "inventoryTitle": "Cookie-uri utilizate",
+    "inventoryText": "Cookie-urile necesare provin direct de la Findelio. Cookie-urile opționale de analiză Google sunt setate doar după consimțământ.",
+    "purposeLabel": "Scop",
+    "durationLabel": "Durata stocării",
+    "cookies": {
+      "access": {
+        "purpose": "Menține autentificarea sigură în timpul sesiunii active.",
+        "duration": "Pe termen scurt; expiră automat odată cu tokenul de acces."
+      },
+      "refresh": {
+        "purpose": "Reînnoiește în siguranță autentificarea fără a cere parola pe fiecare pagină.",
+        "duration": "Până la 7 zile sau până la deconectare."
+      },
+      "locale": {
+        "purpose": "Reține limba selectată pe durata sesiunii browserului.",
+        "duration": "Până la încheierea sesiunii browserului."
+      }
+    },
+    "storageTitle": "Stocarea locală a browserului",
+    "storageText": "Confirmarea notificării despre cookie-uri nu este păstrată într-un cookie suplimentar. Findelio utilizează în schimb stocarea locală a browserului.",
+    "storagePurpose": "Păstrează doar momentul în care ai confirmat notificarea, pentru ca aceasta să nu reapară la fiecare pagină.",
+    "storageDuration": "Până la 12 luni sau până când ștergi datele browserului.",
+    "controlTitle": "Gestionarea cookie-urilor și a stocării",
+    "controlText": "Poți vedea și șterge oricând cookie-urile și datele locale ale site-urilor din setările browserului. Dacă blochezi sau ștergi cookie-urile necesare, autentificarea, selectarea limbii ori alte zone protejate pot să nu mai funcționeze corect.",
+    "privacyTitle": "Mai multe informații despre confidențialitate",
+    "privacyText": "Politica de confidențialitate explică modul în care Findelio prelucrează datele personale și drepturile tale.",
+    "privacyLink": "Deschide politica de confidențialitate"
+  },
+  "CompanyGuide": {
+    "metaTitle": "Cum funcționează Findelio pentru firme | Findelio",
+    "metaDescription": "De la contul companiei la profilul publicat: află cum folosesc firmele Findelio și ce oferă Premium.",
+    "eyebrow": "Pentru firme",
+    "title": "Profilul tău Findelio în câțiva pași.",
+    "intro": "Findelio conectează firma ta cu persoane care caută servicii în limba lor. Păstrezi controlul datelor și alegi Free sau Premium pentru fiecare profil.",
+    "stepsTitle": "Cum funcționează publicarea",
+    "steps": {
+      "register": {
+        "title": "Creează un cont",
+        "text": "Înregistrează-te cu e-mailul și confirmă adresa prin linkul primit."
+      },
+      "organization": {
+        "title": "Creează organizația",
+        "text": "Adaugă organizația căreia îi aparțin profilurile și, ulterior, membrii echipei."
+      },
+      "listing": {
+        "title": "Creează profilul",
+        "text": "Adaugă firma, selectează domeniile și limbile și alege Free sau Premium."
+      },
+      "complete": {
+        "title": "Completează profilul",
+        "text": "Adaugă descrierea, contactul și adresa. Premium include și logo, galerie, program, rețele sociale și traduceri."
+      },
+      "review": {
+        "title": "Trimite la verificare",
+        "text": "Findelio verifică datele noi și modificate pentru ca directorul să rămână credibil și actual."
+      },
+      "publish": {
+        "title": "Publică și dezvoltă-te",
+        "text": "După aprobare, profilul devine vizibil. Abia apoi activezi Premium, postările și statisticile."
+      }
+    },
+    "packagesEyebrow": "Pachet pentru fiecare profil",
+    "packagesTitle": "Începe cu Free sau arată mai mult cu Premium",
+    "free": {
+      "title": "Free",
+      "price": "CHF 0",
+      "description": "O bază solidă pentru un profil găsit în căutare și verificat.",
+      "features": {
+        "profile": "Numele firmei și descriere completă",
+        "classification": "Domenii și limbi vorbite",
+        "contact": "Contact, site și locație"
+      }
+    },
+    "premium": {
+      "title": "Premium",
+      "price": "CHF 9.90 lunar sau CHF 99 anual",
+      "description": "Pentru firme care doresc prezentare vizuală, conținut actual și informații despre audiență.",
+      "features": {
+        "media": "Logo și galerie de imagini",
+        "details": "Program, rețele sociale și buton personalizat",
+        "translations": "Descrieri proprii în toate limbile Findelio",
+        "posts": "Noutăți, promoții și evenimente",
+        "ranking": "Poziționare prioritară pentru profiluri Premium relevante",
+        "statistics": "Statistici și raport lunar"
+      }
+    },
+    "reviewTitle": "De ce sunt verificate profilurile?",
+    "reviewText": "Verificarea protejează vizitatorii și firmele serioase. Findelio verifică plauzibilitatea datelor și trimite un mesaj dacă are întrebări sau respinge conținutul.",
+    "verificationEyebrow": "Verificare suplimentară voluntară",
+    "verificationTitle": "Obține statutul Verificat cu un document oficial",
+    "verificationText": "Poți trimite voluntar către Findelio un document oficial și actual al firmei. După verificarea reușită, marcăm profilul drept „Verificat”.",
+    "verificationProofs": "Poate fi, de exemplu, un extras actual din registrul comerțului sau registrul UID. Pentru întreprinderile individuale care nu sunt înscrise în registrul comerțului, se poate folosi și confirmarea instituției competente de asigurări sociale privind recunoașterea activității independente.",
+    "verificationNote": "Insigna Verificat confirmă doar că Findelio a verificat existența sau legătura firmei pe baza documentului. Nu garantează calitatea, solvabilitatea, autorizațiile sau serviciile.",
+    "verificationCta": "Trimite documentul prin e-mail",
+    "ctaTitle": "Ești gata să adaugi firma?",
+    "ctaText": "Creează un cont gratuit, completează profilul și fii găsit de clienții potriviți.",
+    "ctaButton": "Adaugă compania"
+  },
+  "Terms": {
+    "metaTitle": "Termeni și condiții | Findelio",
+    "metaDescription": "Termeni pentru conturi de firmă, profiluri și abonamente Premium pe Findelio.",
+    "eyebrow": "Informații juridice",
+    "title": "Termeni și condiții",
+    "lastUpdated": "Actualizat la 3 august 2026",
+    "intro": "Acești Termeni reglementează utilizarea Findelio de către firme, organizații și utilizatorii lor autorizați.",
+    "sections": {
+      "scope": {
+        "title": "Furnizor și domeniu",
+        "body": "Findelio este furnizat de Webpixels, Jan Cabanik, Kirchgasse 13, 8532 Warth, Elveția. Termenii se aplică conturilor, organizațiilor, profilurilor și funcțiilor gratuite și plătite."
+      },
+      "services": {
+        "title": "Serviciile Findelio",
+        "body": "Findelio operează un director multilingv și instrumente pentru crearea, verificarea și administrarea profilurilor. Nu este parte în contractele dintre vizitatori și firme."
+      },
+      "accounts": {
+        "title": "Cont și autorizare",
+        "body": "Datele trebuie să fie corecte și actuale, iar credențialele confidențiale. Persoana care acționează pentru o organizație confirmă autorizarea și răspunde pentru activitatea contului."
+      },
+      "content": {
+        "title": "Conținut și licență",
+        "body": "Firma răspunde pentru texte, imagini, logo-uri și linkuri și confirmă legalitatea lor. Findelio primește drepturile neexclusive necesare pentru stocarea și afișarea conținutului pe durata publicării."
+      },
+      "review": {
+        "title": "Verificare și blocare",
+        "body": "Conținutul ilegal, înșelător, incomplet sau abuziv poate fi respins, suspendat sau șters. Când este adecvat, Findelio explică motivul și permite corectarea."
+      },
+      "packages": {
+        "title": "Free și Premium",
+        "body": "Free include funcțiile de bază afișate. Premium se aplică unui profil și include opțiunile descrise pe paginile de ofertă și facturare."
+      },
+      "contract": {
+        "title": "Contract, prețuri și plată",
+        "body": "Prețurile sunt afișate în franci elvețieni. Contractul Premium începe la confirmarea plății. Abonamentele lunare și anuale se reînnoiesc dacă nu sunt anulate înainte de sfârșitul perioadei."
+      },
+      "cancellation": {
+        "title": "Anulare și plată eșuată",
+        "body": "Premium poate fi anulat pentru sfârșitul perioadei și rămâne activ până atunci. După o plată eșuată, accesul poate fi blocat la finalul perioadei. În general nu există rambursare proporțională; drepturile obligatorii rămân."
+      },
+      "availability": {
+        "title": "Disponibilitate",
+        "body": "Nu este garantată funcționarea continuă fără erori. Mentenanța, securitatea, terții sau forța majoră pot cauza întreruperi."
+      },
+      "liability": {
+        "title": "Răspundere",
+        "body": "Findelio răspunde în limitele obligatorii ale legii. În măsura permisă, se exclude răspunderea pentru neglijență ușoară, prejudicii indirecte, profit pierdut și pierdere de date."
+      },
+      "termination": {
+        "title": "Încetare și ștergerea contului",
+        "body": "Ștergerea contului nu înlocuiește anularea unui Premium activ. Încălcările grave sau repetate pot duce la blocarea sau încetarea accesului."
+      },
+      "privacy": {
+        "title": "Confidențialitate",
+        "body": "Datele personale sunt prelucrate conform politicii de confidențialitate Findelio în vigoare."
+      },
+      "changes": {
+        "title": "Modificarea Termenilor",
+        "body": "Findelio poate modifica Termenii pentru viitor din motive juridice, tehnice sau comerciale. Modificările importante vor fi comunicate."
+      },
+      "law": {
+        "title": "Lege și jurisdicție",
+        "body": "Se aplică legea elvețiană. Când este permis, sunt competente instanțele de la sediul Webpixels. Normele obligatorii rămân; în caz de diferențe prevalează versiunea germană."
+      }
+    },
+    "verification": {
+      "title": "Profiluri de firmă verificate",
+      "body": "Firmele pot trimite voluntar un extras actual din registrul comerțului, registrul UID sau un document oficial comparabil. Pentru întreprinderile individuale care nu sunt înscrise în registrul comerțului, Findelio poate accepta în special confirmarea instituției competente de asigurări sociale privind recunoașterea activității independente. După verificarea reușită, Findelio poate marca profilul drept „Verificat”. Insigna confirmă doar existența sau legătura firmei verificată prin document; nu garantează calitatea, solvabilitatea, autorizațiile sau serviciile. Findelio poate solicita informații suplimentare sau retrage statutul dacă datele sunt învechite, contradictorii sau false. Documentele sunt folosite exclusiv pentru verificare, accesibile doar persoanelor autorizate și șterse când nu mai sunt necesare acestui scop, dacă nu există o obligație de păstrare."
+    },
+    "contact": "Pentru întrebări despre acești Termeni, contactează echipa Findelio la"
+  },
+  "Contact": {
+    "metaTitle": "Contact | Findelio",
+    "metaDescription": "Contactează echipa Findelio pentru întrebări despre listări, conturi sau parteneriate.",
+    "eyebrow": "Contact",
+    "title": "Cum te putem ajuta?",
+    "description": "Trimite-ne solicitarea prin formular. Îți vom răspunde cât mai curând posibil.",
+    "directTitle": "Contact direct",
+    "directText": "Poți contacta echipa Findelio și direct prin e-mail sau telefon.",
+    "onlineTitle": "Lucrăm online",
+    "onlineText": "Findelio funcționează digital. Vizitele personale la adresa firmei nu sunt prevăzute.",
+    "fields": {
+      "name": "Nume",
+      "email": "E-mail",
+      "phone": "Telefon (opțional)",
+      "phoneLabel": "Telefon",
+      "subject": "Subiect",
+      "message": "Mesaj"
+    },
+    "subjects": {
+      "general": "Întrebare generală",
+      "listing": "Întrebare despre o listare",
+      "account": "Cont și autentificare",
+      "partnership": "Parteneriat",
+      "other": "Altă solicitare"
+    },
+    "messageHint": "Descrie solicitarea în cel puțin 20 de caractere.",
+    "privacyConsent": "Am citit <privacyLink>politica de confidențialitate</privacyLink> și sunt de acord cu prelucrarea datelor mele pentru a primi un răspuns.",
+    "send": "Trimite mesajul",
+    "sending": "Se trimite …",
+    "success": "Îți mulțumim. Mesajul a fost trimis cu succes.",
+    "error": "Mesajul nu a putut fi trimis. Încearcă din nou sau scrie la info@findelio.ch."
+  },
   "Legal": {
+    "legalEyebrow": "Informații juridice",
+    "imprintMetaTitle": "Date legale | Findelio",
+    "imprintMetaDescription": "Datele operatorului și informațiile de contact Findelio.",
     "imprintTitle": "Date legale",
-    "imprintText": "Înainte de publicare, adaugă datele complete ale operatorului cerute de legislația elvețiană.",
+    "imprintIntro": "Findelio este un serviciu oferit de Webpixels. Aici găsești datele operatorului și informațiile de contact relevante din punct de vedere juridic.",
+    "operatorTitle": "Operatorul site-ului",
+    "owner": "Proprietar",
+    "switzerland": "Elveția",
+    "email": "E-mail",
+    "phone": "Telefon",
+    "website": "Site web",
+    "contentResponsibilityTitle": "Responsabilitatea pentru conținut",
+    "contentResponsibilityText": "Jan Cabanik este responsabil pentru conținutul editorial Findelio și poate fi contactat folosind datele de mai sus.",
+    "liabilityTitle": "Răspundere",
+    "liabilityText": "Conținutul este pregătit cu atenție. Webpixels nu garantează însă exactitatea, caracterul complet, actualitatea sau disponibilitatea permanentă. Răspunderea legală obligatorie rămâne neafectată.",
+    "externalLinksTitle": "Linkuri externe și listări",
+    "externalLinksText": "Operatorii respectivi răspund pentru site-urile externe și datele furnizate de firme. Conținutul ilegal va fi eliminat după notificare și verificare.",
+    "copyrightTitle": "Drepturi de autor",
+    "copyrightText": "Conținutul și designul Findelio sunt protejate prin drepturi de autor. Utilizarea dincolo de excepțiile legale necesită acordul prealabil al titularului drepturilor.",
+    "privacyMetaTitle": "Politica de confidențialitate | Findelio",
+    "privacyMetaDescription": "Informații despre prelucrarea datelor personale de către Findelio.",
     "privacyTitle": "Politica de confidențialitate",
-    "privacyText": "Înainte de publicare, adaugă o politică completă privind găzduirea, formularele, analiza și serviciile terților."
+    "lastUpdated": "Actualizat: 29 iulie 2026",
+    "privacyIntro": "Această politică explică ce date personale prelucrează Findelio, în ce scop și ce drepturi ai. Se aplică legislația elvețiană privind protecția datelor și, unde este cazul, și GDPR.",
+    "controllerTitle": "1. Operatorul de date",
+    "controllerText": "Responsabil pentru prelucrarea datelor în legătură cu Findelio este:",
+    "processedDataTitle": "2. Date prelucrate",
+    "processedDataIntro": "În funcție de modul de utilizare, prelucrăm următoarele categorii de date:",
+    "technicalData": "Date tehnice precum adresa IP, ora, pagina accesată, informații despre browser și dispozitiv și jurnale de server, pentru funcționare sigură și stabilă.",
+    "accountData": "La înregistrare și autentificare: nume, e-mail, starea contului și date de autentificare stocate în siguranță. Parolele nu sunt stocate în text clar.",
+    "listingData": "Pentru organizații și listări: date despre firmă, contact și adresă, descrieri, domenii, limbi și fișiere media și date de profil încărcate voluntar.",
+    "contactData": "În formularul de contact: nume, e-mail, telefon opțional, subiect și mesaj. Adresa IP este utilizată pentru scurt timp la limitarea cererilor și prevenirea abuzurilor.",
+    "purposesTitle": "3. Scopurile prelucrării",
+    "purposesText": "Prelucrăm datele pentru a oferi directorul, a gestiona conturi și listări, a derula verificări și notificări, a răspunde solicitărilor, a preveni abuzurile și a asigura securitatea, stabilitatea și dezvoltarea serviciului.",
+    "legalBasisTitle": "4. Temeiurile prelucrării",
+    "legalBasisText": "Prelucrarea are loc pentru pregătirea și executarea contractelor, în baza interesului privat predominant pentru un serviciu sigur, pentru îndeplinirea obligațiilor legale sau cu consimțământul tău, când acesta este necesar.",
+    "cookiesTitle": "5. Cookie-uri și măsurarea audienței",
+    "cookiesText": "Findelio folosește cookie-uri strict necesare pentru autentificare și sesiune. Măsurarea opțională Google Analytics este încărcată doar după consimțământ expres și poate seta cookie-uri de analiză. Nu integrăm nicio hartă.",
+    "recipientsTitle": "6. Furnizori și destinatari",
+    "recipientsText": "Furnizorii de infrastructură și găzduire pot prelucra date ca persoane împuternicite în măsura necesară. Pentru e-mail folosim Infomaniak Network SA din Elveția. Dacă permiți analiza opțională, datele de măsurare sunt trimise către Google Ireland Limited și servicii Google asociate. Datele sunt transmise doar dacă este necesar pentru funcționare, cerut de lege, inițiat de tine sau acoperit de consimțământ. Pentru prelucrarea în străinătate asigurăm protecție adecvată.",
+    "retentionTitle": "7. Păstrarea datelor",
+    "retentionText": "Păstrăm datele doar cât este necesar pentru scop, administrarea contului, soluționarea unei cereri, securitate sau obligații legale. Datele care nu mai sunt necesare sunt șterse sau anonimizate.",
+    "securityTitle": "8. Securitatea datelor",
+    "securityText": "Aplicăm măsuri tehnice și organizatorice adecvate, inclusiv restricții de acces, transmitere criptată și sisteme securizate. Totuși, transmiterea complet lipsită de riscuri nu poate fi garantată.",
+    "rightsTitle": "9. Drepturile tale",
+    "rightsText": "Conform legii aplicabile, poți solicita acces, rectificare, ștergere, restricționare, furnizare sau transfer, te poți opune prelucrării sau îți poți retrage consimțământul. Scrie la info@findelio.ch. Te poți adresa și autorității competente.",
+    "thirdPartyTitle": "10. Linkuri și conținut extern",
+    "thirdPartyText": "Listările pot conține linkuri către site-uri și rețele sociale terțe. Regulile furnizorului se aplică după deschiderea linkului. Findelio nu integrează o hartă pe pagina de contact.",
+    "changesTitle": "11. Modificări",
+    "changesText": "Putem actualiza această politică atunci când se schimbă funcțiile, furnizorii sau cerințele legale. Este valabilă versiunea publicată pe această pagină."
+  },
+  "Growth": {
+    "common": {
+      "premium": "Premium"
+    },
+    "customCta": {
+      "title": "Custom action button",
+      "hint": "Set the label and destination. Website, email and telephone links are supported.",
+      "label": "Button label",
+      "placeholder": "e.g. Book an appointment",
+      "value": "Destination or action"
+    },
+    "publicPosts": {
+      "title": "News, offers and events"
+    },
+    "posts": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium content",
+      "pageTitle": "Posts for {name}",
+      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "manage": "Manage posts",
+      "createTitle": "Create a new post",
+      "type": "Post type",
+      "types": {
+        "update": "News",
+        "offer": "Offer",
+        "event": "Event"
+      },
+      "title": "Title",
+      "body": "Description",
+      "image": "Image",
+      "imageSelect": "Selectează imaginea",
+      "imageEmpty": "Nicio imagine selectată",
+      "imageHint": "Recomandat: 1200 × 675 px (raport 16:9).",
+      "imageCurrent": "Imaginea actuală va fi păstrată",
+      "editTitle": "Editează postarea",
+      "editPublishedHint": "Postarea actuală rămâne vizibilă. Modificările vor fi verificate din nou înainte de publicare.",
+      "editArchivedHint": "Această postare nu este vizibilă public. O poți salva ca schiță sau o poți trimite din nou pentru verificare.",
+      "startsAt": "Starts",
+      "endsAt": "Ends",
+      "buttonLabel": "Button label",
+      "buttonUrl": "Button destination",
+      "status": "Save status",
+      "statuses": {
+        "draft": "Draft",
+        "pending": "For review",
+        "published": "Published",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      },
+      "save": "Save post",
+      "saving": "Saving …",
+      "saved": "The post was saved.",
+      "updated": "Modificările au fost salvate.",
+      "update": "Salvează modificările",
+      "cancel": "Anulează",
+      "existingTitle": "Existing posts",
+      "empty": "No posts yet.",
+      "archive": "Arhivează",
+      "edit": "Editează",
+      "archivedNotice": "Postarea a fost arhivată. Nu mai este vizibilă public și rămâne salvată în panoul de administrare.",
+      "archivedHint": "Nu este vizibilă public. Poți edita postarea și o poți trimite din nou pentru verificare mai târziu.",
+      "archiveDialogEyebrow": "Arhivează postarea",
+      "archiveDialogTitle": "Arhivezi „{title}”?",
+      "archiveConfirm": "Postarea va fi eliminată imediat din profilul public al firmei. Va rămâne salvată aici, în panoul de administrare, și va putea fi editată și trimisă din nou pentru verificare mai târziu.",
+      "archiveKeep": "Păstrează postarea",
+      "archiving": "Se arhivează …",
+      "errors": {
+        "upload": "The image could not be uploaded.",
+        "save": "The post could not be saved.",
+        "archive": "Postarea nu a putut fi arhivată."
+      }
+    },
+    "statistics": {
+      "back": "Back to business listings",
+      "eyebrow": "Premium statistics",
+      "pageTitle": "Performance of {name}",
+      "description": "See how visitors find your business listing and which contact options they use.",
+      "link": "View statistics",
+      "days": "{count} days",
+      "metrics": {
+        "search_impressions": "Search impressions",
+        "profile_views": "Profile views",
+        "website_clicks": "Website clicks",
+        "phone_clicks": "Phone clicks",
+        "email_clicks": "Email clicks",
+        "social_clicks": "Social media clicks",
+        "custom_cta_clicks": "Custom button clicks",
+        "post_views": "Post views",
+        "post_cta_clicks": "Post button clicks"
+      },
+      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
+      "privacyTitle": "Performance measurement for Premium listings",
+      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+    },
+    "review": {
+      "eyebrow": "Premium content",
+      "title": "Posts awaiting review",
+      "reason": "Mesaj pentru client (obligatoriu la respingere)",
+      "error": "Acțiunea nu a putut fi efectuată. La respingerea unei postări este necesar un motiv.",
+      "approve": "Approve post",
+      "reject": "Reject post"
+    }
   },
   "ListingEditor": {
-    "eyebrow": "Editează profilul firmei",
+    "eyebrow": "Editează listarea firmei",
     "title": "Editează {name}",
-    "description": "Actualizează datele profilului firmei. Modificările pot fi salvate ca schiță sau trimise pentru verificare.",
-    "back": "Înapoi la profilurile firmelor",
+    "description": "Actualizează datele listării firmei. Modificările pot fi salvate ca schiță sau trimise pentru verificare.",
+    "back": "Înapoi la listările firmelor",
     "sections": {
       "general": "Date de bază și descriere",
       "classification": "Domenii și limbi",
@@ -229,10 +763,92 @@
     },
     "industryHint": "Selectează toate domeniile în care activează firma.",
     "spokenLanguagesHint": "Selectează toate limbile în care firma deservește clienții.",
+    "industrySearch": "Caută domenii",
+    "industrySearchPlaceholder": "Introdu un domeniu",
+    "spokenLanguagesSearch": "Caută limbi",
+    "spokenLanguagesSearchPlaceholder": "Introdu o limbă",
+    "noSearchResults": "Nu au fost găsite opțiuni potrivite.",
+    "translations": {
+      "title": "Descriere multilingvă",
+      "description": "Completează descrierea principală în germană cu propriile traduceri pentru celelalte limbi Findelio.",
+      "fallbackHint": "Dacă o traducere rămâne goală, descrierea în germană este afișată automat.",
+      "fieldLabel": "Descriere în {language}"
+    },
+    "premium": {
+      "badge": "Premium",
+      "title": "Listare Premium",
+      "description": "Completează listarea firmei cu logo, imagini, program de funcționare, descrieri multilingve și linkuri către rețele sociale.",
+      "lockedDescription": "Aceste funcții sunt incluse într-un abonament Premium activ.",
+      "lockedHint": "După activarea abonamentului Premium, vei putea edita aceste secțiuni aici.",
+      "manageSubscription": "Activează Premium",
+      "features": {
+        "logo": "Logo-ul firmei",
+        "gallery": "Galerie de imagini",
+        "openingHours": "Program de funcționare",
+        "socialLinks": "Linkuri către rețele sociale",
+        "translations": "Descriere multilingvă"
+      },
+      "logoHint": "Încarcă un logo pătrat sau orizontal al firmei.",
+      "logoPreview": "Previzualizarea logo-ului firmei",
+      "noLogo": "Niciun logo încă",
+      "chooseLogo": "Alege logo-ul",
+      "remove": "Elimină",
+      "removeDialog": {
+        "logoTitle": "Elimini logo-ul firmei?",
+        "logoDescription": "Ești pe cale să elimini logo-ul din această listare de firmă. Modificarea se aplică numai după salvare.",
+        "galleryTitle": "Elimini imaginea din galerie?",
+        "galleryDescription": "Ești pe cale să elimini această imagine din galerie. Modificarea se aplică numai după salvare.",
+        "cancel": "Anulează",
+        "confirm": "Elimină imaginea"
+      },
+      "galleryHint": "Adaugă cel mult zece imagini reprezentative ale firmei.",
+      "galleryPreview": "Previzualizarea imaginii din galerie",
+      "galleryLimit": "Galeria poate conține cel mult zece imagini.",
+      "addImages": "Adaugă imagini",
+      "openingHoursHint": "Adaugă cel mult trei intervale pentru fiecare zi. O zi fără intervale este considerată închisă.",
+      "closed": "Închis",
+      "opensAt": "Ora deschiderii în ziua {day}",
+      "closesAt": "Ora închiderii în ziua {day}",
+      "addInterval": "Adaugă interval",
+      "socialLinksHint": "Adaugă cel mult un link pentru fiecare platformă.",
+      "platform": "Platformă",
+      "socialUrl": "Link către profilul social",
+      "platforms": {
+        "instagram": "Instagram",
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn",
+        "tiktok": "TikTok",
+        "youtube": "YouTube",
+        "x": "X"
+      },
+      "addSocialLink": "Adaugă link către rețeaua socială",
+      "imageRules": "Sunt permise fișiere JPEG, PNG și WebP de cel mult 8 MB pentru fiecare imagine."
+    },
     "addressVisibility": {
       "full": "Afișează adresa completă",
       "city": "Afișează doar localitatea și cantonul",
       "hidden": "Ascunde adresa"
+    },
+    "plan": {
+      "eyebrow": "Pachet pentru această listare",
+      "title": "Alege Free sau Premium",
+      "description": "Pachetul selectat se aplică doar acestei listări de firmă. Alte listări pot avea propriul pachet.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Toate informațiile de bază și publicarea în directorul Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "de la CHF 8.25 pe lună",
+        "description": "Include în plus siglă, galerie de imagini, program și linkuri către rețelele sociale."
+      },
+      "intervalTitle": "Perioada de facturare",
+      "intervals": {
+        "monthly": "Lunar – CHF 9.90",
+        "yearly": "Anual – CHF 99.00"
+      },
+      "cancellationHint": "Fără perioadă de probă. Abonamentul poate fi anulat la sfârșitul perioadei curente de facturare."
     },
     "statusValues": {
       "draft": "Schiță",
@@ -246,26 +862,32 @@
       "inactive": "Inactiv"
     },
     "currentStatus": "Starea actuală",
-    "statusHint": "Profilurile trimise pentru verificare pot fi apoi verificate și publicate.",
+    "statusHint": "Listările trimise pentru verificare pot fi apoi verificate și publicate.",
     "save": "Salvează modificările",
     "saving": "Se salvează …",
     "saved": "Modificările au fost salvate.",
     "errors": {
       "invalid_data": "Verifică datele introduse.",
       "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
-      "forbidden": "Nu ai permisiunea de a edita acest profil de firmă.",
-      "not_found": "Profilul firmei nu a fost găsit.",
+      "forbidden": "Nu ai permisiunea de a edita această listare de firmă.",
+      "not_found": "Listarea firmei nu a fost găsită.",
       "invalid_selection": "Un domeniu sau o limbă selectată nu este validă. Reîncarcă pagina și încearcă din nou.",
+      "invalid_image": "Cel puțin o imagine este invalidă sau nu aparține acestei listări de firmă.",
+      "file_too_large": "Cel puțin o imagine este mai mare de 8 MB.",
+      "too_many_files": "Au fost selectate prea multe imagini.",
+      "upload_failed": "Imaginile nu au putut fi încărcate.",
+      "premium_required": "Aceste funcții necesită un abonament Premium activ.",
       "save_failed": "Modificările nu au putut fi salvate.",
       "network": "Conexiunea la server a eșuat."
     },
-    "createdNotice": "Profilul companiei a fost creat ca schiță. Acum poți continua editarea."
+    "createdNotice": "Listarea firmei a fost creată ca schiță. Acum poți continua editarea.",
+    "createdPremiumNotice": "Listarea firmei a fost creată ca schiță Premium. Completează sigla, galeria, programul și linkurile către rețelele sociale, apoi trimite listarea pentru verificare. Abonamentul se încheie doar după aprobare."
   },
   "ListingCreator": {
-    "eyebrow": "Creează profil de companie",
-    "title": "Creează un profil nou de companie",
-    "description": "Creează o înregistrare nouă pentru una dintre organizațiile tale active. Profilul este salvat în siguranță ca schiță.",
-    "back": "Înapoi la profilurile companiilor",
+    "eyebrow": "Creează o listare de firmă",
+    "title": "Creează o listare nouă de firmă",
+    "description": "Creează o listare nouă pentru una dintre organizațiile tale active. Listarea este salvată în siguranță ca schiță.",
+    "back": "Înapoi la listările firmelor",
     "sections": {
       "organization": "Organizație",
       "general": "Date de bază și descriere",
@@ -293,24 +915,113 @@
       "city": "Afișează doar localitatea și cantonul",
       "hidden": "Ascunde adresa"
     },
-    "create": "Creează profilul companiei",
+    "create": "Creează listarea firmei",
     "creating": "Se creează …",
     "noOrganizationsTitle": "Nu a fost găsită nicio organizație activă",
-    "noOrganizationsDescription": "Ai nevoie de cel puțin un statut de membru activ într-o organizație pentru a crea un profil de companie.",
+    "noOrganizationsDescription": "Ai nevoie de cel puțin un statut de membru activ într-o organizație pentru a crea o listare de firmă.",
     "errors": {
       "invalid_data": "Verifică datele introduse.",
       "unauthorized": "Sesiunea a expirat. Autentifică-te din nou.",
-      "forbidden": "Nu poți crea un profil de companie pentru această organizație.",
-      "create_failed": "Profilul companiei nu a putut fi creat.",
+      "forbidden": "Nu poți crea o listare de firmă pentru această organizație.",
+      "create_failed": "Listarea firmei nu a putut fi creată.",
       "network": "Conexiunea la server a eșuat."
+    }
+  },
+  "Billing": {
+    "back": "Înapoi la listările de firmă",
+    "eyebrow": "Pachet și facturare",
+    "title": "Abonament pentru {name}",
+    "description": "Gestionează pachetul acestei listări de firmă. Premium este activat doar după confirmarea plății.",
+    "listingCreated": "Listarea de firmă a fost salvată ca schiță. Alege acum pachetul dorit.",
+    "checkoutSuccess": "Mulțumim. Plata a fost efectuată cu succes. Activarea Premium este în curs de confirmare și poate dura puțin.",
+    "checkoutCancelled": "Procesul de plată a fost anulat. Listarea de firmă rămâne în pachetul Free.",
+    "approvedNotice": "Listarea firmei tale a fost aprobată. Acum poți finaliza abonamentul Premium rezervat.",
+    "preApproval": {
+      "eyebrow": "Înainte de plată",
+      "draftTitle": "Completează mai întâi listarea firmei",
+      "draftDescription": "Adaugă toate informațiile dorite, precum sigla, galeria, programul și linkurile către rețelele sociale, apoi trimite listarea pentru verificare. Premium se plătește doar după aprobare.",
+      "pendingTitle": "Listarea firmei tale este verificată",
+      "pendingDescription": "După ce Findelio aprobă listarea, vei primi un e-mail și vei putea finaliza abonamentul Premium rezervat.",
+      "unavailableTitle": "Premium nu este încă disponibil",
+      "unavailableDescription": "Listarea firmei trebuie aprobată înainte de a te putea abona la Premium.",
+      "edit": "Completează listarea",
+      "back": "Înapoi la listările firmelor"
+    },
+    "intervalTitle": "Perioada de facturare",
+    "intervals": {
+      "monthly": {
+        "title": "Lunar",
+        "description": "CHF 9.90 pe lună"
+      },
+      "yearly": {
+        "title": "Anual",
+        "description": "CHF 99.00 pe an"
+      }
+    },
+    "terms": "Fără perioadă de probă gratuită. Anularea intră în vigoare la sfârșitul perioadei curente de facturare. Dacă o plată eșuează, accesul rămâne activ până la finalul perioadei și apoi este blocat.",
+    "termsNotice": "Prin finalizarea abonamentului plătit accepți",
+    "termsLink": "Termenii și condițiile",
+    "premium": {
+      "badge": "Premium",
+      "title": "Listare de firmă Premium",
+      "description": "Prezintă-ți firma cu informații vizuale și practice suplimentare.",
+      "features": {
+        "logo": "Sigla firmei",
+        "gallery": "Galerie de imagini",
+        "openingHours": "Program",
+        "socialLinks": "Linkuri către rețelele sociale",
+        "translations": "Descriere multilingvă"
+      }
+    },
+    "status": {
+      "eyebrow": "Pachet curent",
+      "premium": "Premium",
+      "free": "Free",
+      "subscriptionStatus": "Starea abonamentului",
+      "price": "Preț",
+      "nextRenewal": "Următoarea reînnoire",
+      "accessUntil": "Acces Premium până la",
+      "freeHint": "Această listare de firmă folosește în prezent pachetul gratuit.",
+      "grantedTitle": "Acces Premium gratuit",
+      "grantedDescription": "Findelio a acordat acces Premium acestei listări fără plată.",
+      "grantedUntil": "Acces acordat până la {date}",
+      "values": {
+        "pending": "În așteptare",
+        "active": "Activ",
+        "past_due": "Plată în așteptare",
+        "cancelled": "Anulat",
+        "expired": "Expirat"
+      }
+    },
+    "actions": {
+      "subscribe": "Abonează-te la Premium",
+      "openingCheckout": "Se deschide plata securizată …",
+      "manage": "Gestionează abonamentul și metoda de plată",
+      "grantHint": "Findelio a acordat Premium gratuit. Nu există un abonament plătit de gestionat.",
+      "openingPortal": "Se deschide portalul pentru clienți …",
+      "portalHint": "Gestionarea abonamentului se deschide într-o filă nouă. Findelio rămâne deschis."
+    },
+    "errors": {
+      "invalid_data": "Opțiunea de facturare selectată nu este validă.",
+      "unauthorized": "Sesiunea ta a expirat. Autentifică-te din nou.",
+      "forbidden": "Nu poți gestiona acest abonament.",
+      "not_found": "Listarea de firmă nu a fost găsită.",
+      "already_active": "Premium este deja activ pentru această listare de firmă.",
+      "listing_not_published": "Listarea firmei trebuie aprobată mai întâi.",
+      "billing_not_configured": "Funcția de plată nu este disponibilă momentan.",
+      "portal_unavailable": "Gestionarea acestui abonament nu este disponibilă momentan.",
+      "checkout_failed": "Procesul de plată nu a putut fi pornit.",
+      "portal_failed": "Gestionarea abonamentului nu a putut fi deschisă.",
+      "network": "Conexiunea la server a eșuat.",
+      "unknown": "Acțiunea asupra abonamentului nu a putut fi finalizată."
     }
   },
   "ListingReview": {
     "eyebrow": "Verificare internă",
-    "title": "Profiluri de firme în aşteptare",
-    "description": "Verifică profilurile noi şi modificate înainte de publicare.",
+    "title": "Listări de firme în aşteptare",
+    "description": "Verifică listările noi şi modificate înainte de publicare.",
     "emptyTitle": "Nicio verificare în aşteptare",
-    "emptyDescription": "Momentan nu există profiluri de firme care aşteaptă aprobarea.",
+    "emptyDescription": "Momentan nu există listări de firme care aşteaptă aprobarea.",
     "unknownDate": "Dată necunoscută",
     "unknownOrganization": "Organizaţie necunoscută",
     "unknownSubmitter": "Utilizator necunoscut",
@@ -334,11 +1045,12 @@
       "processing": "Se procesează…",
       "approve": "Aprobă modificările",
       "reject": "Respinge modificările",
-      "suspend": "Suspendă profilul",
+      "suspend": "Suspendă listarea firmei",
       "fields": {
         "name": "Numele firmei",
         "short_description": "Descriere scurtă",
         "description": "Descriere",
+        "description_translations": "Descrieri traduse",
         "street": "Stradă",
         "postal_code": "Cod poștal",
         "city": "Localitate",
@@ -348,8 +1060,173 @@
         "website_url": "Site web",
         "address_visibility": "Afișarea adresei",
         "industry_ids": "Domenii",
-        "spoken_language_ids": "Limbi vorbite"
+        "spoken_language_ids": "Limbi vorbite",
+        "logo_id": "Logo-ul firmei",
+        "gallery_file_ids": "Galerie de imagini",
+        "social_links": "Linkuri către rețele sociale",
+        "opening_hours": "Program de funcționare"
       }
+    }
+  },
+  "DeletionRequests": {
+    "customer": {
+      "eyebrow": "Cerere de ștergere",
+      "requestButton": "Solicită ștergerea",
+      "listingTitle": "Soliciți ștergerea pentru {name}?",
+      "organizationTitle": "Soliciți ștergerea pentru {name}?",
+      "listingDescription": "Profilul companiei rămâne vizibil și editabil până când un administrator Findelio confirmă cererea. Apoi va fi arhivat și nu va mai fi vizibil public.",
+      "organizationDescription": "Organizația și profilurile sale rămân disponibile până când un administrator Findelio confirmă cererea. Apoi vor fi arhivate și nu vor mai fi vizibile public.",
+      "reasonLabel": "Motiv (opțional)",
+      "reasonPlaceholder": "Ce ar trebui să luăm în considerare la verificare?",
+      "keep": "Anulează",
+      "confirm": "Solicită ștergerea",
+      "submitting": "Se trimite …",
+      "pendingTitle": "Cererea de ștergere este în curs de verificare",
+      "pendingDescription": "Conținutul rămâne neschimbat până la luarea unei decizii.",
+      "withdraw": "Retrage cererea",
+      "withdrawing": "Se retrage …",
+      "premiumTitle": "Anulează mai întâi Premium",
+      "premiumDescription": "Un abonament Premium activ trebuie anulat la timp înainte de trimiterea cererii.",
+      "manageSubscription": "Gestionează abonamentul",
+      "viewListings": "Vezi profilurile și abonamentele",
+      "errors": {
+        "premium_not_cancelled": "Anulează mai întâi abonamentul Premium activ.",
+        "request_exists": "Există deja o cerere deschisă pentru acest conținut.",
+        "send_failed": "Notificarea administratorului nu a putut fi trimisă. Încearcă din nou.",
+        "forbidden": "Nu poți solicita ștergerea acestui conținut.",
+        "not_found": "Conținutul nu a fost găsit sau este deja arhivat.",
+        "network": "Conexiunea la server a eșuat.",
+        "unknown": "Cererea de ștergere nu a putut fi procesată."
+      }
+    },
+    "admin": {
+      "eyebrow": "Cereri de ștergere",
+      "title": "Cereri de ștergere deschise",
+      "description": "Verifică cererea și asigură-te că nu mai există nicio perioadă Premium plătită activă înainte de arhivare.",
+      "types": {
+        "listing": "Profil de companie",
+        "organization": "Organizație"
+      },
+      "submittedBy": "Solicitat de {name} la {date}",
+      "unknownRequester": "Utilizator necunoscut",
+      "customerReason": "Motivul cererii",
+      "noReason": "Nu a fost indicat niciun motiv",
+      "waitingForSubscription": "Arhivarea nu este încă posibilă",
+      "availableAfter": "Perioada Premium plătită se încheie la {date}. Cererea poate fi confirmată după aceea.",
+      "availableUnknown": "Cel puțin un abonament Premium nu are o dată cunoscută de încheiere a accesului.",
+      "noteLabel": "Mesaj pentru client",
+      "notePlaceholder": "Obligatoriu la respingere",
+      "reasonRequired": "La respingere, introdu un motiv de cel puțin trei caractere.",
+      "premiumStillActive": "Arhivarea este încă blocată de o perioadă Premium activă.",
+      "actionFailed": "Cererea de ștergere nu a putut fi procesată.",
+      "processing": "Se procesează …",
+      "approve": "Confirmă arhivarea",
+      "reject": "Respinge cererea"
+    }
+  },
+  "PremiumGrants": {
+    "eyebrow": "Acces Premium gratuit",
+    "title": "Acordă acces Premium",
+    "description": "Acordă Premium listărilor selectate fără plată. Fiecare acordare este înregistrată cu motiv și dată finală opțională.",
+    "grantTitle": "Acordă Premium",
+    "grantDescription": "Accesul începe imediat. Fără dată finală, rămâne activ până la revocare.",
+    "listingLabel": "Listare de firmă",
+    "listingPlaceholder": "Selectează o listare",
+    "unknownOrganization": "Organizație necunoscută",
+    "reasonLabel": "Motiv intern",
+    "unlimitedLabel": "Fără dată finală",
+    "endsAtLabel": "Data finală",
+    "grantButton": "Acordă Premium",
+    "saving": "Se salvează …",
+    "overviewTitle": "Acordări",
+    "overviewDescription": "Acordările active pot fi revocate oricând. Abonamentele plătite rămân separate.",
+    "active": "Activ",
+    "notActive": "Inactiv",
+    "noActiveGrant": "Nicio acordare Premium gratuită.",
+    "unlimited": "Nelimitat",
+    "revokeButton": "Revocă",
+    "revokeConfirm": "Revoci această acordare Premium gratuită?",
+    "invalid_data": "Completează corect toate câmpurile obligatorii.",
+    "invalid_end_date": "Data finală trebuie să fie în viitor.",
+    "already_active": "Premium este deja activ pentru această listare.",
+    "save_failed": "Acordarea nu a putut fi salvată.",
+    "network": "Conexiunea cu serverul a eșuat."
+  },
+  "VerifyRegistration": {
+    "loadingTitle": "Se confirmă adresa de e-mail",
+    "loadingText": "Așteaptă un moment.",
+    "invitationLoadingTitle": "Se configurează contul și invitația",
+    "invitationLoadingText": "Îți confirmăm adresa de e-mail, acceptăm invitația și te autentificăm în siguranță.",
+    "successTitle": "Adresa ta de e-mail a fost confirmată.",
+    "successText": "Contul tău Findelio este acum activ. Te poți autentifica folosind e-mailul și parola.",
+    "loginButton": "Autentifică-te",
+    "errorTitle": "Confirmarea nu a reușit",
+    "errorText": "Linkul de confirmare este invalid, a expirat sau a fost deja utilizat.",
+    "registerButton": "Înapoi la înregistrare"
+  },
+  "Referrals": {
+    "eyebrow": "PARTENERIATE",
+    "title": "Recomandări",
+    "description": "Gestionează codurile de recomandare și urmărește firmele care vin prin ele pe Findelio. Proba Premium este doar pentru organizații noi.",
+    "activePartners": "Parteneri activi",
+    "registrations": "Înregistrări (filtrate)",
+    "pendingActivation": "Activare în așteptare (filtrată)",
+    "newPartner": "Adaugă partener",
+    "editPartner": "Editează partenerul",
+    "partnerHelp": "Un cod pentru fiecare partener. Nu este necesar un cont Findelio propriu.",
+    "name": "Nume",
+    "code": "Cod de recomandare",
+    "codeHelp": "3–64 de caractere: litere A–Z, cifre, cratimă sau linie de subliniere. Nu se face diferență între majuscule și minuscule.",
+    "codeFixed": "Codul rămâne neschimbat pentru ca linkurile distribuite să rămână valide.",
+    "notes": "Note interne",
+    "status": "Stare",
+    "active": "Activ",
+    "disabled": "Dezactivat",
+    "disableHelp": "Dezactivarea oprește utilizările noi. Asocierile și perioadele de probă existente se păstrează.",
+    "save": "Salvează",
+    "saving": "Se salvează …",
+    "cancel": "Anulează",
+    "partners": "Parteneri",
+    "noPartners": "Nu există încă parteneri. Adaugă primul folosind formularul.",
+    "link": "Link de recomandare",
+    "copyLink": "Copiază linkul",
+    "copyCode": "Copiază codul",
+    "edit": "Editează",
+    "companies": "Firme recomandate",
+    "overviewHelp": "Orele sunt în fusul Europe/Zurich. Proba începe la prima aprobare eligibilă a profilului firmei.",
+    "allPartners": "Toți partenerii",
+    "allStates": "Toate stările",
+    "refresh": "Actualizează",
+    "noCompanies": "Nu există încă înregistrări pentru această selecție.",
+    "company": "Organizație / profilul firmei",
+    "registered": "Data înregistrării",
+    "period": "Începutul / sfârșitul probei",
+    "actions": "Acțiuni",
+    "awaitingOrganization": "Organizația nu a fost încă creată",
+    "retry": "Reîncearcă activarea",
+    "page": "Pagina {page} din {pages} · {total} înregistrări",
+    "previous": "Înapoi",
+    "next": "Înainte",
+    "revoked": "Probă revocată",
+    "expired": "Probă expirată",
+    "previousPublication": "Publicat anterior: fără o nouă probă.",
+    "existingPremium": "Premium exista deja. Nu se acordă o probă suplimentară.",
+    "saved": "Salvat.",
+    "copied": "Copiat.",
+    "copy_failed": "Copierea nu a reușit. Selectează și copiază manual linkul afișat.",
+    "load_failed": "Prezentarea nu a putut fi încărcată. Încearcă din nou.",
+    "save_failed": "Salvarea nu a reușit. Verifică datele și încearcă din nou.",
+    "code_exists": "Acest cod este deja utilizat.",
+    "retry_failed": "Activarea a eșuat. Rezervarea se păstrează.",
+    "retry_done": "Activarea a fost verificată din nou. Starea actuală este afișată în prezentare.",
+    "states": {
+      "pending_organization": "Așteaptă organizația",
+      "pending_approval": "Așteaptă aprobarea",
+      "pending_activation": "Activare în așteptare",
+      "granted": "Probă acordată",
+      "skipped_existing_premium": "Omis: Premium exista",
+      "expired_unactivated": "Expirat fără activare",
+      "void": "Neeligibil"
     }
   }
 }
