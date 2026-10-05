@@ -42,6 +42,7 @@ const descriptionTranslationLocales = [
   { code: "ru", label: "Русский" },
   { code: "pt-pt", label: "Português" },
   { code: "ro", label: "Română" },
+  { code: "vi", label: "Tiếng Việt" },
 ] as const;
 
 type SaveResult = {

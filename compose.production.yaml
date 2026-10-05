@@ -144,7 +144,8 @@ services:
         https://${SITE_DOMAIN}/pl/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/ru/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/pt-pt/registrierung-bestaetigen,
-        https://${SITE_DOMAIN}/ro/registrierung-bestaetigen
+        https://${SITE_DOMAIN}/ro/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/vi/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
       CORS_CREDENTIALS: "true"

@@ -26,6 +26,7 @@ const descriptionTranslationLabels: Record<string, string> = {
   ru: "Русский",
   "pt-pt": "Português",
   ro: "Română",
+  vi: "Tiếng Việt",
 };
 
 function submitterName(

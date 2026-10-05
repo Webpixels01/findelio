@@ -2,16 +2,15 @@
 {% block content %}
 
 <h1 style="margin: 0 0 20px; color: #172940; font-size: 28px; line-height: 1.25;">
-  E-Mail-Adresse bestätigen
+  {{ registrationHeading | default: 'E-Mail-Adresse bestätigen' | escape }}
 </h1>
 
 <p style="margin: 0 0 18px; color: #525f70; font-size: 16px; line-height: 1.6;">
-  Vielen Dank für deine Registrierung bei Findelio.
+  {{ registrationThanks | default: 'Vielen Dank für deine Registrierung bei Findelio.' | escape }}
 </p>
 
 <p style="margin: 0 0 28px; color: #525f70; font-size: 16px; line-height: 1.6;">
-  Bitte bestätige deine E-Mail-Adresse, um dein Firmenkonto zu aktivieren.
-  Falls du diese Registrierung nicht selbst gestartet hast, kannst du diese E-Mail ignorieren.
+  {{ registrationInstructions | default: 'Bitte bestätige deine E-Mail-Adresse, um dein Firmenkonto zu aktivieren. Falls du diese Registrierung nicht selbst gestartet hast, kannst du diese E-Mail ignorieren.' | escape }}
 </p>
 
 <a
@@ -31,11 +30,11 @@
     border: 1px solid #0277EE;
   "
 >
-  E-Mail-Adresse bestätigen
+  {{ registrationButton | default: 'E-Mail-Adresse bestätigen' | escape }}
 </a>
 
 <p style="margin: 28px 0 8px; color: #525f70; font-size: 14px; line-height: 1.5;">
-  Falls der Button nicht funktioniert, öffne diesen Link:
+  {{ registrationLinkHint | default: 'Falls der Button nicht funktioniert, öffne diesen Link:' | escape }}
 </p>
 
 <p style="margin: 0; font-size: 14px; line-height: 1.5; word-break: break-all;">

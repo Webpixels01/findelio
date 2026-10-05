@@ -13,6 +13,7 @@ export const htmlLanguageTags: Record<AppLocale, string> = {
   ru: "ru",
   "pt-pt": "pt-PT",
   ro: "ro",
+  vi: "vi",
 };
 
 const openGraphLocales: Record<AppLocale, string> = {
@@ -25,6 +26,7 @@ const openGraphLocales: Record<AppLocale, string> = {
   ru: "ru_RU",
   "pt-pt": "pt_PT",
   ro: "ro_RO",
+  vi: "vi_VN",
 };
 
 function normalizedBaseUrl(): string {

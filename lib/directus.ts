@@ -152,6 +152,7 @@ const directusLanguageCodes: Record<AppLocale, string> = {
   ru: "ru-RU",
   "pt-pt": "pt-PT",
   ro: "ro-RO",
+  vi: "vi-VN",
 };
 
 type DirectoryTranslationRow = {

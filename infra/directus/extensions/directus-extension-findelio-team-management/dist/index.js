@@ -11,6 +11,7 @@ const supportedLocales = new Set([
   "ru",
   "pt-pt",
   "ro",
+  "vi",
 ]);
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -18,6 +19,16 @@ const tokenPattern = /^[A-Za-z0-9_-]{40,100}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const invitationCopy = {
+  vi: {
+    subject: "Lời mời tham gia nhóm Findelio",
+    heading: "Bạn được mời tham gia một nhóm Findelio",
+    intro: "Một tổ chức muốn cùng bạn quản lý sự hiện diện của họ trên Findelio.",
+    roleLabel: "Vai trò của bạn",
+    roles: { admin: "Quản trị viên", editor: "Biên tập viên" },
+    expiresLabel: "Lời mời có hiệu lực đến",
+    button: "Chấp nhận lời mời",
+    hint: "Tạo tài khoản bằng đúng địa chỉ email này. Sau khi xác nhận email, lời mời sẽ tự động được chấp nhận. Nếu đã có tài khoản Findelio, bạn có thể đăng nhập.",
+  },
   "de-ch": {
     subject: "Einladung zum Findelio-Team",
     heading: "Du wurdest zu einem Findelio-Team eingeladen",

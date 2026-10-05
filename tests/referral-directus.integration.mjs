@@ -65,6 +65,19 @@ try {
   assert.ok(match, 'Verification token in local mail');
   await request('/users/register/verify-email?token=' + encodeURIComponent(match[1]), { token: null, status: 302 });
   ok('new user, atomic redemption and real verification mail/token');
+  const viEmail = `vietnamese-${suffix}@example.com`;
+  const viRegistration = { ...registration(viEmail, code),
+    verification_url: 'http://localhost:3000/vi/registrierung-bestaetigen' };
+  await request('/findelio-referrals/register', { method: 'POST', token: null, status: 204, body: viRegistration });
+  const viMail = await mailFor(viEmail);
+  assert.ok(viMail.Subject === 'Xác nhận địa chỉ email', 'Vietnamese verification subject');
+  assert.ok(viMail.HTML.includes('Cảm ơn bạn đã đăng ký Findelio.'), 'Vietnamese registration template');
+  assert.ok(viMail.HTML.includes('/vi/registrierung-bestaetigen?'), 'Vietnamese verification destination');
+  const viMatch = (viMail.HTML + viMail.Text).match(/token=([A-Za-z0-9_.-]+)/);
+  assert.ok(viMatch, 'Vietnamese verification token in local test mail');
+  await request('/users/register/verify-email?token=' + encodeURIComponent(viMatch[1]), { token: null, status: 302 });
+  assert.equal((await db('directus_users').where({ email: viEmail }).first()).status, 'active');
+  ok('Vietnamese registration, real localized mail and verification');
   const userToken = (await request('/auth/login', { method: 'POST', token: null, body: { email, password } })).access_token;
   await request('/findelio-referrals/register', { method: 'POST', token: null, status: 204, body: registration(email, code) });
   assert.equal((await db('referral_redemptions').where({ user: user.id })).length, 1);

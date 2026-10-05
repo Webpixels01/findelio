@@ -48,7 +48,9 @@ Die Bildserie verwendet eine gemeinsame ruhige, redaktionelle Bildsprache in Dun
 
 Jede Sprachfassung ist ein eigener Beitrag. Dadurch können Titel, URL-Kennung, Inhalt und Suchmaschinenangaben natürlich für die jeweilige Sprache formuliert werden. Beim Import muss das Feld `locale` einen dieser Werte enthalten:
 
-`de-ch`, `en`, `sk`, `cs`, `hu`, `pl`, `ru`, `pt-pt` oder `ro`.
+`de-ch`, `en`, `sk`, `cs`, `hu`, `pl`, `ru`, `pt-pt`, `ro` oder `vi`.
+
+`vi` setzt die Migration `20261005_vietnamese_locale.sql` voraus. Vietnamesische Artikel werden redaktionell als eigene Beiträge angelegt; vorhandene Artikel werden nicht automatisch übersetzt.
 
 Künftige Beiträge können weiterhin ausschliesslich auf Deutsch veröffentlicht werden. Die übrigen Spracharchive behalten dann diese drei grundlegenden Ratgeberartikel, während neue deutsche Inhalte nur unter `de-ch` erscheinen.
 

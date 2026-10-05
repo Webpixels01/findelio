@@ -21,7 +21,7 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
       DB_CLIENT: 'pg', DB_HOST: 'database', DB_PORT: '5432', DB_DATABASE: 'findelio_test', DB_USER: 'postgres', DB_PASSWORD: '',
       PUBLIC_URL: 'http://localhost:8055', EMAIL_FROM: 'test@example.com', EMAIL_TRANSPORT: 'smtp', EMAIL_SMTP_HOST: 'mail', EMAIL_SMTP_PORT: '1025', EMAIL_SMTP_SECURE: 'false',
       EMAIL_TEMPLATES_PATH: '/directus/templates', FINDELIO_SITE_URL: 'http://localhost:3000', FINDELIO_REFERRAL_REGISTRATION_ENABLED: 'true',
-      USER_REGISTER_URL_ALLOW_LIST: 'http://localhost:3000/de-ch/registrierung-bestaetigen', TELEMETRY: 'false', CACHE_ENABLED: 'false', WEBSOCKETS_ENABLED: 'false' } },
+      USER_REGISTER_URL_ALLOW_LIST: 'http://localhost:3000/de-ch/registrierung-bestaetigen,http://localhost:3000/vi/registrierung-bestaetigen', TELEMETRY: 'false', CACHE_ENABLED: 'false', WEBSOCKETS_ENABLED: 'false' } },
 } };
 async function run(args, { quiet = false, input } = {}) {
   return new Promise((resolve, reject) => {

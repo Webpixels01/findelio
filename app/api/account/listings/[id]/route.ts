@@ -69,6 +69,7 @@ const descriptionTranslationLocales = new Set([
   "ru",
   "pt-pt",
   "ro",
+  "vi",
 ]);
 
 function isTrustedOrigin(request: Request): boolean {

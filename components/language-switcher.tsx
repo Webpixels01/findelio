@@ -15,6 +15,7 @@ const labels: Record<AppLocale, string> = {
   ru: "RU",
   "pt-pt": "PT",
   ro: "RO",
+  vi: "VI",
 };
 
 export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {

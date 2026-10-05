@@ -24,6 +24,7 @@ Stand: 5. August 2026
 - `ru`
 - `pt-pt`
 - `ro`
+- `vi` (lokal ergänzt; Directus-Migration `20261005_vietnamese_locale.sql` vor Deployment anwenden)
 
 ## Umgesetzter Stand
 

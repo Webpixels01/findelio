@@ -1,6 +1,13 @@
 // New referral paragraphs only; the existing decision mail remains unchanged.
 // Directus users.language is optional. Match Findelio locale aliases explicitly.
 const messages = {
+  vi: {
+    granted: "Thời gian dùng thử Premium ba tháng của bạn đã được kích hoạt và kết thúc vào {date}. Không có gói đăng ký trả phí nào được tạo.",
+    pending: "Hồ sơ doanh nghiệp của bạn đã được phê duyệt. Thời gian dùng thử Premium vẫn đang chờ kích hoạt.",
+    skipped: "Không kích hoạt thêm thời gian dùng thử vì bạn đã có Premium khi kiểm tra điều kiện. Các gói đăng ký và quyền truy cập hiện có được giữ nguyên.",
+    expired: "Khoảng thời gian dự kiến cho dùng thử Premium đã hết hạn. Không kích hoạt thời gian dùng thử mới.",
+    inactive: "Thời gian dùng thử Premium được cấp qua mã giới thiệu của bạn không còn hiệu lực.",
+  },
   "de-ch": {
     granted: "Deine dreimonatige Premium-Testphase ist aktiviert und endet am {date}. Es entsteht kein kostenpflichtiges Abo.",
     pending: "Dein Firmenprofil ist freigegeben. Die Aktivierung deiner Premium-Testphase steht noch aus.",

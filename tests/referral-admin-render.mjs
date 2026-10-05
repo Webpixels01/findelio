@@ -32,8 +32,8 @@ async function render(locale, initialData) {
   return html;
 }
 
-test('admin renders populated, empty and load-error states in all nine languages', async () => {
-  for (const locale of ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro']) {
+test('admin renders populated, empty and load-error states in all supported languages', async () => {
+  for (const locale of ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi']) {
     const html = await render(locale, data);
     assert.ok(html.includes(`/${locale}/firma-eintragen?ref=ANNA3`));
     assert.ok(html.includes('Anna Muster'));
