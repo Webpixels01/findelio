@@ -3,6 +3,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
 import LoginForm from "@/components/login-form";
+import { privatePageMetadata } from "@/lib/seo";
+
+export const metadata = privatePageMetadata;
 
 export default async function LoginPage({ params }: { params: Promise<{ locale: AppLocale }> }) {
   const { locale } = await params;

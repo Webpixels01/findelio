@@ -36,14 +36,15 @@ export default async function SearchForm({
       method="get"
       className={
         compact
-          ? "grid gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 md:grid-cols-2 xl:grid-cols-5"
-          : "mx-auto mt-12 grid max-w-6xl gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-2xl shadow-[#001734]/8 md:grid-cols-2 xl:grid-cols-5"
+          ? "grid gap-5 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 md:grid-cols-2 xl:grid-cols-5"
+          : "mx-auto mt-12 grid max-w-6xl gap-5 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-2xl shadow-[#001734]/8 md:grid-cols-2 xl:grid-cols-5"
       }
     >
       <label className="field-group">
         <span className="field-label">{t("language")}</span>
 
         <select
+          key={`sprache-${values.sprache ?? ""}`}
           name="sprache"
           defaultValue={values.sprache ?? ""}
           className="field-control"
@@ -62,6 +63,7 @@ export default async function SearchForm({
         <span className="field-label">{t("industry")}</span>
 
         <select
+          key={`branche-${values.branche ?? ""}`}
           name="branche"
           defaultValue={values.branche ?? ""}
           className="field-control"
@@ -80,6 +82,7 @@ export default async function SearchForm({
         <span className="field-label">{t("canton")}</span>
 
         <select
+          key={`kanton-${values.kanton ?? ""}`}
           name="kanton"
           defaultValue={values.kanton ?? ""}
           className="field-control"
@@ -98,6 +101,7 @@ export default async function SearchForm({
         <span className="field-label">{t("location")}</span>
 
         <input
+          key={`ort-${values.ort ?? ""}`}
           type="search"
           name="ort"
           defaultValue={values.ort ?? ""}
@@ -106,7 +110,7 @@ export default async function SearchForm({
         />
       </label>
 
-      <button type="submit" className="primary-button mt-auto h-12 px-5">
+      <button type="submit" className="primary-button search-submit mt-auto px-5">
         {t("submit")}
       </button>
     </form>

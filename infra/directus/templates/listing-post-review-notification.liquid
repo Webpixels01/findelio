@@ -1,0 +1,10 @@
+{% layout 'findelio-base' %}
+{% block content %}
+<h1 style="margin:0 0 20px;color:#172940;font-size:28px;line-height:1.25;">Beitrag wartet auf Prüfung</h1>
+<p style="margin:0 0 18px;color:#525f70;font-size:16px;line-height:1.6;">Ein Premium-Kunde hat einen Beitrag eingereicht, der vor der Veröffentlichung geprüft werden muss.</p>
+<p style="margin:0 0 8px;color:#525f70;font-size:16px;line-height:1.6;"><strong>Firma:</strong> {{ listingName | escape }}</p>
+<p style="margin:0 0 24px;color:#525f70;font-size:16px;line-height:1.6;"><strong>Beitrag:</strong> {{ postTitle | escape }} ({{ postType | escape }})</p>
+<a rel="noopener" target="_blank" href="{{ reviewUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;font-size:16px;font-weight:600;text-decoration:none;">Beitrag prüfen</a>
+<p style="margin:28px 0 8px;color:#525f70;font-size:14px;line-height:1.5;">Falls der Button nicht funktioniert, öffne diesen Link:</p>
+<p style="margin:0;font-size:14px;line-height:1.5;word-break:break-all;"><a href="{{ reviewUrl | escape }}" style="color:#0277EE;">{{ reviewUrl | escape }}</a></p>
+{% endblock %}

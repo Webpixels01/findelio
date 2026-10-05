@@ -1,0 +1,17 @@
+{% layout 'findelio-base' %}
+{% block content %}
+<h1 style="margin:0 0 20px;color:#172940;font-size:28px;line-height:1.25;">Löschanfrage wartet auf Prüfung</h1>
+<p style="margin:0 0 20px;color:#525f70;font-size:16px;line-height:1.6;">{{ intro | escape }}</p>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 24px;border:1px solid #dce6f0;border-radius:12px;background:#f4f8fc;">
+  <tr><td style="padding:18px 20px;color:#525f70;font-size:15px;line-height:1.6;">
+    <strong style="color:#172940;">Typ:</strong> {{ entityLabel | escape }}<br>
+    <strong style="color:#172940;">Organisation:</strong> {{ organizationName | escape }}<br>
+    <strong style="color:#172940;">Inhalt:</strong> {{ targetName | escape }}<br>
+    <strong style="color:#172940;">Angefragt von:</strong> {{ requester | escape }}<br>
+    <strong style="color:#172940;">Grund:</strong> {{ reason | escape }}
+  </td></tr>
+</table>
+<a rel="noopener" target="_blank" href="{{ reviewUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;font-size:16px;font-weight:600;text-decoration:none;">Löschanfrage prüfen</a>
+<p style="margin:28px 0 8px;color:#525f70;font-size:14px;line-height:1.5;">Falls der Button nicht funktioniert, öffne diesen Link:</p>
+<p style="margin:0;font-size:14px;line-height:1.5;word-break:break-all;"><a href="{{ reviewUrl | escape }}" style="color:#0277EE;">{{ reviewUrl | escape }}</a></p>
+{% endblock %}

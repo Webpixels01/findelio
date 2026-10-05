@@ -1,5 +1,12 @@
 import "server-only";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { sendListingReviewNotification } from "@/lib/mail";
+import {
+  getActivePremiumGrant,
+  getPremiumGrants,
+  isPremiumGrantActive,
+  type PremiumGrant,
+} from "@/lib/directus-premium";
 
 export type AccountOrganization = {
   id: string;
@@ -23,14 +30,34 @@ export type AccountListing = {
   postal_code: string | null;
   city: string | null;
   verification_status: string | null;
+  requested_billing_interval: "monthly" | "yearly" | null;
   organization: {
     id: string;
   };
 };
 
+export type AccountSubscription = {
+  id: string;
+  listing: string | { id: string } | null;
+  status: string;
+  plan: string;
+  billing_interval: "monthly" | "yearly";
+  current_period_start: string | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean;
+  cancelled_at: string | null;
+  amount_minor: number;
+  currency: string;
+};
+
+export type AccountListingOverview = AccountListing & {
+  subscription: AccountSubscription | null;
+  premiumGrant: PremiumGrant | null;
+};
+
 export type EditableAccountListing = AccountListing & {
-  short_description: string | null;
   description: string | null;
+  description_translations: Record<string, string> | null;
   street: string | null;
   canton: {
     id?: string;
@@ -41,6 +68,11 @@ export type EditableAccountListing = AccountListing & {
   phone: string | null;
   website_url: string | null;
   address_visibility: "full" | "city" | "hidden" | null;
+  logo: string | null;
+  gallery: AccountGalleryItem[];
+  social_links: AccountSocialLink[] | null;
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 type RawEditableAccountListing = Omit<EditableAccountListing, "canton"> & {
@@ -57,7 +89,6 @@ type RawEditableAccountListing = Omit<EditableAccountListing, "canton"> & {
 export type AccountListingCreate = {
   organization: string;
   name: string;
-  short_description: string | null;
   description: string | null;
   street: string | null;
   postal_code: string;
@@ -67,11 +98,11 @@ export type AccountListingCreate = {
   phone: string | null;
   website_url: string | null;
   address_visibility: "full" | "city" | "hidden";
+  requested_billing_interval: "monthly" | "yearly" | null;
 };
 
 export type AccountListingUpdate = {
   name: string;
-  short_description: string | null;
   description: string | null;
   street: string | null;
   postal_code: string;
@@ -87,6 +118,34 @@ export type AccountListingUpdate = {
 export type AccountListingEditorUpdate = AccountListingUpdate & {
   industry_ids: string[];
   spoken_language_ids: string[];
+  premium?: AccountPremiumListingUpdate;
+};
+
+export type AccountSocialLink = {
+  platform: "instagram" | "facebook" | "linkedin" | "tiktok" | "youtube" | "x";
+  url: string;
+};
+
+export type AccountOpeningHour = {
+  id?: string;
+  day_of_week: number;
+  opens_at: string;
+  closes_at: string;
+};
+
+export type AccountGalleryItem = {
+  id: string | number;
+  directus_files_id: string;
+};
+
+export type AccountPremiumListingUpdate = {
+  logo_id: string | null;
+  gallery_file_ids: string[];
+  social_links: AccountSocialLink[];
+  opening_hours: AccountOpeningHour[];
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
+  description_translations: Record<string, string>;
 };
 
 type ListingRevisionStatus =
@@ -99,6 +158,13 @@ type ListingRevisionStatus =
 type ListingRevisionData = Omit<AccountListingUpdate, "status"> & {
   industry_ids: string[];
   spoken_language_ids: string[];
+  logo_id?: string | null;
+  gallery_file_ids?: string[];
+  social_links?: AccountSocialLink[];
+  opening_hours?: AccountOpeningHour[];
+  custom_cta_label?: string | null;
+  custom_cta_value?: string | null;
+  description_translations?: Record<string, string>;
 };
 
 type ListingRevisionChangedFields = Record<
@@ -123,10 +189,19 @@ export type EditableAccountListingEditorData = {
   listing: EditableAccountListing;
   industryIds: string[];
   spokenLanguageIds: string[];
+  openingHours: AccountOpeningHour[];
+  premiumEnabled: boolean;
 };
 
 export type AccountOrganizationOverview = AccountMembership & {
-  listings: AccountListing[];
+  listings: AccountListingOverview[];
+};
+
+export type AccountListingBillingData = {
+  listing: EditableAccountListing;
+  subscription: AccountSubscription | null;
+  premiumGrant: PremiumGrant | null;
+  premiumEnabled: boolean;
 };
 
 type DirectusError = {
@@ -283,6 +358,197 @@ async function getOrganizationMemberships(
   );
 }
 
+function isActivePremiumSubscription(
+  subscription: AccountSubscription,
+): boolean {
+  if (
+    !["active", "past_due"].includes(subscription.status) ||
+    subscription.plan !== "premium"
+  ) {
+    return false;
+  }
+
+  if (!subscription.current_period_end) {
+    return true;
+  }
+
+  const periodEnd = new Date(subscription.current_period_end);
+  return !Number.isNaN(periodEnd.getTime()) && periodEnd > new Date();
+}
+
+async function hasActivePremiumSubscription(
+  accessToken: string,
+  listingId: string,
+): Promise<boolean> {
+  const url = new URL("/items/subscriptions", getDirectusUrl());
+
+  url.searchParams.set(
+    "fields",
+    "id,listing,status,plan,billing_interval,current_period_start,current_period_end,cancel_at_period_end,cancelled_at,amount_minor,currency",
+  );
+  url.searchParams.set("limit", "20");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listing: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "no-store",
+  });
+  const subscriptions =
+    await readDirectusListResponse<AccountSubscription>(response);
+
+  return subscriptions.some(isActivePremiumSubscription);
+}
+
+async function hasPremiumEditingAccess(
+  accessToken: string,
+  listing: Pick<
+    EditableAccountListing,
+    "id" | "status" | "requested_billing_interval"
+  >,
+): Promise<boolean> {
+  if (
+    listing.requested_billing_interval &&
+    ["draft", "pending"].includes(listing.status)
+  ) {
+    return true;
+  }
+
+  if (await hasActivePremiumSubscription(accessToken, listing.id)) {
+    return true;
+  }
+
+  return Boolean(await getActivePremiumGrant(listing.id));
+}
+
+function subscriptionListingId(
+  subscription: AccountSubscription,
+): string | null {
+  if (typeof subscription.listing === "string") {
+    return subscription.listing;
+  }
+
+  return subscription.listing?.id ?? null;
+}
+
+function selectCurrentSubscription(
+  subscriptions: AccountSubscription[],
+): AccountSubscription | null {
+  const sortedSubscriptions = [...subscriptions].sort((left, right) => {
+    const leftEnd = left.current_period_end
+      ? new Date(left.current_period_end).getTime()
+      : Number.MAX_SAFE_INTEGER;
+    const rightEnd = right.current_period_end
+      ? new Date(right.current_period_end).getTime()
+      : Number.MAX_SAFE_INTEGER;
+
+    return rightEnd - leftEnd;
+  });
+
+  return (
+    sortedSubscriptions.find(isActivePremiumSubscription) ??
+    sortedSubscriptions[0] ??
+    null
+  );
+}
+
+async function getAccountSubscriptions(
+  accessToken: string,
+  organizationIds: string[],
+): Promise<AccountSubscription[]> {
+  if (organizationIds.length === 0) {
+    return [];
+  }
+
+  const url = new URL("/items/subscriptions", getDirectusUrl());
+
+  url.searchParams.set(
+    "fields",
+    "id,listing,status,plan,billing_interval,current_period_start,current_period_end,cancel_at_period_end,cancelled_at,amount_minor,currency",
+  );
+  url.searchParams.set("limit", "500");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      organization: {
+        _in: organizationIds,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  return readDirectusListResponse<AccountSubscription>(response);
+}
+
+export async function getAccountListingBillingData(
+  accessToken: string,
+  listingId: string,
+): Promise<AccountListingBillingData | null> {
+  const listing = await getEditableAccountListing(accessToken, listingId);
+
+  if (!listing) {
+    return null;
+  }
+
+  const subscriptions = await getAccountSubscriptions(accessToken, [
+    listing.organization.id,
+  ]);
+  const subscription = selectCurrentSubscription(
+    subscriptions.filter(
+      (item) => subscriptionListingId(item) === listing.id,
+    ),
+  );
+  const premiumGrant = await getActivePremiumGrant(listing.id);
+
+  return {
+    listing,
+    subscription,
+    premiumGrant,
+    premiumEnabled:
+      (subscription ? isActivePremiumSubscription(subscription) : false) ||
+      Boolean(premiumGrant),
+  };
+}
+
+async function getAccountListingOpeningHours(
+  listingId: string,
+): Promise<AccountOpeningHour[]> {
+  const url = new URL("/items/listing_opening_hours", getDirectusUrl());
+
+  url.searchParams.set("fields", "id,day_of_week,opens_at,closes_at");
+  url.searchParams.set("sort", "day_of_week,opens_at");
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listing: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+
+  return readDirectusListResponse<AccountOpeningHour>(response);
+}
+
 async function getListingsForOrganizations(
   accessToken: string,
   organizationIds: string[],
@@ -303,6 +569,7 @@ async function getListingsForOrganizations(
       "postal_code",
       "city",
       "verification_status",
+      "requested_billing_interval",
       "organization.id",
     ].join(","),
   );
@@ -315,6 +582,9 @@ async function getListingsForOrganizations(
         id: {
           _in: organizationIds,
         },
+      },
+      status: {
+        _neq: "archived",
       },
     }),
   );
@@ -335,8 +605,8 @@ function editableListingFields(): string {
     "name",
     "slug",
     "status",
-    "short_description",
     "description",
+    "description_translations",
     "street",
     "postal_code",
     "city",
@@ -347,8 +617,13 @@ function editableListingFields(): string {
     "public_email",
     "phone",
     "website_url",
+    "logo",
+    "social_links",
+    "custom_cta_label",
+    "custom_cta_value",
     "address_visibility",
     "verification_status",
+    "requested_billing_interval",
     "organization.id",
   ].join(",");
 }
@@ -387,7 +662,10 @@ export async function getEditableAccountListing(
     response,
   );
 
-  if (!activeOrganizationIds.has(rawListing.organization?.id)) {
+  if (
+    rawListing.status === "archived" ||
+    !activeOrganizationIds.has(rawListing.organization?.id)
+  ) {
     return null;
   }
 
@@ -405,9 +683,15 @@ export async function getEditableAccountListing(
     canton = await getCantonById(rawListing.canton.id);
   }
 
+  const gallery = await getAccountListingGallery(rawListing.id);
+
   return {
     ...rawListing,
     canton,
+    gallery,
+    social_links: Array.isArray(rawListing.social_links)
+      ? rawListing.social_links
+      : [],
   };
 }
 
@@ -610,6 +894,328 @@ async function syncListingRelations(
   }
 }
 
+type GalleryRelationRow = {
+  id: string | number;
+  directus_files_id: string | { id: string } | null;
+};
+
+async function getAccountListingGallery(
+  listingId: string,
+): Promise<AccountGalleryItem[]> {
+  const url = new URL("/items/listings_files", getDirectusUrl());
+  url.searchParams.set("fields", "id,directus_files_id");
+  url.searchParams.set("sort", "id");
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listings_id: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+  const rows = await readDirectusListResponse<GalleryRelationRow>(response);
+
+  return rows
+    .map((row) => ({
+      id: row.id,
+      directus_files_id: relationId(row.directus_files_id),
+    }))
+    .filter(
+      (
+        item,
+      ): item is {
+        id: string | number;
+        directus_files_id: string;
+      } => Boolean(item.directus_files_id),
+    );
+}
+
+type OpeningHourRow = AccountOpeningHour & {
+  id: string;
+};
+
+async function syncListingGallery(
+  listingId: string,
+  desiredFileIds: string[],
+): Promise<void> {
+  const url = new URL("/items/listings_files", getDirectusUrl());
+  url.searchParams.set("fields", "id,directus_files_id");
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listings_id: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+  const rows = await readDirectusListResponse<GalleryRelationRow>(response);
+  const desiredIds = Array.from(new Set(desiredFileIds));
+  const desiredIdSet = new Set(desiredIds);
+  const existingIds = new Set<string>();
+  const rowIdsToDelete: Array<string | number> = [];
+
+  for (const row of rows) {
+    const fileId = relationId(row.directus_files_id);
+
+    if (
+      !fileId ||
+      !desiredIdSet.has(fileId) ||
+      existingIds.has(fileId)
+    ) {
+      rowIdsToDelete.push(row.id);
+      continue;
+    }
+
+    existingIds.add(fileId);
+  }
+
+  if (rowIdsToDelete.length > 0) {
+    const deleteResponse = await fetch(
+      new URL("/items/listings_files", getDirectusUrl()),
+      {
+        method: "DELETE",
+        headers: {
+          ...directusServerHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rowIdsToDelete),
+        cache: "no-store",
+      },
+    );
+
+    await ensureDirectusMutationSucceeded(deleteResponse);
+  }
+
+  const idsToCreate = desiredIds.filter((id) => !existingIds.has(id));
+
+  if (idsToCreate.length > 0) {
+    const createResponse = await fetch(
+      new URL("/items/listings_files", getDirectusUrl()),
+      {
+        method: "POST",
+        headers: {
+          ...directusServerHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          idsToCreate.map((fileId) => ({
+            listings_id: listingId,
+            directus_files_id: fileId,
+          })),
+        ),
+        cache: "no-store",
+      },
+    );
+
+    await ensureDirectusMutationSucceeded(createResponse);
+  }
+}
+
+function openingHourKey(value: AccountOpeningHour): string {
+  return `${value.day_of_week}:${value.opens_at.slice(0, 5)}:${value.closes_at.slice(0, 5)}`;
+}
+
+async function syncListingOpeningHours(
+  listingId: string,
+  desiredOpeningHours: AccountOpeningHour[],
+): Promise<void> {
+  const url = new URL("/items/listing_opening_hours", getDirectusUrl());
+  url.searchParams.set("fields", "id,day_of_week,opens_at,closes_at");
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listing: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+  const rows = await readDirectusListResponse<OpeningHourRow>(response);
+  const desiredByKey = new Map(
+    desiredOpeningHours.map((item) => [openingHourKey(item), item]),
+  );
+  const existingKeys = new Set<string>();
+  const rowIdsToDelete: string[] = [];
+
+  for (const row of rows) {
+    const key = openingHourKey(row);
+
+    if (!desiredByKey.has(key) || existingKeys.has(key)) {
+      rowIdsToDelete.push(row.id);
+      continue;
+    }
+
+    existingKeys.add(key);
+  }
+
+  if (rowIdsToDelete.length > 0) {
+    const deleteResponse = await fetch(
+      new URL("/items/listing_opening_hours", getDirectusUrl()),
+      {
+        method: "DELETE",
+        headers: {
+          ...directusServerHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rowIdsToDelete),
+        cache: "no-store",
+      },
+    );
+
+    await ensureDirectusMutationSucceeded(deleteResponse);
+  }
+
+  const valuesToCreate = Array.from(desiredByKey.entries())
+    .filter(([key]) => !existingKeys.has(key))
+    .map(([, value]) => ({
+      listing: listingId,
+      day_of_week: value.day_of_week,
+      opens_at: value.opens_at,
+      closes_at: value.closes_at,
+    }));
+
+  if (valuesToCreate.length > 0) {
+    const createResponse = await fetch(
+      new URL("/items/listing_opening_hours", getDirectusUrl()),
+      {
+        method: "POST",
+        headers: {
+          ...directusServerHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(valuesToCreate),
+        cache: "no-store",
+      },
+    );
+
+    await ensureDirectusMutationSucceeded(createResponse);
+  }
+}
+
+type DirectusFileMetadata = {
+  id: string;
+  type: string | null;
+  folder: string | null;
+  uploaded_by: string | null;
+};
+
+async function getPublicFolderId(): Promise<string> {
+  const url = new URL("/folders", getDirectusUrl());
+  url.searchParams.set("fields", "id,name");
+  url.searchParams.set("limit", "1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      name: {
+        _eq: "Public",
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+  const folders = await readDirectusListResponse<{
+    id: string;
+    name: string;
+  }>(response);
+  const folderId = folders[0]?.id;
+
+  if (!folderId) {
+    throw new DirectusAccountError(
+      "Der öffentliche Dateiordner ist nicht konfiguriert.",
+      500,
+      "UPLOAD_FOLDER_MISSING",
+    );
+  }
+
+  return folderId;
+}
+
+async function validatePremiumFileIds(
+  listing: EditableAccountListing,
+  fileIds: string[],
+  currentUserId: string,
+): Promise<void> {
+  const uniqueIds = Array.from(new Set(fileIds));
+
+  if (uniqueIds.length === 0) {
+    return;
+  }
+
+  const existingListingFileIds = new Set([
+    ...(listing.logo ? [listing.logo] : []),
+    ...listing.gallery.map((item) => item.directus_files_id),
+  ]);
+  const openRevisions = await getOpenListingRevisions(listing.id);
+
+  for (const revision of openRevisions) {
+    if (revision.data.logo_id) {
+      existingListingFileIds.add(revision.data.logo_id);
+    }
+
+    for (const fileId of revision.data.gallery_file_ids ?? []) {
+      existingListingFileIds.add(fileId);
+    }
+  }
+
+  const url = new URL("/files", getDirectusUrl());
+  url.searchParams.set("fields", "id,type,folder,uploaded_by");
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      id: {
+        _in: uniqueIds,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: directusServerHeaders(),
+    cache: "no-store",
+  });
+  const files = await readDirectusListResponse<DirectusFileMetadata>(response);
+  const filesById = new Map(files.map((file) => [file.id, file]));
+  const publicFolderId = await getPublicFolderId();
+
+  for (const fileId of uniqueIds) {
+    const file = filesById.get(fileId);
+
+    if (
+      !file ||
+      !file.type?.startsWith("image/") ||
+      (!existingListingFileIds.has(fileId) &&
+        (file.uploaded_by !== currentUserId ||
+          file.folder !== publicFolderId))
+    ) {
+      throw new DirectusAccountError(
+        "Eine ausgewählte Bilddatei ist nicht freigegeben.",
+        400,
+        "INVALID_FILE",
+      );
+    }
+  }
+}
+
 async function getOpenListingRevisions(
   listingId: string,
 ): Promise<ListingRevision[]> {
@@ -682,12 +1288,38 @@ async function mergeOpenRevisionIntoEditorData(
     return editorData;
   }
 
+  const {
+    logo_id: logoId,
+    gallery_file_ids: galleryFileIds,
+    social_links: socialLinks,
+    opening_hours: openingHours,
+    ...baseRevisionData
+  } = revision.data;
+
   return {
     listing: {
       ...editorData.listing,
-      ...revision.data,
+      ...baseRevisionData,
       status: revision.status,
       canton,
+      logo: logoId === undefined ? editorData.listing.logo : logoId,
+      gallery: Array.isArray(galleryFileIds)
+        ? galleryFileIds.map((fileId, index) => ({
+            id: `revision-${index}`,
+            directus_files_id: fileId,
+          }))
+        : editorData.listing.gallery,
+    social_links: Array.isArray(socialLinks)
+        ? socialLinks
+        : editorData.listing.social_links,
+      custom_cta_label:
+        revision.data.custom_cta_label === undefined
+          ? editorData.listing.custom_cta_label
+          : revision.data.custom_cta_label,
+      custom_cta_value:
+        revision.data.custom_cta_value === undefined
+          ? editorData.listing.custom_cta_value
+          : revision.data.custom_cta_value,
     },
     industryIds: Array.isArray(revision.data.industry_ids)
       ? revision.data.industry_ids
@@ -695,6 +1327,10 @@ async function mergeOpenRevisionIntoEditorData(
     spokenLanguageIds: Array.isArray(revision.data.spoken_language_ids)
       ? revision.data.spoken_language_ids
       : editorData.spokenLanguageIds,
+    openingHours: Array.isArray(openingHours)
+      ? openingHours
+      : editorData.openingHours,
+    premiumEnabled: editorData.premiumEnabled,
   };
 }
 
@@ -702,20 +1338,50 @@ function normalizedStringArray(values: string[]): string[] {
   return Array.from(new Set(values)).sort();
 }
 
+function normalizedOpeningHours(
+  values: AccountOpeningHour[],
+): AccountOpeningHour[] {
+  return values
+    .map(({ day_of_week, opens_at, closes_at }) => ({
+      day_of_week,
+      opens_at: opens_at.slice(0, 5),
+      closes_at: closes_at.slice(0, 5),
+    }))
+    .sort(
+      (first, second) =>
+        first.day_of_week - second.day_of_week ||
+        first.opens_at.localeCompare(second.opens_at) ||
+        first.closes_at.localeCompare(second.closes_at),
+    );
+}
+
 function valuesEqual(oldValue: unknown, newValue: unknown): boolean {
   return JSON.stringify(oldValue) === JSON.stringify(newValue);
+}
+
+function shouldNotifyAdminAboutRevision(
+  status: "draft" | "pending",
+  currentRevision: ListingRevision | undefined,
+  revisionData: ListingRevisionData,
+): boolean {
+  return (
+    status === "pending" &&
+    (currentRevision?.status !== "pending" ||
+      !valuesEqual(currentRevision.data, revisionData))
+  );
 }
 
 function createChangedFields(
   listing: EditableAccountListing,
   currentIndustryIds: string[],
   currentSpokenLanguageIds: string[],
+  currentOpeningHours: AccountOpeningHour[],
   values: ListingRevisionData,
 ): ListingRevisionChangedFields {
   const publishedValues: Record<string, unknown> = {
     name: listing.name,
-    short_description: listing.short_description,
     description: listing.description,
+    description_translations: listing.description_translations ?? {},
     street: listing.street,
     postal_code: listing.postal_code,
     city: listing.city,
@@ -726,11 +1392,29 @@ function createChangedFields(
     address_visibility: listing.address_visibility,
     industry_ids: normalizedStringArray(currentIndustryIds),
     spoken_language_ids: normalizedStringArray(currentSpokenLanguageIds),
+    logo_id: listing.logo,
+    gallery_file_ids: listing.gallery.map(
+      (item) => item.directus_files_id,
+    ),
+    social_links: listing.social_links ?? [],
+    custom_cta_label: listing.custom_cta_label,
+    custom_cta_value: listing.custom_cta_value,
+    opening_hours: normalizedOpeningHours(currentOpeningHours),
   };
   const revisionValues: Record<string, unknown> = {
     ...values,
     industry_ids: normalizedStringArray(values.industry_ids),
     spoken_language_ids: normalizedStringArray(values.spoken_language_ids),
+    ...(values.gallery_file_ids
+      ? {
+          gallery_file_ids: values.gallery_file_ids,
+        }
+      : {}),
+    ...(values.opening_hours
+      ? {
+          opening_hours: normalizedOpeningHours(values.opening_hours),
+        }
+      : {}),
   };
 
   return Object.fromEntries(
@@ -837,13 +1521,13 @@ async function supersedeListingRevision(revisionId: string): Promise<void> {
 }
 
 async function savePublishedListingRevision(
+  accessToken: string,
   listing: EditableAccountListing,
   values: AccountListingEditorUpdate,
   submittedBy: string,
 ): Promise<EditableAccountListing> {
   const revisionData: ListingRevisionData = {
     name: values.name,
-    short_description: values.short_description,
     description: values.description,
     street: values.street,
     postal_code: values.postal_code,
@@ -855,29 +1539,53 @@ async function savePublishedListingRevision(
     address_visibility: values.address_visibility,
     industry_ids: Array.from(new Set(values.industry_ids)),
     spoken_language_ids: Array.from(new Set(values.spoken_language_ids)),
+    ...(values.premium
+      ? {
+          logo_id: values.premium.logo_id,
+          gallery_file_ids: values.premium.gallery_file_ids,
+          social_links: values.premium.social_links,
+          opening_hours: values.premium.opening_hours,
+          custom_cta_label: values.premium.custom_cta_label,
+          custom_cta_value: values.premium.custom_cta_value,
+          description_translations:
+            values.premium.description_translations,
+        }
+      : {}),
   };
   const status = values.status;
-  const [currentIndustryIds, currentSpokenLanguageIds, openRevisions] =
+  const [
+    currentIndustryIds,
+    currentSpokenLanguageIds,
+    currentOpeningHours,
+    openRevisions,
+  ] =
     await Promise.all([
       getListingRelationIds(listing.id, industryRelationConfig),
       getListingRelationIds(listing.id, spokenLanguageRelationConfig),
+      getAccountListingOpeningHours(listing.id),
       getOpenListingRevisions(listing.id),
     ]);
   const changedFields = createChangedFields(
     listing,
     currentIndustryIds,
     currentSpokenLanguageIds,
+    currentOpeningHours,
     revisionData,
   );
   const currentRevision =
     openRevisions.find((revision) => revision.status === "pending") ??
     openRevisions[0];
 
-  const shouldNotifyAdmin =
-    status === "pending" && currentRevision?.status !== "pending";
+  const shouldNotifyAdmin = shouldNotifyAdminAboutRevision(
+    status,
+    currentRevision,
+    revisionData,
+  );
+
+  let savedRevision: ListingRevision;
 
   if (currentRevision) {
-    await updateListingRevision(
+    savedRevision = await updateListingRevision(
       currentRevision.id,
       revisionData,
       changedFields,
@@ -891,7 +1599,7 @@ async function savePublishedListingRevision(
         .map((revision) => supersedeListingRevision(revision.id)),
     );
   } else {
-    await createListingRevision(
+    savedRevision = await createListingRevision(
       listing.id,
       revisionData,
       changedFields,
@@ -902,11 +1610,10 @@ async function savePublishedListingRevision(
 
   if (shouldNotifyAdmin) {
     try {
-      await sendListingReviewNotification({
+      await sendListingReviewNotification(accessToken, {
         listingId: listing.id,
-        listingName: revisionData.name,
+        revisionId: savedRevision.id,
         kind: "listing_revision",
-        changedFields: Object.keys(changedFields),
       });
     } catch (error) {
       console.error("Admin-Benachrichtigung konnte nicht gesendet werden:", error);
@@ -931,16 +1638,119 @@ export async function getEditableAccountListingEditorData(
     return null;
   }
 
-  const [industryIds, spokenLanguageIds] = await Promise.all([
-    getListingRelationIds(listingId, industryRelationConfig),
-    getListingRelationIds(listingId, spokenLanguageRelationConfig),
-  ]);
+  const [industryIds, spokenLanguageIds, openingHours, premiumEnabled] =
+    await Promise.all([
+      getListingRelationIds(listingId, industryRelationConfig),
+      getListingRelationIds(listingId, spokenLanguageRelationConfig),
+      getAccountListingOpeningHours(listingId),
+      hasPremiumEditingAccess(accessToken, listing),
+    ]);
 
   return mergeOpenRevisionIntoEditorData({
     listing,
     industryIds,
     spokenLanguageIds,
+    openingHours,
+    premiumEnabled,
   });
+}
+
+export type UploadedAccountImage = {
+  id: string;
+  assetUrl: string;
+};
+
+const supportedImageTypes = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+]);
+const maximumImageSize = 8 * 1024 * 1024;
+
+export async function uploadAccountListingImages(
+  accessToken: string,
+  listingId: string,
+  files: File[],
+  currentUserId: string,
+): Promise<UploadedAccountImage[]> {
+  if (files.length === 0 || files.length > 10) {
+    throw new DirectusAccountError(
+      "Es wurden zu viele Dateien ausgewählt.",
+      400,
+      "TOO_MANY_FILES",
+    );
+  }
+
+  for (const file of files) {
+    if (!supportedImageTypes.has(file.type)) {
+      throw new DirectusAccountError(
+        "Die Datei ist kein unterstütztes Bild.",
+        400,
+        "INVALID_IMAGE",
+      );
+    }
+
+    if (file.size > maximumImageSize) {
+      throw new DirectusAccountError(
+        "Die Bilddatei ist zu gross.",
+        413,
+        "FILE_TOO_LARGE",
+      );
+    }
+  }
+
+  const listing = await getEditableAccountListing(accessToken, listingId);
+
+  if (!listing) {
+    throw new DirectusAccountError(
+      "Firmenprofil nicht gefunden oder nicht freigegeben.",
+      404,
+      "FORBIDDEN",
+    );
+  }
+
+  const premiumEnabled = await hasPremiumEditingAccess(accessToken, listing);
+
+  if (!premiumEnabled) {
+    throw new DirectusAccountError(
+      "Für Bild-Uploads ist ein aktives Premium-Abo erforderlich.",
+      403,
+      "PREMIUM_REQUIRED",
+    );
+  }
+
+  const folderId = await getPublicFolderId();
+  const uploadedImages: UploadedAccountImage[] = [];
+
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append("folder", folderId);
+    formData.append("uploaded_by", currentUserId);
+    formData.append(
+      "title",
+      `${listing.name} – ${file.name}`.slice(0, 240),
+    );
+    formData.append("file", file, file.name);
+
+    const uploadUrl = new URL("/files", getDirectusUrl());
+    uploadUrl.searchParams.set("fields", "id");
+
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: directusServerHeaders(),
+      body: formData,
+      cache: "no-store",
+    });
+    const uploadedFile =
+      await readDirectusItemResponse<DirectusFileMetadata>(response);
+
+    uploadedImages.push({
+      id: uploadedFile.id,
+      assetUrl: getDirectusAssetUrl(uploadedFile.id),
+    });
+  }
+
+  return uploadedImages;
 }
 
 export async function getActiveAccountOrganizations(
@@ -958,6 +1768,13 @@ export async function getActiveAccountOrganizations(
         ]),
     ).values(),
   );
+}
+
+export async function hasActiveAccountMembership(
+  accessToken: string,
+): Promise<boolean> {
+  const memberships = await getOrganizationMemberships(accessToken);
+  return memberships.length > 0;
 }
 
 function slugifyListingName(name: string): string {
@@ -1024,6 +1841,35 @@ async function createUniqueListingSlug(name: string): Promise<string> {
   }
 
   return `${baseSlug.slice(0, 125)}-${crypto.randomUUID().slice(0, 8)}`;
+}
+
+export async function createAccountOrganization(
+  accessToken: string,
+  name: string,
+): Promise<AccountOrganization> {
+  const memberships = await getOrganizationMemberships(accessToken);
+
+  if (memberships.length > 0) {
+    throw new DirectusAccountError(
+      "Das Firmenkonto ist bereits einer Organisation zugeordnet.",
+      409,
+      "ALREADY_CONFIGURED",
+    );
+  }
+
+  const url = new URL("/findelio-account-setup", getDirectusUrl());
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name }),
+    cache: "no-store",
+  });
+
+  return readDirectusItemResponse<AccountOrganization>(response);
 }
 
 export async function createAccountListing(
@@ -1100,13 +1946,47 @@ export async function updateEditableAccountListing(
     ),
   ]);
 
-  if (currentListing.status === "published") {
-    return savePublishedListingRevision(currentListing, values, submittedBy);
+  if (values.premium) {
+    const premiumEnabled = await hasPremiumEditingAccess(
+      accessToken,
+      currentListing,
+    );
+
+    if (!premiumEnabled) {
+      throw new DirectusAccountError(
+        "Für diese Änderungen ist ein aktives Premium-Abo erforderlich.",
+        403,
+        "PREMIUM_REQUIRED",
+      );
+    }
+
+    await validatePremiumFileIds(
+      currentListing,
+      [
+        ...(values.premium.logo_id ? [values.premium.logo_id] : []),
+        ...values.premium.gallery_file_ids,
+      ],
+      submittedBy,
+    );
   }
 
-  const safeListingValues: AccountListingUpdate = {
+  if (currentListing.status === "published") {
+    return savePublishedListingRevision(
+      accessToken,
+      currentListing,
+      values,
+      submittedBy,
+    );
+  }
+
+  const safeListingValues: AccountListingUpdate & {
+    logo?: string | null;
+    social_links?: AccountSocialLink[];
+    custom_cta_label?: string | null;
+    custom_cta_value?: string | null;
+    description_translations?: Record<string, string>;
+  } = {
     name: values.name,
-    short_description: values.short_description,
     description: values.description,
     street: values.street,
     postal_code: values.postal_code,
@@ -1117,6 +1997,16 @@ export async function updateEditableAccountListing(
     website_url: values.website_url,
     address_visibility: values.address_visibility,
     status: values.status,
+    ...(values.premium
+      ? {
+          logo: values.premium.logo_id,
+          social_links: values.premium.social_links,
+          custom_cta_label: values.premium.custom_cta_label,
+          custom_cta_value: values.premium.custom_cta_value,
+          description_translations:
+            values.premium.description_translations,
+        }
+      : {}),
   };
   const url = new URL(
     `/items/listings/${encodeURIComponent(listingId)}`,
@@ -1147,17 +2037,102 @@ export async function updateEditableAccountListing(
       uniqueSpokenLanguageIds,
       spokenLanguageRelationConfig,
     ),
+    ...(values.premium
+      ? [
+          syncListingGallery(
+            listingId,
+            values.premium.gallery_file_ids,
+          ),
+          syncListingOpeningHours(
+            listingId,
+            values.premium.opening_hours,
+          ),
+        ]
+      : []),
   ]);
 
-  if (values.status === "pending" && currentListing.status !== "pending") {
-    try {
-      await sendListingReviewNotification({
+  const openRevisions = await getOpenListingRevisions(listingId);
+  const currentRevision =
+    openRevisions.find((revision) => revision.status === "pending") ??
+    openRevisions[0];
+
+  if (values.status === "pending" || currentRevision) {
+    const revisionData: ListingRevisionData = {
+      name: values.name,
+      description: values.description,
+      street: values.street,
+      postal_code: values.postal_code,
+      city: values.city,
+      canton: values.canton,
+      public_email: values.public_email,
+      phone: values.phone,
+      website_url: values.website_url,
+      address_visibility: values.address_visibility,
+      industry_ids: uniqueIndustryIds,
+      spoken_language_ids: uniqueSpokenLanguageIds,
+      ...(values.premium
+        ? {
+            logo_id: values.premium.logo_id,
+            gallery_file_ids: values.premium.gallery_file_ids,
+            social_links: values.premium.social_links,
+            opening_hours: values.premium.opening_hours,
+            custom_cta_label: values.premium.custom_cta_label,
+            custom_cta_value: values.premium.custom_cta_value,
+            description_translations:
+              values.premium.description_translations,
+          }
+        : {}),
+    };
+    const changedFields: ListingRevisionChangedFields = Object.fromEntries(
+      Object.entries(revisionData).map(([field, newValue]) => [
+        field,
+        { old: null, new: newValue ?? null },
+      ]),
+    );
+    const shouldNotifyAdmin = shouldNotifyAdminAboutRevision(
+      values.status,
+      currentRevision,
+      revisionData,
+    );
+    let savedRevision: ListingRevision;
+
+    if (currentRevision) {
+      savedRevision = await updateListingRevision(
+        currentRevision.id,
+        revisionData,
+        changedFields,
+        values.status,
+        submittedBy,
+      );
+
+      await Promise.all(
+        openRevisions
+          .filter((revision) => revision.id !== currentRevision.id)
+          .map((revision) => supersedeListingRevision(revision.id)),
+      );
+    } else {
+      savedRevision = await createListingRevision(
         listingId,
-        listingName: updatedListing.name,
-        kind: "new_listing",
-      });
-    } catch (error) {
-      console.error("Admin-Benachrichtigung konnte nicht gesendet werden:", error);
+        revisionData,
+        changedFields,
+        values.status,
+        submittedBy,
+      );
+    }
+
+    if (shouldNotifyAdmin) {
+      try {
+        await sendListingReviewNotification(accessToken, {
+          listingId,
+          revisionId: savedRevision.id,
+          kind: "new_listing",
+        });
+      } catch (error) {
+        console.error(
+          "Admin-Benachrichtigung konnte nicht gesendet werden:",
+          error,
+        );
+      }
     }
   }
 
@@ -1185,11 +2160,38 @@ export async function getAccountOrganizationOverview(
     accessToken,
     organizationIds,
   );
+  const subscriptions = await getAccountSubscriptions(
+    accessToken,
+    organizationIds,
+  );
+  let premiumGrants: PremiumGrant[] = [];
+  try {
+    premiumGrants = (await getPremiumGrants()).filter(isPremiumGrantActive);
+  } catch (error) {
+    console.warn("Premium-Freischaltungen konnten nicht geladen werden:", error);
+  }
 
   return uniqueMemberships.map((membership) => ({
     ...membership,
-    listings: listings.filter(
-      (listing) => listing.organization?.id === membership.organization.id,
-    ),
+    listings: listings
+      .filter(
+        (listing) => listing.organization?.id === membership.organization.id,
+      )
+      .map((listing) => ({
+        ...listing,
+        subscription: selectCurrentSubscription(
+          subscriptions.filter(
+            (subscription) =>
+              subscriptionListingId(subscription) === listing.id,
+          ),
+        ),
+        premiumGrant:
+          premiumGrants.find(
+            (grant) =>
+              (typeof grant.listing === "string"
+                ? grant.listing
+                : grant.listing.id) === listing.id,
+          ) ?? null,
+      })),
   }));
 }

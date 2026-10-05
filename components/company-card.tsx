@@ -3,6 +3,7 @@ import type { Listing } from "@/lib/directus";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import CompanyLogo from "@/components/company-logo";
+import { htmlToPlainText } from "@/lib/text";
 
 export default async function CompanyCard({
   company,
@@ -12,9 +13,9 @@ export default async function CompanyCard({
   locale: AppLocale;
 }) {
   const t = await getTranslations("Results");
+  const tg = await getTranslations("Growth");
 
-  const primaryIndustry =
-    company.industries[0]?.industries_id.name ?? "";
+  const primaryIndustry = company.industries[0]?.industries_id;
 
   const languages = company.spoken_languages.map(
     (item) => item.spoken_languages_id,
@@ -22,6 +23,7 @@ export default async function CompanyCard({
 
   const isVerified =
     company.verification_status === "verified";
+  const descriptionExcerpt = htmlToPlainText(company.description);
 
   return (
     <article className="group rounded-3xl border border-[var(--border)] bg-white p-6 transition hover:-translate-y-1 hover:border-[#0277ee]/40 hover:shadow-xl hover:shadow-[#001734]/8">
@@ -42,19 +44,30 @@ export default async function CompanyCard({
                 {t("verified")}
               </span>
             )}
+            {company.premium_features_enabled && (
+              <span className="rounded-full bg-[#e8f3ff] px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-[var(--accent)]">
+                {tg("common.premium")}
+              </span>
+            )}
           </div>
 
           {primaryIndustry && (
-            <p className="mt-1 text-sm font-semibold text-[var(--accent)]">
-              {primaryIndustry}
-            </p>
+            <Link
+              href={`/unternehmen?branche=${encodeURIComponent(
+                primaryIndustry.code,
+              )}`}
+              locale={locale}
+              className="mt-1 inline-flex text-sm font-semibold text-[var(--accent)] hover:underline focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+            >
+              {primaryIndustry.name}
+            </Link>
           )}
         </div>
       </div>
 
-      {company.short_description && (
+      {descriptionExcerpt && (
         <p className="mt-5 line-clamp-3 text-[var(--muted)]">
-          {company.short_description}
+          {descriptionExcerpt}
         </p>
       )}
 

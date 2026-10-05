@@ -1,0 +1,20 @@
+{% layout 'findelio-base' %}
+{% block content %}
+
+<h1 style="margin:0 0 20px;color:#172940;font-size:28px;line-height:1.25;">{{ heading | escape }}</h1>
+<p style="margin:0 0 18px;color:#525f70;font-size:16px;line-height:1.6;">{{ intro | escape }}</p>
+<p style="margin:0 0 8px;color:#525f70;font-size:16px;line-height:1.6;"><strong>Firma:</strong> {{ listingName | escape }}</p>
+<p style="margin:0 0 24px;color:#525f70;font-size:16px;line-height:1.6;"><strong>Beitrag:</strong> {{ postTitle | escape }} ({{ postType | escape }})</p>
+
+{% if reason %}
+<div style="margin:0 0 26px;padding:18px;border:1px solid #d9e8f8;border-radius:10px;background:#f3f7fb;">
+  <p style="margin:0 0 8px;color:#172940;font-size:15px;line-height:1.5;"><strong>{{ reasonLabel | escape }}:</strong></p>
+  <p style="margin:0;color:#525f70;font-size:15px;line-height:1.6;white-space:pre-line;">{{ reason | escape }}</p>
+</div>
+{% endif %}
+
+<a rel="noopener" target="_blank" href="{{ targetUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;font-size:16px;font-weight:600;text-decoration:none;">{{ buttonLabel | escape }}</a>
+<p style="margin:28px 0 8px;color:#525f70;font-size:14px;line-height:1.5;">Falls der Button nicht funktioniert, öffne diesen Link:</p>
+<p style="margin:0;font-size:14px;line-height:1.5;word-break:break-all;"><a href="{{ targetUrl | escape }}" style="color:#0277EE;">{{ targetUrl | escape }}</a></p>
+
+{% endblock %}

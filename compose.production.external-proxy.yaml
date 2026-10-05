@@ -1,0 +1,23 @@
+services:
+  # Caddy bleibt in der Basisdatei für eigenständige Server verfügbar, wird
+  # hinter dem bestehenden Nginx Proxy Manager aber nicht gestartet.
+  proxy:
+    profiles:
+      - caddy
+
+  app:
+    networks:
+      - edge
+      - backend
+      - ingress
+
+  directus:
+    networks:
+      - edge
+      - backend
+      - ingress
+
+networks:
+  ingress:
+    name: nginx-proxy_default
+    external: true

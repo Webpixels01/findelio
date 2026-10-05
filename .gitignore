@@ -1,5 +1,6 @@
 node_modules
 .next
+next-env.d.ts
 out
 coverage
 
@@ -14,3 +15,5 @@ coverage
 Thumbs.db
 
 infra/directus/uploads/
+backups/
+.env.production
