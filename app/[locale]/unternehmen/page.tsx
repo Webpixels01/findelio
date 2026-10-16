@@ -3,10 +3,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
 import SearchForm, { type SearchValues } from "@/components/search-form";
-import CompanyCard from "@/components/company-card";
-import { getListings } from "@/lib/directus";
+import CompanyResults from "@/components/company-results";
+import { loadListingPage } from "@/app/actions/listings";
+import { normalizeListingPage } from "@/lib/listing-pagination";
+import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
-import ListingMetricsTracker from "@/components/listing-metrics-tracker";
 import { buildPageMetadata } from "@/lib/seo";
 
 function value(input: string | string[] | undefined) {
@@ -31,10 +32,11 @@ export async function generateMetadata({
     Boolean(value(query[key])?.trim()),
   );
 
+  const page = normalizeListingPage(value(query.page));
   return buildPageMetadata({
     locale,
-    path: "/unternehmen",
-    title: `${t("title")} | Findelio`,
+    path: page > 1 ? `/unternehmen?page=${page}` : "/unternehmen",
+    title: `${t("title")}${page > 1 ? ` – ${t("pageTitle", { page })}` : ""} | Findelio`,
     description: metadata("description"),
     noIndex: hasFilters,
   });
@@ -56,15 +58,12 @@ export default async function CompaniesPage({
     ort: value(query.ort),
   };
 
+  const page = normalizeListingPage(value(query.page));
   const [results, t] = await Promise.all([
-    getListings(locale, {
-      language: filters.sprache,
-      industry: filters.branche,
-      canton: filters.kanton,
-      location: filters.ort,
-    }),
+    loadListingPage(locale, filters, page),
     getTranslations("Results"),
   ]);
+  if (page > 1 && results.items.length === 0) notFound();
 
   return (
     <>
@@ -79,10 +78,6 @@ export default async function CompaniesPage({
               <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
                 {t("title")}
               </h1>
-
-              <p className="mt-3 text-lg text-[var(--muted)]">
-                {t("count", { count: results.length })}
-              </p>
             </div>
 
             <Link
@@ -93,44 +88,16 @@ export default async function CompaniesPage({
             </Link>
           </div>
 
-          <div className="mt-8">
-            <SearchForm
-              locale={locale}
-              values={filters}
-              compact
-            />
-          </div>
-
-          {results.length > 0 ? (
-            <>
-            <ListingMetricsTracker
-              listingIds={results.filter((item) => item.premium_features_enabled).map((item) => item.id)}
-              event="search_impressions"
-            />
-            <div className="mt-10 grid gap-6 lg:grid-cols-2">
-              {results.map((company) => (
-                <CompanyCard
-                  key={company.id}
-                  company={company}
-                  locale={locale}
-                />
-              ))}
+          <CompanyResults
+            key={JSON.stringify([locale, filters, page, results.orderDate])}
+            initial={results}
+            locale={locale}
+            filters={filters}
+          >
+            <div className="mt-8">
+              <SearchForm locale={locale} values={filters} compact />
             </div>
-            </>
-          ) : (
-            <div className="mt-10 rounded-3xl border border-dashed border-[#b9c9d9] bg-white p-10 text-center">
-              <p className="text-xl font-bold">
-                {t("noResults")}
-              </p>
-
-              <Link
-                href="/unternehmen"
-                className="primary-button mt-6 h-11 px-5"
-              >
-                {t("clearFilters")}
-              </Link>
-            </div>
-          )}
+          </CompanyResults>
         </div>
       </main>
     </>

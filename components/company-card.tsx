@@ -12,8 +12,8 @@ export default async function CompanyCard({
   company: Listing;
   locale: AppLocale;
 }) {
-  const t = await getTranslations("Results");
-  const tg = await getTranslations("Growth");
+  const t = await getTranslations({ locale, namespace: "Results" });
+  const tg = await getTranslations({ locale, namespace: "Growth" });
 
   const primaryIndustry = company.industries[0]?.industries_id;
 

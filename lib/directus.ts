@@ -1,4 +1,5 @@
 import "server-only";
+import { LISTINGS_PAGE_SIZE, normalizeListingPage, dailyListingRank } from "@/lib/listing-pagination";
 import type { AppLocale } from "@/i18n/routing";
 import { getActivePremiumGrantListingIds } from "@/lib/directus-premium";
 
@@ -391,10 +392,14 @@ async function getActivePremiumListingIds(): Promise<Set<string>> {
   );
 }
 
-export async function getListings(
+export async function getListingsPage(
   locale: AppLocale,
   filters: ListingFilters = {},
-): Promise<Listing[]> {
+  requestedPage = 1,
+  orderDate = new Date().toISOString().slice(0, 10),
+): Promise<{ listings: Listing[]; total: number; page: number; orderDate: string }> {
+  const page = normalizeListingPage(requestedPage);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(orderDate)) throw new Error("Invalid listing order date");
   const fields = [
     "id",
     "organization",
@@ -485,47 +490,62 @@ export async function getListings(
     });
   }
 
-  const url = new URL("/items/listings", getDirectusUrl());
-
-  url.searchParams.set("fields", fields);
-  url.searchParams.set("sort", "name");
-  url.searchParams.set(
-    "filter",
-    JSON.stringify({
-      _and: conditions,
-    }),
-  );
-
-  const [
-    response,
-    industryNames,
-    spokenLanguageNames,
-    premiumListingIds,
-    premiumGrantListingIds,
-  ] =
-    await Promise.all([
-      fetch(url, {
-        headers: getDirectusHeaders(),
-        cache: "no-store",
-      }),
-      getDirectoryTranslationMap("industries", locale),
-      getDirectoryTranslationMap("spoken_languages", locale),
-      getActivePremiumListingIds(),
-      getActivePremiumGrantListingIds(),
-    ]);
-
-  if (!response.ok) {
-    throw new Error(
-      `Directus konnte nicht geladen werden: ${response.status} ${response.statusText}`,
-    );
+  const filter = { _and: conditions };
+  async function readListings<T>(query: Record<string, string>, extra?: Record<string, unknown>): Promise<T> {
+    const url = new URL("/items/listings", getDirectusUrl());
+    url.searchParams.set("filter", JSON.stringify(extra ? { _and: [filter, extra] } : filter));
+    for (const [key, value] of Object.entries(query)) url.searchParams.set(key, value);
+    const response = await fetch(url, { headers: getDirectusHeaders(), cache: "no-store" });
+    if (!response.ok) throw new Error(`Directus listings request failed: ${response.status}`);
+    return ((await response.json()) as DirectusResponse<T>).data;
   }
 
-  const result = (await response.json()) as DirectusResponse<Listing[]>;
+  // Count all matching public listings, independently of the ten displayed cards.
+  const [counts, industryNames, spokenLanguageNames, subscriptions, grants] = await Promise.all([
+    readListings<Array<{ countDistinct: { id: string | number } }>>({ "aggregate[countDistinct]": "id" }),
+    getDirectoryTranslationMap("industries", locale),
+    getDirectoryTranslationMap("spoken_languages", locale),
+    getActivePremiumListingIds(),
+    getActivePremiumGrantListingIds(),
+  ]);
+  const total = Number(counts[0]?.countDistinct.id);
+  if (!Number.isSafeInteger(total) || total < 0) throw new Error("Invalid listing count");
+  const premiumIds = [...new Set([...subscriptions, ...grants])];
 
-  const localizedListings = result.data.map((listing) => {
+  // Resolve only matching premium IDs. Bounded batches avoid the default 100-item
+  // limit and oversized URLs; full card data is fetched only for the current page.
+  const matchingPremium: string[] = [];
+  for (let start = 0; start < premiumIds.length; start += 100) {
+    const ids = premiumIds.slice(start, start + 100);
+    const matches = await readListings<Array<{ id: string }>>(
+      { fields: "id", limit: "100", sort: "id" }, { id: { _in: ids } },
+    );
+    matchingPremium.push(...matches.map((item) => item.id));
+  }
+  matchingPremium.sort((a, b) => dailyListingRank(a, orderDate) - dailyListingRank(b, orderDate) || a.localeCompare(b));
+  const offset = (page - 1) * LISTINGS_PAGE_SIZE;
+  const selectedPremium = matchingPremium.slice(offset, offset + LISTINGS_PAGE_SIZE);
+  const regularLimit = LISTINGS_PAGE_SIZE - selectedPremium.length;
+  const regularOffset = Math.max(0, offset - matchingPremium.length);
+  const [premiumListings, regularListings] = await Promise.all([
+    selectedPremium.length
+      ? readListings<Listing[]>({ fields, limit: String(selectedPremium.length) }, { id: { _in: selectedPremium } })
+      : Promise.resolve([] as Listing[]),
+    regularLimit && offset < total
+      ? readListings<Listing[]>(
+          { fields, limit: String(regularLimit), offset: String(regularOffset), sort: "name,id" },
+          premiumIds.length ? { id: { _nin: premiumIds } } : undefined,
+        )
+      : Promise.resolve([] as Listing[]),
+  ]);
+  const premiumById = new Map(premiumListings.map((listing) => [listing.id, listing]));
+  const ordered = [
+    ...selectedPremium.flatMap((id) => premiumById.has(id) ? [premiumById.get(id)!] : []),
+    ...regularListings,
+  ];
+  const localizedListings = ordered.map((listing) => {
     const premiumEnabled =
-      premiumListingIds.has(listing.id) ||
-      premiumGrantListingIds.has(listing.id);
+      subscriptions.has(listing.id) || grants.has(listing.id);
 
     return localizeListing(
       {
@@ -543,25 +563,7 @@ export async function getListings(
     );
   });
 
-  const dailySeed = new Date().toISOString().slice(0, 10);
-  const dailyRank = (id: string) => {
-    let hash = 0;
-    for (const character of `${dailySeed}:${id}`) {
-      hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
-    }
-    return hash;
-  };
-
-  return localizedListings.sort((first, second) => {
-    const premiumDifference =
-      Number(Boolean(second.premium_features_enabled)) -
-      Number(Boolean(first.premium_features_enabled));
-    if (premiumDifference !== 0) return premiumDifference;
-    if (first.premium_features_enabled && second.premium_features_enabled) {
-      return dailyRank(first.id) - dailyRank(second.id);
-    }
-    return first.name.localeCompare(second.name, locale);
-  });
+  return { listings: localizedListings, total, page, orderDate };
 }
 
 export async function getListingBySlug(

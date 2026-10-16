@@ -49,6 +49,13 @@
     "submit": "Znajdź firmy"
   },
   "Results": {
+    "loadMore": "Wczytaj więcej firm",
+    "loadingMore": "Wczytywanie kolejnych firm …",
+    "loadError": "Nie udało się wczytać kolejnych firm. Spróbuj ponownie.",
+    "retryLoading": "Spróbuj ponownie",
+    "previousPage": "Poprzednia strona",
+    "pagination": "Strony wyników",
+    "pageTitle": "Strona {page}",
     "eyebrow": "Wyszukiwanie firm",
     "title": "Pasujące firmy",
     "count": "Liczba znalezionych firm: {count}",

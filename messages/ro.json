@@ -49,6 +49,13 @@
     "submit": "Găsește companii"
   },
   "Results": {
+    "loadMore": "Încarcă mai multe firme",
+    "loadingMore": "Se încarcă mai multe firme …",
+    "loadError": "Nu s-au putut încărca mai multe firme. Încearcă din nou.",
+    "retryLoading": "Încearcă din nou",
+    "previousPage": "Pagina anterioară",
+    "pagination": "Pagini de rezultate",
+    "pageTitle": "Pagina {page}",
     "eyebrow": "Căutare companii",
     "title": "Companii potrivite",
     "count": "Companii găsite: {count}",

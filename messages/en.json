@@ -49,6 +49,13 @@
     "submit": "Find businesses"
   },
   "Results": {
+    "loadMore": "Load more companies",
+    "loadingMore": "Loading more companies …",
+    "loadError": "More companies could not be loaded. Please try again.",
+    "retryLoading": "Try again",
+    "previousPage": "Previous page",
+    "pagination": "Results pages",
+    "pageTitle": "Page {page}",
     "eyebrow": "Business search",
     "title": "Matching businesses",
     "count": "{count, plural, =0 {No businesses} one {# business} other {# businesses}} found",

@@ -49,6 +49,13 @@
     "submit": "Nájsť firmy"
   },
   "Results": {
+    "loadMore": "Načítať ďalšie firmy",
+    "loadingMore": "Načítavajú sa ďalšie firmy …",
+    "loadError": "Ďalšie firmy sa nepodarilo načítať. Skúste to znova.",
+    "retryLoading": "Skúsiť znova",
+    "previousPage": "Predchádzajúca stránka",
+    "pagination": "Stránky výsledkov",
+    "pageTitle": "Stránka {page}",
     "eyebrow": "Vyhľadávanie firiem",
     "title": "Vhodné firmy",
     "count": "Nájdené firmy: {count}",

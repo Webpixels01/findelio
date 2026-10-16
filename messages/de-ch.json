@@ -49,6 +49,13 @@
     "submit": "Unternehmen finden"
   },
   "Results": {
+    "loadMore": "Weitere Unternehmen laden",
+    "loadingMore": "Weitere Unternehmen werden geladen …",
+    "loadError": "Die weiteren Unternehmen konnten nicht geladen werden. Bitte versuche es erneut.",
+    "retryLoading": "Erneut versuchen",
+    "previousPage": "Vorherige Seite",
+    "pagination": "Ergebnisseiten",
+    "pageTitle": "Seite {page}",
     "eyebrow": "Firmensuche",
     "title": "Passende Unternehmen",
     "count": "{count, plural, =0 {Keine Unternehmen} one {# Unternehmen} other {# Unternehmen}} gefunden",

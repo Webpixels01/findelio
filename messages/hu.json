@@ -49,6 +49,13 @@
     "submit": "Cégek keresése"
   },
   "Results": {
+    "loadMore": "További cégek betöltése",
+    "loadingMore": "További cégek betöltése …",
+    "loadError": "A további cégeket nem sikerült betölteni. Kérjük, próbálja újra.",
+    "retryLoading": "Újrapróbálkozás",
+    "previousPage": "Előző oldal",
+    "pagination": "Találati oldalak",
+    "pageTitle": "{page}. oldal",
     "eyebrow": "Cégkeresés",
     "title": "Megfelelő vállalkozások",
     "count": "Találatok száma: {count}",

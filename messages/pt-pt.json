@@ -49,6 +49,13 @@
     "submit": "Encontrar empresas"
   },
   "Results": {
+    "loadMore": "Carregar mais empresas",
+    "loadingMore": "A carregar mais empresas …",
+    "loadError": "Não foi possível carregar mais empresas. Tente novamente.",
+    "retryLoading": "Tentar novamente",
+    "previousPage": "Página anterior",
+    "pagination": "Páginas de resultados",
+    "pageTitle": "Página {page}",
     "eyebrow": "Pesquisa de empresas",
     "title": "Empresas correspondentes",
     "count": "Empresas encontradas: {count}",

@@ -49,6 +49,13 @@
     "submit": "Tìm doanh nghiệp"
   },
   "Results": {
+    "loadMore": "Tải thêm doanh nghiệp",
+    "loadingMore": "Đang tải thêm doanh nghiệp …",
+    "loadError": "Không thể tải thêm doanh nghiệp. Vui lòng thử lại.",
+    "retryLoading": "Thử lại",
+    "previousPage": "Trang trước",
+    "pagination": "Các trang kết quả",
+    "pageTitle": "Trang {page}",
     "eyebrow": "Tìm kiếm doanh nghiệp",
     "title": "Doanh nghiệp phù hợp",
     "count": "{count, plural, =0 {Không tìm thấy doanh nghiệp} other {Tìm thấy # doanh nghiệp}}",
