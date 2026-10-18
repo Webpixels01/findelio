@@ -46,9 +46,9 @@ export default async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-xl">
-      <div className="site-container flex min-h-20 items-center justify-between gap-6">
-        <Link href="/" aria-label={t("home")} className="shrink-0">
-          <span className="relative block h-12 w-[161px] sm:h-[45px] sm:w-[150px]">
+      <div className="site-container flex min-h-20 items-center justify-between gap-3 sm:gap-6">
+        <Link href="/" aria-label={t("home")} className="min-w-0 sm:shrink-0">
+          <span className="relative block h-12 w-[161px] max-w-full sm:h-[45px] sm:w-[150px]">
             <Image
               src="/findelio-logo-horizontal.svg"
               alt="Findelio"
@@ -95,54 +95,54 @@ export default async function SiteHeader() {
           <LanguageSwitcher ariaLabel={t("selectLanguage")} />
         </nav>
 
-        <details className="group relative lg:hidden">
-          <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-[var(--border)] [&::-webkit-details-marker]:hidden">
-            <span className="sr-only">{t("menu")}</span>
-            <span className="relative h-5 w-5" aria-hidden="true">
-              <span className="absolute left-0 top-1 block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:translate-y-[5px] group-open:rotate-45" />
-              <span className="absolute left-0 top-[9px] block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:opacity-0" />
-              <span className="absolute left-0 top-[14px] block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:-translate-y-[5px] group-open:-rotate-45" />
-            </span>
-          </summary>
+        <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <LanguageSwitcher ariaLabel={t("selectLanguage")} />
+          <details className="group relative">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-[var(--border)] [&::-webkit-details-marker]:hidden">
+              <span className="sr-only">{t("menu")}</span>
+              <span className="relative h-5 w-5" aria-hidden="true">
+                <span className="absolute left-0 top-1 block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:translate-y-[5px] group-open:rotate-45" />
+                <span className="absolute left-0 top-[9px] block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:opacity-0" />
+                <span className="absolute left-0 top-[14px] block h-0.5 w-5 rounded bg-[var(--foreground)] transition duration-200 group-open:-translate-y-[5px] group-open:-rotate-45" />
+              </span>
+            </summary>
 
-          <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-2xl shadow-[#001734]/10">
-            <nav className="flex flex-col gap-1" aria-label={t("navigation")}>
-              <Link
-                href="/"
-                aria-label={t("home")}
-                title={t("home")}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-xl transition-colors hover:bg-[var(--surface)] hover:text-[var(--accent)]"
-              >
-                <HomeIcon />
-              </Link>
-              <Link href="/unternehmen" className="mobile-nav-link">
-                {t("findCompanies")}
-              </Link>
-              <Link href="/firma-eintragen" className="mobile-nav-link">
-                {t("registerCompany")}
-              </Link>
-              <Link href="/blog" className="mobile-nav-link">
-                {t("blog")}
-              </Link>
-              {isAuthenticated ? (
-                <>
-                  <Link href="/dashboard" className="mobile-nav-link">
-                    {t("dashboard")}
-                  </Link>
-                  <LogoutButton variant="mobile-nav" />
-                </>
-              ) : (
-                <Link href="/login" className="mobile-nav-link">
-                  {t("login")}
+            <div className="absolute right-0 mt-3 w-72 rounded-2xl border border-[var(--border)] bg-white p-4 shadow-2xl shadow-[#001734]/10">
+              <nav className="flex flex-col gap-1" aria-label={t("navigation")}>
+                <Link
+                  href="/"
+                  aria-label={t("home")}
+                  title={t("home")}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-xl transition-colors hover:bg-[var(--surface)] hover:text-[var(--accent)]"
+                >
+                  <HomeIcon />
                 </Link>
-              )}
-              <ShareButton variant="mobile" hideOnCompanyProfile />
-              <div className="mt-3 border-t border-[var(--border)] pt-3">
-                <LanguageSwitcher ariaLabel={t("selectLanguage")} />
-              </div>
-            </nav>
-          </div>
-        </details>
+                <Link href="/unternehmen" className="mobile-nav-link">
+                  {t("findCompanies")}
+                </Link>
+                <Link href="/firma-eintragen" className="mobile-nav-link">
+                  {t("registerCompany")}
+                </Link>
+                <Link href="/blog" className="mobile-nav-link">
+                  {t("blog")}
+                </Link>
+                {isAuthenticated ? (
+                  <>
+                    <Link href="/dashboard" className="mobile-nav-link">
+                      {t("dashboard")}
+                    </Link>
+                    <LogoutButton variant="mobile-nav" />
+                  </>
+                ) : (
+                  <Link href="/login" className="mobile-nav-link">
+                    {t("login")}
+                  </Link>
+                )}
+                <ShareButton variant="mobile" hideOnCompanyProfile />
+              </nav>
+            </div>
+          </details>
+        </div>
       </div>
     </header>
   );
