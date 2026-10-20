@@ -50,16 +50,23 @@ npm run lint
 npx tsc --noEmit --incremental false
 node scripts/test-referral-directus.mjs --isolated
 node scripts/test-referral-directus.mjs --isolated --recover-from-12
+node scripts/test-referral-directus.mjs --isolated --licensed-upgrade
 ```
 
-Der letzte Befehl erstellt eine kurzlebige Docker-Umgebung mit eigener
-Datenbank und lokalem Mailpit; Projektzugänge und echte E-Mail-Empfänger
-werden nicht verwendet. Er prüft auch gleichzeitige Anfragen, direkte
+Die Docker-Testbefehle erstellen eine kurzlebige Umgebung mit eigener
+Datenbank und lokalem Mailpit; Produktionsdaten und echte E-Mail-Empfänger
+werden nicht verwendet. Sie prüfen auch gleichzeitige Anfragen, direkte
 CMS-Zugriffe und die Kompatibilität der Directus-Erweiterungen. Mit
 `--recover-from-12` werden vor dem Upgrade gefilterte Berechtigungen und
 öffentliche/private Beispieldaten angelegt. Der Test reproduziert die
 Sperre unter Directus 12 und prüft die Wiederherstellung des Zugriffs unter
 Directus 11 mit derselben Datenbank, unveränderten Regeln und Redis-Caches.
+`--licensed-upgrade` benötigt `LICENSE_KEY` in der ignorierten `.env.local`.
+Er prüft 11.17.4 → 12.5.0 mit aktiver Lizenz, bestehenden gefilterten Regeln
+und getrennten Eigentümerzugriffen. Nur der Test-CMS erhält dafür ausgehenden
+Netzwerkzugriff zur Directus-Lizenzprüfung. Die Testaktivierung wird vor dem
+Löschen der Testdatenbank freigegeben; schlägt dies fehl, bleibt die Instanz
+zur Wiederherstellung erhalten. Der Schlüssel wird nicht ausgegeben.
 Nach Änderungen an den beiden Sicherheits-Erweiterungen
 `npm run build:security-extensions` ausführen.
 

@@ -7,7 +7,7 @@ Stand: 5. August 2026
 - Next.js 16.4.2 mit Turbopack (Sicherheitsupdate, Quellstand 20.10.2026)
 - TypeScript und Tailwind CSS
 - next-intl
-- Directus 11.17.4 (12.5.0 wegen inkompatibler Lizenzanforderungen an bestehende Berechtigungsregeln zurückgenommen)
+- Directus 12.5.0 mit LICENSE_KEY (lizenzierter Upgrade-Test bestanden; Produktionsaktivierung über ops/deploy.sh)
 - PostgreSQL 17 Alpine
 - Redis 7 Alpine
 - Docker Compose

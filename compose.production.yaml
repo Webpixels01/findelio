@@ -101,10 +101,11 @@ services:
     logging: *default-logging
 
   directus:
-    image: directus/directus:11.17.4
+    image: directus/directus:12.5.0
     restart: unless-stopped
     environment:
       SECRET: ${DIRECTUS_SECRET:?DIRECTUS_SECRET fehlt}
+      LICENSE_KEY: ${LICENSE_KEY:-}
       PUBLIC_URL: https://${CMS_DOMAIN:?CMS_DOMAIN fehlt}
       IP_TRUST_PROXY: "number:1"
 

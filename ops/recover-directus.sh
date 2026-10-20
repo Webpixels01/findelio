@@ -14,11 +14,11 @@ if [[ -n "$compose_overlay" ]]; then
   fi
   COMPOSE+=( -f "$ROOT_DIR/$compose_overlay" )
 fi
+rollback_override=$(mktemp)
+trap 'rm -f -- "$rollback_override"' EXIT
+printf 'services:\n  directus:\n    image: directus/directus:11.17.4\n' > "$rollback_override"
+COMPOSE+=( -f "$rollback_override" )
 "${COMPOSE[@]}" config --quiet
-if ! "${COMPOSE[@]}" config --images | grep -Fxq 'directus/directus:11.17.4'; then
-  echo "Reparatur abgebrochen: Compose muss Directus 11.17.4 verwenden." >&2
-  exit 1
-fi
 container=$("${COMPOSE[@]}" ps -q directus)
 if [[ -z "$container" ]]; then
   echo "Reparatur abgebrochen: laufender Directus-Container fehlt." >&2

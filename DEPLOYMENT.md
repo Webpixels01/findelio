@@ -191,8 +191,8 @@ bash ops/deploy.sh
 
 ### Sicherheitsupdate vom 20.10.2026
 
-Der Quellstand verwendet Next.js 16.4.2, Sharp 0.35.5 und wieder Directus
-11.17.4. Das zunächst ausgelieferte Update auf Directus 12.5.0 wurde
+Der Quellstand verwendet Next.js 16.4.2, Sharp 0.35.5 und Directus
+12.5.0 mit Lizenz. Das zunächst ausgelieferte Update auf Directus 12.5.0 wurde
 zurückgenommen: Directus 12 schaltet benutzerdefinierte Berechtigungsregeln
 ohne passende Lizenz ab. Davon sind bestehende gefilterte Findelio-Regeln
 betroffen. Die früheren Tests mit unbeschränkten Testberechtigungen haben
@@ -208,10 +208,33 @@ erhalten. Der Ablauf ist für den konkreten Wechsel 12.5.0 → 11.17.4 geprüft,
 nicht als allgemeines Downgrade-Verfahren vorgesehen.
 
 Die eigenen Sicherheitskorrekturen und Next-/Sharp-Updates bleiben aktiv.
-Die nur in Directus 12 behobenen CMS-Schwachstellen gelten durch diese
-Wiederherstellung ausdrücklich nicht als behoben. Ein späteres CMS-Update
-benötigt eine kompatible, lizenzierte Zielversion und Tests der tatsächlichen
-Berechtigungsregeln; der Notfallfix erweitert keine Zugriffsrechte.
+Solange auf dem Server weiterhin 11.17.4 läuft, bleiben die erst in Directus
+12 behobenen CMS-Schwachstellen offen.
+
+#### Lizenzierter Wechsel auf Directus 12.5.0
+
+Vor dem Deployment auf dem Server `LICENSE_KEY=...` in `.env.production`
+ergänzen. Diese Datei und die lokale `.env.local` sind von Git ausgeschlossen.
+Der Schlüssel wird ausschliesslich an den CMS-Container weitergegeben, nicht
+an das Frontend oder dessen Build. Der Server benötigt ausgehenden HTTPS-Zugriff
+auf `licensing.directus.com`; `PUBLIC_URL` bleibt bei `https://cms.findelio.ch`.
+Die Lizenz muss Produktion und benutzerdefinierte Berechtigungsregeln erlauben.
+
+Der isolierte Test `--licensed-upgrade` prüft den Wechsel 11.17.4 → 12.5.0 mit
+aktiver Lizenz, vorher angelegten gefilterten Regeln und Eigentümerrechten.
+Öffentliche/fremde Zugriffe bleiben gesperrt; eigene Änderungen, Registrierung,
+Anmeldung und die bestehenden Sicherheitserweiterungen werden geprüft.
+
+`ops/deploy.sh` stoppt bei fehlendem Schlüssel vor Änderungen an den Diensten.
+Nach dem CMS-Wechsel prüft es die Zielversion, die Lizenzquelle und echte
+API-Lesezugriffe auf Kantone, Branchen und Sprachen mit dem bestehenden
+Server-Token. Eine bereits zwischengespeicherte Startseite genügt nicht.
+Beim Wechsel von 11.17.4 auf 12.5.0 stellt das Skript bei einem Fehler nach
+dem CMS-Neustart automatisch 11.17.4 mit derselben Datenbank wieder her und
+prüft die Website. Der fehlgeschlagene Deploy behält einen Fehlerstatus.
+Diese Rückkehr gilt nur für den konkret getesteten Versionswechsel.
+`ops/recover-directus.sh` kann 11.17.4 auch manuell über ein temporäres
+Compose-Overlay starten. Es verändert keine Regeln oder Geschäftsdaten.
 
 Das Update verwendet denselben Deploy-Befehl wie bisher. Eine Datenbank
 neu einzuspielen oder manuell SQL auszuführen ist nicht erforderlich.

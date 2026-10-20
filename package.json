@@ -17,7 +17,7 @@
     "build:referral-extension": "node scripts/build-referral-extension.mjs",
     "test:referral-approval": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-approval.test.mjs",
     "test:referral-admin": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-admin.test.mjs tests/referral-admin-render.mjs",
-    "test:security": "node --test tests/security.test.mjs tests/braces-security.test.mjs tests/deployment-security.test.mjs",
+    "test:security": "node --test tests/security.test.mjs tests/braces-security.test.mjs tests/deployment-security.test.mjs tests/deploy-workflow.test.mjs",
     "build:security-extensions": "node scripts/build-security-extensions.mjs"
   },
   "dependencies": {

@@ -1,16 +1,25 @@
-// Explicitly opt-in: creates only a disposable, externally isolated Docker stack.
+// Explicitly opt-in: disposable stack; licensed mode permits CMS licensing egress.
 import { mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomBytes } from 'node:crypto';
 import { spawn } from 'node:child_process';
+import { parseEnv } from 'node:util';
 
 if (!process.argv.includes('--isolated')) throw new Error('Pass --isolated to start a disposable Docker integration test');
 const browserFixture = process.argv.includes('--browser-fixture');
 const upgradeFrom11 = process.argv.includes('--upgrade-from-11');
 const recoverFrom12 = process.argv.includes('--recover-from-12');
+const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11;
+if (licensedUpgrade && (recoverFrom12 || browserFixture)) throw new Error('Licensed upgrade must run separately');
 const root = fileURLToPath(new URL('../', import.meta.url));
+let licenseKey;
+if (licensedUpgrade) {
+  const values = parseEnv(await readFile(join(root, '.env.local'), 'utf8'));
+  licenseKey = values.LICENSE_KEY?.trim();
+  if (!licenseKey || licenseKey.includes('DEIN_')) throw new Error('LICENSE_KEY in .env.local fehlt');
+}
 const dir = await mkdtemp(join(tmpdir(), 'findelio-referral-integration-'));
 const configPath = join(dir, 'compose.json');
 const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networks: { default: { internal: true } }, services: {
@@ -32,6 +41,13 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
       RATE_LIMITER_GLOBAL_KEY_PREFIX: 'findelio-global', RATE_LIMITER_EMAIL_KEY_PREFIX: 'findelio-email',
       IP_TRUST_PROXY: 'number:1', WEBSOCKETS_ENABLED: 'true' } },
 } };
+// Only the disposable CMS gets outbound access, for Directus license validation.
+// Production URLs, credentials and SMTP settings are never copied into this stack.
+if (licensedUpgrade) {
+  config.networks.licensing = {};
+  config.services.directus.networks = ['default', 'licensing'];
+}
+let licenseAttempted = false;
 async function run(args, { quiet = false, input } = {}) {
   return new Promise((resolve, reject) => {
     const child = spawn('docker', ['compose', '-f', configPath, ...args], { stdio: ['pipe', quiet ? 'ignore' : 'inherit', quiet ? 'ignore' : 'inherit'] });
@@ -52,7 +68,8 @@ async function ready() {
 try {
   if (browserFixture) config.services.directus.environment.FINDELIO_TEST_ADMIN_TOKEN = randomBytes(32).toString('hex');
   await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
-  for (const name of ['referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs', 'directus-permissions-recovery.mjs',
+  if (licensedUpgrade) await writeFile(join(dir, 'check-directus-upgrade.mjs'), await readFile(join(root, 'ops/check-directus-upgrade.mjs')));
+  for (const name of ['referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs', 'directus-permissions-recovery.mjs', 'directus-license.integration.mjs', 'directus-ownership-upgrade.mjs',
     ...(browserFixture ? ['referral-browser-setup.mjs', 'referral-directory-setup.mjs'] : [])]) {
     await writeFile(join(dir, name), await readFile(join(root, 'tests', name)));
   }
@@ -67,7 +84,8 @@ try {
   await writeFile(join(dir, 'migrations/20261020_request_limits.sql'), await readFile(join(root, 'infra/directus/migrations/20261020_request_limits.sql')));
   await writeFile(join(dir, 'apply-migrations.sh'), await readFile(join(root, 'ops/apply-migrations.sh')));
   if (browserFixture) sql += await readFile(join(root, 'tests/fixtures/referral-browser.sql'), 'utf8');
-  if (recoverFrom12) sql += await readFile(join(root, 'tests/fixtures/directus-permissions-recovery.sql'), 'utf8');
+  if (recoverFrom12 || licensedUpgrade) sql += await readFile(join(root, 'tests/fixtures/directus-permissions-recovery.sql'), 'utf8');
+  if (licensedUpgrade) sql += await readFile(join(root, 'tests/fixtures/directus-ownership-upgrade.sql'), 'utf8');
   await run(['up', '-d']);
   await ready();
   await run(['exec', '-T', 'database', 'psql', '-U', 'postgres', '-d', 'findelio_test', '-v', 'ON_ERROR_STOP=1'], { input: sql, quiet: true });
@@ -77,13 +95,25 @@ try {
   }
   await run(['restart', 'directus']);
   await ready();
-  if (recoverFrom12) await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
-  if (upgradeFrom11 || recoverFrom12) {
+  if (recoverFrom12 || licensedUpgrade) await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+  if (licensedUpgrade) await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
+  if (upgradeFrom11 || recoverFrom12 || licensedUpgrade) {
     config.services.directus.image = 'directus/directus:12.5.0';
+    if (licensedUpgrade) {
+      config.services.directus.environment.LICENSE_KEY = licenseKey;
+      licenseAttempted = true;
+    }
     await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
     await run(['up', '-d', '--no-deps', 'directus']);
   }
   await ready();
+  if (licensedUpgrade) {
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
+    await run(['exec', '-T', '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
+      'directus', 'node', '/test/check-directus-upgrade.mjs']);
+  }
   if (recoverFrom12) {
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '403']);
     config.services.directus.image = 'directus/directus:11.17.4';
@@ -105,6 +135,20 @@ try {
   await ready();
   await run(['exec', '-T', 'directus', 'node', '/test/referral-directus-disabled.integration.mjs']);
 } finally {
+  // A throwaway DB must never strand a license activation. Remove the env key,
+  // restart and use Directus' official DELETE /license endpoint before cleanup.
+  if (licenseAttempted) {
+    try {
+      delete config.services.directus.environment.LICENSE_KEY;
+      await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+      await run(['up', '-d', '--no-deps', 'directus']);
+      await ready();
+      await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'deactivate']);
+    } catch {
+      // Preserve this exact instance and its activation binding for recovery.
+      throw new Error(`Testlizenz konnte nicht freigegeben werden. Testinstanz zur Wiederherstellung erhalten: ${configPath}`);
+    }
+  }
   // Only the uniquely named stack and temporary directory created above.
   await run(['down']).finally(() => rm(dir, { recursive: true, force: true }));
 }
