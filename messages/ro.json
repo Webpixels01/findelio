@@ -139,7 +139,11 @@
     "note": "Datele tale sunt verificate în siguranță prin Directus.",
     "errorFallback": "Adresa de e-mail sau parola este incorectă.",
     "serverError": "Autentificarea nu poate fi procesată momentan.",
-    "connectionError": "Conexiunea la server a eșuat."
+    "connectionError": "Conexiunea la server a eșuat.",
+    "otpLabel": "Codul de șase cifre din autentificator",
+    "otpInvalid": "Cod invalid. Încearcă codul actual din aplicație.",
+    "otpHelp": "Deschide aplicația de autentificare. Cheia salvată permite restabilirea pe un telefon nou.",
+    "rateLimited": "Prea multe încercări. Așteaptă 15 minute."
   },
   "AccountSetup": {
     "eyebrow": "Configurarea contului de companie",
@@ -209,7 +213,8 @@
       "team": "Echipă",
       "review": "Verificare",
       "premium": "Premium",
-      "referrals": "Recomandări"
+      "referrals": "Recomandări",
+      "security": "Securitatea contului"
     },
     "summary": {
       "organizations": "Organizații",
@@ -1235,5 +1240,37 @@
       "expired_unactivated": "Expirat fără activare",
       "void": "Neeligibil"
     }
+  },
+  "TwoFactor": {
+    "title": "Securitatea contului",
+    "description": "Protejează-ți contul cu un cod suplimentar din aplicația de autentificare.",
+    "back": "Înapoi la panou",
+    "enabled": "Autentificarea cu doi factori este activată.",
+    "disabled": "Autentificarea cu doi factori nu este încă activată.",
+    "required": "2FA este obligatorie pentru acest cont. Configureaz-o pentru a continua.",
+    "optional": "Pentru clienți, 2FA este opțională. Autentificarea rămâne neschimbată până la activare.",
+    "password": "Parola actuală",
+    "scan": "Scanează codul QR cu aplicația de autentificare sau introdu cheia manual.",
+    "qrLabel": "Cod QR pentru configurarea autentificării cu doi factori",
+    "secretLabel": "Cheia de configurare și recuperare",
+    "backup": "Păstrează cheia în siguranță, de exemplu într-un manager de parole. O poți folosi pentru a restabili autentificatorul pe un telefon nou. Nu o divulga. Nu o vom mai afișa după activare.",
+    "backedUp": "Am salvat cheia în siguranță.",
+    "otp": "Codul de șase cifre din autentificator",
+    "start": "Configurează 2FA",
+    "enable": "Activează 2FA",
+    "disable": "Dezactivează 2FA",
+    "cancel": "Anulează configurarea",
+    "working": "Se verifică …",
+    "saved": "Salvat. Autentifică-te din nou.",
+    "loginAgain": "Configurarea este finalizată. Autentifică-te din nou cu codul din aplicație.",
+    "login": "Autentifică-te din nou",
+    "invalidOtp": "Cod invalid. Încearcă codul actual din aplicație.",
+    "invalidPassword": "Parolă incorectă.",
+    "expiredSetup": "Configurarea a expirat. Anulează și începe din nou.",
+    "rateLimited": "Prea multe încercări. Așteaptă 15 minute.",
+    "sessionExpired": "Sesiunea a expirat. Autentifică-te din nou.",
+    "failed": "Modificarea a eșuat. Încearcă din nou.",
+    "recovery": "Ai pierdut telefonul? Restabilește autentificatorul cu cheia salvată. Fără ea, serviciul de asistență trebuie să îți verifice identitatea.",
+    "externalProvider": "Gestionează 2FA pentru acest cont extern în Directus sau la furnizorul de autentificare."
   }
 }

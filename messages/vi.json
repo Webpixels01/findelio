@@ -139,7 +139,11 @@
     "note": "Thông tin đăng nhập được xác thực an toàn qua Directus.",
     "errorFallback": "Địa chỉ email hoặc mật khẩu không đúng.",
     "serverError": "Hiện không thể xử lý đăng nhập.",
-    "connectionError": "Không thể kết nối với máy chủ."
+    "connectionError": "Không thể kết nối với máy chủ.",
+    "otpLabel": "Mã xác thực gồm sáu chữ số",
+    "otpInvalid": "Mã không hợp lệ. Hãy thử mã hiện tại trong ứng dụng.",
+    "otpHelp": "Mở ứng dụng xác thực. Khóa đã lưu giúp bạn khôi phục ứng dụng trên điện thoại mới.",
+    "rateLimited": "Quá nhiều lần thử. Vui lòng đợi 15 phút."
   },
   "AccountSetup": {
     "eyebrow": "Thiết lập tài khoản doanh nghiệp",
@@ -209,7 +213,8 @@
       "team": "Nhóm",
       "review": "Xét duyệt",
       "premium": "Premium",
-      "referrals": "Giới thiệu"
+      "referrals": "Giới thiệu",
+      "security": "Bảo mật tài khoản"
     },
     "summary": {
       "organizations": "Tổ chức",
@@ -1237,5 +1242,37 @@
       "expired_unactivated": "Hết hạn chưa kích hoạt",
       "void": "Không đủ điều kiện"
     }
+  },
+  "TwoFactor": {
+    "title": "Bảo mật tài khoản",
+    "description": "Bảo vệ tài khoản bằng mã bổ sung từ ứng dụng xác thực.",
+    "back": "Quay lại bảng điều khiển",
+    "enabled": "Đã bật xác thực hai yếu tố.",
+    "disabled": "Chưa bật xác thực hai yếu tố.",
+    "required": "Tài khoản này bắt buộc dùng 2FA. Hãy thiết lập để tiếp tục.",
+    "optional": "2FA là tùy chọn cho khách hàng. Cách đăng nhập không thay đổi cho đến khi bạn bật tính năng này.",
+    "password": "Mật khẩu hiện tại",
+    "scan": "Quét mã QR bằng ứng dụng xác thực hoặc nhập khóa thiết lập thủ công.",
+    "qrLabel": "Mã QR để thiết lập xác thực hai yếu tố",
+    "secretLabel": "Khóa thiết lập và khôi phục",
+    "backup": "Lưu khóa này ở nơi an toàn, ví dụ trong trình quản lý mật khẩu. Bạn có thể dùng khóa để khôi phục ứng dụng xác thực trên điện thoại mới. Không chia sẻ với bất kỳ ai. Sau khi kích hoạt, chúng tôi sẽ không hiển thị lại khóa.",
+    "backedUp": "Tôi đã lưu khóa ở nơi an toàn.",
+    "otp": "Mã xác thực gồm sáu chữ số",
+    "start": "Thiết lập 2FA",
+    "enable": "Bật 2FA",
+    "disable": "Tắt 2FA",
+    "cancel": "Hủy thiết lập",
+    "working": "Đang kiểm tra …",
+    "saved": "Đã lưu. Vui lòng đăng nhập lại.",
+    "loginAgain": "Đã thiết lập xong. Vui lòng đăng nhập lại bằng mã xác thực.",
+    "login": "Đăng nhập lại",
+    "invalidOtp": "Mã không hợp lệ. Hãy thử mã hiện tại trong ứng dụng.",
+    "invalidPassword": "Mật khẩu không đúng.",
+    "expiredSetup": "Phiên thiết lập đã hết hạn. Hãy hủy và bắt đầu lại.",
+    "rateLimited": "Quá nhiều lần thử. Vui lòng đợi 15 phút.",
+    "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "failed": "Thay đổi không thành công. Vui lòng thử lại.",
+    "recovery": "Mất điện thoại? Khôi phục ứng dụng xác thực bằng khóa đã lưu. Nếu không có khóa, bộ phận hỗ trợ phải xác minh danh tính của bạn.",
+    "externalProvider": "Quản lý 2FA cho tài khoản bên ngoài này trong Directus hoặc tại nhà cung cấp đăng nhập."
   }
 }

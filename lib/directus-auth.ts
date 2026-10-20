@@ -159,6 +159,7 @@ export async function verifyDirectusRegistration(token: string): Promise<void> {
 export async function loginWithDirectus(
   email: string,
   password: string,
+  otp?: string,
 ): Promise<DirectusAuthTokens> {
   const response = await fetch(new URL("/auth/login", getDirectusUrl()), {
     method: "POST",
@@ -169,6 +170,7 @@ export async function loginWithDirectus(
     body: JSON.stringify({
       email,
       password,
+      ...(otp ? { otp } : {}),
       mode: "json",
     }),
     cache: "no-store",

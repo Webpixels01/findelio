@@ -280,7 +280,7 @@ test("Directus contact, metrics and limit endpoints reject public, normal and ad
 test("Directus deployment copies match the tested source", async () => {
   for (const [extension, files] of [
     ["review-notification", ["index.js", "request-security.js", "referral-mail.js"]],
-    ["request-security", ["index.js"]],
+    ["request-security", ["index.js", "two-factor.js"]],
   ]) {
     for (const file of files) {
       const base = new URL(`../infra/directus/extensions/directus-extension-findelio-${extension}/`, import.meta.url);

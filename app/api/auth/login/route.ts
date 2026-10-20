@@ -39,11 +39,12 @@ export async function POST(request: Request) {
   try {
     const limited = await enforceRequestLimit(request, "login-ip");
     if (limited) return limited;
-    const { email, password } = await readJsonObject(request);
+    const { email, password, otp } = await readJsonObject(request);
     const normalizedEmail = stringValue(email).toLowerCase();
 
     if (!normalizedEmail || normalizedEmail.length > 254 ||
-        typeof password !== "string" || !password || password.length > 1024) {
+        typeof password !== "string" || !password || password.length > 1024 ||
+        (otp !== undefined && (typeof otp !== "string" || !/^\d{6}$/.test(otp)))) {
       return NextResponse.json(
         { error: "E-Mail-Adresse und Passwort sind erforderlich." },
         { status: 400 },
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
 
     const accountLimited = await enforceRequestLimit(request, "login-account", normalizedEmail);
     if (accountLimited) return accountLimited;
-    const tokens = await loginWithDirectus(normalizedEmail, password);
+    const tokens = await loginWithDirectus(normalizedEmail, password, otp as string | undefined);
     await saveAuthTokens(tokens);
 
     return NextResponse.json(
@@ -68,6 +69,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Ungültige Anfrage." }, { status: error.status });
     }
     if (error instanceof DirectusAuthError) {
+      if (error.code === "INVALID_OTP") {
+        return NextResponse.json({ error: "otp_required" }, {
+          status: 401, headers: { "Cache-Control": "no-store" },
+        });
+      }
       if (error.status === 429 || error.status === 503) {
         return NextResponse.json({ error: "rate_limited" }, {
           status: error.status, headers: { "Cache-Control": "no-store", "Retry-After": "900" },

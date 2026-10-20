@@ -139,7 +139,11 @@
     "note": "A bejelentkezési adatait a Directus biztonságosan ellenőrzi.",
     "errorFallback": "Az e-mail-cím vagy a jelszó helytelen.",
     "serverError": "A bejelentkezés jelenleg nem dolgozható fel.",
-    "connectionError": "Nem sikerült kapcsolódni a szerverhez."
+    "connectionError": "Nem sikerült kapcsolódni a szerverhez.",
+    "otpLabel": "Hatjegyű hitelesítő kód",
+    "otpInvalid": "Érvénytelen kód. Próbáld az alkalmazás aktuális kódját.",
+    "otpHelp": "Nyisd meg a hitelesítő alkalmazást. A mentett kulccsal új telefonon is visszaállíthatod.",
+    "rateLimited": "Túl sok próbálkozás. Várj 15 percet."
   },
   "AccountSetup": {
     "eyebrow": "Céges fiók beállítása",
@@ -209,7 +213,8 @@
       "team": "Csapat",
       "review": "Ellenőrzés",
       "premium": "Premium",
-      "referrals": "Ajánlások"
+      "referrals": "Ajánlások",
+      "security": "Fiókbiztonság"
     },
     "summary": {
       "organizations": "Szervezetek",
@@ -1235,5 +1240,37 @@
       "expired_unactivated": "Aktiválás nélkül lejárt",
       "void": "Nem jogosult"
     }
+  },
+  "TwoFactor": {
+    "title": "Fiókbiztonság",
+    "description": "Védd fiókodat a hitelesítő alkalmazás egy további kódjával.",
+    "back": "Vissza az irányítópultra",
+    "enabled": "A kétlépcsős hitelesítés be van kapcsolva.",
+    "disabled": "A kétlépcsős hitelesítés még nincs bekapcsolva.",
+    "required": "Ennél a fióknál kötelező a 2FA. A folytatáshoz állítsd be.",
+    "optional": "Az ügyfeleknek a 2FA választható. Bekapcsolás nélkül a bejelentkezés változatlan.",
+    "password": "Jelenlegi jelszó",
+    "scan": "Olvasd be a QR-kódot a hitelesítő alkalmazással, vagy add meg kézzel a kulcsot.",
+    "qrLabel": "QR-kód a kétlépcsős hitelesítés beállításához",
+    "secretLabel": "Beállítási és helyreállítási kulcs",
+    "backup": "Őrizd meg biztonságosan ezt a kulcsot, például egy jelszókezelőben. Ezzel új telefonon is visszaállíthatod a hitelesítőt. Ne oszd meg senkivel. Aktiválás után nem jelenítjük meg újra.",
+    "backedUp": "Biztonságosan elmentettem a kulcsot.",
+    "otp": "Hatjegyű hitelesítő kód",
+    "start": "2FA beállítása",
+    "enable": "2FA bekapcsolása",
+    "disable": "2FA kikapcsolása",
+    "cancel": "Beállítás megszakítása",
+    "working": "Ellenőrzés …",
+    "saved": "Mentve. Jelentkezz be újra.",
+    "loginAgain": "A beállítás kész. Jelentkezz be újra a hitelesítő kódoddal.",
+    "login": "Új bejelentkezés",
+    "invalidOtp": "Érvénytelen kód. Próbáld az alkalmazás aktuális kódját.",
+    "invalidPassword": "Helytelen jelszó.",
+    "expiredSetup": "A beállítás lejárt. Szakítsd meg, és kezdd újra.",
+    "rateLimited": "Túl sok próbálkozás. Várj 15 percet.",
+    "sessionExpired": "A munkamenet lejárt. Jelentkezz be újra.",
+    "failed": "A módosítás sikertelen. Próbáld újra.",
+    "recovery": "Elvesztetted a telefonod? Állítsd vissza a hitelesítőt az elmentett kulccsal. Enélkül az ügyfélszolgálatnak ellenőriznie kell a személyazonosságodat.",
+    "externalProvider": "A külső fiók 2FA-beállításait a Directusban vagy a bejelentkezési szolgáltatónál kezelheted."
   }
 }

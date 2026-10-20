@@ -139,7 +139,11 @@
     "note": "Your credentials are securely verified through Directus.",
     "errorFallback": "The email address or password is incorrect.",
     "serverError": "Sign-in cannot be processed at the moment.",
-    "connectionError": "The connection to the server failed."
+    "connectionError": "The connection to the server failed.",
+    "otpLabel": "Six-digit authenticator code",
+    "otpInvalid": "Invalid code. Try the current code from your app.",
+    "otpHelp": "Open your authenticator app. Your saved setup key lets you restore it on a new phone.",
+    "rateLimited": "Too many attempts. Please wait 15 minutes."
   },
   "AccountSetup": {
     "eyebrow": "Set up company account",
@@ -209,7 +213,8 @@
       "team": "Team",
       "review": "Review",
       "premium": "Premium",
-      "referrals": "Referrals"
+      "referrals": "Referrals",
+      "security": "Account security"
     },
     "summary": {
       "organizations": "Organizations",
@@ -1237,5 +1242,37 @@
       "expired_unactivated": "Expired without activation",
       "void": "Not eligible"
     }
+  },
+  "TwoFactor": {
+    "title": "Account security",
+    "description": "Protect your account with an additional code from your authenticator app.",
+    "back": "Back to dashboard",
+    "enabled": "Two-factor authentication is enabled.",
+    "disabled": "Two-factor authentication is not enabled yet.",
+    "required": "2FA is required for this account. Set it up to continue.",
+    "optional": "2FA is optional for customers. Sign-in stays the same until you enable it.",
+    "password": "Current password",
+    "scan": "Scan this QR code with your authenticator app or enter the setup key manually.",
+    "qrLabel": "QR code for two-factor authentication setup",
+    "secretLabel": "Setup and recovery key",
+    "backup": "Keep this key safe, for example in a password manager. You can use it to restore your authenticator on a new phone. Never share it. We will not display it again after activation.",
+    "backedUp": "I have stored the key securely.",
+    "otp": "Six-digit authenticator code",
+    "start": "Set up 2FA",
+    "enable": "Enable 2FA",
+    "disable": "Disable 2FA",
+    "cancel": "Cancel setup",
+    "working": "Checking …",
+    "saved": "Saved. Please sign in again.",
+    "loginAgain": "Setup is complete. Please sign in again with your authenticator code.",
+    "login": "Sign in again",
+    "invalidOtp": "Invalid code. Try the current code from your app.",
+    "invalidPassword": "Incorrect password.",
+    "expiredSetup": "Setup has expired. Cancel and start again.",
+    "rateLimited": "Too many attempts. Please wait 15 minutes.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "failed": "The change failed. Please try again.",
+    "recovery": "Lost your phone? Restore your authenticator using your saved setup key. Without it, support will need to verify your identity.",
+    "externalProvider": "Manage 2FA for this external account in Directus or with your sign-in provider."
   }
 }

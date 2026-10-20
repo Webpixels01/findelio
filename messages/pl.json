@@ -139,7 +139,11 @@
     "note": "Dane logowania są bezpiecznie weryfikowane przez Directus.",
     "errorFallback": "Adres e-mail lub hasło są nieprawidłowe.",
     "serverError": "Logowanie nie może być teraz przetworzone.",
-    "connectionError": "Połączenie z serwerem nie powiodło się."
+    "connectionError": "Połączenie z serwerem nie powiodło się.",
+    "otpLabel": "Sześciocyfrowy kod z aplikacji",
+    "otpInvalid": "Nieprawidłowy kod. Spróbuj aktualnego kodu z aplikacji.",
+    "otpHelp": "Otwórz aplikację uwierzytelniającą. Zapisany klucz pozwala ją odtworzyć na nowym telefonie.",
+    "rateLimited": "Zbyt wiele prób. Poczekaj 15 minut."
   },
   "AccountSetup": {
     "eyebrow": "Konfiguracja konta firmowego",
@@ -209,7 +213,8 @@
       "team": "Zespół",
       "review": "Weryfikacja",
       "premium": "Premium",
-      "referrals": "Polecenia"
+      "referrals": "Polecenia",
+      "security": "Bezpieczeństwo konta"
     },
     "summary": {
       "organizations": "Organizacje",
@@ -1235,5 +1240,37 @@
       "expired_unactivated": "Wygasło bez aktywacji",
       "void": "Brak uprawnień"
     }
+  },
+  "TwoFactor": {
+    "title": "Bezpieczeństwo konta",
+    "description": "Chroń konto dodatkowym kodem z aplikacji uwierzytelniającej.",
+    "back": "Wróć do panelu",
+    "enabled": "Uwierzytelnianie dwuskładnikowe jest włączone.",
+    "disabled": "Uwierzytelnianie dwuskładnikowe nie jest jeszcze włączone.",
+    "required": "Dla tego konta 2FA jest obowiązkowe. Skonfiguruj je, aby kontynuować.",
+    "optional": "Dla klientów 2FA jest dobrowolne. Bez włączenia logowanie się nie zmienia.",
+    "password": "Obecne hasło",
+    "scan": "Zeskanuj kod QR aplikacją uwierzytelniającą lub wpisz klucz ręcznie.",
+    "qrLabel": "Kod QR do konfiguracji uwierzytelniania dwuskładnikowego",
+    "secretLabel": "Klucz konfiguracji i odzyskiwania",
+    "backup": "Przechowuj ten klucz bezpiecznie, np. w menedżerze haseł. Pozwala odtworzyć aplikację uwierzytelniającą na nowym telefonie. Nie udostępniaj go nikomu. Po aktywacji nie wyświetlimy go ponownie.",
+    "backedUp": "Klucz został bezpiecznie zapisany.",
+    "otp": "Sześciocyfrowy kod z aplikacji",
+    "start": "Skonfiguruj 2FA",
+    "enable": "Włącz 2FA",
+    "disable": "Wyłącz 2FA",
+    "cancel": "Anuluj konfigurację",
+    "working": "Sprawdzanie …",
+    "saved": "Zapisano. Zaloguj się ponownie.",
+    "loginAgain": "Konfiguracja zakończona. Zaloguj się ponownie z kodem z aplikacji.",
+    "login": "Zaloguj się ponownie",
+    "invalidOtp": "Nieprawidłowy kod. Spróbuj aktualnego kodu z aplikacji.",
+    "invalidPassword": "Nieprawidłowe hasło.",
+    "expiredSetup": "Konfiguracja wygasła. Anuluj ją i zacznij ponownie.",
+    "rateLimited": "Zbyt wiele prób. Poczekaj 15 minut.",
+    "sessionExpired": "Sesja wygasła. Zaloguj się ponownie.",
+    "failed": "Zmiana nie powiodła się. Spróbuj ponownie.",
+    "recovery": "Zgubiony telefon? Odtwórz aplikację za pomocą zapisanego klucza. Bez niego pomoc techniczna musi zweryfikować Twoją tożsamość.",
+    "externalProvider": "Zarządzaj 2FA tego zewnętrznego konta w Directus lub u dostawcy logowania."
   }
 }

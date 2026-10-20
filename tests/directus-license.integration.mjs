@@ -1,3 +1,4 @@
+import { adminCredentials } from "./directus-test-auth.mjs";
 import assert from 'node:assert/strict';
 
 if (process.env.DB_DATABASE !== 'findelio_test' || process.env.EMAIL_SMTP_HOST !== 'mail') {
@@ -6,7 +7,7 @@ if (process.env.DB_DATABASE !== 'findelio_test' || process.env.EMAIL_SMTP_HOST !
 const base = 'http://127.0.0.1:8055';
 const login = await fetch(base + '/auth/login', {
   method: 'POST', headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD }),
+  body: JSON.stringify(adminCredentials()),
 });
 assert.equal(login.status, 200, 'Isolated admin login');
 const token = (await login.json()).data.access_token;

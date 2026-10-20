@@ -1,11 +1,15 @@
 import { createHmac } from "node:crypto";
+import { registerTwoFactor } from "./two-factor.js";
 import {
   createRequestLimiter,
   isServerAccount,
 } from "../../directus-extension-findelio-review-notification/dist/request-security.js";
 
-const requestSecurityHook = ({ init }, { database, env, logger }) => {
+const requestSecurityHook = (hooks, context) => {
+  const { init } = hooks;
+  const { database, env, logger } = context;
   const consume = createRequestLimiter(database);
+  registerTwoFactor(hooks, context, consume);
   const key = (value) => createHmac("sha256", String(env.SECRET)).update(value).digest("hex");
   init("routes.before", ({ app }) => {
     app.use("/auth/login", async (req, res, next) => {

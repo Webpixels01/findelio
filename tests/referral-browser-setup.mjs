@@ -1,3 +1,4 @@
+import { adminCredentials } from "./directus-test-auth.mjs";
 // Synthetic policies for the disposable browser fixture, NOT production policy definitions.
 import { createRequire } from 'node:module';
 if (process.env.DB_DATABASE !== 'findelio_test' || process.env.DB_HOST !== 'database' ||
@@ -14,7 +15,7 @@ async function api(path, method, body) {
   return (await response.json()).data;
 }
 try {
-  admin = (await api('/auth/login', 'POST', { email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD })).access_token;
+  admin = (await api('/auth/login', 'POST', adminCredentials())).access_token;
   const policy = await api('/policies', 'POST', { name: 'Browser company fixture' });
   const role = await api('/roles', 'POST', { name: 'Firmenkonto', policies: [{ policy: policy.id }] });
   const reads = {

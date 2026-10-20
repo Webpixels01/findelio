@@ -139,7 +139,11 @@
     "note": "Vaše přihlašovací údaje jsou bezpečně ověřovány přes Directus.",
     "errorFallback": "E-mailová adresa nebo heslo nejsou správné.",
     "serverError": "Přihlášení nyní nelze zpracovat.",
-    "connectionError": "Připojení k serveru se nezdařilo."
+    "connectionError": "Připojení k serveru se nezdařilo.",
+    "otpLabel": "Šestimístný kód z ověřovací aplikace",
+    "otpInvalid": "Neplatný kód. Zkuste aktuální kód z aplikace.",
+    "otpHelp": "Otevřete ověřovací aplikaci. Uložený klíč umožňuje její obnovení na novém telefonu.",
+    "rateLimited": "Příliš mnoho pokusů. Počkejte 15 minut."
   },
   "AccountSetup": {
     "eyebrow": "Nastavení firemního účtu",
@@ -209,7 +213,8 @@
       "team": "Tým",
       "review": "Kontrola",
       "premium": "Premium",
-      "referrals": "Doporučení"
+      "referrals": "Doporučení",
+      "security": "Zabezpečení účtu"
     },
     "summary": {
       "organizations": "Organizace",
@@ -1235,5 +1240,37 @@
       "expired_unactivated": "Vypršelo bez aktivace",
       "void": "Bez oprávnění"
     }
+  },
+  "TwoFactor": {
+    "title": "Zabezpečení účtu",
+    "description": "Chraňte svůj účet také kódem z ověřovací aplikace.",
+    "back": "Zpět na přehled",
+    "enabled": "Dvoufaktorové ověřování je zapnuté.",
+    "disabled": "Dvoufaktorové ověřování zatím není zapnuté.",
+    "required": "Pro tento účet je 2FA povinné. Pro pokračování jej nastavte.",
+    "optional": "Pro zákazníky je 2FA dobrovolné. Bez aktivace se přihlášení nemění.",
+    "password": "Aktuální heslo",
+    "scan": "Naskenujte QR kód ověřovací aplikací nebo zadejte klíč ručně.",
+    "qrLabel": "QR kód pro nastavení dvoufaktorového ověřování",
+    "secretLabel": "Klíč pro nastavení a obnovení",
+    "backup": "Uložte si tento klíč bezpečně, například do správce hesel. Umožní obnovit ověřovací aplikaci na novém telefonu. S nikým jej nesdílejte. Po aktivaci jej už nezobrazíme.",
+    "backedUp": "Klíč mám bezpečně uložený.",
+    "otp": "Šestimístný kód z ověřovací aplikace",
+    "start": "Nastavit 2FA",
+    "enable": "Zapnout 2FA",
+    "disable": "Vypnout 2FA",
+    "cancel": "Zrušit nastavení",
+    "working": "Ověřování …",
+    "saved": "Uloženo. Přihlaste se znovu.",
+    "loginAgain": "Nastavení je dokončeno. Přihlaste se znovu s kódem z ověřovací aplikace.",
+    "login": "Znovu se přihlásit",
+    "invalidOtp": "Neplatný kód. Zkuste aktuální kód z aplikace.",
+    "invalidPassword": "Nesprávné heslo.",
+    "expiredSetup": "Platnost nastavení vypršela. Zrušte jej a začněte znovu.",
+    "rateLimited": "Příliš mnoho pokusů. Počkejte 15 minut.",
+    "sessionExpired": "Platnost relace vypršela. Přihlaste se znovu.",
+    "failed": "Změna se nezdařila. Zkuste to znovu.",
+    "recovery": "Ztratili jste telefon? Obnovte ověřovací aplikaci uloženým klíčem. Bez něj musí podpora ověřit vaši totožnost.",
+    "externalProvider": "2FA tohoto externího účtu spravujete v Directus nebo u poskytovatele přihlášení."
   }
 }

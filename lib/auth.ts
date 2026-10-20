@@ -4,6 +4,7 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { AppLocale } from "@/i18n/routing";
+import { directusTwoFactor, type TwoFactorStatus } from "@/lib/two-factor";
 import {
   DirectusAuthError,
   getDirectusCurrentUser,
@@ -137,6 +138,11 @@ export async function requireCurrentUser({
   const user = await getCurrentUser();
 
   if (user) {
+    if (nextPath !== `/${locale}/konto/sicherheit`) {
+      const token = await getAccessToken();
+      const security = await directusTwoFactor<TwoFactorStatus>(token!);
+      if (security.pending || (security.required && !security.enabled)) redirect(`/${locale}/konto/sicherheit`);
+    }
     return user;
   }
 

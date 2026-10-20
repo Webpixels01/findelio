@@ -1,3 +1,4 @@
+import { adminCredentials } from "./directus-test-auth.mjs";
 // Runs only inside the disposable test container, with the feature disabled.
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
@@ -16,7 +17,7 @@ async function request(path, method, body, token, status) {
   return response.json().catch(() => null);
 }
 try {
-  const admin = (await request('/auth/login', 'POST', { email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD }, null, 200)).data.access_token;
+  const admin = (await request('/auth/login', 'POST', adminCredentials(), null, 200)).data.access_token;
   const settings = (await request('/settings', 'GET', null, admin, 200)).data;
   const email = 'disabled-flow-' + randomUUID().slice(0, 8) + '@example.com';
   const password = randomUUID() + '!Aa9';

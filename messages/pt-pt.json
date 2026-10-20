@@ -139,7 +139,11 @@
     "note": "Os seus dados são verificados de forma segura através do Directus.",
     "errorFallback": "O e-mail ou a palavra-passe estão incorretos.",
     "serverError": "Não foi possível processar o início de sessão neste momento.",
-    "connectionError": "A ligação ao servidor falhou."
+    "connectionError": "A ligação ao servidor falhou.",
+    "otpLabel": "Código de seis dígitos do autenticador",
+    "otpInvalid": "Código inválido. Experimenta o código atual da aplicação.",
+    "otpHelp": "Abre a aplicação de autenticação. A chave guardada permite restaurá-la num novo telemóvel.",
+    "rateLimited": "Demasiadas tentativas. Aguarda 15 minutos."
   },
   "AccountSetup": {
     "eyebrow": "Configuração da conta empresarial",
@@ -209,7 +213,8 @@
       "team": "Equipa",
       "review": "Revisão",
       "premium": "Premium",
-      "referrals": "Recomendações"
+      "referrals": "Recomendações",
+      "security": "Segurança da conta"
     },
     "summary": {
       "organizations": "Organizações",
@@ -1235,5 +1240,37 @@
       "expired_unactivated": "Expirado sem ativação",
       "void": "Não elegível"
     }
+  },
+  "TwoFactor": {
+    "title": "Segurança da conta",
+    "description": "Protege a tua conta com um código adicional da aplicação de autenticação.",
+    "back": "Voltar ao painel",
+    "enabled": "A autenticação de dois fatores está ativa.",
+    "disabled": "A autenticação de dois fatores ainda não está ativa.",
+    "required": "A 2FA é obrigatória para esta conta. Configura-a para continuar.",
+    "optional": "A 2FA é opcional para clientes. O início de sessão mantém-se igual até a ativares.",
+    "password": "Palavra-passe atual",
+    "scan": "Lê este código QR com a aplicação de autenticação ou introduz a chave manualmente.",
+    "qrLabel": "Código QR para configurar a autenticação de dois fatores",
+    "secretLabel": "Chave de configuração e recuperação",
+    "backup": "Guarda esta chave em segurança, por exemplo num gestor de palavras-passe. Permite restaurar o autenticador num novo telemóvel. Não a partilhes. Não voltaremos a mostrá-la após a ativação.",
+    "backedUp": "Guardei a chave em segurança.",
+    "otp": "Código de seis dígitos do autenticador",
+    "start": "Configurar 2FA",
+    "enable": "Ativar 2FA",
+    "disable": "Desativar 2FA",
+    "cancel": "Cancelar configuração",
+    "working": "A verificar …",
+    "saved": "Guardado. Inicia sessão novamente.",
+    "loginAgain": "A configuração está concluída. Inicia sessão novamente com o código do autenticador.",
+    "login": "Iniciar sessão novamente",
+    "invalidOtp": "Código inválido. Experimenta o código atual da aplicação.",
+    "invalidPassword": "Palavra-passe incorreta.",
+    "expiredSetup": "A configuração expirou. Cancela e começa novamente.",
+    "rateLimited": "Demasiadas tentativas. Aguarda 15 minutos.",
+    "sessionExpired": "A sessão expirou. Inicia sessão novamente.",
+    "failed": "A alteração falhou. Tenta novamente.",
+    "recovery": "Perdeste o telemóvel? Restaura o autenticador com a chave guardada. Sem ela, o apoio terá de verificar a tua identidade.",
+    "externalProvider": "Gere a 2FA desta conta externa no Directus ou junto do fornecedor de início de sessão."
   }
 }

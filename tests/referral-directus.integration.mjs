@@ -1,3 +1,4 @@
+import { adminCredentials } from "./directus-test-auth.mjs";
 /** Run INSIDE the disposable Directus container described in docs/referral-integration.md.
  * Never loads .env files. Credentials/tokens and mail bodies are never printed.
  */
@@ -36,7 +37,7 @@ async function mailFor(email) {
 const ok = message => console.log('PASS ' + message);
 try {
   admin = (await request('/auth/login', { method: 'POST', token: null,
-    body: { email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD } })).access_token;
+    body: adminCredentials() })).access_token;
   await request('/findelio-referrals/admin/access');
   const role = (await request('/roles', { method: 'POST', body: { name: 'Firmenkonto' } })).id;
   await request('/settings', { method: 'PATCH', body: { public_registration: true, public_registration_role: role,

@@ -8,6 +8,7 @@ const navigationItems = [
   { href: "/dashboard/organisationen", label: "organizations" },
   { href: "/dashboard/firmenprofile", label: "listings" },
   { href: "/dashboard/team", label: "team" },
+  { href: "/konto/sicherheit", label: "security" },
 ] as const;
 
 export default function DashboardNav({

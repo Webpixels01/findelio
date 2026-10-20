@@ -1,3 +1,4 @@
+import { adminCredentials } from "./directus-test-auth.mjs";
 /** Only run inside the disposable, network-isolated integration stack. */
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
@@ -24,7 +25,7 @@ async function create(path, body, token) {
 }
 const pass = (message) => console.log("PASS " + message);
 try {
-  const admin = (await create("/auth/login", { email: process.env.ADMIN_EMAIL, password: process.env.ADMIN_PASSWORD })).access_token;
+  const admin = (await create("/auth/login", adminCredentials())).access_token;
   const serverRole = await create("/roles", { name: "Findelio Server" }, admin);
   const regularRole = await create("/roles", { name: "Security fixture customer" }, admin);
   const serviceToken = randomBytes(32).toString("hex");

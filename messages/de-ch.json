@@ -139,7 +139,11 @@
     "note": "Deine Zugangsdaten werden sicher über Directus geprüft.",
     "errorFallback": "E-Mail-Adresse oder Passwort ist falsch.",
     "serverError": "Die Anmeldung konnte momentan nicht verarbeitet werden.",
-    "connectionError": "Die Verbindung zum Server ist fehlgeschlagen."
+    "connectionError": "Die Verbindung zum Server ist fehlgeschlagen.",
+    "otpLabel": "Sechsstelliger Authenticator-Code",
+    "otpInvalid": "Der Code ist ungültig. Versuche es mit dem aktuellen Code.",
+    "otpHelp": "Öffne deine Authenticator-App. Mit deinem gesicherten Einrichtungsschlüssel kannst du sie auf einem neuen Handy wiederherstellen.",
+    "rateLimited": "Zu viele Versuche. Bitte warte 15 Minuten."
   },
   "AccountSetup": {
     "eyebrow": "Firmenkonto einrichten",
@@ -209,7 +213,8 @@
       "team": "Team",
       "review": "Prüfbereich",
       "premium": "Premium",
-      "referrals": "Empfehlungen"
+      "referrals": "Empfehlungen",
+      "security": "Kontosicherheit"
     },
     "summary": {
       "organizations": "Organisationen",
@@ -1237,5 +1242,37 @@
       "expired_unactivated": "Ohne Aktivierung abgelaufen",
       "void": "Nicht berechtigt"
     }
+  },
+  "TwoFactor": {
+    "title": "Kontosicherheit",
+    "description": "Schütze dein Konto zusätzlich mit einem Code aus deiner Authenticator-App.",
+    "back": "Zurück zum Dashboard",
+    "enabled": "Zwei-Faktor-Authentifizierung ist aktiv.",
+    "disabled": "Zwei-Faktor-Authentifizierung ist noch nicht aktiv.",
+    "required": "Für dieses Konto ist 2FA Pflicht. Richte sie ein, um fortzufahren.",
+    "optional": "Für Kunden ist 2FA freiwillig. Ohne Aktivierung bleibt die Anmeldung unverändert.",
+    "password": "Aktuelles Passwort",
+    "scan": "Scanne diesen QR-Code mit deiner Authenticator-App oder gib den Einrichtungsschlüssel manuell ein.",
+    "qrLabel": "QR-Code zur Einrichtung der Zwei-Faktor-Authentifizierung",
+    "secretLabel": "Einrichtungs- und Wiederherstellungsschlüssel",
+    "backup": "Bewahre diesen Schlüssel sicher auf, zum Beispiel in einem Passwortmanager. Damit kannst du den Authenticator auf einem neuen Handy wiederherstellen. Teile ihn mit niemandem. Nach der Aktivierung zeigen wir ihn nicht erneut an.",
+    "backedUp": "Ich habe den Schlüssel sicher aufbewahrt.",
+    "otp": "Sechsstelliger Authenticator-Code",
+    "start": "2FA einrichten",
+    "enable": "2FA aktivieren",
+    "disable": "2FA deaktivieren",
+    "cancel": "Einrichtung abbrechen",
+    "working": "Wird geprüft …",
+    "saved": "Gespeichert. Bitte melde dich erneut an.",
+    "loginAgain": "Die Einrichtung ist abgeschlossen. Bitte melde dich erneut mit deinem Authenticator-Code an.",
+    "login": "Erneut anmelden",
+    "invalidOtp": "Der Code ist ungültig. Versuche es mit dem aktuellen Code.",
+    "invalidPassword": "Das Passwort ist falsch.",
+    "expiredSetup": "Die Einrichtung ist abgelaufen. Brich sie ab und starte erneut.",
+    "rateLimited": "Zu viele Versuche. Bitte warte 15 Minuten.",
+    "sessionExpired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+    "failed": "Die Änderung ist fehlgeschlagen. Bitte versuche es erneut.",
+    "recovery": "Handy verloren? Stelle den Authenticator mit deinem gesicherten Einrichtungsschlüssel wieder her. Ohne diesen Schlüssel ist eine Identitätsprüfung durch den Support nötig.",
+    "externalProvider": "Die 2FA dieses externen Kontos verwaltest du in Directus oder bei deinem Anmeldedienst."
   }
 }

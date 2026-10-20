@@ -9,10 +9,14 @@ import { parseEnv } from 'node:util';
 
 if (!process.argv.includes('--isolated')) throw new Error('Pass --isolated to start a disposable Docker integration test');
 const browserFixture = process.argv.includes('--browser-fixture');
+const twoFactorBrowser = process.argv.includes('--two-factor-browser');
+const browserOnly = process.argv.includes('--browser-only');
+if (browserOnly && !twoFactorBrowser) throw new Error('--browser-only requires --two-factor-browser');
 const upgradeFrom11 = process.argv.includes('--upgrade-from-11');
 const recoverFrom12 = process.argv.includes('--recover-from-12');
 const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11;
 if (licensedUpgrade && (recoverFrom12 || browserFixture)) throw new Error('Licensed upgrade must run separately');
+if (twoFactorBrowser && !licensedUpgrade) throw new Error('2FA browser tests require --licensed-upgrade');
 const root = fileURLToPath(new URL('../', import.meta.url));
 let licenseKey;
 if (licensedUpgrade) {
@@ -30,7 +34,7 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
   cache: { image: 'redis:7-alpine', healthcheck: { test: ['CMD', 'redis-cli', 'ping'], interval: '2s', retries: 30 } },
   directus: { image: 'directus/directus:11.17.4', depends_on: { database: { condition: 'service_healthy' }, cache: { condition: 'service_healthy' } },
     volumes: [join(root, 'infra/directus/extensions') + ':/directus/extensions:ro', join(root, 'infra/directus/templates') + ':/directus/templates:ro', dir + ':/test:ro'],
-    environment: { SECRET: randomBytes(32).toString('hex'), ADMIN_EMAIL: 'admin@example.com', ADMIN_PASSWORD: randomBytes(32).toString('base64url'),
+    environment: { SECRET: randomBytes(32).toString('hex'), ADMIN_EMAIL: 'admin@example.com', ADMIN_PASSWORD: randomBytes(32).toString('base64url'), FINDELIO_TEST_TFA_SECRET: 'JBSWY3DPEHPK3PXP',
       DB_CLIENT: 'pg', DB_HOST: 'database', DB_PORT: '5432', DB_DATABASE: 'findelio_test', DB_USER: 'postgres', DB_PASSWORD: '',
       PUBLIC_URL: 'http://localhost:8055', EMAIL_FROM: 'test@example.com', EMAIL_TRANSPORT: 'smtp', EMAIL_SMTP_HOST: 'mail', EMAIL_SMTP_PORT: '1025', EMAIL_SMTP_SECURE: 'false',
       EMAIL_TEMPLATES_PATH: '/directus/templates', ADMIN_NOTIFICATION_EMAIL: 'notifications@example.com', FINDELIO_SITE_URL: 'http://localhost:3000', FINDELIO_REFERRAL_REGISTRATION_ENABLED: 'true',
@@ -46,6 +50,19 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
 if (licensedUpgrade) {
   config.networks.licensing = {};
   config.services.directus.networks = ['default', 'licensing'];
+}
+if (twoFactorBrowser) {
+  // Docker Desktop needs a non-internal network for published browser ports.
+  config.networks.browser = {};
+  config.services.directus.ports = ['127.0.0.1:3318:8055'];
+  config.services.directus.environment.PUBLIC_URL = 'http://127.0.0.1:3318';
+  config.services.app = { image: 'findelio-two-factor-test:20261020', profiles: ['browser'],
+    networks: ['default', 'browser'],
+    ports: ['127.0.0.1:3317:3000'], environment: {
+      HOSTNAME: '0.0.0.0',
+      DIRECTUS_URL: 'http://directus:8055', DIRECTUS_PUBLIC_URL: 'http://127.0.0.1:3318',
+      DIRECTUS_TOKEN: randomBytes(32).toString('hex'), NEXT_PUBLIC_SITE_URL: 'http://127.0.0.1:3317',
+    } };
 }
 let licenseAttempted = false;
 async function run(args, { quiet = false, input } = {}) {
@@ -69,7 +86,7 @@ try {
   if (browserFixture) config.services.directus.environment.FINDELIO_TEST_ADMIN_TOKEN = randomBytes(32).toString('hex');
   await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
   if (licensedUpgrade) await writeFile(join(dir, 'check-directus-upgrade.mjs'), await readFile(join(root, 'ops/check-directus-upgrade.mjs')));
-  for (const name of ['referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs', 'directus-permissions-recovery.mjs', 'directus-license.integration.mjs', 'directus-ownership-upgrade.mjs',
+  for (const name of ['directus-test-auth.mjs', 'two-factor-directus.integration.mjs', 'referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs', 'directus-permissions-recovery.mjs', 'directus-license.integration.mjs', 'directus-ownership-upgrade.mjs',
     ...(browserFixture ? ['referral-browser-setup.mjs', 'referral-directory-setup.mjs'] : [])]) {
     await writeFile(join(dir, name), await readFile(join(root, 'tests', name)));
   }
@@ -80,7 +97,9 @@ try {
   for (const migration of ['20260810_premium_grants.sql', '20260910_referral_system.sql']) {
     sql += await readFile(join(root, 'infra/directus/migrations', migration), 'utf8');
   }
+  sql += "\nUPDATE directus_users SET tfa_secret = 'JBSWY3DPEHPK3PXP' WHERE email = 'admin@example.com';\n";
   await mkdir(join(dir, 'migrations'));
+  await writeFile(join(dir, 'migrations/20261021_two_factor_auth.sql'), await readFile(join(root, 'infra/directus/migrations/20261021_two_factor_auth.sql')));
   await writeFile(join(dir, 'migrations/20261020_request_limits.sql'), await readFile(join(root, 'infra/directus/migrations/20261020_request_limits.sql')));
   await writeFile(join(dir, 'apply-migrations.sh'), await readFile(join(root, 'ops/apply-migrations.sh')));
   if (browserFixture) sql += await readFile(join(root, 'tests/fixtures/referral-browser.sql'), 'utf8');
@@ -123,17 +142,35 @@ try {
     await run(['exec', '-T', 'directus', 'node', 'cli.js', 'cache', 'clear']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
   }
-  await run(['exec', '-T', 'directus', 'node', '/test/referral-directus.integration.mjs']);
-  await run(['exec', '-T', 'directus', 'node', '/test/security-directus.integration.mjs']);
-  if (browserFixture) {
-    await run(['exec', '-T', 'directus', 'node', '/test/referral-browser-setup.mjs']);
-    await run(['exec', '-T', 'directus', 'node', '/test/referral-directory-setup.mjs']);
+  if (!browserOnly) {
+    await run(['exec', '-T', 'directus', 'node', '/test/referral-directus.integration.mjs']);
+    await run(['exec', '-T', 'directus', 'node', '/test/security-directus.integration.mjs']);
+    await run(['exec', '-T', 'directus', 'node', '/test/two-factor-directus.integration.mjs']);
+    if (browserFixture) {
+      await run(['exec', '-T', 'directus', 'node', '/test/referral-browser-setup.mjs']);
+      await run(['exec', '-T', 'directus', 'node', '/test/referral-directory-setup.mjs']);
+    }
+    config.services.directus.environment.FINDELIO_REFERRAL_REGISTRATION_ENABLED = 'false';
+    await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+    await run(['up', '-d', '--no-deps', 'directus']);
+    await ready();
+    await run(['exec', '-T', 'directus', 'node', '/test/referral-directus-disabled.integration.mjs']);
   }
-  config.services.directus.environment.FINDELIO_REFERRAL_REGISTRATION_ENABLED = 'false';
-  await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
-  await run(['up', '-d', '--no-deps', 'directus']);
-  await ready();
-  await run(['exec', '-T', 'directus', 'node', '/test/referral-directus-disabled.integration.mjs']);
+  if (twoFactorBrowser) {
+    await run(['exec', '-T', 'database', 'psql', '-U', 'postgres', '-d', 'findelio_test', '-c', 'TRUNCATE findelio_request_limits'], { quiet: true });
+    await run(['up', '-d', '--wait', 'app']);
+    await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, [join(root, 'tests/two-factor-browser.mjs')], {
+        stdio: 'inherit', env: { ...process.env, DB_DATABASE: 'findelio_test',
+          ADMIN_EMAIL: config.services.directus.environment.ADMIN_EMAIL,
+          ADMIN_PASSWORD: config.services.directus.environment.ADMIN_PASSWORD,
+          FINDELIO_TEST_TFA_SECRET: config.services.directus.environment.FINDELIO_TEST_TFA_SECRET,
+          FINDELIO_TEST_WEBSITE_TOKEN: config.services.app.environment.DIRECTUS_TOKEN },
+      });
+      child.on('error', reject);
+      child.on('close', code => code === 0 ? resolve() : reject(new Error('Two-factor browser test failed')));
+    });
+  }
 } finally {
   // A throwaway DB must never strand a license activation. Remove the env key,
   // restart and use Directus' official DELETE /license endpoint before cleanup.
@@ -150,5 +187,5 @@ try {
     }
   }
   // Only the uniquely named stack and temporary directory created above.
-  await run(['down']).finally(() => rm(dir, { recursive: true, force: true }));
+  await run(['--profile', 'browser', 'down']).finally(() => rm(dir, { recursive: true, force: true }));
 }
