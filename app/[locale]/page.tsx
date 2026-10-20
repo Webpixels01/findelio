@@ -1,10 +1,30 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
 import SiteHeader from "@/components/site-header";
 import SearchForm from "@/components/search-form";
 import { Link } from "@/i18n/navigation";
+import StructuredData from "@/components/structured-data";
+import { buildPageMetadata, getSiteUrl, localizedUrl } from "@/lib/seo";
 
-export default async function HomePage({ params }: { params: Promise<{ locale: AppLocale }> }) {
+type HomePageProps = {
+  params: Promise<{ locale: AppLocale }>;
+};
+
+export async function generateMetadata({
+  params,
+}: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+
+  return buildPageMetadata({
+    locale,
+    title: t("title"),
+    description: t("description"),
+  });
+}
+
+export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("Home");
@@ -14,9 +34,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: A
     ["02", t("step2Title"), t("step2Text")],
     ["03", t("step3Title"), t("step3Text")],
   ];
+  const websiteData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${getSiteUrl()}/#website`,
+    name: "Findelio",
+    url: localizedUrl(locale),
+    inLanguage: locale,
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+  };
 
   return (
     <>
+      <StructuredData data={websiteData} />
       <SiteHeader />
       <main className="page-shell">
         <section className="relative overflow-hidden bg-gradient-to-b from-[#eff7ff] via-[#f8fbff] to-white py-20 lg:py-28">

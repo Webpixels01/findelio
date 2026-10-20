@@ -1,37 +1,50 @@
 import "server-only";
+import { LISTINGS_PAGE_SIZE, normalizeListingPage, dailyListingRank } from "@/lib/listing-pagination";
 import type { AppLocale } from "@/i18n/routing";
+import { getActivePremiumGrantListingIds } from "@/lib/directus-premium";
 
-const directusUrl = process.env.DIRECTUS_URL;
-const directusToken = process.env.DIRECTUS_TOKEN;
-
-if (!directusUrl) {
-  throw new Error("DIRECTUS_URL fehlt in der Datei .env.local");
+function getDirectusUrl(): string {
+  const directusUrl = process.env.DIRECTUS_URL?.trim();
+  if (!directusUrl) {
+    throw new Error("DIRECTUS_URL fehlt in der Laufzeitumgebung");
+  }
+  return directusUrl;
 }
 
-if (!directusToken) {
-  throw new Error("DIRECTUS_TOKEN fehlt in der Datei .env.local");
+function getDirectusHeaders(): HeadersInit {
+  const directusToken = process.env.DIRECTUS_TOKEN?.trim();
+  if (!directusToken) {
+    throw new Error("DIRECTUS_TOKEN fehlt in der Laufzeitumgebung");
+  }
+  return { Authorization: `Bearer ${directusToken}` };
 }
-
-const directusHeaders = {
-  Authorization: `Bearer ${directusToken}`,
-};
 
 const PUBLIC_LISTING_STATUS = "published" as const;
 
 export type Listing = {
   id: string;
+  organization: string | { id: string } | null;
   name: string;
   slug: string;
   status: string;
-  short_description: string | null;
+  description: string | null;
+  description_translations: Partial<Record<AppLocale, string>> | null;
   postal_code: string | null;
   city: string;
-  logo: string | null;
+  logo:
+    | string
+    | {
+        id: string;
+        width: number | null;
+        height: number | null;
+      }
+    | null;
   canton: {
     code: string;
     name: string;
   };
   verification_status: string;
+  premium_features_enabled?: boolean;
   spoken_languages: {
     spoken_languages_id: {
       id: string;
@@ -58,8 +71,12 @@ export type GalleryItem = {
   directus_files_id: string;
 };
 
+type PublicGalleryRelationRow = {
+  id: number;
+  directus_files_id: string | { id: string } | null;
+};
+
 export type ListingDetail = Listing & {
-  description: string | null;
   street: string | null;
   public_email: string | null;
   phone: string | null;
@@ -69,6 +86,9 @@ export type ListingDetail = Listing & {
   social_links: SocialLink[] | null;
   address_visibility: "full" | "city" | "hidden";
   gallery: GalleryItem[];
+  premium_features_enabled: boolean;
+  custom_cta_label: string | null;
+  custom_cta_value: string | null;
 };
 
 export type ListingOpeningHour = {
@@ -76,6 +96,20 @@ export type ListingOpeningHour = {
   day_of_week: number;
   opens_at: string;
   closes_at: string;
+};
+
+export type ListingPost = {
+  id: string;
+  listing: string | { id: string };
+  type: "update" | "offer" | "event";
+  title: string;
+  body: string | null;
+  image: string | null;
+  cta_label: string | null;
+  cta_url: string | null;
+  starts_at: string | null;
+  ends_at: string | null;
+  published_at: string | null;
 };
 
 export type DirectoryOption = {
@@ -93,6 +127,11 @@ export type ListingFilters = {
 
 type DirectusResponse<T> = {
   data: T;
+};
+
+type PremiumSubscription = {
+  listing: string | { id: string } | null;
+  current_period_end: string | null;
 };
 
 type DirectoryCollection =
@@ -114,6 +153,7 @@ const directusLanguageCodes: Record<AppLocale, string> = {
   ru: "ru-RU",
   "pt-pt": "pt-PT",
   ro: "ro-RO",
+  vi: "vi-VN",
 };
 
 type DirectoryTranslationRow = {
@@ -141,11 +181,64 @@ function getRelationCode(value: unknown): string | null {
   return null;
 }
 
+function getGalleryFileId(
+  value: PublicGalleryRelationRow["directus_files_id"],
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.id ?? null;
+}
+
+async function getPublicListingGallery(
+  listingId: string,
+): Promise<GalleryItem[]> {
+  const url = new URL("/items/listings_files", getDirectusUrl());
+
+  url.searchParams.set("fields", "id,directus_files_id");
+  url.searchParams.set("sort", "id");
+  url.searchParams.set("limit", "10");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      listings_id: {
+        _eq: listingId,
+      },
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: getDirectusHeaders(),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.warn(
+      `Bildergalerie konnte nicht geladen werden: ${response.status} ${response.statusText}`,
+    );
+    return [];
+  }
+
+  const result = (await response.json()) as DirectusResponse<
+    PublicGalleryRelationRow[]
+  >;
+
+  return result.data
+    .map((item) => ({
+      id: item.id,
+      directus_files_id: getGalleryFileId(item.directus_files_id),
+    }))
+    .filter(
+      (item): item is GalleryItem => Boolean(item.directus_files_id),
+    );
+}
+
 async function getDirectoryTranslationMap(
   collection: TranslatableDirectoryCollection,
   locale: AppLocale,
 ): Promise<Map<string, string>> {
-  const url = new URL(`/items/${collection}`, directusUrl);
+  const url = new URL(`/items/${collection}`, getDirectusUrl());
 
   url.searchParams.set(
     "fields",
@@ -154,7 +247,7 @@ async function getDirectoryTranslationMap(
   url.searchParams.set("limit", "-1");
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -214,28 +307,117 @@ function localizeListing<T extends Listing>(
   } as T;
 }
 
+function localizedListingDescription(
+  listing: Listing,
+  locale: AppLocale,
+  premiumEnabled: boolean,
+): string | null {
+  if (!premiumEnabled || locale === "de-ch") {
+    return listing.description;
+  }
+
+  const translatedDescription =
+    listing.description_translations?.[locale]?.trim();
+
+  return translatedDescription || listing.description;
+}
+
 function cleanValue(value?: string): string | undefined {
   const cleaned = value?.trim();
 
   return cleaned || undefined;
 }
 
-export async function getListings(
+function subscriptionListingId(
+  value: PremiumSubscription["listing"],
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value?.id ?? null;
+}
+
+async function getActivePremiumListingIds(): Promise<Set<string>> {
+  const url = new URL("/items/subscriptions", getDirectusUrl());
+
+  url.searchParams.set(
+    "fields",
+    "listing,current_period_end",
+  );
+  url.searchParams.set("limit", "-1");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      _and: [
+        { status: { _in: ["active", "past_due"] } },
+        { plan: { _eq: "premium" } },
+      ],
+    }),
+  );
+
+  const response = await fetch(url, {
+    headers: getDirectusHeaders(),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.warn(
+      "Premium-Abos konnten nicht geprüft werden:",
+      response.status,
+      response.statusText,
+    );
+    return new Set();
+  }
+
+  const result = (await response.json()) as DirectusResponse<
+    PremiumSubscription[]
+  >;
+  const now = new Date();
+
+  return new Set(
+    result.data
+      .filter((subscription) => {
+        if (!subscription.current_period_end) {
+          return true;
+        }
+
+        const periodEnd = new Date(subscription.current_period_end);
+        return !Number.isNaN(periodEnd.getTime()) && periodEnd > now;
+      })
+      .map((subscription) =>
+        subscriptionListingId(subscription.listing),
+      )
+      .filter((id): id is string => Boolean(id)),
+  );
+}
+
+export async function getListingsPage(
   locale: AppLocale,
   filters: ListingFilters = {},
-): Promise<Listing[]> {
+  requestedPage = 1,
+  orderDate = new Date().toISOString().slice(0, 10),
+): Promise<{ listings: Listing[]; total: number; page: number; orderDate: string }> {
+  const page = normalizeListingPage(requestedPage);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(orderDate)) throw new Error("Invalid listing order date");
   const fields = [
     "id",
+    "organization",
     "name",
     "slug",
     "status",
-    "short_description",
+    "description",
+    "description_translations",
     "postal_code",
     "city",
-    "logo",
+    "logo.id",
+    "logo.width",
+    "logo.height",
     "canton.code",
     "canton.name",
     "verification_status",
+    "custom_cta_label",
+    "custom_cta_value",
     "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
@@ -308,38 +490,80 @@ export async function getListings(
     });
   }
 
-  const url = new URL("/items/listings", directusUrl);
-
-  url.searchParams.set("fields", fields);
-  url.searchParams.set("sort", "name");
-  url.searchParams.set(
-    "filter",
-    JSON.stringify({
-      _and: conditions,
-    }),
-  );
-
-  const [response, industryNames, spokenLanguageNames] =
-    await Promise.all([
-      fetch(url, {
-        headers: directusHeaders,
-        cache: "no-store",
-      }),
-      getDirectoryTranslationMap("industries", locale),
-      getDirectoryTranslationMap("spoken_languages", locale),
-    ]);
-
-  if (!response.ok) {
-    throw new Error(
-      `Directus konnte nicht geladen werden: ${response.status} ${response.statusText}`,
-    );
+  const filter = { _and: conditions };
+  async function readListings<T>(query: Record<string, string>, extra?: Record<string, unknown>): Promise<T> {
+    const url = new URL("/items/listings", getDirectusUrl());
+    url.searchParams.set("filter", JSON.stringify(extra ? { _and: [filter, extra] } : filter));
+    for (const [key, value] of Object.entries(query)) url.searchParams.set(key, value);
+    const response = await fetch(url, { headers: getDirectusHeaders(), cache: "no-store" });
+    if (!response.ok) throw new Error(`Directus listings request failed: ${response.status}`);
+    return ((await response.json()) as DirectusResponse<T>).data;
   }
 
-  const result = (await response.json()) as DirectusResponse<Listing[]>;
+  // Count all matching public listings, independently of the ten displayed cards.
+  const [counts, industryNames, spokenLanguageNames, subscriptions, grants] = await Promise.all([
+    readListings<Array<{ countDistinct: { id: string | number } }>>({ "aggregate[countDistinct]": "id" }),
+    getDirectoryTranslationMap("industries", locale),
+    getDirectoryTranslationMap("spoken_languages", locale),
+    getActivePremiumListingIds(),
+    getActivePremiumGrantListingIds(),
+  ]);
+  const total = Number(counts[0]?.countDistinct.id);
+  if (!Number.isSafeInteger(total) || total < 0) throw new Error("Invalid listing count");
+  const premiumIds = [...new Set([...subscriptions, ...grants])];
 
-  return result.data.map((listing) =>
-    localizeListing(listing, industryNames, spokenLanguageNames),
-  );
+  // Resolve only matching premium IDs. Bounded batches avoid the default 100-item
+  // limit and oversized URLs; full card data is fetched only for the current page.
+  const matchingPremium: string[] = [];
+  for (let start = 0; start < premiumIds.length; start += 100) {
+    const ids = premiumIds.slice(start, start + 100);
+    const matches = await readListings<Array<{ id: string }>>(
+      { fields: "id", limit: "100", sort: "id" }, { id: { _in: ids } },
+    );
+    matchingPremium.push(...matches.map((item) => item.id));
+  }
+  matchingPremium.sort((a, b) => dailyListingRank(a, orderDate) - dailyListingRank(b, orderDate) || a.localeCompare(b));
+  const offset = (page - 1) * LISTINGS_PAGE_SIZE;
+  const selectedPremium = matchingPremium.slice(offset, offset + LISTINGS_PAGE_SIZE);
+  const regularLimit = LISTINGS_PAGE_SIZE - selectedPremium.length;
+  const regularOffset = Math.max(0, offset - matchingPremium.length);
+  const [premiumListings, regularListings] = await Promise.all([
+    selectedPremium.length
+      ? readListings<Listing[]>({ fields, limit: String(selectedPremium.length) }, { id: { _in: selectedPremium } })
+      : Promise.resolve([] as Listing[]),
+    regularLimit && offset < total
+      ? readListings<Listing[]>(
+          { fields, limit: String(regularLimit), offset: String(regularOffset), sort: "name,id" },
+          premiumIds.length ? { id: { _nin: premiumIds } } : undefined,
+        )
+      : Promise.resolve([] as Listing[]),
+  ]);
+  const premiumById = new Map(premiumListings.map((listing) => [listing.id, listing]));
+  const ordered = [
+    ...selectedPremium.flatMap((id) => premiumById.has(id) ? [premiumById.get(id)!] : []),
+    ...regularListings,
+  ];
+  const localizedListings = ordered.map((listing) => {
+    const premiumEnabled =
+      subscriptions.has(listing.id) || grants.has(listing.id);
+
+    return localizeListing(
+      {
+        ...listing,
+        description: localizedListingDescription(
+          listing,
+          locale,
+          premiumEnabled,
+        ),
+        logo: premiumEnabled ? listing.logo : null,
+        premium_features_enabled: premiumEnabled,
+      },
+      industryNames,
+      spokenLanguageNames,
+    );
+  });
+
+  return { listings: localizedListings, total, page, orderDate };
 }
 
 export async function getListingBySlug(
@@ -348,11 +572,12 @@ export async function getListingBySlug(
 ): Promise<ListingDetail | null> {
   const fields = [
     "id",
+    "organization",
     "name",
     "slug",
     "status",
-    "short_description",
     "description",
+    "description_translations",
     "street",
     "postal_code",
     "city",
@@ -361,14 +586,16 @@ export async function getListingBySlug(
     "public_email",
     "phone",
     "website_url",
-    "logo",
-    "gallery.id",
-    "gallery.directus_files_id",
+    "logo.id",
+    "logo.width",
+    "logo.height",
     "location",
     "verification_status",
     "published_at",
     "social_links",
     "address_visibility",
+    "custom_cta_label",
+    "custom_cta_value",
     "spoken_languages.spoken_languages_id.id",
     "spoken_languages.spoken_languages_id.code",
     "spoken_languages.spoken_languages_id.name",
@@ -377,7 +604,7 @@ export async function getListingBySlug(
     "industries.industries_id.name",
   ].join(",");
 
-  const url = new URL("/items/listings", directusUrl);
+  const url = new URL("/items/listings", getDirectusUrl());
 
   url.searchParams.set("fields", fields);
   url.searchParams.set("limit", "1");
@@ -399,14 +626,22 @@ export async function getListingBySlug(
     }),
   );
 
-  const [response, industryNames, spokenLanguageNames] =
+  const [
+    response,
+    industryNames,
+    spokenLanguageNames,
+    premiumListingIds,
+    premiumGrantListingIds,
+  ] =
     await Promise.all([
       fetch(url, {
-        headers: directusHeaders,
+        headers: getDirectusHeaders(),
         cache: "no-store",
       }),
       getDirectoryTranslationMap("industries", locale),
       getDirectoryTranslationMap("spoken_languages", locale),
+      getActivePremiumListingIds(),
+      getActivePremiumGrantListingIds(),
     ]);
 
   if (!response.ok) {
@@ -415,19 +650,53 @@ export async function getListingBySlug(
     );
   }
 
-  const result = (await response.json()) as DirectusResponse<ListingDetail[]>;
+  const result = (await response.json()) as DirectusResponse<
+    Array<Omit<ListingDetail, "gallery">>
+  >;
   const listing = result.data[0];
 
-  return listing
-    ? localizeListing(listing, industryNames, spokenLanguageNames)
-    : null;
+  if (!listing) {
+    return null;
+  }
+
+  const premiumEnabled =
+    premiumListingIds.has(listing.id) || premiumGrantListingIds.has(listing.id);
+  const gallery = premiumEnabled
+    ? await getPublicListingGallery(listing.id)
+    : [];
+
+  return localizeListing(
+    {
+      ...listing,
+      description: localizedListingDescription(
+        listing,
+        locale,
+        premiumEnabled,
+      ),
+      logo: premiumEnabled ? listing.logo : null,
+      gallery,
+      social_links: premiumEnabled ? listing.social_links : [],
+      premium_features_enabled: premiumEnabled,
+      custom_cta_label: premiumEnabled ? listing.custom_cta_label : null,
+      custom_cta_value: premiumEnabled ? listing.custom_cta_value : null,
+    },
+    industryNames,
+    spokenLanguageNames,
+  );
 }
 
 
-export async function getPublishedListingSlugs(): Promise<string[]> {
-  const url = new URL("/items/listings", directusUrl);
+export type PublishedListingSitemapEntry = {
+  slug: string;
+  lastModified: string | null;
+};
 
-  url.searchParams.set("fields", "slug");
+export async function getPublishedListingSitemapEntries(): Promise<
+  PublishedListingSitemapEntry[]
+> {
+  const url = new URL("/items/listings", getDirectusUrl());
+
+  url.searchParams.set("fields", "slug,published_at");
   url.searchParams.set("sort", "slug");
   url.searchParams.set("limit", "-1");
   url.searchParams.set(
@@ -440,7 +709,7 @@ export async function getPublishedListingSlugs(): Promise<string[]> {
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -451,18 +720,53 @@ export async function getPublishedListingSlugs(): Promise<string[]> {
   }
 
   const result = (await response.json()) as DirectusResponse<
-    Array<{ slug: string }>
+    Array<{ slug: string; published_at: string | null }>
   >;
 
   return result.data
-    .map((listing) => listing.slug?.trim())
-    .filter((slug): slug is string => Boolean(slug));
+    .map((listing) => ({
+      slug: listing.slug?.trim(),
+      lastModified: listing.published_at,
+    }))
+    .filter(
+      (listing): listing is PublishedListingSitemapEntry =>
+        Boolean(listing.slug),
+    );
+}
+
+export async function getPublicListingPosts(
+  listingId: string,
+): Promise<ListingPost[]> {
+  const url = new URL("/items/listing_posts", getDirectusUrl());
+  url.searchParams.set(
+    "fields",
+    "id,listing,type,title,body,image,cta_label,cta_url,starts_at,ends_at,published_at",
+  );
+  url.searchParams.set("sort", "-published_at");
+  url.searchParams.set("limit", "20");
+  url.searchParams.set(
+    "filter",
+    JSON.stringify({
+      _and: [
+        { listing: { _eq: listingId } },
+        { status: { _eq: "published" } },
+        { _or: [{ ends_at: { _null: true } }, { ends_at: { _gte: "$NOW" } }] },
+      ],
+    }),
+  );
+  const response = await fetch(url, {
+    headers: getDirectusHeaders(),
+    cache: "no-store",
+  });
+  if (!response.ok) return [];
+  const result = (await response.json()) as DirectusResponse<ListingPost[]>;
+  return result.data;
 }
 
 export async function getListingOpeningHours(
   listingId: string,
 ): Promise<ListingOpeningHour[]> {
-  const url = new URL("/items/listing_opening_hours", directusUrl);
+  const url = new URL("/items/listing_opening_hours", getDirectusUrl());
 
   url.searchParams.set(
     "fields",
@@ -479,7 +783,7 @@ export async function getListingOpeningHours(
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -499,13 +803,13 @@ export async function getListingOpeningHours(
 async function getDirectoryOptions(
   collection: DirectoryCollection,
 ): Promise<DirectoryOption[]> {
-  const url = new URL(`/items/${collection}`, directusUrl);
+  const url = new URL(`/items/${collection}`, getDirectusUrl());
 
   url.searchParams.set("fields", "id,code,name");
   url.searchParams.set("sort", "name");
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 
@@ -529,7 +833,7 @@ export function getCantons(): Promise<DirectoryOption[]> {
 export async function getCantonIdByCode(
   code: string,
 ): Promise<string | null> {
-  const url = new URL("/items/cantons", directusUrl);
+  const url = new URL("/items/cantons", getDirectusUrl());
 
   url.searchParams.set("fields", "id");
   url.searchParams.set("limit", "1");
@@ -543,7 +847,7 @@ export async function getCantonIdByCode(
   );
 
   const response = await fetch(url, {
-    headers: directusHeaders,
+    headers: getDirectusHeaders(),
     cache: "no-store",
   });
 

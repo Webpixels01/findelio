@@ -25,8 +25,13 @@ const addressVisibilityValues = new Set(["full", "city", "hidden"]);
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-type ValidatedCreateValues = Omit<AccountListingCreate, "canton"> & {
+type ValidatedCreateValues = Omit<
+  AccountListingCreate,
+  "canton" | "requested_billing_interval"
+> & {
   canton: string;
+  plan: "free" | "premium";
+  billing_interval: "monthly" | "yearly";
 };
 
 function isTrustedOrigin(request: Request): boolean {
@@ -77,7 +82,6 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   const data = body as Record<string, unknown>;
   const organization = stringValue(data.organization_id);
   const name = stringValue(data.name);
-  const shortDescription = optionalString(data.short_description);
   const description = optionalString(data.description);
   const street = optionalString(data.street);
   const postalCode = stringValue(data.postal_code);
@@ -86,6 +90,8 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   const publicEmail = optionalString(data.public_email)?.toLowerCase() ?? null;
   const phone = optionalString(data.phone);
   const addressVisibility = stringValue(data.address_visibility);
+  const plan = stringValue(data.plan);
+  const billingInterval = stringValue(data.billing_interval);
 
   let websiteUrl: string | null;
 
@@ -101,14 +107,15 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
     !postalCode ||
     !city ||
     !cantonCodes.has(canton) ||
-    !addressVisibilityValues.has(addressVisibility)
+    !addressVisibilityValues.has(addressVisibility) ||
+    !["free", "premium"].includes(plan) ||
+    !["monthly", "yearly"].includes(billingInterval)
   ) {
     return null;
   }
 
   if (
     !hasValidLength(name, 180) ||
-    !hasValidLength(shortDescription, 500) ||
     !hasValidLength(description, 20000) ||
     !hasValidLength(street, 200) ||
     !hasValidLength(postalCode, 20) ||
@@ -127,7 +134,6 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
   return {
     organization,
     name,
-    short_description: shortDescription,
     description,
     street,
     postal_code: postalCode,
@@ -138,6 +144,9 @@ function validateBody(body: unknown): ValidatedCreateValues | null {
     website_url: websiteUrl,
     address_visibility:
       addressVisibility as AccountListingCreate["address_visibility"],
+    plan: plan as ValidatedCreateValues["plan"],
+    billing_interval:
+      billingInterval as ValidatedCreateValues["billing_interval"],
   };
 }
 
@@ -192,9 +201,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
 
+  const {
+    plan,
+    billing_interval: billingInterval,
+    ...listingValues
+  } = values;
   const createValues: AccountListingCreate = {
-    ...values,
+    ...listingValues,
     canton: cantonId,
+    requested_billing_interval:
+      plan === "premium" ? billingInterval : null,
   };
 
   let accessToken = await getAccessToken();
@@ -209,7 +225,11 @@ export async function POST(request: Request) {
     const listing = await createAccountListing(accessToken, createValues);
 
     return NextResponse.json(
-      { success: true, listing: { id: listing.id } },
+      {
+        success: true,
+        listing: { id: listing.id },
+        premium_requested: plan === "premium",
+      },
       { status: 201, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
@@ -227,7 +247,11 @@ export async function POST(request: Request) {
         );
 
         return NextResponse.json(
-          { success: true, listing: { id: listing.id } },
+          {
+            success: true,
+            listing: { id: listing.id },
+            premium_requested: plan === "premium",
+          },
           { status: 201, headers: { "Cache-Control": "no-store" } },
         );
       } catch (retryError) {

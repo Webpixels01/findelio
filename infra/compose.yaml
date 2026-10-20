@@ -35,13 +35,14 @@ services:
       retries: 5
 
   directus:
-    image: directus/directus:11.17.4
+    image: directus/directus:12.5.0
     container_name: findelio-directus
     ports:
       - "127.0.0.1:8055:8055"
     volumes:
       - ./directus/uploads:/directus/uploads
       - ./directus/extensions:/directus/extensions
+      - ./directus/templates:/directus/templates
     depends_on:
       database:
         condition: service_healthy
@@ -49,6 +50,7 @@ services:
         condition: service_healthy
     environment:
       SECRET: ${DIRECTUS_SECRET}
+      LICENSE_KEY: ${LICENSE_KEY:-}
 
       DB_CLIENT: pg
       DB_HOST: database
@@ -61,11 +63,35 @@ services:
       CACHE_AUTO_PURGE: "true"
       CACHE_STORE: redis
       REDIS: redis://cache:6379
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_STORE: redis
+      RATE_LIMITER_KEY_PREFIX: findelio-ip
+      RATE_LIMITER_REGISTRATION_KEY_PREFIX: findelio-registration
+      RATE_LIMITER_GLOBAL_KEY_PREFIX: findelio-global
+      RATE_LIMITER_EMAIL_KEY_PREFIX: findelio-email
+      RATE_LIMITER_POINTS: "200"
+      RATE_LIMITER_DURATION: "1"
+      ASSETS_TRANSFORM_MAX_CONCURRENT: "2"
 
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       PUBLIC_URL: http://localhost:8055
+      EMAIL_FROM: info@findelio.ch
+      EMAIL_TEMPLATES_PATH: /directus/templates
+      EMAIL_TRANSPORT: smtp
+      EMAIL_SMTP_HOST: mail.infomaniak.com
+      EMAIL_SMTP_PORT: "587"
+      EMAIL_SMTP_SECURE: "false"
+      EMAIL_SMTP_USER: ${DIRECTUS_EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD}
+      ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL}
+      FINDELIO_SITE_URL: http://localhost:3000
+      # Default off until migration is applied and the feature is intentionally enabled.
+      FINDELIO_REFERRAL_REGISTRATION_ENABLED: ${FINDELIO_REFERRAL_REGISTRATION_ENABLED:-false}
+      USER_REGISTER_URL_ALLOW_LIST: >-
+        http://localhost:3000/de-ch/registrierung-bestaetigen,
+        http://localhost:3000/vi/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: http://localhost:3000
 
@@ -73,7 +99,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "wget --spider -q http://localhost:8055/server/ping || exit 1",
+          "wget --spider -q http://127.0.0.1:8055/server/ping || exit 1",
         ]
       interval: 10s
       timeout: 5s

@@ -1,23 +1,123 @@
 "use client";
 
+import type { FormEvent } from "react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { cantons, categories, languages } from "@/data/directory-options";
-import type { AppLocale } from "@/i18n/routing";
+import { Link } from "@/i18n/navigation";
 
-export default function RegisterForm() {
+const LETTER_PATTERN = /[A-Za-z]/;
+const NUMBER_PATTERN = /\d/;
+const SPECIAL_CHARACTER_PATTERN = /[^A-Za-z0-9]/;
+
+function isValidPassword(password: string): boolean {
+  return (
+    password.length >= 8 &&
+    LETTER_PATTERN.test(password) &&
+    NUMBER_PATTERN.test(password) &&
+    SPECIAL_CHARACTER_PATTERN.test(password)
+  );
+}
+
+export default function RegisterForm({
+  initialEmail = "",
+  invitationToken = "",
+  referralRegistrationEnabled = false,
+  initialReferralCode = "",
+}: {
+  initialEmail?: string;
+  invitationToken?: string;
+  referralRegistrationEnabled?: boolean;
+  initialReferralCode?: string;
+}) {
   const t = useTranslations("Register");
-  const locale = useLocale() as AppLocale;
-  const [submitted, setSubmitted] = useState(false);
+  const locale = useLocale();
+  const showReferralField =
+    referralRegistrationEnabled && !invitationToken;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState(initialEmail);
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [referralCode, setReferralCode] = useState(
+    showReferralField ? initialReferralCode : "",
+  );
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  if (submitted) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+
+    if (!isValidPassword(password)) {
+      setError(t("passwordError"));
+      return;
+    }
+
+    if (password !== passwordConfirmation) {
+      setError(t("passwordMismatch"));
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          locale,
+          invitationToken,
+          referralCode: showReferralField ? referralCode : "",
+        }),
+      });
+
+      const result = (await response.json()) as {
+        success?: boolean;
+        error?: string;
+      };
+
+      if (!response.ok || !result.success) {
+        if (result.error === "INVALID_PASSWORD") {
+          setError(t("passwordError"));
+        } else if (result.error === "INVALID_EMAIL") {
+          setError(t("emailError"));
+        } else if (result.error === "INVALID_INVITATION") {
+          setError(t("invitationError"));
+        } else if (result.error === "INVALID_REFERRAL") {
+          setError(t("referralError"));
+        } else if (response.status >= 500) {
+          setError(t("serverError"));
+        } else {
+          setError(t("errorFallback"));
+        }
+        return;
+      }
+
+      setIsSubmitted(true);
+    } catch {
+      setError(t("connectionError"));
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  if (isSubmitted) {
     return (
       <div className="rounded-3xl border border-[#bfe4ca] bg-[#eefaf2] p-8 text-[#135f30]">
-        <h2 className="text-2xl font-extrabold">{t("successTitle")}</h2>
-        <p className="mt-2">{t("successText")}</p>
-        <button type="button" className="mt-6 font-bold underline" onClick={() => setSubmitted(false)}>
-          {t("newEntry")}
-        </button>
+        <h2 className="text-2xl font-extrabold">
+          {t(invitationToken ? "invitationSuccessTitle" : "successTitle")}
+        </h2>
+        <p className="mt-3 leading-7">
+          {t(invitationToken ? "invitationSuccessText" : "successText")}
+        </p>
+        <p className="mt-3 text-sm">{t("successHint")}</p>
       </div>
     );
   }
@@ -25,66 +125,140 @@ export default function RegisterForm() {
   return (
     <form
       className="grid gap-5 rounded-3xl border border-[var(--border)] bg-white p-6 shadow-xl shadow-[#001734]/6 md:grid-cols-2 md:p-8"
-      onSubmit={(event) => {
-        event.preventDefault();
-        setSubmitted(true);
-      }}
+      onSubmit={handleSubmit}
     >
-      <label className="field-group md:col-span-2">
-        <span className="field-label">{t("companyName")}</span>
-        <input required className="field-control" />
-      </label>
       <label className="field-group">
+        <span className="field-label">{t("firstName")}</span>
+        <input
+          type="text"
+          name="firstName"
+          autoComplete="given-name"
+          required
+          maxLength={100}
+          className="field-control"
+          value={firstName}
+          onChange={(event) => setFirstName(event.target.value)}
+          disabled={isLoading}
+        />
+      </label>
+
+      <label className="field-group">
+        <span className="field-label">{t("lastName")}</span>
+        <input
+          type="text"
+          name="lastName"
+          autoComplete="family-name"
+          required
+          maxLength={100}
+          className="field-control"
+          value={lastName}
+          onChange={(event) => setLastName(event.target.value)}
+          disabled={isLoading}
+        />
+      </label>
+
+      <label className="field-group md:col-span-2">
         <span className="field-label">{t("email")}</span>
-        <input required type="email" className="field-control" />
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          required
+          maxLength={254}
+          className="field-control"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          disabled={isLoading}
+          readOnly={Boolean(invitationToken)}
+          aria-readonly={Boolean(invitationToken)}
+        />
       </label>
+
       <label className="field-group">
-        <span className="field-label">{t("phone")}</span>
-        <input type="tel" className="field-control" />
+        <span className="field-label">{t("password")}</span>
+        <input
+          type="password"
+          name="password"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          className="field-control"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          disabled={isLoading}
+        />
       </label>
+
       <label className="field-group">
-        <span className="field-label">{t("website")}</span>
-        <input type="url" placeholder="https://" className="field-control" />
+        <span className="field-label">{t("passwordConfirmation")}</span>
+        <input
+          type="password"
+          name="passwordConfirmation"
+          autoComplete="new-password"
+          required
+          minLength={8}
+          className="field-control"
+          value={passwordConfirmation}
+          onChange={(event) => setPasswordConfirmation(event.target.value)}
+          disabled={isLoading}
+        />
       </label>
-      <label className="field-group">
-        <span className="field-label">{t("industry")}</span>
-        <select required className="field-control" defaultValue="">
-          <option value="" disabled>{t("choose")}</option>
-          {categories.map((category) => (
-            <option key={category.code} value={category.code}>{category.labels[locale]}</option>
-          ))}
-        </select>
-      </label>
-      <label className="field-group">
-        <span className="field-label">{t("canton")}</span>
-        <select required className="field-control" defaultValue="">
-          <option value="" disabled>{t("choose")}</option>
-          {cantons.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
-        </select>
-      </label>
-      <label className="field-group">
-        <span className="field-label">{t("city")}</span>
-        <input required className="field-control" />
-      </label>
-      <fieldset className="md:col-span-2">
-        <legend className="field-label">{t("languages")}</legend>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {languages.map((language) => (
-            <label key={language.code} className="flex items-center gap-3 rounded-xl border border-[var(--border)] px-4 py-3">
-              <input type="checkbox" name="languages" value={language.code} className="h-4 w-4 accent-[#0277ee]" />
-              <span>{language.label}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <label className="field-group md:col-span-2">
-        <span className="field-label">{t("descriptionLabel")}</span>
-        <textarea required rows={6} className="field-control h-auto py-3" />
-      </label>
-      <p className="text-sm text-[var(--muted)] md:col-span-2">{t("note")}</p>
-      <button type="submit" className="primary-button h-12 px-6 md:col-span-2 md:justify-self-start">
-        {t("submit")}
+
+      <p className="text-sm leading-6 text-[var(--muted)] md:col-span-2">
+        {t("passwordHint")}
+      </p>
+
+      {showReferralField && (
+        <label className="field-group md:col-span-2">
+          <span className="field-label">{t("referralCode")}</span>
+          <input
+            type="text"
+            name="referralCode"
+            autoComplete="off"
+            maxLength={64}
+            className="field-control"
+            value={referralCode}
+            onChange={(event) => setReferralCode(event.target.value)}
+            disabled={isLoading}
+          />
+          <span className="mt-2 text-sm text-[var(--muted)]">
+            {t("referralCodeHint")}
+          </span>
+        </label>
+      )}
+
+      <button
+        type="submit"
+        className="primary-button h-12 px-6 md:col-span-2 md:justify-self-start"
+        disabled={isLoading}
+      >
+        {isLoading
+          ? t("loading")
+          : t(invitationToken ? "invitationSubmit" : "submit")}
       </button>
+
+      {error && (
+        <p
+          className="rounded-xl bg-red-50 p-3 text-sm text-red-700 md:col-span-2"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
+
+      <p className="text-sm text-[var(--muted)] md:col-span-2">
+        {t("loginPrompt")} {" "}
+        <Link
+          href={
+            invitationToken
+              ? `/login?next=${encodeURIComponent(`/${locale}/team/einladung?token=${invitationToken}`)}`
+              : "/login"
+          }
+          className="font-bold text-[#0277ee] hover:underline"
+        >
+          {t("loginLink")}
+        </Link>
+      </p>
     </form>
   );
 }

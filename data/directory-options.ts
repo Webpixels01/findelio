@@ -10,6 +10,7 @@ export const languages = [
   { code: "ru", label: "Русский" },
   { code: "pt-pt", label: "Português" },
   { code: "ro", label: "Română" },
+  { code: "vi", label: "Tiếng Việt" },
 ] as const;
 
 export type LanguageCode = (typeof languages)[number]["code"];
@@ -27,6 +28,7 @@ export const categories = [
       ru: "Строительство и ремёсла",
       "pt-pt": "Construção e ofícios",
       ro: "Construcții și meserii",
+      vi: "Xây dựng và nghề thủ công",
     },
   },
   {
@@ -41,6 +43,7 @@ export const categories = [
       ru: "Здоровье",
       "pt-pt": "Saúde",
       ro: "Sănătate",
+      vi: "Sức khỏe",
     },
   },
   {
@@ -55,6 +58,7 @@ export const categories = [
       ru: "Гастрономия",
       "pt-pt": "Restauração",
       ro: "Gastronomie",
+      vi: "Ẩm thực",
     },
   },
   {
@@ -69,6 +73,7 @@ export const categories = [
       ru: "Финансы и консалтинг",
       "pt-pt": "Finanças e consultoria",
       ro: "Finanțe și consultanță",
+      vi: "Tài chính và tư vấn",
     },
   },
   {
@@ -83,6 +88,7 @@ export const categories = [
       ru: "Автомобили",
       "pt-pt": "Veículos",
       ro: "Vehicule",
+      vi: "Xe cộ",
     },
   },
   {
@@ -97,6 +103,7 @@ export const categories = [
       ru: "Красота и велнес",
       "pt-pt": "Beleza e bem-estar",
       ro: "Frumusețe și wellness",
+      vi: "Làm đẹp và chăm sóc sức khỏe",
     },
   },
   {
@@ -111,6 +118,7 @@ export const categories = [
       ru: "IT и цифровые услуги",
       "pt-pt": "TI e serviços digitais",
       ro: "IT și servicii digitale",
+      vi: "Công nghệ thông tin và dịch vụ số",
     },
   },
   {
@@ -125,6 +133,7 @@ export const categories = [
       ru: "Уборка",
       "pt-pt": "Limpeza",
       ro: "Curățenie",
+      vi: "Vệ sinh",
     },
   },
 ] as const;

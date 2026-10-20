@@ -17,8 +17,11 @@ import {
   rejectListingRevision,
   suspendListingFromRevision,
 } from "@/lib/directus-review";
+import { sendListingDecisionNotification } from "@/lib/mail";
 
-const actions = new Set(["approve", "reject", "suspend"]);
+type ReviewAction = "approve" | "reject" | "suspend";
+
+const actions = new Set<ReviewAction>(["approve", "reject", "suspend"]);
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -47,7 +50,7 @@ async function refreshAccessToken(): Promise<string | null> {
 async function runAction(
   accessToken: string,
   revisionId: string,
-  action: string,
+  action: ReviewAction,
   reason: string,
 ): Promise<void> {
   const [user, permissions] = await Promise.all([
@@ -59,12 +62,20 @@ async function runAction(
     throw new DirectusReviewError("Keine Berechtigung.", 403, "FORBIDDEN");
   }
 
+  if (reason.length > 2000) {
+    throw new DirectusReviewError(
+      "Die Begründung darf höchstens 2000 Zeichen lang sein.",
+      400,
+      "INVALID_REASON",
+    );
+  }
+
   if (action === "approve") {
     await approveListingRevision(accessToken, revisionId, user.id);
     return;
   }
 
-  if (!reason || reason.length < 3 || reason.length > 2000) {
+  if (!reason || reason.length < 3) {
     throw new DirectusReviewError(
       "Eine Begründung ist erforderlich.",
       400,
@@ -78,6 +89,26 @@ async function runAction(
   }
 
   await suspendListingFromRevision(accessToken, revisionId, user.id, reason);
+}
+
+async function notifyCustomer(
+  accessToken: string,
+  revisionId: string,
+  action: ReviewAction,
+  reason: string,
+): Promise<void> {
+  try {
+    await sendListingDecisionNotification(accessToken, {
+      revisionId,
+      action,
+      ...(reason ? { reason } : {}),
+    });
+  } catch (error) {
+    console.error(
+      "Kundenbenachrichtigung konnte nicht gesendet werden:",
+      error,
+    );
+  }
 }
 
 export async function PATCH(
@@ -111,9 +142,10 @@ export async function PATCH(
   const action = typeof data.action === "string" ? data.action : "";
   const reason = typeof data.reason === "string" ? data.reason.trim() : "";
 
-  if (!actions.has(action)) {
+  if (!actions.has(action as ReviewAction)) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
+  const reviewAction = action as ReviewAction;
 
   let accessToken = await getAccessToken();
 
@@ -126,7 +158,13 @@ export async function PATCH(
   }
 
   try {
-    await runAction(accessToken, revisionId, action, reason);
+    await runAction(accessToken, revisionId, reviewAction, reason);
+    await notifyCustomer(
+      accessToken,
+      revisionId,
+      reviewAction,
+      reason,
+    );
     return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof DirectusReviewError && error.status === 401) {
@@ -134,7 +172,18 @@ export async function PATCH(
 
       if (refreshedToken) {
         try {
-          await runAction(refreshedToken, revisionId, action, reason);
+          await runAction(
+            refreshedToken,
+            revisionId,
+            reviewAction,
+            reason,
+          );
+          await notifyCustomer(
+            refreshedToken,
+            revisionId,
+            reviewAction,
+            reason,
+          );
           return NextResponse.json({ success: true });
         } catch (retryError) {
           error = retryError;
