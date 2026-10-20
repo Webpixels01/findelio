@@ -28,6 +28,8 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
       USER_REGISTER_URL_ALLOW_LIST: 'http://localhost:3000/de-ch/registrierung-bestaetigen,http://localhost:3000/vi/registrierung-bestaetigen', TELEMETRY: 'false',
       CACHE_ENABLED: 'true', CACHE_AUTO_PURGE: 'true', CACHE_STORE: 'redis', REDIS: 'redis://cache:6379',
       RATE_LIMITER_ENABLED: 'true', RATE_LIMITER_STORE: 'redis', RATE_LIMITER_POINTS: '200', RATE_LIMITER_DURATION: '1',
+      RATE_LIMITER_KEY_PREFIX: 'findelio-ip', RATE_LIMITER_REGISTRATION_KEY_PREFIX: 'findelio-registration',
+      RATE_LIMITER_GLOBAL_KEY_PREFIX: 'findelio-global', RATE_LIMITER_EMAIL_KEY_PREFIX: 'findelio-email',
       IP_TRUST_PROXY: 'number:1', WEBSOCKETS_ENABLED: 'true' } },
 } };
 async function run(args, { quiet = false, input } = {}) {
@@ -98,9 +100,6 @@ try {
     await run(['exec', '-T', 'directus', 'node', '/test/referral-directory-setup.mjs']);
   }
   config.services.directus.environment.FINDELIO_REFERRAL_REGISTRATION_ENABLED = 'false';
-  // A separate registration scenario needs fresh quotas; Redis now persists
-  // the previous scenario's counters across CMS restarts. This is test-only.
-  await run(['exec', '-T', 'cache', 'redis-cli', 'FLUSHDB'], { quiet: true });
   await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
   await run(['up', '-d', '--no-deps', 'directus']);
   await ready();
