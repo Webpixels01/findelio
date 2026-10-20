@@ -191,7 +191,28 @@ bash ops/deploy.sh
 
 ### Sicherheitsupdate vom 20.10.2026
 
-Der Quellstand verwendet Next.js 16.4.2, Sharp 0.35.5 und Directus 12.5.0.
+Der Quellstand verwendet Next.js 16.4.2, Sharp 0.35.5 und wieder Directus
+11.17.4. Das zunächst ausgelieferte Update auf Directus 12.5.0 wurde
+zurückgenommen: Directus 12 schaltet benutzerdefinierte Berechtigungsregeln
+ohne passende Lizenz ab. Davon sind bestehende gefilterte Findelio-Regeln
+betroffen. Die früheren Tests mit unbeschränkten Testberechtigungen haben
+diesen Ausfall nicht erfasst.
+
+Wenn `5fb07dd` bereits ausgerollt wurde und die Startseite HTTP 500 meldet,
+nach dem Git-Pull einmal `bash ops/recover-directus.sh` ausführen. Das
+Skript sichert den aktuellen Stand, ersetzt nur den CMS-Container durch
+11.17.4, leert die CMS-Caches und prüft die Seite. Es spielt keinen Dump
+ein, führt keine Rückwärtsmigrationen aus und ändert keine Berechtigungen
+oder Geschäftsdaten. Die zusätzlichen Directus-12-Systemtabellen bleiben
+erhalten. Der Ablauf ist für den konkreten Wechsel 12.5.0 → 11.17.4 geprüft,
+nicht als allgemeines Downgrade-Verfahren vorgesehen.
+
+Die eigenen Sicherheitskorrekturen und Next-/Sharp-Updates bleiben aktiv.
+Die nur in Directus 12 behobenen CMS-Schwachstellen gelten durch diese
+Wiederherstellung ausdrücklich nicht als behoben. Ein späteres CMS-Update
+benötigt eine kompatible, lizenzierte Zielversion und Tests der tatsächlichen
+Berechtigungsregeln; der Notfallfix erweitert keine Zugriffsrechte.
+
 Das Update verwendet denselben Deploy-Befehl wie bisher. Eine Datenbank
 neu einzuspielen oder manuell SQL auszuführen ist nicht erforderlich.
 `ops/deploy.sh` ergänzt vor dem Neustart mit `20261020_request_limits.sql`
@@ -221,12 +242,11 @@ abgewiesen. WebSockets bleiben aktiviert. Weiterleitungen des
 Next-Bildoptimierers sind deaktiviert. Private Bildquellen sind nur im
 Entwicklungsmodus erlaubt.
 
-Die automatisierten Tests prüfen eine frische Datenbank sowie das Upgrade
-von Directus 11.17.4 auf 12.5.0 mit vorhandenen Testdaten. Sie greifen nicht
-auf Produktionsdaten zu. Für dieses Update sind keine manuell zu
-wiederholenden Testschritte vorgesehen. Das vom Deploy-Skript erstellte
-Backup bleibt für einen nötigen Rollback erhalten; ein Downgrade des Images
-allein setzt Directus-Systemmigrationen nicht zurück.
+Die automatisierten Tests prüfen eine frische Datenbank sowie die
+Wiederherstellung nach dem Upgrade auf 12.5.0 mit bereits vorhandenen
+gefilterten Berechtigungen und Testdaten. Sie greifen nicht auf
+Produktionsdaten zu. Das vom Deploy-Skript erstellte Backup bleibt für
+einen nötigen Rollback erhalten.
 
 ## Backups
 

@@ -49,15 +49,17 @@ npm run test:security
 npm run lint
 npx tsc --noEmit --incremental false
 node scripts/test-referral-directus.mjs --isolated
-node scripts/test-referral-directus.mjs --isolated --upgrade-from-11
+node scripts/test-referral-directus.mjs --isolated --recover-from-12
 ```
 
 Der letzte Befehl erstellt eine kurzlebige Docker-Umgebung mit eigener
 Datenbank und lokalem Mailpit; Projektzugänge und echte E-Mail-Empfänger
 werden nicht verwendet. Er prüft auch gleichzeitige Anfragen, direkte
 CMS-Zugriffe und die Kompatibilität der Directus-Erweiterungen. Mit
-`--upgrade-from-11` wird zuerst eine Directus-11-Datenbank angelegt und
-anschliessend durch Directus 12 migriert.
+`--recover-from-12` werden vor dem Upgrade gefilterte Berechtigungen und
+öffentliche/private Beispieldaten angelegt. Der Test reproduziert die
+Sperre unter Directus 12 und prüft die Wiederherstellung des Zugriffs unter
+Directus 11 mit derselben Datenbank, unveränderten Regeln und Redis-Caches.
 Nach Änderungen an den beiden Sicherheits-Erweiterungen
 `npm run build:security-extensions` ausführen.
 

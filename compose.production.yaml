@@ -101,7 +101,7 @@ services:
     logging: *default-logging
 
   directus:
-    image: directus/directus:12.5.0
+    image: directus/directus:11.17.4
     restart: unless-stopped
     environment:
       SECRET: ${DIRECTUS_SECRET:?DIRECTUS_SECRET fehlt}

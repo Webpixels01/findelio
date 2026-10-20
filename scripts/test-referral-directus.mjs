@@ -9,6 +9,7 @@ import { spawn } from 'node:child_process';
 if (!process.argv.includes('--isolated')) throw new Error('Pass --isolated to start a disposable Docker integration test');
 const browserFixture = process.argv.includes('--browser-fixture');
 const upgradeFrom11 = process.argv.includes('--upgrade-from-11');
+const recoverFrom12 = process.argv.includes('--recover-from-12');
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dir = await mkdtemp(join(tmpdir(), 'findelio-referral-integration-'));
 const configPath = join(dir, 'compose.json');
@@ -17,13 +18,17 @@ const config = { name: 'findelio-test-' + randomBytes(4).toString('hex'), networ
     volumes: [dir + ':/test:ro'],
     tmpfs: ['/var/lib/postgresql/data'], healthcheck: { test: ['CMD-SHELL', 'pg_isready -U postgres'], interval: '2s', retries: 30 } },
   mail: { image: 'axllent/mailpit@sha256:98b916bd3c8d61f7633a52d3ea2f58d00620cb01ca57ab59edde68c347a95365' },
-  directus: { image: upgradeFrom11 ? 'directus/directus:11.17.4' : 'directus/directus:12.5.0', depends_on: { database: { condition: 'service_healthy' } },
+  cache: { image: 'redis:7-alpine', healthcheck: { test: ['CMD', 'redis-cli', 'ping'], interval: '2s', retries: 30 } },
+  directus: { image: 'directus/directus:11.17.4', depends_on: { database: { condition: 'service_healthy' }, cache: { condition: 'service_healthy' } },
     volumes: [join(root, 'infra/directus/extensions') + ':/directus/extensions:ro', join(root, 'infra/directus/templates') + ':/directus/templates:ro', dir + ':/test:ro'],
     environment: { SECRET: randomBytes(32).toString('hex'), ADMIN_EMAIL: 'admin@example.com', ADMIN_PASSWORD: randomBytes(32).toString('base64url'),
       DB_CLIENT: 'pg', DB_HOST: 'database', DB_PORT: '5432', DB_DATABASE: 'findelio_test', DB_USER: 'postgres', DB_PASSWORD: '',
       PUBLIC_URL: 'http://localhost:8055', EMAIL_FROM: 'test@example.com', EMAIL_TRANSPORT: 'smtp', EMAIL_SMTP_HOST: 'mail', EMAIL_SMTP_PORT: '1025', EMAIL_SMTP_SECURE: 'false',
       EMAIL_TEMPLATES_PATH: '/directus/templates', ADMIN_NOTIFICATION_EMAIL: 'notifications@example.com', FINDELIO_SITE_URL: 'http://localhost:3000', FINDELIO_REFERRAL_REGISTRATION_ENABLED: 'true',
-      USER_REGISTER_URL_ALLOW_LIST: 'http://localhost:3000/de-ch/registrierung-bestaetigen,http://localhost:3000/vi/registrierung-bestaetigen', TELEMETRY: 'false', CACHE_ENABLED: 'false', WEBSOCKETS_ENABLED: 'false' } },
+      USER_REGISTER_URL_ALLOW_LIST: 'http://localhost:3000/de-ch/registrierung-bestaetigen,http://localhost:3000/vi/registrierung-bestaetigen', TELEMETRY: 'false',
+      CACHE_ENABLED: 'true', CACHE_AUTO_PURGE: 'true', CACHE_STORE: 'redis', REDIS: 'redis://cache:6379',
+      RATE_LIMITER_ENABLED: 'true', RATE_LIMITER_STORE: 'redis', RATE_LIMITER_POINTS: '200', RATE_LIMITER_DURATION: '1',
+      IP_TRUST_PROXY: 'number:1', WEBSOCKETS_ENABLED: 'true' } },
 } };
 async function run(args, { quiet = false, input } = {}) {
   return new Promise((resolve, reject) => {
@@ -45,7 +50,7 @@ async function ready() {
 try {
   if (browserFixture) config.services.directus.environment.FINDELIO_TEST_ADMIN_TOKEN = randomBytes(32).toString('hex');
   await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
-  for (const name of ['referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs',
+  for (const name of ['referral-directus.integration.mjs', 'referral-directus-disabled.integration.mjs', 'security-directus.integration.mjs', 'directus-permissions-recovery.mjs',
     ...(browserFixture ? ['referral-browser-setup.mjs', 'referral-directory-setup.mjs'] : [])]) {
     await writeFile(join(dir, name), await readFile(join(root, 'tests', name)));
   }
@@ -60,6 +65,7 @@ try {
   await writeFile(join(dir, 'migrations/20261020_request_limits.sql'), await readFile(join(root, 'infra/directus/migrations/20261020_request_limits.sql')));
   await writeFile(join(dir, 'apply-migrations.sh'), await readFile(join(root, 'ops/apply-migrations.sh')));
   if (browserFixture) sql += await readFile(join(root, 'tests/fixtures/referral-browser.sql'), 'utf8');
+  if (recoverFrom12) sql += await readFile(join(root, 'tests/fixtures/directus-permissions-recovery.sql'), 'utf8');
   await run(['up', '-d']);
   await ready();
   await run(['exec', '-T', 'database', 'psql', '-U', 'postgres', '-d', 'findelio_test', '-v', 'ON_ERROR_STOP=1'], { input: sql, quiet: true });
@@ -67,14 +73,24 @@ try {
     await run(['exec', '-T', '-e', 'PGUSER=postgres', '-e', 'PGDATABASE=findelio_test', '-e', 'MIGRATIONS_DIR=/test/migrations',
       'database', 'sh', '/test/apply-migrations.sh']);
   }
-  if (upgradeFrom11) {
+  await run(['restart', 'directus']);
+  await ready();
+  if (recoverFrom12) await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+  if (upgradeFrom11 || recoverFrom12) {
     config.services.directus.image = 'directus/directus:12.5.0';
     await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
     await run(['up', '-d', '--no-deps', 'directus']);
-  } else {
-    await run(['restart', 'directus']);
   }
   await ready();
+  if (recoverFrom12) {
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '403']);
+    config.services.directus.image = 'directus/directus:11.17.4';
+    await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+    await run(['up', '-d', '--no-deps', 'directus']);
+    await ready();
+    await run(['exec', '-T', 'directus', 'node', 'cli.js', 'cache', 'clear']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+  }
   await run(['exec', '-T', 'directus', 'node', '/test/referral-directus.integration.mjs']);
   await run(['exec', '-T', 'directus', 'node', '/test/security-directus.integration.mjs']);
   if (browserFixture) {
@@ -82,6 +98,9 @@ try {
     await run(['exec', '-T', 'directus', 'node', '/test/referral-directory-setup.mjs']);
   }
   config.services.directus.environment.FINDELIO_REFERRAL_REGISTRATION_ENABLED = 'false';
+  // A separate registration scenario needs fresh quotas; Redis now persists
+  // the previous scenario's counters across CMS restarts. This is test-only.
+  await run(['exec', '-T', 'cache', 'redis-cli', 'FLUSHDB'], { quiet: true });
   await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
   await run(['up', '-d', '--no-deps', 'directus']);
   await ready();
