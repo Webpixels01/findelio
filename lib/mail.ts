@@ -19,6 +19,7 @@ export type PostDecisionNotification = {
 };
 
 export type ContactNotification = {
+  client_key: string;
   name: string;
   email: string;
   phone: string;
@@ -153,7 +154,7 @@ export async function sendListingDecisionNotification(
 
 export async function sendContactNotification(
   notification: ContactNotification,
-): Promise<void> {
+): Promise<"sent" | "rate_limited"> {
   const response = await fetch(
     new URL("/findelio-review-notification/contact", getDirectusUrl()),
     {
@@ -167,7 +168,9 @@ export async function sendContactNotification(
     },
   );
 
+  if (response.status === 429) return "rate_limited";
   if (!response.ok) {
     throw new Error(`Directus-Kontaktversand fehlgeschlagen (${response.status}).`);
   }
+  return "sent";
 }

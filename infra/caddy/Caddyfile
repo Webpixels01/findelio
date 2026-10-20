@@ -10,6 +10,15 @@ www.{$SITE_DOMAIN} {
 {$SITE_DOMAIN} {
 	encode zstd gzip
 
+	@uploads path /api/account/listings/*/media
+	request_body @uploads {
+		max_size 84934656
+	}
+	@otherRequests not path /api/account/listings/*/media
+	request_body @otherRequests {
+		max_size 1MB
+	}
+
 	header {
 		Strict-Transport-Security "max-age=31536000"
 		X-Content-Type-Options "nosniff"
@@ -29,6 +38,9 @@ www.{$SITE_DOMAIN} {
 
 {$CMS_DOMAIN} {
 	encode zstd gzip
+	request_body {
+		max_size 9437184
+	}
 
 	header {
 		Strict-Transport-Security "max-age=31536000"

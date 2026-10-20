@@ -35,7 +35,7 @@ services:
       retries: 5
 
   directus:
-    image: directus/directus:11.17.4
+    image: directus/directus:12.5.0
     container_name: findelio-directus
     ports:
       - "127.0.0.1:8055:8055"
@@ -62,6 +62,11 @@ services:
       CACHE_AUTO_PURGE: "true"
       CACHE_STORE: redis
       REDIS: redis://cache:6379
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_STORE: redis
+      RATE_LIMITER_POINTS: "200"
+      RATE_LIMITER_DURATION: "1"
+      ASSETS_TRANSFORM_MAX_CONCURRENT: "2"
 
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}

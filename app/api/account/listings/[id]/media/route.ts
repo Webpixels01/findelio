@@ -1,3 +1,5 @@
+import { readUploadForm, RequestBodyError } from "@/lib/request-body";
+import { enforceRequestLimit } from "@/lib/request-security";
 import { NextResponse } from "next/server";
 import {
   clearAuthCookies,
@@ -7,6 +9,7 @@ import {
 } from "@/lib/auth";
 import {
   DirectusAccountError,
+  authorizeAccountListingImageUpload,
   uploadAccountListingImages,
 } from "@/lib/directus-account";
 import {
@@ -14,6 +17,10 @@ import {
   getDirectusCurrentUser,
   refreshDirectusSession,
 } from "@/lib/directus-auth";
+
+// Bound memory per server process as well as per request/user.
+let activeUploads = 0;
+const maximumConcurrentUploads = 2;
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -43,21 +50,6 @@ async function refreshAccessToken(): Promise<string | null> {
     await clearAuthCookies();
     return null;
   }
-}
-
-async function uploadWithToken(
-  accessToken: string,
-  listingId: string,
-  files: File[],
-) {
-  const currentUser = await getDirectusCurrentUser(accessToken);
-
-  return uploadAccountListingImages(
-    accessToken,
-    listingId,
-    files,
-    currentUser.id,
-  );
 }
 
 function errorResponse(error: DirectusAccountError) {
@@ -110,73 +102,55 @@ export async function POST(
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
-  let formData: FormData;
-
+  let holdsUploadSlot = false;
   try {
-    formData = await request.formData();
-  } catch {
-    return NextResponse.json({ error: "invalid_data" }, { status: 400 });
-  }
-
-  const files = formData
-    .getAll("files")
-    .filter((value): value is File => value instanceof File && value.size > 0);
-
-  if (files.length === 0) {
-    return NextResponse.json({ error: "invalid_data" }, { status: 400 });
-  }
-
-  let accessToken = await getAccessToken();
-
-  if (!accessToken) {
-    accessToken = await refreshAccessToken();
-  }
-
-  if (!accessToken) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-
-  try {
-    const images = await uploadWithToken(accessToken, listingId, files);
+    let accessToken = await getAccessToken() ?? await refreshAccessToken();
+    if (!accessToken) {
+      return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+    }
+    let currentUser;
+    try {
+      currentUser = await getDirectusCurrentUser(accessToken);
+    } catch (error) {
+      if (!(error instanceof DirectusAuthError) || error.status !== 401) throw error;
+      accessToken = await refreshAccessToken();
+      if (!accessToken) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+      currentUser = await getDirectusCurrentUser(accessToken);
+    }
+    // Verify both session and listing ownership before reading any upload bytes.
+    await authorizeAccountListingImageUpload(accessToken, listingId);
+    const limited = await enforceRequestLimit(request, "upload", currentUser.id);
+    if (limited) return limited;
+    if (activeUploads >= maximumConcurrentUploads) {
+      return NextResponse.json({ error: "rate_limited" }, {
+        status: 429, headers: { "Retry-After": "5", "Cache-Control": "no-store" },
+      });
+    }
+    activeUploads++;
+    holdsUploadSlot = true;
+    const formData = await readUploadForm(request);
+    const files = formData.getAll("files")
+      .filter((value): value is File => value instanceof File && value.size > 0);
+    if (files.length === 0) {
+      return NextResponse.json({ error: "invalid_data" }, { status: 400 });
+    }
+    const images = await uploadAccountListingImages(accessToken, listingId, files, currentUser.id);
     return NextResponse.json(
       { success: true, images },
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
-    if (error instanceof DirectusAccountError && error.status === 401) {
-      const refreshedAccessToken = await refreshAccessToken();
-
-      if (refreshedAccessToken) {
-        try {
-          const images = await uploadWithToken(
-            refreshedAccessToken,
-            listingId,
-            files,
-          );
-          return NextResponse.json(
-            { success: true, images },
-            { headers: { "Cache-Control": "no-store" } },
-          );
-        } catch (retryError) {
-          error = retryError;
-        }
-      }
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: error.status === 413 ? "file_too_large" : "invalid_data" }, { status: error.status });
     }
-
-    if (error instanceof DirectusAccountError) {
-      console.warn(
-        "Premium-Bild konnte nicht hochgeladen werden:",
-        error.code ?? error.status,
-      );
-      return errorResponse(error);
-    }
-
+    if (error instanceof DirectusAccountError) return errorResponse(error);
     if (error instanceof DirectusAuthError) {
       await clearAuthCookies();
       return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     }
-
     console.error("Premium-Bild konnte nicht hochgeladen werden:", error);
     return NextResponse.json({ error: "upload_failed" }, { status: 500 });
+  } finally {
+    if (holdsUploadSlot) activeUploads--;
   }
 }

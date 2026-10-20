@@ -1,3 +1,5 @@
+import { readJsonObject, RequestBodyError } from "@/lib/request-body";
+import { requestIdentity } from "@/lib/request-security";
 import { NextResponse } from "next/server";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { sendContactNotification } from "@/lib/mail";
@@ -21,10 +23,6 @@ const SUBJECTS = new Set([
   "partnership",
   "other",
 ]);
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 5;
-const rateLimits = new Map<string, number[]>();
-
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
 
@@ -37,30 +35,6 @@ function isTrustedOrigin(request: Request): boolean {
   ).origin;
 
   return origin === expectedOrigin;
-}
-
-function getClientAddress(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip")?.trim() ||
-    "unknown"
-  );
-}
-
-function exceedsRateLimit(address: string): boolean {
-  const now = Date.now();
-  const recentRequests = (rateLimits.get(address) ?? []).filter(
-    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS,
-  );
-
-  if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
-    rateLimits.set(address, recentRequests);
-    return true;
-  }
-
-  recentRequests.push(now);
-  rateLimits.set(address, recentRequests);
-  return false;
 }
 
 function stringValue(value: unknown): string {
@@ -83,27 +57,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_format" }, { status: 415 });
   }
 
-  const clientAddress = getClientAddress(request);
-
-  if (exceedsRateLimit(clientAddress)) {
-    return NextResponse.json(
-      { error: "rate_limited" },
-      {
-        status: 429,
-        headers: {
-          "Cache-Control": "no-store",
-          "Retry-After": "900",
-        },
-      },
-    );
-  }
-
   let body: ContactBody;
 
   try {
-    body = (await request.json()) as ContactBody;
-  } catch {
-    return NextResponse.json({ error: "invalid_data" }, { status: 400 });
+    body = await readJsonObject(request);
+  } catch (error) {
+    return NextResponse.json({ error: "invalid_data" }, { status: error instanceof RequestBodyError ? error.status : 400 });
   }
 
   const name = stringValue(body.name);
@@ -136,7 +95,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    await sendContactNotification({
+    const sent = await sendContactNotification({
+      client_key: requestIdentity(request),
       name,
       email,
       phone,
@@ -145,6 +105,11 @@ export async function POST(request: Request) {
       locale: isAppLocale(body.locale) ? body.locale : routing.defaultLocale,
     });
 
+    if (sent === "rate_limited") {
+      return NextResponse.json({ error: "rate_limited" }, {
+        status: 429, headers: { "Cache-Control": "no-store", "Retry-After": "900" },
+      });
+    }
     return NextResponse.json(
       { success: true },
       { headers: { "Cache-Control": "no-store" } },

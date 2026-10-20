@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { readJsonObject, RequestBodyError, stringValue } from "@/lib/request-body";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { saveAuthTokens } from "@/lib/auth";
 import {
@@ -10,15 +11,9 @@ import {
   DirectusTeamError,
 } from "@/lib/directus-team";
 
-type VerificationBody = {
-  token?: string;
-  invitationToken?: string;
-  locale?: string;
-};
-
 const invitationTokenPattern = /^[A-Za-z0-9_-]{40,100}$/;
 
-function appLocale(value: string | undefined): AppLocale {
+function appLocale(value: unknown): AppLocale {
   return routing.locales.includes(value as AppLocale)
     ? (value as AppLocale)
     : routing.defaultLocale;
@@ -49,9 +44,9 @@ export async function POST(request: Request) {
 
   try {
     const { token, invitationToken, locale: requestedLocale } =
-      (await request.json()) as VerificationBody;
-    const normalizedToken = token?.trim();
-    const normalizedInvitationToken = invitationToken?.trim() ?? "";
+      await readJsonObject(request);
+    const normalizedToken = stringValue(token);
+    const normalizedInvitationToken = stringValue(invitationToken);
     const locale = appLocale(requestedLocale);
 
     if (!normalizedToken || normalizedToken.length > 2048) {
@@ -99,6 +94,9 @@ export async function POST(request: Request) {
       },
     );
   } catch (error) {
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: "INVALID_REQUEST" }, { status: error.status });
+    }
     if (error instanceof DirectusTeamError && error.status >= 500) {
       console.error("Einladungsregistrierung fehlgeschlagen:", error);
       return NextResponse.json(

@@ -1,3 +1,5 @@
+import { readJsonObject, RequestBodyError } from "@/lib/request-body";
+import { requestIdentity } from "@/lib/request-security";
 import { NextResponse } from "next/server";
 
 const metricEvents = new Set([
@@ -13,7 +15,6 @@ const metricEvents = new Set([
 ]);
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const rateLimits = new Map<string, number[]>();
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -21,30 +22,15 @@ function isTrustedOrigin(request: Request): boolean {
   return origin === new URL(process.env.NEXT_PUBLIC_SITE_URL ?? request.url).origin;
 }
 
-function isRateLimited(request: Request): boolean {
-  const address =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip")?.trim() ||
-    "unknown";
-  const now = Date.now();
-  const recent = (rateLimits.get(address) ?? []).filter(
-    (timestamp) => now - timestamp < 60_000,
-  );
-  if (recent.length >= 120) return true;
-  recent.push(now);
-  rateLimits.set(address, recent);
-  return false;
-}
-
 export async function POST(request: Request) {
-  if (!isTrustedOrigin(request) || isRateLimited(request)) {
-    return NextResponse.json({ success: false }, { status: 429 });
+  if (!isTrustedOrigin(request)) {
+    return NextResponse.json({ success: false }, { status: 403 });
   }
 
-  const body = (await request.json().catch(() => null)) as {
-    listingIds?: unknown;
-    event?: unknown;
-  } | null;
+  let body: Record<string, unknown>;
+  try { body = await readJsonObject(request); } catch (error) {
+    return NextResponse.json({ success: false }, { status: error instanceof RequestBodyError ? error.status : 400 });
+  }
   const event = typeof body?.event === "string" ? body.event : "";
   const listingIds = Array.isArray(body?.listingIds)
     ? Array.from(new Set(body.listingIds.filter((id): id is string =>
@@ -62,18 +48,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false }, { status: 503 });
   }
 
-  const response = await fetch(new URL("/findelio-review-notification/metrics", directusUrl), {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${directusToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ listing_ids: listingIds, event }),
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(new URL("/findelio-review-notification/metrics", directusUrl), {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${directusToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ listing_ids: listingIds, event, client_key: requestIdentity(request) }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
 
-  return NextResponse.json(
-    { success: response.ok },
-    { status: response.ok ? 200 : 502, headers: { "Cache-Control": "no-store" } },
-  );
+    return NextResponse.json(
+      { success: response.ok },
+      { status: response.ok ? 200 : response.status === 429 ? 429 : 502, headers: { "Cache-Control": "no-store", ...(response.status === 429 ? { "Retry-After": "60" } : {}) } },
+    );
+  } catch {
+    return NextResponse.json({ success: false }, { status: 503 });
+  }
 }

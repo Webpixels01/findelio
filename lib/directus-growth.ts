@@ -3,6 +3,7 @@ import "server-only";
 import {
   DirectusAccountError,
   getAccountListingBillingData,
+  validatePremiumFileIds,
 } from "@/lib/directus-account";
 
 export type ListingPostStatus = "draft" | "pending" | "published" | "rejected" | "archived";
@@ -91,7 +92,8 @@ export async function createAccountListingPost(
   currentUserId: string,
   input: ListingPostInput,
 ): Promise<string> {
-  await ensurePremium(accessToken, listingId);
+  const billing = await ensurePremium(accessToken, listingId);
+  await validatePremiumFileIds(billing.listing, input.image ? [input.image] : [], currentUserId);
   const url = new URL("/items/listing_posts", directusUrl());
   const response = await fetch(url, {
     method: "POST",
@@ -118,13 +120,17 @@ export async function updateAccountListingPost(
   currentUserId: string,
   input: ListingPostInput,
 ): Promise<string> {
-  await ensurePremium(accessToken, listingId);
+  const billing = await ensurePremium(accessToken, listingId);
   const posts = await getAccountListingPosts(accessToken, listingId);
   const current = posts.find((post) => post.id === postId);
 
   if (!current) {
     throw new DirectusAccountError("Nicht gefunden.", 404, "NOT_FOUND");
   }
+  await validatePremiumFileIds(
+    billing.listing, input.image ? [input.image] : [], currentUserId,
+    current.image ? [current.image] : [],
+  );
 
   if (current.status === "published") {
     const existingReplacement = posts.find((post) =>

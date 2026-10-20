@@ -8,6 +8,14 @@ CREATE TABLE listing_revisions (id uuid PRIMARY KEY, listing uuid REFERENCES lis
  data jsonb, reviewed_by uuid, reviewed_at timestamptz, rejection_reason text);
 CREATE TABLE subscriptions (id uuid PRIMARY KEY, listing uuid REFERENCES listings(id), plan text,
  status text, current_period_end timestamptz);
+CREATE TABLE listing_metrics_daily (
+ id uuid PRIMARY KEY DEFAULT gen_random_uuid(), listing uuid REFERENCES listings(id),
+ metric_date date NOT NULL, profile_views integer NOT NULL DEFAULT 0,
+ search_impressions integer NOT NULL DEFAULT 0, website_clicks integer NOT NULL DEFAULT 0,
+ phone_clicks integer NOT NULL DEFAULT 0, email_clicks integer NOT NULL DEFAULT 0,
+ social_clicks integer NOT NULL DEFAULT 0, custom_cta_clicks integer NOT NULL DEFAULT 0,
+ post_views integer NOT NULL DEFAULT 0, post_cta_clicks integer NOT NULL DEFAULT 0,
+ date_updated timestamptz DEFAULT NOW(), UNIQUE (listing, metric_date));
 CREATE TABLE listings_industries (id serial PRIMARY KEY, listings_id uuid REFERENCES listings(id), industries_id uuid);
 CREATE TABLE listings_spoken_languages (id serial PRIMARY KEY, listings_id uuid REFERENCES listings(id), spoken_languages_id uuid);
 CREATE TABLE listings_files (id serial PRIMARY KEY, listings_id uuid REFERENCES listings(id), directus_files_id uuid);

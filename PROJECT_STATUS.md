@@ -4,10 +4,10 @@ Stand: 5. August 2026
 
 ## Technischer Rahmen
 
-- Next.js 16.2.12 mit Turbopack
+- Next.js 16.4.2 mit Turbopack (Sicherheitsupdate, Quellstand 20.10.2026)
 - TypeScript und Tailwind CSS
 - next-intl
-- Directus 11.17.4
+- Directus 12.5.0 (Compose-Zielversion; Migration und Rollout siehe DEPLOYMENT.md)
 - PostgreSQL 17 Alpine
 - Redis 7 Alpine
 - Docker Compose

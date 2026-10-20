@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { readJsonObject, RequestBodyError, stringValue } from "@/lib/request-body";
 import { routing, type AppLocale } from "@/i18n/routing";
 import {
   DirectusAuthError,
@@ -17,16 +18,6 @@ import {
   DirectusTeamError,
   getPublicTeamInvitation,
 } from "@/lib/directus-team";
-
-type RegisterBody = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  locale?: string;
-  invitationToken?: string;
-  referralCode?: string;
-};
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LETTER_PATTERN = /[A-Za-z]/;
@@ -48,13 +39,14 @@ function isTrustedOrigin(request: Request): boolean {
   return origin === expectedOrigin;
 }
 
-function isAppLocale(value: string | undefined): value is AppLocale {
+function isAppLocale(value: unknown): value is AppLocale {
   return routing.locales.includes(value as AppLocale);
 }
 
 function validatePassword(password: string): boolean {
   return (
     password.length >= 8 &&
+    password.length <= 1024 &&
     LETTER_PATTERN.test(password) &&
     NUMBER_PATTERN.test(password) &&
     SPECIAL_CHARACTER_PATTERN.test(password)
@@ -71,13 +63,13 @@ export async function POST(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as RegisterBody;
-    const firstName = body.firstName?.trim();
-    const lastName = body.lastName?.trim();
-    const email = body.email?.trim().toLowerCase();
-    const password = body.password ?? "";
-    const invitationToken = body.invitationToken?.trim() ?? "";
-    const referralCode = normalizeReferralCode(body.referralCode);
+    const body = await readJsonObject(request);
+    const firstName = stringValue(body.firstName);
+    const lastName = stringValue(body.lastName);
+    const email = stringValue(body.email).toLowerCase();
+    const password = typeof body.password === "string" ? body.password : "";
+    const invitationToken = stringValue(body.invitationToken);
+    const referralCode = normalizeReferralCode(stringValue(body.referralCode));
     const locale = isAppLocale(body.locale)
       ? body.locale
       : routing.defaultLocale;
@@ -234,6 +226,9 @@ export async function POST(request: Request) {
       },
     );
   } catch (error) {
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: "INVALID_REQUEST" }, { status: error.status });
+    }
     console.error("Registrierung fehlgeschlagen:", error);
 
     return NextResponse.json(

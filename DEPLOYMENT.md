@@ -2,6 +2,11 @@
 
 Diese Anleitung beschreibt die vorbereitete Docker-Produktion auf einem Linux-Server. Die Website läuft unter `SITE_DOMAIN`, Directus unter `CMS_DOMAIN`. Caddy übernimmt HTTPS-Zertifikate und deren Erneuerung automatisch.
 
+**Für die bereits laufende Website genügt `bash ops/deploy.sh` nach dem Git-Pull.**
+Das Skript übernimmt Backup, ausstehende Migrationen, Container-Update und
+automatische Funktionsprüfungen. Die Datenübernahme in Abschnitt 2 betrifft
+ausschliesslich eine erstmalige Installation auf einem leeren Server.
+
 ## Architektur
 
 - `proxy`: Caddy auf den öffentlichen Ports 80 und 443
@@ -135,6 +140,28 @@ intern mit HTTP 200 antworten, werden die öffentlichen Hostnamen im Tunnel und
 die DNS-Einträge aktiviert. Findelio selbst veröffentlicht in dieser Variante
 keine zusätzlichen Host-Ports.
 
+Für die neuen Schutzgrenzen im Nginx Proxy Manager gelten zusätzlich:
+
+- Website-Host: `client_max_body_size 81m;` (das Upload-API begrenzt den
+  tatsächlich gelesenen Stream zusätzlich; JSON-Endpunkte mit neuer
+  Validierung erlauben höchstens 64 KiB).
+- CMS-Host: `client_max_body_size 9m;`.
+- `X-Forwarded-For` muss zuletzt die echte Besucher-IP enthalten.
+  Findelio vertraut ausschliesslich diesem letzten Eintrag. Vorangestellte
+  Headerwerte des Besuchers ändern den Limit-Schlüssel nicht.
+- Bei Cloudflare Tunnel muss Nginx die Besucher-IP aus `CF-Connecting-IP`
+  mit `real_ip_header CF-Connecting-IP` übernehmen. `set_real_ip_from`
+  darf dabei nur die tatsächlich verwendete Tunnel-IP beziehungsweise das
+  isolierte Tunnelnetz enthalten. Der Proxy darf diesen Header nicht von
+  beliebigen direkten Verbindungen akzeptieren. Anschliessend verwendet
+  `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for` die bereinigte
+  Besucher-IP als letzten Eintrag.
+- App-Port 3000 und Directus-Port 8055 bleiben intern; keine zusätzliche
+  öffentliche Portfreigabe. Ohne korrekt eingerichtete Besucher-IP teilen
+  sich alle Tunnelbesucher ein Limit.
+
+Die Caddy-Variante setzt die Grössenlimits bereits in `infra/caddy/Caddyfile`.
+
 ## Absenderlogo in Mailübersichten (BIMI)
 
 Das quadratische Findelio-Absenderlogo liegt als SVG Tiny PS unter `public/bimi-logo.svg`. Nach dem Deployment muss es öffentlich und ohne Anmeldung unter `https://findelio.ch/bimi-logo.svg` erreichbar sein.
@@ -160,7 +187,46 @@ git pull --ff-only
 bash ops/deploy.sh
 ```
 
-`ops/deploy.sh` erstellt bei einer bereits laufenden Installation zuerst ein Backup. Bereits angewendete SQL-Migrationen werden anhand von Dateiname und SHA-256-Prüfsumme erkannt. Eine nachträglich veränderte Migration wird abgelehnt; Schemaänderungen müssen immer als neue Datei hinzukommen.
+`ops/deploy.sh` erstellt bei einer bereits laufenden Installation zuerst ein Backup. Bereits angewendete SQL-Migrationen werden anhand von Dateiname und SHA-256-Prüfsumme erkannt. Eine nachträglich veränderte Migration wird abgelehnt; Schemaänderungen müssen immer als neue Datei hinzukommen. Abschliessend prüft das Skript Website, CMS, Zugriffsschutz und den internen Limit-Endpunkt automatisch. Bei einem Fehler beendet es sich mit einem Fehlerstatus.
+
+### Sicherheitsupdate vom 20.10.2026
+
+Der Quellstand verwendet Next.js 16.4.2, Sharp 0.35.5 und Directus 12.5.0.
+Das Update verwendet denselben Deploy-Befehl wie bisher. Eine Datenbank
+neu einzuspielen oder manuell SQL auszuführen ist nicht erforderlich.
+`ops/deploy.sh` ergänzt vor dem Neustart mit `20261020_request_limits.sql`
+eine interne Zählertabelle. Bestehende Firmen, Konten und Uploads bleiben
+erhalten. Directus führt seine eigenen Systemmigrationen beim Start aus.
+
+`DIRECTUS_TOKEN` muss zu einem aktiven technischen Benutzer mit der Rolle
+`Findelio Server` gehören. Ein Admin- oder Firmenkonto-Token wird an den
+internen Kontakt-, Statistik- und Limit-Endpunkten abgewiesen. Die bestehenden
+Compose-Mounts stellen alle mit Git gelieferten Erweiterungen automatisch
+bereit. Die abschliessende Prüfung erkennt fehlende Erweiterungen, eine
+fehlende Zählertabelle und ein ungeeignetes Token, ohne Testmails zu versenden.
+
+Die Limits gelten über alle Instanzen: Login 30/IP und 10/Konto je
+15 Minuten, Uploads 10/Benutzer je Stunde, Kontakt 5/IP je 15 Minuten und
+Statistik 120/IP je Minute. Gleiche Statistikereignisse pro Besucher und
+Eintrag zählen innerhalb von fünf Minuten einmal. Schlüssel werden als
+HMAC gespeichert; abgelaufene Zähler werden bei Nutzung bereinigt.
+
+Uploads erlauben weiterhin bis zu zehn Dateien mit je 8 MiB, mit höchstens
+zwei gleichzeitig verarbeiteten Upload-Anfragen pro App-Prozess. Erlaubte
+Rasterbilder werden zur Prüfung vollständig dekodiert und anschliessend
+unverändert gespeichert: Format, Auflösung, Dateiname und Metadaten bleiben
+erhalten. Quelldateien mit mehr
+als 20 Megapixeln, über 8000 Pixeln pro Seite oder mehreren Frames werden
+abgewiesen. WebSockets bleiben aktiviert. Weiterleitungen des
+Next-Bildoptimierers sind deaktiviert. Private Bildquellen sind nur im
+Entwicklungsmodus erlaubt.
+
+Die automatisierten Tests prüfen eine frische Datenbank sowie das Upgrade
+von Directus 11.17.4 auf 12.5.0 mit vorhandenen Testdaten. Sie greifen nicht
+auf Produktionsdaten zu. Für dieses Update sind keine manuell zu
+wiederholenden Testschritte vorgesehen. Das vom Deploy-Skript erstellte
+Backup bleibt für einen nötigen Rollback erhalten; ein Downgrade des Images
+allein setzt Directus-Systemmigrationen nicht zurück.
 
 ## Backups
 

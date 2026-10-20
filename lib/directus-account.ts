@@ -1,4 +1,5 @@
 import "server-only";
+import { validateUploadImage, InvalidUploadImageError } from "@/lib/upload-image";
 import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { sendListingReviewNotification } from "@/lib/mail";
 import {
@@ -1150,20 +1151,25 @@ async function getPublicFolderId(): Promise<string> {
   return folderId;
 }
 
-async function validatePremiumFileIds(
+export async function validatePremiumFileIds(
   listing: EditableAccountListing,
   fileIds: string[],
   currentUserId: string,
+  existingPostImages: string[] = [],
 ): Promise<void> {
   const uniqueIds = Array.from(new Set(fileIds));
 
   if (uniqueIds.length === 0) {
     return;
   }
+  if (uniqueIds.some((id) => !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id))) {
+    throw new DirectusAccountError("Ungültige Bilddatei.", 400, "INVALID_FILE");
+  }
 
   const existingListingFileIds = new Set([
     ...(listing.logo ? [listing.logo] : []),
     ...listing.gallery.map((item) => item.directus_files_id),
+    ...existingPostImages,
   ]);
   const openRevisions = await getOpenListingRevisions(listing.id);
 
@@ -1202,7 +1208,7 @@ async function validatePremiumFileIds(
 
     if (
       !file ||
-      !file.type?.startsWith("image/") ||
+      !supportedImageTypes.has(file.type ?? "") ||
       (!existingListingFileIds.has(fileId) &&
         (file.uploaded_by !== currentUserId ||
           file.folder !== publicFolderId))
@@ -1667,6 +1673,17 @@ const supportedImageTypes = new Set([
 ]);
 const maximumImageSize = 8 * 1024 * 1024;
 
+export async function authorizeAccountListingImageUpload(accessToken: string, listingId: string) {
+  const listing = await getEditableAccountListing(accessToken, listingId);
+  if (!listing) {
+    throw new DirectusAccountError("Firmenprofil nicht gefunden oder nicht freigegeben.", 404, "FORBIDDEN");
+  }
+  if (!await hasPremiumEditingAccess(accessToken, listing)) {
+    throw new DirectusAccountError("Für Bild-Uploads ist ein aktives Premium-Abo erforderlich.", 403, "PREMIUM_REQUIRED");
+  }
+  return listing;
+}
+
 export async function uploadAccountListingImages(
   accessToken: string,
   listingId: string,
@@ -1699,24 +1716,14 @@ export async function uploadAccountListingImages(
     }
   }
 
-  const listing = await getEditableAccountListing(accessToken, listingId);
-
-  if (!listing) {
-    throw new DirectusAccountError(
-      "Firmenprofil nicht gefunden oder nicht freigegeben.",
-      404,
-      "FORBIDDEN",
-    );
-  }
-
-  const premiumEnabled = await hasPremiumEditingAccess(accessToken, listing);
-
-  if (!premiumEnabled) {
-    throw new DirectusAccountError(
-      "Für Bild-Uploads ist ein aktives Premium-Abo erforderlich.",
-      403,
-      "PREMIUM_REQUIRED",
-    );
+  const listing = await authorizeAccountListingImageUpload(accessToken, listingId);
+  try {
+    for (const file of files) await validateUploadImage(file);
+  } catch (error) {
+    if (error instanceof InvalidUploadImageError) {
+      throw new DirectusAccountError("Die Datei ist kein gültiges Bild.", 400, "INVALID_IMAGE");
+    }
+    throw error;
   }
 
   const folderId = await getPublicFolderId();

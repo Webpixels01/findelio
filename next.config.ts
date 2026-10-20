@@ -27,14 +27,16 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   images: {
-    dangerouslyAllowLocalIP: true,
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
+    maximumRedirects: 0,
+    maximumResponseBody: 8 * 1024 * 1024,
     remotePatterns: [
-      {
-        protocol: "http",
+      ...(process.env.NODE_ENV !== "production" ? [{
+        protocol: "http" as const,
         hostname: "localhost",
         port: "8055",
         pathname: "/assets/**",
-      },
+      }] : []),
       ...(directusRemotePattern ? [directusRemotePattern] : []),
     ],
   },

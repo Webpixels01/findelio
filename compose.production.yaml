@@ -101,12 +101,12 @@ services:
     logging: *default-logging
 
   directus:
-    image: directus/directus:11.17.4
+    image: directus/directus:12.5.0
     restart: unless-stopped
     environment:
       SECRET: ${DIRECTUS_SECRET:?DIRECTUS_SECRET fehlt}
       PUBLIC_URL: https://${CMS_DOMAIN:?CMS_DOMAIN fehlt}
-      IP_TRUST_PROXY: "true"
+      IP_TRUST_PROXY: "number:1"
 
       DB_CLIENT: pg
       DB_HOST: database
@@ -119,6 +119,11 @@ services:
       CACHE_AUTO_PURGE: "true"
       CACHE_STORE: redis
       REDIS: redis://cache:6379
+      RATE_LIMITER_ENABLED: "true"
+      RATE_LIMITER_STORE: redis
+      RATE_LIMITER_POINTS: "200"
+      RATE_LIMITER_DURATION: "1"
+      ASSETS_TRANSFORM_MAX_CONCURRENT: "2"
 
       ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?DIRECTUS_ADMIN_EMAIL fehlt}
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?DIRECTUS_ADMIN_PASSWORD fehlt}

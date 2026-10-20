@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { readJsonObject, RequestBodyError, stringValue } from "@/lib/request-body";
 import {
   clearAuthCookies,
   getAccessToken,
@@ -14,10 +15,6 @@ import {
   getDirectusCurrentUser,
   refreshDirectusSession,
 } from "@/lib/directus-auth";
-
-type SetupBody = {
-  name?: string;
-};
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -73,15 +70,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_data" }, { status: 415 });
   }
 
-  let body: SetupBody;
+  let body: Record<string, unknown>;
 
   try {
-    body = (await request.json()) as SetupBody;
-  } catch {
-    return NextResponse.json({ error: "invalid_data" }, { status: 400 });
+    body = await readJsonObject(request);
+  } catch (error) {
+    return NextResponse.json({ error: "invalid_data" }, {
+      status: error instanceof RequestBodyError ? error.status : 400,
+    });
   }
 
-  const name = body.name?.trim() ?? "";
+  const name = stringValue(body.name);
 
   if (!name || name.length > 255) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });

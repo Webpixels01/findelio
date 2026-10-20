@@ -164,6 +164,7 @@ export async function loginWithDirectus(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...(process.env.DIRECTUS_TOKEN ? { Authorization: `Bearer ${process.env.DIRECTUS_TOKEN}` } : {}),
     },
     body: JSON.stringify({
       email,

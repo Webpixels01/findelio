@@ -39,6 +39,9 @@ fi
 echo "Baue das Frontend-Image ..."
 "${COMPOSE[@]}" build app
 
+echo "Lade das Directus-Image ..."
+"${COMPOSE[@]}" pull directus
+
 echo "Starte Datenbank und Cache ..."
 "${COMPOSE[@]}" up -d --wait database cache
 
@@ -54,7 +57,11 @@ if [[ "$external_proxy" -eq 1 ]]; then
 else
   echo "Aktualisiere Frontend und HTTPS-Proxy ..."
   "${COMPOSE[@]}" up -d --wait app proxy
+  "${COMPOSE[@]}" exec -T proxy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
 fi
+
+echo "Prüfe Website, CMS und Sicherheitsfunktionen ..."
+"${COMPOSE[@]}" exec -T app node --input-type=module - < "$ROOT_DIR/ops/check-deployment.mjs"
 
 echo "Deployment abgeschlossen."
 "${COMPOSE[@]}" ps

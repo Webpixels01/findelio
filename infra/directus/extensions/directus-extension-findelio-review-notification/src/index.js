@@ -1,4 +1,5 @@
 import { referralMailContent } from "./referral-mail.js";
+import { createRequestLimiter, isServerAccount, requestLimits, validClientKey } from "./request-security.js";
 
 const uuidPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -44,6 +45,42 @@ const findelioReviewNotificationEndpoint = {
   id: "findelio-review-notification",
   handler: (router, { database, env, getSchema, logger, services }) => {
     const { MailService } = services;
+    const consumeLimit = createRequestLimiter(database);
+    const serverOnly = (handler, scope) => async (req, res) => {
+      if (!req.accountability?.user) return res.status(401).json({ error: "unauthorized" });
+      try {
+        if (!await isServerAccount(database, req.accountability)) {
+          return res.status(403).json({ error: "forbidden" });
+        }
+        if (!validClientKey(req.body?.client_key)) {
+          return res.status(400).json({ error: "invalid_data" });
+        }
+        if (scope) {
+          const [maximum, seconds] = requestLimits[scope];
+          if (!await consumeLimit(`${scope}:${req.body.client_key}`, maximum, seconds)) {
+            res.set("Retry-After", String(seconds));
+            return res.status(429).json({ error: "rate_limited" });
+          }
+        }
+        return await handler(req, res);
+      } catch (error) {
+        logger.error(error, "Findelio request security check failed");
+        return res.status(503).json({ error: "temporarily_unavailable" });
+      }
+    };
+
+    router.post("/rate-limit", serverOnly(async (req, res) => {
+      const scope = req.body?.scope;
+      if (!["login-ip", "login-account", "upload"].includes(scope)) {
+        return res.status(400).json({ error: "invalid_data" });
+      }
+      const [maximum, seconds] = requestLimits[scope];
+      if (!await consumeLimit(`${scope}:${req.body.client_key}`, maximum, seconds)) {
+        res.set("Retry-After", String(seconds));
+        return res.status(429).json({ error: "rate_limited" });
+      }
+      return res.status(204).send();
+    }));
 
     router.post("/", async (req, res) => {
       const userId = req.accountability?.user;
@@ -174,7 +211,7 @@ const findelioReviewNotificationEndpoint = {
       }
     });
 
-    router.post("/metrics", async (req, res) => {
+    router.post("/metrics", serverOnly(async (req, res) => {
       if (!req.accountability?.user) {
         return res.status(401).json({ error: "unauthorized" });
       }
@@ -202,20 +239,26 @@ const findelioReviewNotificationEndpoint = {
         const today = new Date().toISOString().slice(0, 10);
 
         for (const row of activeRows) {
-          await database("listing_metrics_daily")
+          await database.transaction(async (transaction) => {
+            const unique = await createRequestLimiter(transaction, { cleanup: false })(
+              `metric:${req.body.client_key}:${event}:${row.id}`, 1, 300,
+            );
+            if (!unique) return;
+            await transaction("listing_metrics_daily")
             .insert({ listing: row.id, metric_date: today, [event]: 1 })
             .onConflict(["listing", "metric_date"])
             .merge({
               [event]: database.raw("??.?? + 1", ["listing_metrics_daily", event]),
               date_updated: database.fn.now(),
             });
+          });
         }
         return res.status(204).send();
       } catch (error) {
         logger.error(error, "Findelio metric tracking failed");
         return res.status(500).json({ error: "save_failed" });
       }
-    });
+    }, "metrics"));
 
     router.post("/post-review", async (req, res) => {
       const userId = req.accountability?.user;
@@ -454,7 +497,7 @@ const findelioReviewNotificationEndpoint = {
       }
     });
 
-    router.post("/contact", async (req, res) => {
+    router.post("/contact", serverOnly(async (req, res) => {
       const userId = req.accountability?.user;
       const name =
         typeof req.body?.name === "string" ? req.body.name.trim() : "";
@@ -525,7 +568,7 @@ const findelioReviewNotificationEndpoint = {
         logger.error(error, "Findelio contact notification failed");
         return res.status(500).json({ error: "send_failed" });
       }
-    });
+    }, "contact"));
 
     router.post("/decision", async (req, res) => {
       const userId = req.accountability?.user;
