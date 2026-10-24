@@ -16,3 +16,10 @@ infra/directus/uploads
 *.tsbuildinfo
 Thumbs.db
 .DS_Store
+
+# Local project documentation; do not version or send to Docker builds.
+/CLAUDE.md
+/DEPLOYMENT.md
+/PROJECT_STATUS.md
+/README.md
+/SKILLS.md

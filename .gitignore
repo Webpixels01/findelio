@@ -17,3 +17,10 @@ Thumbs.db
 infra/directus/uploads/
 backups/
 .env.production
+
+# Local project documentation; do not version or send to Docker builds.
+/CLAUDE.md
+/DEPLOYMENT.md
+/PROJECT_STATUS.md
+/README.md
+/SKILLS.md
