@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAccessToken } from "@/lib/auth";
-import { getDirectusCurrentUser, getDirectusCurrentUserPermissions, hasListingReviewAccess } from "@/lib/directus-auth";
+import { getDirectusCurrentUserPermissions, hasListingReviewAccess } from "@/lib/directus-auth";
+import { DirectusAccountError } from "@/lib/directus-account";
 import { decideListingPost } from "@/lib/directus-growth";
 import { sendPostDecisionNotification } from "@/lib/mail";
 
@@ -30,19 +31,24 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ po
   if (!accessToken) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const permissions = await getDirectusCurrentUserPermissions(accessToken);
   if (!hasListingReviewAccess(permissions)) return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  const body = (await request.json().catch(() => null)) as { action?: string; reason?: string } | null;
+  const body = (await request.json().catch(() => null)) as { action?: string; reason?: string; reviewVersion?: number } | null;
   if (!body || !["approve", "reject"].includes(body.action ?? "")) return NextResponse.json({ error: "invalid_data" }, { status: 400 });
-  const reason = body.reason?.trim() ?? "";
+  if (typeof body.reviewVersion !== "number" || !Number.isSafeInteger(body.reviewVersion) || body.reviewVersion < 1) return NextResponse.json({ error: "invalid_version" }, { status: 400 });
+  const reason = typeof body.reason === "string" ? body.reason.trim() : "";
   if (reason.length > 2000) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
   if (body.action === "reject" && reason.length < 3) {
     return NextResponse.json({ error: "reason_required" }, { status: 400 });
   }
-  const user = await getDirectusCurrentUser(accessToken);
   const { postId } = await params;
   const action = body.action as "approve" | "reject";
-  await decideListingPost(accessToken, postId, user.id, action, reason);
+  try {
+    await decideListingPost(accessToken, postId, body.reviewVersion, action, reason);
+  } catch (error) {
+    if (error instanceof DirectusAccountError) return NextResponse.json({ error: "action_failed" }, { status: error.status >= 400 && error.status <= 599 ? error.status : 500 });
+    throw error;
+  }
   await notifyCustomer(accessToken, postId, action, reason);
   return NextResponse.json({ success: true });
 }

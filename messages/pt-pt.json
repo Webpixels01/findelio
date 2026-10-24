@@ -136,7 +136,7 @@
     "password": "Palavra-passe",
     "submit": "Iniciar sessão",
     "loading": "A iniciar sessão …",
-    "note": "Os seus dados são verificados de forma segura através do Directus.",
+    "note": "Os seus dados de acesso são verificados de forma segura.",
     "errorFallback": "O e-mail ou a palavra-passe estão incorretos.",
     "serverError": "Não foi possível processar o início de sessão neste momento.",
     "connectionError": "A ligação ao servidor falhou.",

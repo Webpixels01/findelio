@@ -9,6 +9,7 @@ import { hasActiveAccountMembership } from "@/lib/directus-account";
 import {
   getDirectusCurrentUserPermissions,
   hasListingReviewAccess,
+  hasDirectusAdminAccess,
 } from "@/lib/directus-auth";
 import { privatePageMetadata } from "@/lib/seo";
 import { canManageReferrals } from "@/lib/referral-admin-server";
@@ -38,8 +39,10 @@ export default async function DashboardLayout({
   const accessToken = await getAccessToken();
   let canReviewListings = false;
   let referralAdmin = false;
+  let premiumAdmin = false;
 
   if (accessToken) {
+    premiumAdmin = await hasDirectusAdminAccess(accessToken);
     referralAdmin = await canManageReferrals(accessToken);
     if (
       user.role?.name === "Firmenkonto" &&
@@ -62,7 +65,7 @@ export default async function DashboardLayout({
       <main className="page-shell bg-[var(--surface)] py-10 sm:py-12">
         <div className="site-container">
           <div className="mb-8">
-            <DashboardNav canReviewListings={canReviewListings} canManageReferrals={referralAdmin} />
+            <DashboardNav canReviewListings={canReviewListings} canManageReferrals={referralAdmin} canManagePremium={premiumAdmin} />
           </div>
 
           {children}

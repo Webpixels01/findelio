@@ -1,6 +1,5 @@
 import "server-only";
 import type { AppLocale } from "@/i18n/routing";
-import { isReferralRegistrationEnabled } from "@/lib/referral-registration";
 
 export type ListingRevisionChangedValue = {
   old: unknown;
@@ -39,6 +38,7 @@ export type ListingRevisionData = {
 export type PendingListingRevision = {
   id: string;
   status: "pending";
+  review_version: number;
   changed_fields: Record<string, ListingRevisionChangedValue> | null;
   submitted_at: string | null;
   submitted_by: {
@@ -170,24 +170,6 @@ async function readItemResponse<T>(response: Response): Promise<T> {
   return result.data;
 }
 
-async function ensureMutationSucceeded(response: Response): Promise<void> {
-  if (response.ok) return;
-
-  let result: DirectusItemResponse<unknown> | null = null;
-
-  try {
-    result = (await response.json()) as DirectusItemResponse<unknown>;
-  } catch {
-    result = null;
-  }
-
-  throw new DirectusReviewError(
-    result?.errors?.[0]?.message ?? "Directus-Änderung fehlgeschlagen.",
-    response.status,
-    result?.errors?.[0]?.extensions?.code,
-  );
-}
-
 function authorizationHeaders(accessToken: string): Record<string, string> {
   return { Authorization: `Bearer ${accessToken}` };
 }
@@ -202,6 +184,7 @@ export async function getPendingListingRevisions(
     [
       "id",
       "status",
+      "review_version",
       "changed_fields",
       "submitted_at",
       "submitted_by.id",
@@ -244,6 +227,7 @@ export async function getPendingListingRevision(
     [
       "id",
       "status",
+      "review_version",
       "data",
       "changed_fields",
       "submitted_at",
@@ -335,470 +319,29 @@ export async function getReviewOptionMaps(
   };
 }
 
-async function syncListingJunction(
-  accessToken: string,
-  listingId: string,
-  collection: "listings_industries" | "listings_spoken_languages",
-  referenceField: "industries_id" | "spoken_languages_id",
-  desiredIds: string[],
-): Promise<void> {
-  const readUrl = new URL(`/items/${collection}`, getDirectusUrl());
-  readUrl.searchParams.set("fields", `id,${referenceField}`);
-  readUrl.searchParams.set("limit", "-1");
-  readUrl.searchParams.set(
-    "filter",
-    JSON.stringify({ listings_id: { _eq: listingId } }),
-  );
-
-  const existingRows = await readListResponse<
-    { id: number; industries_id?: string; spoken_languages_id?: string }
-  >(
-    await fetch(readUrl, {
-      headers: authorizationHeaders(accessToken),
-      cache: "no-store",
-    }),
-  );
-  const desired = Array.from(new Set(desiredIds));
-  const desiredSet = new Set(desired);
-  const existingSet = new Set<string>();
-  const rowIdsToDelete: number[] = [];
-
-  for (const row of existingRows) {
-    const referenceId = row[referenceField];
-    if (!referenceId || !desiredSet.has(referenceId)) {
-      rowIdsToDelete.push(row.id);
-    } else {
-      existingSet.add(referenceId);
-    }
-  }
-
-  if (rowIdsToDelete.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(new URL(`/items/${collection}`, getDirectusUrl()), {
-        method: "DELETE",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rowIdsToDelete),
-        cache: "no-store",
-      }),
-    );
-  }
-
-  const idsToCreate = desired.filter((id) => !existingSet.has(id));
-
-  if (idsToCreate.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(new URL(`/items/${collection}`, getDirectusUrl()), {
-        method: "POST",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          idsToCreate.map((id) => ({
-            listings_id: listingId,
-            [referenceField]: id,
-          })),
-        ),
-        cache: "no-store",
-      }),
-    );
-  }
-}
-
-function relatedId(
-  value: string | { id: string } | null | undefined,
-): string | null {
-  if (typeof value === "string") return value;
-  return value?.id ?? null;
-}
-
-async function syncListingGallery(
-  accessToken: string,
-  listingId: string,
-  desiredFileIds: string[],
-): Promise<void> {
-  const readUrl = new URL("/items/listings_files", getDirectusUrl());
-  readUrl.searchParams.set("fields", "id,directus_files_id");
-  readUrl.searchParams.set("limit", "-1");
-  readUrl.searchParams.set(
-    "filter",
-    JSON.stringify({ listings_id: { _eq: listingId } }),
-  );
-
-  const existingRows = await readListResponse<
-    {
-      id: number;
-      directus_files_id: string | { id: string } | null;
-    }
-  >(
-    await fetch(readUrl, {
-      headers: authorizationHeaders(accessToken),
-      cache: "no-store",
-    }),
-  );
-  const desiredIds = Array.from(new Set(desiredFileIds));
-  const desiredSet = new Set(desiredIds);
-  const existingSet = new Set<string>();
-  const rowIdsToDelete: number[] = [];
-
-  for (const row of existingRows) {
-    const fileId = relatedId(row.directus_files_id);
-
-    if (!fileId || !desiredSet.has(fileId) || existingSet.has(fileId)) {
-      rowIdsToDelete.push(row.id);
-    } else {
-      existingSet.add(fileId);
-    }
-  }
-
-  if (rowIdsToDelete.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(new URL("/items/listings_files", getDirectusUrl()), {
-        method: "DELETE",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rowIdsToDelete),
-        cache: "no-store",
-      }),
-    );
-  }
-
-  const idsToCreate = desiredIds.filter((id) => !existingSet.has(id));
-
-  if (idsToCreate.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(new URL("/items/listings_files", getDirectusUrl()), {
-        method: "POST",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          idsToCreate.map((fileId) => ({
-            listings_id: listingId,
-            directus_files_id: fileId,
-          })),
-        ),
-        cache: "no-store",
-      }),
-    );
-  }
-}
-
-type ReviewOpeningHour = {
-  id?: string;
-  day_of_week: number;
-  opens_at: string;
-  closes_at: string;
-};
-
-function openingHourKey(value: ReviewOpeningHour): string {
-  return `${value.day_of_week}:${value.opens_at.slice(0, 5)}:${value.closes_at.slice(0, 5)}`;
-}
-
-async function syncListingOpeningHours(
-  accessToken: string,
-  listingId: string,
-  desiredOpeningHours: ReviewOpeningHour[],
-): Promise<void> {
-  const readUrl = new URL("/items/listing_opening_hours", getDirectusUrl());
-  readUrl.searchParams.set("fields", "id,day_of_week,opens_at,closes_at");
-  readUrl.searchParams.set("limit", "-1");
-  readUrl.searchParams.set(
-    "filter",
-    JSON.stringify({ listing: { _eq: listingId } }),
-  );
-
-  const existingRows = await readListResponse<
-    ReviewOpeningHour & { id: string }
-  >(
-    await fetch(readUrl, {
-      headers: authorizationHeaders(accessToken),
-      cache: "no-store",
-    }),
-  );
-  const desiredByKey = new Map(
-    desiredOpeningHours.map((item) => [openingHourKey(item), item]),
-  );
-  const existingKeys = new Set<string>();
-  const rowIdsToDelete: string[] = [];
-
-  for (const row of existingRows) {
-    const key = openingHourKey(row);
-
-    if (!desiredByKey.has(key) || existingKeys.has(key)) {
-      rowIdsToDelete.push(row.id);
-    } else {
-      existingKeys.add(key);
-    }
-  }
-
-  if (rowIdsToDelete.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(
-        new URL("/items/listing_opening_hours", getDirectusUrl()),
-        {
-          method: "DELETE",
-          headers: {
-            ...authorizationHeaders(accessToken),
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(rowIdsToDelete),
-          cache: "no-store",
-        },
-      ),
-    );
-  }
-
-  const valuesToCreate = Array.from(desiredByKey.entries())
-    .filter(([key]) => !existingKeys.has(key))
-    .map(([, item]) => ({
-      listing: listingId,
-      day_of_week: item.day_of_week,
-      opens_at: item.opens_at,
-      closes_at: item.closes_at,
-    }));
-
-  if (valuesToCreate.length > 0) {
-    await ensureMutationSucceeded(
-      await fetch(
-        new URL("/items/listing_opening_hours", getDirectusUrl()),
-        {
-          method: "POST",
-          headers: {
-            ...authorizationHeaders(accessToken),
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(valuesToCreate),
-          cache: "no-store",
-        },
-      ),
-    );
-  }
-}
-
-async function finishRevision(
+async function decideRevision(
   accessToken: string,
   revisionId: string,
-  values: Record<string, unknown>,
+  reviewVersion: number,
+  action: "approve" | "reject" | "suspend",
+  reason = "",
 ): Promise<void> {
-  await ensureMutationSucceeded(
-    await fetch(
-      new URL(
-        `/items/listing_revisions/${encodeURIComponent(revisionId)}`,
-        getDirectusUrl(),
-      ),
-      {
-        method: "PATCH",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-        cache: "no-store",
-      },
-    ),
-  );
+  await readItemResponse(await fetch(new URL("/findelio-referrals/approve-revision", getDirectusUrl()), {
+    method: "POST",
+    headers: { ...authorizationHeaders(accessToken), "Content-Type": "application/json" },
+    body: JSON.stringify({ revision_id: revisionId, review_version: reviewVersion, action, reason }),
+    cache: "no-store",
+  }));
 }
 
-export async function approveListingRevision(
-  accessToken: string,
-  revisionId: string,
-  reviewedBy: string,
-): Promise<void> {
-  if (isReferralRegistrationEnabled()) {
-    // Directus derives reviewer, organization, listing and trial dates itself.
-    // Approval + reservation commit before the independently retryable grant.
-    await readItemResponse(
-      await fetch(new URL("/findelio-referrals/approve-revision", getDirectusUrl()), {
-        method: "POST",
-        headers: { ...authorizationHeaders(accessToken), "Content-Type": "application/json" },
-        body: JSON.stringify({ revision_id: revisionId }),
-        cache: "no-store",
-      }),
-    );
-    return;
-  }
-  const revision = await getPendingListingRevision(accessToken, revisionId);
-
-  if (!revision) {
-    throw new DirectusReviewError("Revision nicht gefunden.", 404, "NOT_FOUND");
-  }
-
-  const data = revision.data;
-  const listingId = revision.listing.id;
-  const reviewedAt = new Date().toISOString();
-
-  await ensureMutationSucceeded(
-    await fetch(
-      new URL(`/items/listings/${encodeURIComponent(listingId)}`, getDirectusUrl()),
-      {
-        method: "PATCH",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          description: data.description,
-          ...(data.description_translations !== undefined
-            ? {
-                description_translations:
-                  data.description_translations,
-              }
-            : {}),
-          street: data.street,
-          postal_code: data.postal_code,
-          city: data.city,
-          canton: data.canton,
-          public_email: data.public_email,
-          phone: data.phone,
-          website_url: data.website_url,
-          address_visibility: data.address_visibility,
-          ...(data.logo_id !== undefined
-            ? { logo: data.logo_id }
-            : {}),
-          ...(data.social_links !== undefined
-            ? { social_links: data.social_links }
-            : {}),
-          ...(data.custom_cta_label !== undefined
-            ? { custom_cta_label: data.custom_cta_label }
-            : {}),
-          ...(data.custom_cta_value !== undefined
-            ? { custom_cta_value: data.custom_cta_value }
-            : {}),
-          status: "published",
-          published_at: reviewedAt,
-        }),
-        cache: "no-store",
-      },
-    ),
-  );
-
-  await Promise.all([
-    syncListingJunction(
-      accessToken,
-      listingId,
-      "listings_industries",
-      "industries_id",
-      data.industry_ids,
-    ),
-    syncListingJunction(
-      accessToken,
-      listingId,
-      "listings_spoken_languages",
-      "spoken_languages_id",
-      data.spoken_language_ids,
-    ),
-    ...(data.gallery_file_ids
-      ? [
-          syncListingGallery(
-            accessToken,
-            listingId,
-            data.gallery_file_ids,
-          ),
-        ]
-      : []),
-    ...(data.opening_hours
-      ? [
-          syncListingOpeningHours(
-            accessToken,
-            listingId,
-            data.opening_hours,
-          ),
-        ]
-      : []),
-  ]);
-
-  await finishRevision(accessToken, revisionId, {
-    status: "approved",
-    rejection_reason: null,
-    reviewed_by: reviewedBy,
-    reviewed_at: reviewedAt,
-  });
+export async function approveListingRevision(accessToken: string, revisionId: string, reviewVersion: number): Promise<void> {
+  await decideRevision(accessToken, revisionId, reviewVersion, "approve");
 }
 
-export async function rejectListingRevision(
-  accessToken: string,
-  revisionId: string,
-  reviewedBy: string,
-  reason: string,
-): Promise<void> {
-  const revision = await getPendingListingRevision(accessToken, revisionId);
-
-  if (!revision) {
-    throw new DirectusReviewError("Revision nicht gefunden.", 404, "NOT_FOUND");
-  }
-
-  if (revision.listing.status === "pending") {
-    await ensureMutationSucceeded(
-      await fetch(
-        new URL(
-          `/items/listings/${encodeURIComponent(revision.listing.id)}`,
-          getDirectusUrl(),
-        ),
-        {
-          method: "PATCH",
-          headers: {
-            ...authorizationHeaders(accessToken),
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status: "draft" }),
-          cache: "no-store",
-        },
-      ),
-    );
-  }
-
-  await finishRevision(accessToken, revisionId, {
-    status: "rejected",
-    rejection_reason: reason,
-    reviewed_by: reviewedBy,
-    reviewed_at: new Date().toISOString(),
-  });
+export async function rejectListingRevision(accessToken: string, revisionId: string, reviewVersion: number, reason: string): Promise<void> {
+  await decideRevision(accessToken, revisionId, reviewVersion, "reject", reason);
 }
 
-export async function suspendListingFromRevision(
-  accessToken: string,
-  revisionId: string,
-  reviewedBy: string,
-  reason: string,
-): Promise<void> {
-  const revision = await getPendingListingRevision(accessToken, revisionId);
-
-  if (!revision) {
-    throw new DirectusReviewError("Revision nicht gefunden.", 404, "NOT_FOUND");
-  }
-
-  const reviewedAt = new Date().toISOString();
-
-  await ensureMutationSucceeded(
-    await fetch(
-      new URL(
-        `/items/listings/${encodeURIComponent(revision.listing.id)}`,
-        getDirectusUrl(),
-      ),
-      {
-        method: "PATCH",
-        headers: {
-          ...authorizationHeaders(accessToken),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "suspended" }),
-        cache: "no-store",
-      },
-    ),
-  );
-
-  await finishRevision(accessToken, revisionId, {
-    status: "rejected",
-    rejection_reason: reason,
-    reviewed_by: reviewedBy,
-    reviewed_at: reviewedAt,
-  });
+export async function suspendListingFromRevision(accessToken: string, revisionId: string, reviewVersion: number, reason: string): Promise<void> {
+  await decideRevision(accessToken, revisionId, reviewVersion, "suspend", reason);
 }

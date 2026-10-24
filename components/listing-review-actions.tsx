@@ -6,7 +6,7 @@ import { useRouter } from "@/i18n/navigation";
 
 type ReviewAction = "approve" | "reject" | "suspend";
 
-export default function ListingReviewActions({ revisionId }: { revisionId: string }) {
+export default function ListingReviewActions({ revisionId, reviewVersion }: { revisionId: string; reviewVersion: number }) {
   const t = useTranslations("ListingReview.detail");
   const router = useRouter();
   const [reason, setReason] = useState("");
@@ -26,7 +26,7 @@ export default function ListingReviewActions({ revisionId }: { revisionId: strin
       const response = await fetch(`/api/admin/listing-revisions/${revisionId}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action, reason: reason.trim() }),
+        body: JSON.stringify({ action, reason: reason.trim(), reviewVersion }),
       });
 
       const result = await response.json().catch(() => null) as { error?: string } | null;

@@ -22,16 +22,25 @@ async function syncSubscriptionById(subscriptionId: string): Promise<void> {
 }
 
 async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
-  const subscriptionId = getInvoiceSubscriptionId(invoice);
+  const stripe = getStripeClient();
+  const currentInvoice = await stripe.invoices.retrieve(invoice.id);
+  const subscriptionId = getInvoiceSubscriptionId(currentInvoice);
 
   if (!subscriptionId) {
     return;
   }
 
-  const stripe = getStripeClient();
   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
   if (!subscription.metadata.listing_id) {
+    return;
+  }
+
+  // A delayed failure for an already-paid or previous invoice must not
+  // schedule a new cancellation on a currently healthy subscription.
+  if (currentInvoice.status !== "open" || getStripeObjectId(subscription.latest_invoice) !== currentInvoice.id
+    || subscription.status === "canceled" || subscription.status === "incomplete_expired") {
+    await syncStripeSubscription(subscription);
     return;
   }
 
@@ -54,16 +63,19 @@ async function handlePaymentFailed(invoice: Stripe.Invoice): Promise<void> {
 }
 
 async function handleInvoicePaid(invoice: Stripe.Invoice): Promise<void> {
-  const subscriptionId = getInvoiceSubscriptionId(invoice);
+  const stripe = getStripeClient();
+  const currentInvoice = await stripe.invoices.retrieve(invoice.id);
+  const subscriptionId = getInvoiceSubscriptionId(currentInvoice);
 
   if (!subscriptionId) {
     return;
   }
 
-  const stripe = getStripeClient();
   let subscription = await stripe.subscriptions.retrieve(subscriptionId);
 
   if (
+    currentInvoice.status === "paid" &&
+    getStripeObjectId(subscription.latest_invoice) === currentInvoice.id &&
     subscription.metadata[paymentFailureMetadataKey] === "true" &&
     subscription.status === "active"
   ) {
@@ -108,7 +120,9 @@ export async function POST(request: Request) {
       case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted":
-        await syncStripeSubscription(event.data.object);
+        // Event delivery is not ordered. Treat the signed event as a signal
+        // to read current provider state, never as the state to publish.
+        await syncSubscriptionById(event.data.object.id);
         break;
       case "invoice.payment_failed":
         await handlePaymentFailed(event.data.object);

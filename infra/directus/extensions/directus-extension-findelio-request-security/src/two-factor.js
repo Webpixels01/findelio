@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { normalizeLoginEmail } from "./login-budget.js";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OTP = /^\d{6}$/;
@@ -103,9 +104,10 @@ export function registerTwoFactor({ filter, init }, { database, services, env, l
   });
 
   filter("websocket.authenticate", async (accountability, { message }) => {
+    const email = normalizeLoginEmail(message.email);
     let user;
     if (message.access_token) user = await tokenState(message.access_token);
-    else if (message.email) user = await state((await database("directus_users").select("id").whereRaw("lower(email) = ?", [String(message.email).toLowerCase()]).first())?.id);
+    else if (email) user = await state((await database("directus_users").select("id").whereRaw("lower(email) = ?", [email]).first())?.id);
     else if (message.refresh_token) {
       user = await state((await database("directus_sessions").select("user").where({ token: message.refresh_token }).first())?.user);
       if (!user) throw failure("INVALID_TOKEN", 401);

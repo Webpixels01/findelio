@@ -7,13 +7,16 @@ leere, wegwerfbare lokale PostgreSQL-Fixtures ausgefuehrt.
 
 ## Ablauf
 
-Bei deaktiviertem `FINDELIO_REFERRAL_REGISTRATION_ENABLED` bleibt der bisherige
-Next-Freigabeweg bestehen. Neue Endpoints verweigern den Zugriff vor Schema-/
-Referral-Abfragen. Das Flag muss spaeter bewusst in App und Directus gesetzt
-werden; diese Umsetzung aendert keine `.env`-Datei.
+Seit der Sicherheitskorrektur vom 24. Oktober 2026 laufen Freigabe, Ablehnung und
+Sperrung immer über den transaktionalen Directus-Endpunkt
+`/findelio-referrals/approve-revision`. Next übermittelt die Revisions-ID,
+die angezeigte `review_version`, die Aktion und gegebenenfalls einen Grund.
+Ein veralteter Stand wird mit HTTP 409 abgewiesen. Das Referral-Flag steuert
+nur die Reservierung und Aktivierung des Empfehlungsbonus; die sichere
+Moderation funktioniert auch bei deaktiviertem Flag. Siehe
+[Reparaturbericht](security-repairs-2026-10-24.md) für Migrationen und Tests.
 
-Bei aktivem Feature ruft Next `/findelio-referrals/approve-revision` mit der
-Benutzersession und ausschliesslich der Revisions-ID auf:
+Bei aktivem Referral-Feature gilt zusätzlich folgender Ablauf:
 
 1. Dieselbe volle Review-Berechtigung wie `hasListingReviewAccess` pruefen,
    zusaetzlich Services mit der Accountability des Aufrufers verwenden.

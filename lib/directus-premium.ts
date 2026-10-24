@@ -145,19 +145,22 @@ export async function getAdminPremiumListings(
 }
 
 export async function createPremiumGrant({
+  accessToken,
   listing,
   grantedBy,
   reason,
   endsAt,
 }: {
+  accessToken: string;
   listing: string;
   grantedBy: string;
   reason: string;
   endsAt: string | null;
 }): Promise<PremiumGrant> {
+  if (!accessToken?.trim()) throw new Error("Caller access token required");
   const response = await fetch(new URL("/items/premium_grants", getDirectusUrl()), {
     method: "POST",
-    headers: { ...getServerHeaders(), "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       listing,
       granted_by: grantedBy,
@@ -171,17 +174,20 @@ export async function createPremiumGrant({
 }
 
 export async function revokePremiumGrant({
+  accessToken,
   grantId,
   revokedBy,
 }: {
+  accessToken: string;
   grantId: string;
   revokedBy: string;
 }): Promise<PremiumGrant> {
+  if (!accessToken?.trim()) throw new Error("Caller access token required");
   const response = await fetch(
     new URL(`/items/premium_grants/${encodeURIComponent(grantId)}`, getDirectusUrl()),
     {
       method: "PATCH",
-      headers: { ...getServerHeaders(), "Content-Type": "application/json" },
+      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         revoked_at: new Date().toISOString(),
         revoked_by: revokedBy,

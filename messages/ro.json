@@ -136,7 +136,7 @@
     "password": "Parolă",
     "submit": "Autentificare",
     "loading": "Se autentifică …",
-    "note": "Datele tale sunt verificate în siguranță prin Directus.",
+    "note": "Datele tale de autentificare sunt verificate în siguranță.",
     "errorFallback": "Adresa de e-mail sau parola este incorectă.",
     "serverError": "Autentificarea nu poate fi procesată momentan.",
     "connectionError": "Conexiunea la server a eșuat.",

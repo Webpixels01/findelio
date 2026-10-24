@@ -136,7 +136,7 @@
     "password": "Heslo",
     "submit": "Přihlásit se",
     "loading": "Přihlašování …",
-    "note": "Vaše přihlašovací údaje jsou bezpečně ověřovány přes Directus.",
+    "note": "Vaše přihlašovací údaje jsou bezpečně ověřovány.",
     "errorFallback": "E-mailová adresa nebo heslo nejsou správné.",
     "serverError": "Přihlášení nyní nelze zpracovat.",
     "connectionError": "Připojení k serveru se nezdařilo.",

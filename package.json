@@ -18,7 +18,12 @@
     "test:referral-approval": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-approval.test.mjs",
     "test:referral-admin": "node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-admin.test.mjs tests/referral-admin-render.mjs",
     "test:security": "node --test tests/security.test.mjs tests/braces-security.test.mjs tests/deployment-security.test.mjs tests/deploy-workflow.test.mjs tests/two-factor.test.mjs",
-    "build:security-extensions": "node scripts/build-security-extensions.mjs"
+    "build:security-extensions": "node scripts/build-security-extensions.mjs",
+    "test:security-repairs": "node --test tests/login-transport-budget.test.mjs tests/stripe-webhook-ordering.test.mjs tests/premium-admin-access.test.mjs infra/directus/extensions/directus-extension-findelio-referrals/src/referral-approval.test.mjs",
+    "test:security-postgres": "node --test --test-concurrency=1 tests/team-concurrency.integration.mjs tests/deletion-concurrency.integration.mjs tests/notification-delivery.postgres.mjs tests/stripe-state.postgres.mjs tests/premium-permissions.postgres.mjs tests/referral-workflow.postgres.mjs",
+    "test:regression": "node --test --test-concurrency=1 tests/*.test.mjs tests/referral-admin-render.mjs infra/directus/extensions/directus-extension-findelio-referrals/src/*.test.mjs && node --experimental-strip-types --test lib/referral-dates.test.ts lib/referral-registration.test.ts lib/register-search-params.test.ts",
+    "test:security-native": "node tests/security-repairs-directus.integration.mjs",
+    "test:production-smoke": "node tests/security-repairs-production.mjs"
   },
   "dependencies": {
     "@fontsource-variable/roboto-condensed": "^5.3.0",

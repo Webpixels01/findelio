@@ -136,7 +136,7 @@
     "password": "Mật khẩu",
     "submit": "Đăng nhập",
     "loading": "Đang đăng nhập …",
-    "note": "Thông tin đăng nhập được xác thực an toàn qua Directus.",
+    "note": "Thông tin đăng nhập của bạn được xác thực an toàn.",
     "errorFallback": "Địa chỉ email hoặc mật khẩu không đúng.",
     "serverError": "Hiện không thể xử lý đăng nhập.",
     "connectionError": "Không thể kết nối với máy chủ.",

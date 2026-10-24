@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 
-export default function ListingPostReviewActions({ postId }: { postId: string }) {
+export default function ListingPostReviewActions({ postId, reviewVersion }: { postId: string; reviewVersion: number }) {
   const t = useTranslations("Growth.review");
   const router = useRouter();
   const [reason, setReason] = useState("");
@@ -14,7 +14,7 @@ export default function ListingPostReviewActions({ postId }: { postId: string })
   async function decide(action: "approve" | "reject") {
     if (action === "reject" && reason.trim().length < 3) { setError(true); return; }
     setBusy(true); setError(false);
-    const response = await fetch(`/api/review/posts/${postId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action, reason }) });
+    const response = await fetch(`/api/review/posts/${postId}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action, reason, reviewVersion }) });
     if (!response.ok) { setError(true); setBusy(false); return; }
     router.refresh();
   }

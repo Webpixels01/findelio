@@ -228,6 +228,33 @@ function canManageTarget(actorRole, targetRole) {
   );
 }
 
+// All team mutations lock the organization before reading authorization or
+// locking invitations, memberships, or users. Invitation creation first takes
+// an actor-wide advisory lock (across organizations). Never acquire that actor
+// lock after an organization lock. READ COMMITTED gives post-wait reads a fresh
+// snapshot; transaction-scoped locks are released on both commit and rollback.
+function teamTransaction(database, callback) {
+  return database.transaction(callback, { isolationLevel: "read committed" });
+}
+
+async function lockOrganization(trx, organizationId) {
+  await trx("organizations").select("id").where("id", organizationId)
+    .forUpdate().first();
+}
+
+async function lockInvitationOrganization(trx, tokenHash) {
+  // Discovery only: the authoritative invitation is reread after locking.
+  const locator = await trx("organization_invitations")
+    .select("organization").where("token_hash", tokenHash).first();
+  if (!locator) {
+    const error = new Error("not_found");
+    error.status = 404;
+    throw error;
+  }
+  await lockOrganization(trx, locator.organization);
+  return locator.organization;
+}
+
 async function activeMembership(database, userId, organizationId) {
   return database("organization_members as memberships")
     .join("organizations", "memberships.organization", "organizations.id")
@@ -433,7 +460,11 @@ const findelioTeamManagementEndpoint = {
       let rawToken;
 
       try {
-        const result = await database.transaction(async (trx) => {
+        const result = await teamTransaction(database, async (trx) => {
+          await trx.raw("select pg_advisory_xact_lock(hashtextextended(?, 0))", [
+            `findelio:team:invitation-actor:${userId}`,
+          ]);
+          await lockOrganization(trx, organizationId);
           const actor = await activeMembership(
             trx,
             userId,
@@ -566,9 +597,14 @@ const findelioTeamManagementEndpoint = {
         return res.status(201).json({ data: invitation });
       } catch (error) {
         if (invitation?.id) {
-          await database("organization_invitations")
-            .where("id", invitation.id)
-            .update({ status: "cancelled", date_updated: database.fn.now() });
+          await teamTransaction(database, async (trx) => {
+            await lockOrganization(trx, organizationId);
+            // SMTP failure can be ambiguous: a delivered link may already have
+            // been accepted. Only release a reservation that is still pending.
+            await trx("organization_invitations")
+              .where({ id: invitation.id, organization: organizationId, status: "pending" })
+              .update({ status: "cancelled", date_updated: trx.fn.now() });
+          });
         }
 
         const knownStatus = Number(error?.status);
@@ -590,27 +626,35 @@ const findelioTeamManagementEndpoint = {
       }
 
       try {
-        const invitation = await database("organization_invitations")
-          .select("id", "organization", "role", "status")
-          .where("id", invitationId)
-          .first();
-        if (!invitation || invitation.status !== "pending") {
-          return res.status(404).json({ error: "not_found" });
-        }
+        const result = await teamTransaction(database, async (trx) => {
+          const locator = await trx("organization_invitations")
+            .select("organization").where("id", invitationId).first();
+          if (!locator) return { status: 404, body: { error: "not_found" } };
+          await lockOrganization(trx, locator.organization);
+          const invitation = await trx("organization_invitations")
+            .select("id", "organization", "role", "status")
+            .where({ id: invitationId, organization: locator.organization })
+            .first();
+          if (!invitation || invitation.status !== "pending") {
+            return { status: 404, body: { error: "not_found" } };
+          }
 
-        const actor = await activeMembership(
-          database,
-          userId,
-          invitation.organization,
-        );
-        if (!actor || !canInviteRole(actor.role, invitation.role)) {
-          return res.status(403).json({ error: "forbidden" });
-        }
+          const actor = await activeMembership(
+            trx,
+            userId,
+            invitation.organization,
+          );
+          if (!actor || !canInviteRole(actor.role, invitation.role)) {
+            return { status: 403, body: { error: "forbidden" } };
+          }
 
-        await database("organization_invitations")
-          .where({ id: invitationId, status: "pending" })
-          .update({ status: "cancelled", date_updated: database.fn.now() });
-        return res.status(204).send();
+          await trx("organization_invitations")
+            .where({ id: invitationId, status: "pending" })
+            .update({ status: "cancelled", date_updated: trx.fn.now() });
+          return { status: 204 };
+        });
+        if (result.status === 204) return res.status(204).send();
+        return res.status(result.status).json(result.body);
       } catch (error) {
         logger.error(error, "Findelio team invitation cancellation failed");
         return res.status(500).json({ error: "update_failed" });
@@ -627,32 +671,39 @@ const findelioTeamManagementEndpoint = {
       }
 
       try {
-        const member = await database("organization_members")
-          .select("id", "organization", "user", "role", "status")
-          .where("id", memberId)
-          .first();
-        if (!member || member.status !== "active") {
-          return res.status(404).json({ error: "not_found" });
-        }
+        const result = await teamTransaction(database, async (trx) => {
+          const locator = await trx("organization_members")
+            .select("organization").where("id", memberId).first();
+          if (!locator) return { status: 404, body: { error: "not_found" } };
+          await lockOrganization(trx, locator.organization);
+          const member = await trx("organization_members")
+            .select("id", "organization", "user", "role", "status")
+            .where({ id: memberId, organization: locator.organization })
+            .first();
+          if (!member || member.status !== "active") {
+            return { status: 404, body: { error: "not_found" } };
+          }
 
-        const actor = await activeMembership(
-          database,
-          userId,
-          member.organization,
-        );
-        if (
-          !actor ||
-          actor.role !== "owner" ||
-          member.user === userId ||
-          !["admin", "editor"].includes(member.role)
-        ) {
-          return res.status(403).json({ error: "forbidden" });
-        }
+          const actor = await activeMembership(
+            trx,
+            userId,
+            member.organization,
+          );
+          if (
+            !actor ||
+            actor.role !== "owner" ||
+            member.user === userId ||
+            !["admin", "editor"].includes(member.role)
+          ) {
+            return { status: 403, body: { error: "forbidden" } };
+          }
 
-        await database("organization_members")
-          .where("id", memberId)
-          .update({ role });
-        return res.json({ data: { id: memberId, role } });
+          await trx("organization_members")
+            .where({ id: memberId, organization: locator.organization })
+            .update({ role });
+          return { status: 200, body: { data: { id: memberId, role } } };
+        });
+        return res.status(result.status).json(result.body);
       } catch (error) {
         logger.error(error, "Findelio team role update failed");
         return res.status(500).json({ error: "update_failed" });
@@ -668,31 +719,39 @@ const findelioTeamManagementEndpoint = {
       }
 
       try {
-        const member = await database("organization_members")
-          .select("id", "organization", "user", "role", "status")
-          .where("id", memberId)
-          .first();
-        if (!member || member.status !== "active") {
-          return res.status(404).json({ error: "not_found" });
-        }
+        const result = await teamTransaction(database, async (trx) => {
+          const locator = await trx("organization_members")
+            .select("organization").where("id", memberId).first();
+          if (!locator) return { status: 404, body: { error: "not_found" } };
+          await lockOrganization(trx, locator.organization);
+          const member = await trx("organization_members")
+            .select("id", "organization", "user", "role", "status")
+            .where({ id: memberId, organization: locator.organization })
+            .first();
+          if (!member || member.status !== "active") {
+            return { status: 404, body: { error: "not_found" } };
+          }
 
-        const actor = await activeMembership(
-          database,
-          userId,
-          member.organization,
-        );
-        if (
-          !actor ||
-          member.user === userId ||
-          !canManageTarget(actor.role, member.role)
-        ) {
-          return res.status(403).json({ error: "forbidden" });
-        }
+          const actor = await activeMembership(
+            trx,
+            userId,
+            member.organization,
+          );
+          if (
+            !actor ||
+            member.user === userId ||
+            !canManageTarget(actor.role, member.role)
+          ) {
+            return { status: 403, body: { error: "forbidden" } };
+          }
 
-        await database("organization_members")
-          .where("id", memberId)
-          .update({ status: "disabled" });
-        return res.status(204).send();
+          await trx("organization_members")
+            .where({ id: memberId, organization: locator.organization })
+            .update({ status: "disabled" });
+          return { status: 204 };
+        });
+        if (result.status === 204) return res.status(204).send();
+        return res.status(result.status).json(result.body);
       } catch (error) {
         logger.error(error, "Findelio team member removal failed");
         return res.status(500).json({ error: "update_failed" });
@@ -715,7 +774,8 @@ const findelioTeamManagementEndpoint = {
 
       try {
         const schema = await getSchema();
-        const result = await database.transaction(async (trx) => {
+        const result = await teamTransaction(database, async (trx) => {
+          const organizationId = await lockInvitationOrganization(trx, hashToken(invitationToken));
           const invitation = await trx(
             "organization_invitations as invitations",
           )
@@ -736,6 +796,7 @@ const findelioTeamManagementEndpoint = {
               "organizations.status as organization_status",
             )
             .where("invitations.token_hash", hashToken(invitationToken))
+            .where("invitations.organization", organizationId)
             .forUpdate()
             .first();
 
@@ -851,7 +912,8 @@ const findelioTeamManagementEndpoint = {
       }
 
       try {
-        const result = await database.transaction(async (trx) => {
+        const result = await teamTransaction(database, async (trx) => {
+          const organizationId = await lockInvitationOrganization(trx, hashToken(token));
           const user = await trx("directus_users")
             .select("id", "email", "status")
             .where("id", userId)
@@ -876,6 +938,7 @@ const findelioTeamManagementEndpoint = {
               "organizations.status as organization_status",
             )
             .where("invitations.token_hash", hashToken(token))
+            .where("invitations.organization", organizationId)
             .forUpdate()
             .first();
 

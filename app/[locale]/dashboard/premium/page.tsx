@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import {
-  getDirectusCurrentUserPermissions,
-  hasListingReviewAccess,
+  hasDirectusAdminAccess,
 } from "@/lib/directus-auth";
 import { getAdminPremiumListings } from "@/lib/directus-premium";
 import PremiumGrantManager from "@/components/premium-grant-manager";
@@ -23,8 +22,7 @@ export default async function PremiumAdminPage({
   const accessToken = await getAccessToken();
   if (!accessToken) redirect(`/${locale}/login`);
 
-  const permissions = await getDirectusCurrentUserPermissions(accessToken);
-  if (!hasListingReviewAccess(permissions)) {
+  if (!(await hasDirectusAdminAccess(accessToken))) {
     redirect(`/${locale}/dashboard`);
   }
 

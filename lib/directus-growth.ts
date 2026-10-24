@@ -8,6 +8,7 @@ import {
 
 export type ListingPostStatus = "draft" | "pending" | "published" | "rejected" | "archived";
 export type AccountListingPost = {
+  review_version: number;
   id: string;
   listing: string | { id: string; name?: string };
   type: "update" | "offer" | "event";
@@ -132,8 +133,8 @@ export async function updateAccountListingPost(
     current.image ? [current.image] : [],
   );
 
-  if (current.status === "published") {
-    const existingReplacement = posts.find((post) =>
+  if (current.status === "published" || current.status === "archived") {
+    const existingReplacement = current.status === "published" && posts.find((post) =>
       relationId(post.replaces_post) === current.id &&
       ["draft", "pending", "rejected"].includes(post.status),
     );
@@ -154,7 +155,8 @@ export async function updateAccountListingPost(
       body: JSON.stringify({
         ...input,
         listing: listingId,
-        replaces_post: current.id,
+        // An archived post stays frozen; editing it starts a fresh submission.
+        replaces_post: current.status === "published" ? current.id : null,
         submitted_by: currentUserId,
         submitted_at: input.status === "pending" ? new Date().toISOString() : null,
         published_at: null,
@@ -206,7 +208,7 @@ export async function archiveAccountListingPost(
 
 export async function getPendingListingPosts(accessToken: string) {
   const url = new URL("/items/listing_posts", directusUrl());
-  url.searchParams.set("fields", "id,listing.id,listing.name,type,status,title,body,image,cta_label,cta_url,starts_at,ends_at,submitted_by.id,submitted_by.email,submitted_at,published_at,rejection_reason,replaces_post");
+  url.searchParams.set("fields", "id,review_version,listing.id,listing.name,type,status,title,body,image,cta_label,cta_url,starts_at,ends_at,submitted_by.id,submitted_by.email,submitted_at,published_at,rejection_reason,replaces_post");
   url.searchParams.set("sort", "submitted_at");
   url.searchParams.set("filter", JSON.stringify({ status: { _eq: "pending" } }));
   return readList<AccountListingPost>(await fetch(url, { headers: { Authorization: `Bearer ${accessToken}` }, cache: "no-store" }));
@@ -215,50 +217,17 @@ export async function getPendingListingPosts(accessToken: string) {
 export async function decideListingPost(
   accessToken: string,
   postId: string,
-  reviewerId: string,
+  reviewVersion: number,
   action: "approve" | "reject",
   reason: string,
 ) {
-  const postUrl = new URL(`/items/listing_posts/${encodeURIComponent(postId)}`, directusUrl());
-  postUrl.searchParams.set("fields", "id,status,replaces_post");
-  const postResponse = await fetch(postUrl, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-    cache: "no-store",
-  });
-  const postResult = (await postResponse.json().catch(() => null)) as DirectusResponse<{
-    id: string;
-    status: ListingPostStatus;
-    replaces_post?: string | { id: string } | null;
-  }> | null;
-  if (!postResponse.ok || postResult?.data?.status !== "pending") {
-    throw new DirectusAccountError("Entscheidung fehlgeschlagen.", postResponse.status || 400, "SAVE_FAILED");
-  }
-  const replacedPostId = relationId(postResult.data.replaces_post);
-  const response = await fetch(new URL(`/items/listing_posts/${encodeURIComponent(postId)}`, directusUrl()), {
-    method: "PATCH",
+  const response = await fetch(new URL("/findelio-referrals/decide-post", directusUrl()), {
+    method: "POST",
     headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      status: action === "approve" ? "published" : "rejected",
-      reviewed_by: reviewerId,
-      reviewed_at: new Date().toISOString(),
-      published_at: action === "approve" ? new Date().toISOString() : null,
-      rejection_reason: action === "reject" ? reason : null,
-    }),
+    body: JSON.stringify({ post_id: postId, review_version: reviewVersion, action, reason }),
     cache: "no-store",
   });
-  if (!response.ok) throw new DirectusAccountError("Entscheidung fehlgeschlagen.", response.status, "SAVE_FAILED");
-
-  if (action === "approve" && replacedPostId) {
-    const archiveResponse = await fetch(new URL(`/items/listing_posts/${encodeURIComponent(replacedPostId)}`, directusUrl()), {
-      method: "PATCH",
-      headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "archived" }),
-      cache: "no-store",
-    });
-    if (!archiveResponse.ok) {
-      throw new DirectusAccountError("Vorheriger Beitrag konnte nicht archiviert werden.", archiveResponse.status, "SAVE_FAILED");
-    }
-  }
+  if (!response.ok) throw new DirectusAccountError("Entscheidung fehlgeschlagen. Bitte neu laden.", response.status, "SAVE_FAILED");
 }
 
 const metricKeys: Array<keyof ListingMetricSummary> = [

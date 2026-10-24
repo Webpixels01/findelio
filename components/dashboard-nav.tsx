@@ -14,9 +14,11 @@ const navigationItems = [
 export default function DashboardNav({
   canReviewListings = false,
   canManageReferrals = false,
+  canManagePremium = false,
 }: {
   canReviewListings?: boolean;
   canManageReferrals?: boolean;
+  canManagePremium?: boolean;
 }) {
   const t = useTranslations("Dashboard.navigation");
   const pathname = usePathname();
@@ -24,12 +26,14 @@ export default function DashboardNav({
     ? [
         ...navigationItems,
         { href: "/dashboard/pruefung", label: "review" } as const,
-        { href: "/dashboard/premium", label: "premium" } as const,
       ]
     : navigationItems;
-  const visibleItems = canManageReferrals
-    ? [...reviewItems, { href: "/dashboard/empfehlungen", label: "referrals" } as const]
+  const premiumItems = canManagePremium
+    ? [...reviewItems, { href: "/dashboard/premium", label: "premium" } as const]
     : reviewItems;
+  const visibleItems = canManageReferrals
+    ? [...premiumItems, { href: "/dashboard/empfehlungen", label: "referrals" } as const]
+    : premiumItems;
 
   return (
     <nav

@@ -261,3 +261,17 @@ export function hasListingReviewAccess(
     permissions.listings?.update?.access === "full"
   );
 }
+
+export async function hasDirectusAdminAccess(accessToken: string): Promise<boolean> {
+  if (!accessToken.trim()) return false;
+  try {
+    const response = await fetch(new URL("/policies/me/globals", getDirectusUrl()), {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      cache: "no-store",
+    });
+    const permissions = await readDirectusResponse<{ admin_access?: boolean }>(response);
+    return permissions.admin_access === true;
+  } catch {
+    return false;
+  }
+}

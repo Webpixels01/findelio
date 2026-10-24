@@ -6,6 +6,12 @@ export function workflowError(code, status = 409) {
   return Object.assign(new Error(code), { status, code });
 }
 
+export function assertReviewVersion(row, expected) {
+  if (!Number.isSafeInteger(expected) || expected < 1 || Number(row?.review_version) !== expected) {
+    throw workflowError("review_changed", 409);
+  }
+}
+
 export function hasFullReviewAccess(access) {
   return access?.listing_revisions?.read?.access === "full"
     && access?.listing_revisions?.update?.access === "full"
@@ -13,8 +19,8 @@ export function hasFullReviewAccess(access) {
 }
 
 async function collectionAccess(accountability, context) {
-  // Same evaluator as Directus 11.17.4 GET /permissions/me. Lazy import keeps
-  // the disabled feature independent of this version-specific API entry point.
+  // Use the native Directus collection-access evaluator behind /permissions/me.
+  // Load it lazily so unit tests can inject an evaluator without a CMS runtime.
   const { fetchAccountabilityCollectionAccess } = await import(
     "@directus/api/permissions/modules/fetch-accountability-collection-access/fetch-accountability-collection-access"
   );
@@ -89,7 +95,7 @@ export async function syncRows(service, filter, desired, key, options) {
 /** All services use the caller's permissions and the same outer transaction.
  * Action hooks are collected until commit; filters still run transactionally.
  */
-export function createApprovalWorkflow({ database, services, getSchema, emitter, logger, now = () => new Date(), getCollectionAccess = collectionAccess }) {
+export function createApprovalWorkflow({ database, services, getSchema, emitter, logger, now = () => new Date(), getCollectionAccess = collectionAccess, env = {} }) {
   const { ItemsService, PermissionsService } = services;
   async function transaction(work) {
     const events = [];
@@ -103,7 +109,7 @@ export function createApprovalWorkflow({ database, services, getSchema, emitter,
     return value;
   }
 
-  async function approve(revisionId, accountability) {
+  async function approve(revisionId, accountability, reviewVersion, action = "approve", reason = "") {
     const schema = await getSchema();
     return transaction(async (trx, options) => {
       if (!accountability?.user || !hasFullReviewAccess(await getCollectionAccess(accountability, { schema, knex: trx }))) {
@@ -133,18 +139,25 @@ export function createApprovalWorkflow({ database, services, getSchema, emitter,
       if (listing.organization !== initialListing.organization) throw workflowError("organization_changed");
       const revision = await trx("listing_revisions").where({ id: revisionId }).forUpdate().first();
       if (revision?.listing !== listingId) throw workflowError("revision_changed");
-      // Same reviewer may retry a lost response; no re-publish or time reset.
-      if (revision.status === "approved" && revision.reviewed_by === accountability.user) {
-        const row = await trx("referral_redemptions").where({ trial_listing: listingId }).first();
-        return result(row);
-      }
+      assertReviewVersion(revision, reviewVersion);
       if (revision.status !== "pending") throw workflowError("revision_not_pending");
+      const reviewedAt = now().toISOString();
+      if (action !== "approve") {
+        if (action !== "reject" && action !== "suspend") throw workflowError("invalid_action", 400);
+        if (typeof reason !== "string" || reason.trim().length < 3 || reason.length > 2000) throw workflowError("invalid_reason", 400);
+        if (action === "suspend" || listing.status === "pending") {
+          await service("listings").updateOne(listingId, { status: action === "suspend" ? "suspended" : "draft" }, options);
+        }
+        await revisions.updateOne(revisionId, {
+          status: "rejected", rejection_reason: reason, reviewed_by: accountability.user, reviewed_at: reviewedAt,
+        }, options);
+        return { status: "rejected" };
+      }
       const data = typeof revision.data === "string" ? JSON.parse(revision.data) : revision.data;
       if (!data || !Array.isArray(data.industry_ids) || !Array.isArray(data.spoken_language_ids)) {
         throw workflowError("invalid_revision", 400);
       }
-      const reviewedAt = now().toISOString();
-      let redemption = listing.organization
+      let redemption = isReferralRegistrationEnabled(env) && listing.organization
         ? await trx("referral_redemptions").where({ organization: listing.organization }).forUpdate().first()
         : null;
       if (redemption?.status === "pending_approval" && !redemption.trial_listing) {
@@ -199,8 +212,42 @@ export function createApprovalWorkflow({ database, services, getSchema, emitter,
         || savedRevision.status !== "approved" || savedRevision.reviewed_by !== accountability.user) {
         throw workflowError("approval_overridden");
       }
-      redemption = await trx("referral_redemptions").where({ trial_listing: listingId }).first();
+      redemption = isReferralRegistrationEnabled(env)
+        ? await trx("referral_redemptions").where({ trial_listing: listingId }).first() : null;
       return result(redemption);
+    });
+  }
+
+  async function decidePost(postId, accountability, reviewVersion, action, reason = "") {
+    const schema = await getSchema();
+    return transaction(async (trx, options) => {
+      const access = accountability?.user && await getCollectionAccess(accountability, { schema, knex: trx });
+      if (!hasFullReviewAccess(access) || access?.listing_posts?.update?.access !== "full"
+        || access?.listing_posts?.read?.access !== "full") throw workflowError("forbidden", 403);
+      if (!["approve", "reject"].includes(action)) throw workflowError("invalid_action", 400);
+      if (typeof reason !== "string" || reason.length > 2000 || (action === "reject" && reason.trim().length < 3)) throw workflowError("invalid_reason", 400);
+      const posts = new ItemsService("listing_posts", { schema, knex: trx, accountability });
+      const visible = await posts.readOne(postId, { fields: ["id", "listing"] });
+      const listingId = typeof visible.listing === "object" ? visible.listing?.id : visible.listing;
+      if (!listingId) throw workflowError("not_found", 404);
+      // Serialize replacements within a listing; edits also conflict with the row lock.
+      await trx("listings").where({ id: listingId }).forUpdate().first("id");
+      const post = await trx("listing_posts").where({ id: postId }).forUpdate().first();
+      assertReviewVersion(post, reviewVersion);
+      if (post.listing !== listingId || post.status !== "pending") throw workflowError("post_not_pending");
+      if (action === "approve" && post.replaces_post) {
+        const previous = await trx("listing_posts").where({ id: post.replaces_post }).forUpdate().first();
+        if (!previous || previous.listing !== listingId || previous.status !== "published") throw workflowError("replacement_changed");
+        await posts.updateOne(previous.id, { status: "archived" }, options);
+      }
+      const reviewedAt = now().toISOString();
+      await posts.updateOne(postId, {
+        status: action === "approve" ? "published" : "rejected",
+        reviewed_by: accountability.user, reviewed_at: reviewedAt,
+        published_at: action === "approve" ? reviewedAt : null,
+        rejection_reason: action === "reject" ? reason : null,
+      }, options);
+      return { status: action === "approve" ? "published" : "rejected" };
     });
   }
 
@@ -239,7 +286,7 @@ export function createApprovalWorkflow({ database, services, getSchema, emitter,
       return result({ ...row, ...patch });
     });
   }
-  return { approve, activate };
+  return { approve, activate, decidePost };
 }
 
 export function registerApprovalRoutes(router, context) {
@@ -247,7 +294,7 @@ export function registerApprovalRoutes(router, context) {
   const { env, logger } = context;
   const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
   function gate(req, res, adminOnly) {
-    if (!isReferralRegistrationEnabled(env)) { res.status(503).json({ error: "feature_disabled" }); return false; }
+    if (adminOnly && !isReferralRegistrationEnabled(env)) { res.status(503).json({ error: "feature_disabled" }); return false; }
     if (!req.accountability?.user) { res.status(401).json({ error: "unauthorized" }); return false; }
     if (adminOnly && req.accountability.admin !== true) { res.status(403).json({ error: "forbidden" }); return false; }
     return true;
@@ -259,14 +306,21 @@ export function registerApprovalRoutes(router, context) {
   }
   router.post("/approve-revision", async (req, res) => {
     if (!gate(req, res, false)) return;
-    if (!uuid.test(req.body?.revision_id ?? "")) return res.status(400).json({ error: "invalid_data" });
+    if (!uuid.test(req.body?.revision_id ?? "") || !Number.isSafeInteger(req.body?.review_version) || req.body.review_version < 1) return res.status(400).json({ error: "invalid_data" });
     try {
-      let outcome = await workflow.approve(req.body.revision_id, req.accountability);
+      let outcome = await workflow.approve(req.body.revision_id, req.accountability, req.body.review_version, req.body.action ?? "approve", req.body.reason ?? "");
       if (outcome.status === "pending_activation") {
         try { outcome = await workflow.activate(outcome.redemption_id, req.accountability.user); }
         catch { logger.warn("Referral activation pending; retry required"); }
       }
       return res.json({ data: outcome });
+    } catch (error) { return fail(res, error); }
+  });
+  router.post("/decide-post", async (req, res) => {
+    if (!gate(req, res, false)) return;
+    if (!uuid.test(req.body?.post_id ?? "") || !Number.isSafeInteger(req.body?.review_version) || req.body.review_version < 1) return res.status(400).json({ error: "invalid_data" });
+    try {
+      return res.json({ data: await workflow.decidePost(req.body.post_id, req.accountability, req.body.review_version, req.body.action, req.body.reason ?? "") });
     } catch (error) { return fail(res, error); }
   });
   router.post("/activate", async (req, res) => {

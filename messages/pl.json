@@ -136,7 +136,7 @@
     "password": "Hasło",
     "submit": "Zaloguj się",
     "loading": "Logowanie …",
-    "note": "Dane logowania są bezpiecznie weryfikowane przez Directus.",
+    "note": "Twoje dane logowania są bezpiecznie weryfikowane.",
     "errorFallback": "Adres e-mail lub hasło są nieprawidłowe.",
     "serverError": "Logowanie nie może być teraz przetworzone.",
     "connectionError": "Połączenie z serwerem nie powiodło się.",

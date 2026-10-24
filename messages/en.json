@@ -136,7 +136,7 @@
     "password": "Password",
     "submit": "Sign in",
     "loading": "Signing in …",
-    "note": "Your credentials are securely verified through Directus.",
+    "note": "Your credentials are securely verified.",
     "errorFallback": "The email address or password is incorrect.",
     "serverError": "Sign-in cannot be processed at the moment.",
     "connectionError": "The connection to the server failed.",

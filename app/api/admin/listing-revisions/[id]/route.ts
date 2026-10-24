@@ -6,7 +6,6 @@ import {
   saveAuthTokens,
 } from "@/lib/auth";
 import {
-  getDirectusCurrentUser,
   getDirectusCurrentUserPermissions,
   hasListingReviewAccess,
   refreshDirectusSession,
@@ -52,11 +51,9 @@ async function runAction(
   revisionId: string,
   action: ReviewAction,
   reason: string,
+  reviewVersion: number,
 ): Promise<void> {
-  const [user, permissions] = await Promise.all([
-    getDirectusCurrentUser(accessToken),
-    getDirectusCurrentUserPermissions(accessToken),
-  ]);
+  const permissions = await getDirectusCurrentUserPermissions(accessToken);
 
   if (!hasListingReviewAccess(permissions)) {
     throw new DirectusReviewError("Keine Berechtigung.", 403, "FORBIDDEN");
@@ -71,7 +68,7 @@ async function runAction(
   }
 
   if (action === "approve") {
-    await approveListingRevision(accessToken, revisionId, user.id);
+    await approveListingRevision(accessToken, revisionId, reviewVersion);
     return;
   }
 
@@ -84,11 +81,11 @@ async function runAction(
   }
 
   if (action === "reject") {
-    await rejectListingRevision(accessToken, revisionId, user.id, reason);
+    await rejectListingRevision(accessToken, revisionId, reviewVersion, reason);
     return;
   }
 
-  await suspendListingFromRevision(accessToken, revisionId, user.id, reason);
+  await suspendListingFromRevision(accessToken, revisionId, reviewVersion, reason);
 }
 
 async function notifyCustomer(
@@ -145,6 +142,10 @@ export async function PATCH(
   if (!actions.has(action as ReviewAction)) {
     return NextResponse.json({ error: "invalid_data" }, { status: 400 });
   }
+  const reviewVersion = data.reviewVersion;
+  if (typeof reviewVersion !== "number" || !Number.isSafeInteger(reviewVersion) || reviewVersion < 1) {
+    return NextResponse.json({ error: "invalid_version" }, { status: 400 });
+  }
   const reviewAction = action as ReviewAction;
 
   let accessToken = await getAccessToken();
@@ -158,7 +159,7 @@ export async function PATCH(
   }
 
   try {
-    await runAction(accessToken, revisionId, reviewAction, reason);
+    await runAction(accessToken, revisionId, reviewAction, reason, reviewVersion);
     await notifyCustomer(
       accessToken,
       revisionId,
@@ -177,6 +178,7 @@ export async function PATCH(
             revisionId,
             reviewAction,
             reason,
+            reviewVersion,
           );
           await notifyCustomer(
             refreshedToken,

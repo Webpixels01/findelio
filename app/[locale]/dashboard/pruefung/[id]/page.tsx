@@ -335,7 +335,7 @@ export default async function ListingReviewDetailPage({
           )}
         </section>
 
-        <ListingReviewActions revisionId={revision.id} />
+        <ListingReviewActions revisionId={revision.id} reviewVersion={revision.review_version} />
       </div>
     </>
   );

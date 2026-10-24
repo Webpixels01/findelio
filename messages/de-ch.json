@@ -136,7 +136,7 @@
     "password": "Passwort",
     "submit": "Anmelden",
     "loading": "Anmeldung läuft …",
-    "note": "Deine Zugangsdaten werden sicher über Directus geprüft.",
+    "note": "Deine Zugangsdaten werden sicher geprüft.",
     "errorFallback": "E-Mail-Adresse oder Passwort ist falsch.",
     "serverError": "Die Anmeldung konnte momentan nicht verarbeitet werden.",
     "connectionError": "Die Verbindung zum Server ist fehlgeschlagen.",

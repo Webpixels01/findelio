@@ -1,3 +1,4 @@
+import { sendReviewOnce } from "./review-delivery.js";
 import { referralMailContent } from "./referral-mail.js";
 import { createRequestLimiter, isServerAccount, requestLimits, validClientKey } from "./request-security.js";
 
@@ -123,6 +124,7 @@ const findelioReviewNotificationEndpoint = {
           .join("listings", "revisions.listing", "listings.id")
           .select(
             "revisions.changed_fields",
+            "revisions.review_notification_version",
             "listings.name as listing_name",
             "listings.status as listing_status",
           )
@@ -188,7 +190,7 @@ const findelioReviewNotificationEndpoint = {
           knex: database,
         });
 
-        await mailService.send({
+        await sendReviewOnce(database, "listing_revisions", revisionId, revision.review_notification_version, () => mailService.send({
           to: recipient,
           subject,
           text: `${intro}\n\nFirma: ${revision.listing_name}${changedFieldsText}\n\nPrüfung öffnen:\n${reviewUrl}\n\nListing-ID: ${listingId}`,
@@ -202,11 +204,11 @@ const findelioReviewNotificationEndpoint = {
               changedFields,
             },
           },
-        });
+        }));
 
         return res.status(204).send();
-      } catch (error) {
-        logger.error(error, "Findelio review notification failed");
+      } catch {
+        logger.error("Findelio review notification failed");
         return res.status(500).json({ error: "send_failed" });
       }
     });
@@ -292,6 +294,7 @@ const findelioReviewNotificationEndpoint = {
         let postQuery = database("listing_posts as posts")
           .join("listings", "posts.listing", "listings.id")
           .select(
+            "posts.review_notification_version",
             "posts.title as post_title",
             "posts.type as post_type",
             "posts.submitted_by",
@@ -337,7 +340,7 @@ const findelioReviewNotificationEndpoint = {
           knex: database,
         });
 
-        await mailService.send({
+        await sendReviewOnce(database, "listing_posts", postId, post.review_notification_version, () => mailService.send({
           to: recipient,
           subject: `Beitrag wartet auf Freigabe: ${post.post_title}`,
           text: `Ein Premium-Beitrag wartet auf deine Prüfung.\n\nFirma: ${post.listing_name}\nBeitrag: ${post.post_title}\nArt: ${typeLabels[post.post_type] ?? post.post_type}\n\nPrüfung öffnen:\n${reviewUrl}`,
@@ -350,11 +353,11 @@ const findelioReviewNotificationEndpoint = {
               reviewUrl,
             },
           },
-        });
+        }));
 
         return res.status(204).send();
-      } catch (error) {
-        logger.error(error, "Findelio post review notification failed");
+      } catch {
+        logger.error("Findelio post review notification failed");
         return res.status(500).json({ error: "send_failed" });
       }
     });

@@ -29,6 +29,10 @@ CREATE TABLE listings (id uuid PRIMARY KEY, organization uuid REFERENCES organiz
  description_translations jsonb, social_links jsonb, custom_cta_label text, custom_cta_value text);
 CREATE TABLE listing_revisions (id uuid PRIMARY KEY, listing uuid REFERENCES listings(id), status text,
  data jsonb, reviewed_by uuid, reviewed_at timestamptz, rejection_reason text);
+CREATE TABLE listing_posts (id uuid PRIMARY KEY, listing uuid REFERENCES listings(id), status text,
+ title text, body text, image uuid, submitted_by uuid REFERENCES directus_users(id) ON DELETE SET NULL,
+ reviewed_by uuid REFERENCES directus_users(id) ON DELETE SET NULL, reviewed_at timestamptz,
+ published_at timestamptz, rejection_reason text, replaces_post uuid REFERENCES listing_posts(id) ON DELETE SET NULL);
 CREATE TABLE subscriptions (id uuid PRIMARY KEY, listing uuid REFERENCES listings(id), plan text,
  status text, current_period_end timestamptz);
 CREATE TABLE listings_industries (id serial PRIMARY KEY, listings_id uuid REFERENCES listings(id), industries_id uuid);
@@ -41,14 +45,14 @@ CREATE TABLE directus_fields (collection text, field text, special text, interfa
 CREATE TABLE directus_relations (many_collection text, many_field text, one_collection text, one_deselect_action text);
 CREATE TABLE directus_permissions (collection text, action text, permissions jsonb, validation jsonb, fields text, policy uuid);
 `);
-for (const name of ['20260810_premium_grants.sql', '20260910_referral_system.sql']) {
+for (const name of ['20260810_premium_grants.sql', '20260910_referral_system.sql', '20261024_moderation_snapshot_binding.sql']) {
   await knex.raw(await readFile(new URL(`../infra/directus/migrations/${name}`, import.meta.url), 'utf8'));
 }
 
 const fixedNow = new Date('2026-09-11T10:00:00Z');
 const jsonFields = new Set(['description_translations', 'social_links', 'data']);
 const sqlPayload = (row) => Object.fromEntries(Object.entries(row).map(([k,v]) => [k, jsonFields.has(k) && v !== null ? JSON.stringify(v) : v]));
-function workflow({ failCollection, denied = false, now = () => fixedNow, events = [] } = {}) {
+function workflow({ failCollection, denied = false, now = () => fixedNow, events = [], referralsEnabled = true } = {}) {
   class ItemsService {
     constructor(collection, options) { this.collection = collection; this.trx = options.knex; }
     async readOne(id) { return this.trx(this.collection).where({ id }).first(); }
@@ -72,8 +76,8 @@ function workflow({ failCollection, denied = false, now = () => fixedNow, events
   }
   class PermissionsService { async getItemPermissions() { return { update: { access: !denied } }; } }
   return createApprovalWorkflow({ database: knex, services: { ItemsService, PermissionsService }, getSchema: async () => ({}),
-    getCollectionAccess: async () => denied ? {} : { listing_revisions: { read: { access: 'full' }, update: { access: 'full' } }, listings: { update: { access: 'full' } } },
-    emitter: { emitAction: (...args) => events.push(args) }, logger: { warn() {} }, now });
+    getCollectionAccess: async () => denied ? {} : { listing_revisions: { read: { access: 'full' }, update: { access: 'full' } }, listings: { update: { access: 'full' } }, listing_posts: { read: { access: 'full' }, update: { access: 'full' } } },
+    emitter: { emitAction: (...args) => events.push(args) }, logger: { warn() {} }, now, env: { FINDELIO_REFERRAL_REGISTRATION_ENABLED: String(referralsEnabled) } });
 }
 async function fixture() {
   const user = randomUUID(), organization = randomUUID(), partner = randomUUID(), redemption = randomUUID();
@@ -96,7 +100,7 @@ const load = (f) => knex('referral_redemptions').where({ id: f.redemption }).fir
 
 test('two concurrent approvals reserve one first profile; concurrent retries create exactly one grant', async () => {
   const f = await fixture(), w = workflow();
-  await Promise.all(f.revisions.map((id) => w.approve(id, f.accountability)));
+  await Promise.all(f.revisions.map((id) => w.approve(id, f.accountability, 1)));
   const before = await load(f);
   assert.equal(before.status, 'pending_activation');
   assert.ok(f.listings.includes(before.trial_listing));
@@ -105,7 +109,7 @@ test('two concurrent approvals reserve one first profile; concurrent retries cre
   const after = await load(f);
   assert.equal(after.status, 'granted');
   assert.equal((await knex('premium_grants').whereIn('listing', f.listings)).length, 1);
-  await w.approve(f.revisions[f.listings.indexOf(before.trial_listing)], f.accountability);
+  await assert.rejects(w.approve(f.revisions[f.listings.indexOf(before.trial_listing)], f.accountability, 1), /review_changed/);
   assert.deepEqual((await load(f)).trial_starts_at, before.trial_starts_at);
   assert.equal((await knex('listings_files').whereIn('listings_id', f.listings)).length, 2);
   assert.equal((await knex('listing_opening_hours').whereIn('listing', f.listings)).length, 2);
@@ -113,7 +117,7 @@ test('two concurrent approvals reserve one first profile; concurrent retries cre
 
 test('failure late in approval rolls back listing, relationships and reservation; no action hooks emitted', async () => {
   const f = await fixture(), events = [];
-  await assert.rejects(workflow({ failCollection: 'listing_revisions', events }).approve(f.revisions[0], f.accountability), /injected failure/);
+  await assert.rejects(workflow({ failCollection: 'listing_revisions', events }).approve(f.revisions[0], f.accountability, 1), /injected failure/);
   assert.equal((await load(f)).status, 'pending_approval');
   assert.equal((await load(f)).trial_listing, null);
   assert.equal((await knex('listings').where({ id: f.listings[0] }).first()).name, 'Before');
@@ -122,7 +126,7 @@ test('failure late in approval rolls back listing, relationships and reservation
 });
 
 test('activation failure preserves reservation and retry retains original dates', async () => {
-  const f = await fixture(); await workflow().approve(f.revisions[0], f.accountability);
+  const f = await fixture(); await workflow().approve(f.revisions[0], f.accountability, 1);
   const before = await load(f);
   await assert.rejects(workflow({ failCollection: 'premium_grants' }).activate(f.redemption, f.user), /injected failure/);
   assert.equal((await load(f)).status, 'pending_activation');
@@ -134,7 +138,7 @@ test('activation failure preserves reservation and retry retains original dates'
 
 test('failure after grant insert rolls back the grant and emits no action event', async () => {
   const f = await fixture(), events = [];
-  await workflow().approve(f.revisions[0], f.accountability);
+  await workflow().approve(f.revisions[0], f.accountability, 1);
   await knex.raw(`CREATE FUNCTION fail_test_redemption() RETURNS trigger LANGUAGE plpgsql AS $$
     BEGIN RAISE EXCEPTION 'injected redemption update failure'; END $$;
     CREATE TRIGGER fail_test_redemption BEFORE UPDATE ON referral_redemptions
@@ -155,7 +159,7 @@ test('failure after grant insert rolls back the grant and emits no action event'
 test('ordinary approval without a referral preserves all listing updates', async () => {
   const f = await fixture();
   await knex('referral_redemptions').where({ id: f.redemption }).del();
-  const result = await workflow().approve(f.revisions[0], f.accountability);
+  const result = await workflow().approve(f.revisions[0], f.accountability, 1);
   assert.deepEqual(result, { status: 'none' });
   assert.equal((await knex('listings').where({ id: f.listings[0] }).first()).name, 'Approved');
   assert.equal((await knex('premium_grants').whereIn('listing', f.listings)).length, 0);
@@ -164,10 +168,10 @@ test('ordinary approval without a referral preserves all listing updates', async
 test('an existing grant at approval is skipped; a later subscription also blocks activation', async () => {
   const a = await fixture();
   await knex('premium_grants').insert({ id: randomUUID(), listing: a.listings[0], reason: 'Existing', starts_at: fixedNow });
-  await workflow().approve(a.revisions[0], a.accountability);
+  await workflow().approve(a.revisions[0], a.accountability, 1);
   assert.equal((await load(a)).trial_decision, 'skipped_existing_premium');
   const b = await fixture();
-  await workflow().approve(b.revisions[0], b.accountability);
+  await workflow().approve(b.revisions[0], b.accountability, 1);
   await knex('subscriptions').insert({ id: randomUUID(), listing: b.listings[0], plan: 'premium', status: 'active' });
   await workflow().activate(b.redemption, b.user);
   assert.equal((await load(b)).skip_reason, 'activation_active_subscription');
@@ -178,7 +182,7 @@ test('existing subscription at approval remains skipped after cancellation', asy
   const f = await fixture();
   const id = randomUUID();
   await knex('subscriptions').insert({ id, listing: f.listings[0], plan: 'premium', status: 'active' });
-  await workflow().approve(f.revisions[0], f.accountability);
+  await workflow().approve(f.revisions[0], f.accountability, 1);
   await knex('subscriptions').where({ id }).update({ status: 'canceled' });
   await workflow().activate(f.redemption, f.user);
   assert.equal((await load(f)).trial_decision, 'skipped_existing_premium');
@@ -187,7 +191,7 @@ test('existing subscription at approval remains skipped after cancellation', asy
 });
 
 test('a grant added between approval and activation prevents an additional grant without changing approval decision', async () => {
-  const f = await fixture(); await workflow().approve(f.revisions[0], f.accountability);
+  const f = await fixture(); await workflow().approve(f.revisions[0], f.accountability, 1);
   await knex('premium_grants').insert({ id: randomUUID(), listing: f.listings[0], reason: 'Existing grant', starts_at: fixedNow });
   await workflow().activate(f.redemption, f.user);
   const row = await load(f);
@@ -199,9 +203,9 @@ test('a grant added between approval and activation prevents an additional grant
 
 test('expired reservation never restarts and unauthorized review leaves no mutations', async () => {
   const f = await fixture();
-  await assert.rejects(workflow({ denied: true }).approve(f.revisions[0], f.accountability), /forbidden/);
+  await assert.rejects(workflow({ denied: true }).approve(f.revisions[0], f.accountability, 1), /forbidden/);
   assert.equal((await load(f)).status, 'pending_approval');
-  await workflow().approve(f.revisions[0], f.accountability);
+  await workflow().approve(f.revisions[0], f.accountability, 1);
   await workflow({ now: () => new Date('2027-01-01') }).activate(f.redemption, f.user);
   assert.equal((await load(f)).status, 'expired_unactivated');
   assert.equal((await knex('premium_grants').whereIn('listing', f.listings)).length, 0);
@@ -210,7 +214,7 @@ test('expired reservation never restarts and unauthorized review leaves no mutat
 test('previously published then suspended profile cannot claim a new referral trial', async () => {
   const f = await fixture();
   await knex('listings').where({ id: f.listings[1] }).update({ status: 'suspended', published_at: fixedNow });
-  await workflow().approve(f.revisions[0], f.accountability);
+  await workflow().approve(f.revisions[0], f.accountability, 1);
   assert.equal((await load(f)).status, 'void');
   assert.equal((await load(f)).skip_reason, 'previous_publication');
 });
@@ -264,4 +268,36 @@ test('admin create, duplicate code, edit/deactivate, filtered paging and stable 
   assert.equal(empty.body.data.total, 0);
   assert.equal(empty.body.data.redemptions.length, 0);
   assert.equal((await call('patch /admin/partners/:id', { name: 'Anna', code: 'NEWCODE', status: 'active' }, {}, { id: partner })).code, 400);
+});
+
+
+test('disabled referrals still publish a matching snapshot; changed versions never publish', async () => {
+  const f = await fixture();
+  const w = workflow({ referralsEnabled: false });
+  await knex('listing_revisions').where({ id: f.revisions[0] }).update({
+    data: JSON.stringify({ name: 'Not shown to reviewer', industry_ids: [], spoken_language_ids: [] }),
+  });
+  await assert.rejects(w.approve(f.revisions[0], f.accountability, 1), /review_changed/);
+  assert.equal((await knex('listings').where({ id: f.listings[0] }).first()).name, 'Before');
+  await w.approve(f.revisions[0], f.accountability, 2);
+  assert.equal((await knex('listings').where({ id: f.listings[0] }).first()).name, 'Not shown to reviewer');
+  assert.equal((await load(f)).status, 'pending_approval');
+  await assert.rejects(knex('listing_revisions').where({ id: f.revisions[0] }).update({ status: 'pending' }), (error) => error.code === '23514');
+});
+
+test('post approval binds displayed version and atomically archives its published predecessor', async () => {
+  const f = await fixture(), w = workflow({ referralsEnabled: false });
+  const previous = randomUUID(), post = randomUUID();
+  await knex('listing_posts').insert([
+    { id: previous, listing: f.listings[0], status: 'published', title: 'Old', replaces_post: null },
+    { id: post, listing: f.listings[0], status: 'pending', title: 'Seen', replaces_post: previous },
+  ]);
+  await knex('listing_posts').where({ id: post }).update({ title: 'Changed' });
+  await assert.rejects(w.decidePost(post, f.accountability, 1, 'approve'), /review_changed/);
+  assert.equal((await knex('listing_posts').where({ id: previous }).first()).status, 'published');
+  assert.equal((await knex('listing_posts').where({ id: post }).first()).status, 'pending');
+  await w.decidePost(post, f.accountability, 2, 'approve');
+  assert.equal((await knex('listing_posts').where({ id: previous }).first()).status, 'archived');
+  assert.equal((await knex('listing_posts').where({ id: post }).first()).status, 'published');
+  await assert.rejects(knex('listing_posts').where({ id: post }).update({ status: 'pending', title: 'Delayed editor' }), (error) => error.code === '23514');
 });

@@ -190,16 +190,20 @@ const findelioDeletionRequestsEndpoint = {
           let organization = null;
 
           if (entityType === "listing") {
+            // Discover the organization before locking; moderation and team
+            // mutations also acquire the organization before its children.
+            const locator = await trx("listings")
+              .select("organization").where("id", targetId).first();
+            if (!locator) fail("not_found", 404);
+            organization = await trx("organizations")
+              .select("id", "name", "status")
+              .where("id", locator.organization).forUpdate().first();
             listing = await trx("listings")
               .select("id", "name", "organization", "status")
               .where("id", targetId)
               .forUpdate()
               .first();
-            if (!listing) fail("not_found", 404);
-            organization = await trx("organizations")
-              .select("id", "name", "status")
-              .where("id", listing.organization)
-              .first();
+            if (!listing || listing.organization !== locator.organization) fail("not_found", 404);
           } else {
             organization = await trx("organizations")
               .select("id", "name", "status")
@@ -470,17 +474,28 @@ const findelioDeletionRequestsEndpoint = {
 
       try {
         await database.transaction(async (trx) => {
+          // Lock the organization before the request too: approving an
+          // organization request cancels its other pending requests below.
+          const locator = await trx("deletion_requests")
+            .select("organization").where("id", requestId).first();
+          if (!locator) fail("not_found", 404);
+          await trx("organizations").select("id")
+            .where("id", locator.organization).forUpdate().first();
           const request = await trx("deletion_requests")
             .select("*")
             .where("id", requestId)
             .forUpdate()
             .first();
-          if (!request || request.status !== "pending") {
+          if (!request || request.status !== "pending" || request.organization !== locator.organization) {
             fail("not_found", 404);
           }
 
           if (action === "approve") {
             const listingIds = await targetListingIds(trx, request);
+            // Lock before checking premium access, so a concurrent moderation
+            // or billing transaction cannot grant access between check/archive.
+            await trx("listings").select("id").whereIn("id", listingIds)
+              .orderBy("id").forUpdate();
             const premiumAccess = await currentPremiumAccess(trx, listingIds);
             if (premiumAccess.length > 0) fail("premium_active", 409);
 

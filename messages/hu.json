@@ -136,7 +136,7 @@
     "password": "Jelszó",
     "submit": "Bejelentkezés",
     "loading": "Bejelentkezés …",
-    "note": "A bejelentkezési adatait a Directus biztonságosan ellenőrzi.",
+    "note": "A bejelentkezési adataid ellenőrzése biztonságosan történik.",
     "errorFallback": "Az e-mail-cím vagy a jelszó helytelen.",
     "serverError": "A bejelentkezés jelenleg nem dolgozható fel.",
     "connectionError": "Nem sikerült kapcsolódni a szerverhez.",

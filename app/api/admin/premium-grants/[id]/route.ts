@@ -7,8 +7,7 @@ import {
 } from "@/lib/auth";
 import {
   getDirectusCurrentUser,
-  getDirectusCurrentUserPermissions,
-  hasListingReviewAccess,
+  hasDirectusAdminAccess,
   refreshDirectusSession,
 } from "@/lib/directus-auth";
 import { revokePremiumGrant } from "@/lib/directus-premium";
@@ -44,11 +43,11 @@ export async function DELETE(
   if (!accessToken) accessToken = await refreshAccessToken();
   if (!accessToken) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
-  const [user, permissions] = await Promise.all([
+  const [user, isAdmin] = await Promise.all([
     getDirectusCurrentUser(accessToken),
-    getDirectusCurrentUserPermissions(accessToken),
+    hasDirectusAdminAccess(accessToken),
   ]);
-  if (!hasListingReviewAccess(permissions)) {
+  if (!isAdmin) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
@@ -56,7 +55,7 @@ export async function DELETE(
   if (!id.trim()) return NextResponse.json({ error: "not_found" }, { status: 404 });
 
   try {
-    await revokePremiumGrant({ grantId: id.trim(), revokedBy: user.id });
+    await revokePremiumGrant({ accessToken, grantId: id.trim(), revokedBy: user.id });
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Premium-Freischaltung konnte nicht widerrufen werden:", error);

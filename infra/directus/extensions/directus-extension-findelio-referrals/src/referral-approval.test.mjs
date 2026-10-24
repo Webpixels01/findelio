@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { activationDecision, hasFullReviewAccess, listingPatch, registerApprovalRoutes } from "./referral-approval.js";
+import { assertReviewVersion, createApprovalWorkflow, activationDecision, hasFullReviewAccess, listingPatch, registerApprovalRoutes } from "./referral-approval.js";
 import { referralMailContent } from "../../directus-extension-findelio-review-notification/src/referral-mail.js";
 
 const at = new Date("2026-09-11T10:00:00Z");
@@ -35,7 +35,7 @@ test("listing patch preserves optional fields and excludes arbitrary revision pa
   assert.equal("description_translations" in patch, false);
 });
 
-test("disabled routes and non-admin retry never touch schema or database", async () => {
+test("disabled activation and non-admin retry never touch schema or database", async () => {
   for (const enabled of [false, true]) {
     const routes = new Map();
     registerApprovalRoutes({ post: (path, handler) => routes.set(path, handler) }, {
@@ -48,7 +48,7 @@ test("disabled routes and non-admin retry never touch schema or database", async
     assert.equal(res.code, enabled ? 403 : 503);
     if (!enabled) {
       await routes.get("/approve-revision")({ accountability: { user: "admin", admin: true } }, res);
-      assert.equal(res.code, 503);
+      assert.equal(res.code, 400);
     } else {
       await routes.get("/approve-revision")({}, res);
       assert.equal(res.code, 401);
@@ -72,4 +72,54 @@ test("mail does not promise a pending, expired or revoked trial and localizes al
     assert.notEqual(referralMailContent(grant, locale, new Date("2027-01-01")).text, active.text);
   }
   assert.deepEqual(referralMailContent(null, "de-ch"), { text: "", suppressCheckout: false });
+});
+
+
+test("review snapshots reject missing, malformed, stale and ABA versions", () => {
+  for (const version of [undefined, null, "2", 0, -1, 1.5, 1, 3]) {
+    assert.throws(() => assertReviewVersion({ review_version: 2 }, version), /review_changed/);
+  }
+  assert.doesNotThrow(() => assertReviewVersion({ review_version: 2 }, 2));
+  assert.throws(() => assertReviewVersion({ review_version: 3, data: { name: "original again" } }, 1), /review_changed/);
+});
+
+test("both decision workflows compare the locked row before any write, with referrals disabled", async () => {
+  for (const kind of ["revision", "post"]) {
+    const locks = [];
+    let writes = 0;
+    const database = (table) => {
+      const query = {
+        where() { return this; },
+        forUpdate() { locks.push(table); return this; },
+        async first() {
+          if (table === "listings") return { id: "listing", organization: null };
+          if (table === "listing_revisions" || table === "listing_posts") return { id: kind, listing: "listing", status: "pending", review_version: 2 };
+          throw Error(`Unexpected table: ${table}`);
+        },
+      };
+      return query;
+    };
+    database.transaction = (work) => work(database);
+    class ItemsService {
+      async readOne() { return { id: kind, listing: "listing" }; }
+      async updateOne() { writes++; }
+    }
+    class PermissionsService {
+      async getItemPermissions() { return { update: { access: true } }; }
+    }
+    const workflow = createApprovalWorkflow({
+      database, services: { ItemsService, PermissionsService }, getSchema: async () => ({}),
+      emitter: { emitAction() {} }, logger: { warn() {} }, env: { FINDELIO_REFERRAL_REGISTRATION_ENABLED: "false" },
+      getCollectionAccess: async () => ({
+        listing_revisions: { read: { access: "full" }, update: { access: "full" } },
+        listings: { update: { access: "full" } },
+        listing_posts: { read: { access: "full" }, update: { access: "full" } },
+      }),
+    });
+    await assert.rejects(kind === "revision"
+      ? workflow.approve(kind, { user: "reviewer" }, 1)
+      : workflow.decidePost(kind, { user: "reviewer" }, 1, "approve"), /review_changed/);
+    assert.equal(writes, 0);
+    assert.deepEqual(locks, ["listings", kind === "revision" ? "listing_revisions" : "listing_posts"]);
+  }
 });

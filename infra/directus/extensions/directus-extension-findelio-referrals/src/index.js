@@ -1,3 +1,4 @@
+import { consumeVerificationBudget } from "./verification-budget.js";
 import { randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
 import { createRequire } from "node:module";
@@ -220,7 +221,7 @@ const findelioReferralsEndpoint = {
           shouldSendMail = hasEmailVerification;
         });
 
-        if (shouldSendMail) {
+        if (shouldSendMail && await consumeVerificationBudget(database, email, env.SECRET)) {
           await sendVerificationMail({
             MailService,
             schema,

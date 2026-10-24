@@ -7,8 +7,7 @@ import {
 } from "@/lib/auth";
 import {
   getDirectusCurrentUser,
-  getDirectusCurrentUserPermissions,
-  hasListingReviewAccess,
+  hasDirectusAdminAccess,
   refreshDirectusSession,
 } from "@/lib/directus-auth";
 import {
@@ -41,12 +40,12 @@ async function getAdminToken(): Promise<{ token: string; userId: string } | null
   if (!token) token = await refreshAccessToken();
   if (!token) return null;
 
-  const [user, permissions] = await Promise.all([
+  const [user, isAdmin] = await Promise.all([
     getDirectusCurrentUser(token),
-    getDirectusCurrentUserPermissions(token),
+    hasDirectusAdminAccess(token),
   ]);
 
-  if (!hasListingReviewAccess(permissions)) return null;
+  if (!isAdmin) return null;
   return { token, userId: user.id };
 }
 
@@ -103,6 +102,7 @@ export async function POST(request: Request) {
     }
 
     const grant = await createPremiumGrant({
+      accessToken: auth.token,
       listing: listingId,
       grantedBy: auth.userId,
       reason,

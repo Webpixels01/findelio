@@ -241,7 +241,7 @@ export default async function ListingReviewPage({
                     </div>
                   </div>
 
-                  <ListingPostReviewActions postId={post.id} />
+                  <ListingPostReviewActions postId={post.id} reviewVersion={post.review_version} />
                 </article>
               );
             })}
