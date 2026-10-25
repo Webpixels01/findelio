@@ -4,6 +4,7 @@
     "description": "Directorul multilingv de companii din Elveția. Caută după limbă, domeniu, canton și localitate."
   },
   "Header": {
+    "darkMode": "Mod întunecat",
     "home": "Pagina principală Findelio",
     "navigation": "Navigare principală",
     "findCompanies": "Găsește companii",

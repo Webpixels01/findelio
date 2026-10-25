@@ -4,6 +4,7 @@
     "description": "O diretório empresarial multilingue da Suíça. Pesquise por língua, setor, cantão e localidade."
   },
   "Header": {
+    "darkMode": "Modo escuro",
     "home": "Página inicial da Findelio",
     "navigation": "Navegação principal",
     "findCompanies": "Encontrar empresas",

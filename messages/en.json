@@ -4,6 +4,7 @@
     "description": "Switzerland’s multilingual business directory. Find businesses by language, industry, canton and location."
   },
   "Header": {
+    "darkMode": "Dark mode",
     "home": "Findelio home",
     "navigation": "Main navigation",
     "findCompanies": "Find businesses",

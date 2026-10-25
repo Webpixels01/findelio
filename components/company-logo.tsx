@@ -40,7 +40,7 @@ export default function CompanyLogo({
 
   if (file) {
     return (
-      <div className={containerClass}>
+      <div className={containerClass} data-brand-surface>
         <Image
           src={getDirectusAssetUrl(file.id)}
           alt={`${name} Logo`}

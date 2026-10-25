@@ -69,7 +69,7 @@ export default function TwoFactorSettings({ status }: { status: TwoFactorStatus 
           </label>
         </> : <>
           <p>{t("scan")}</p>
-          <div className="my-5 w-fit rounded-xl border border-[var(--border)] bg-white p-4">
+          <div className="my-5 w-fit rounded-xl border border-[var(--border)] bg-white p-4" data-brand-surface>
             <QRCodeSVG value={setup.url} size={200} level="M" title={t("qrLabel")} />
           </div>
           <p className="text-sm font-bold">{t("secretLabel")}</p>

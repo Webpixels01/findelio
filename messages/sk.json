@@ -4,6 +4,7 @@
     "description": "Viacjazyčný firemný adresár vo Švajčiarsku. Vyhľadávajte podľa jazyka, odvetvia, kantónu a mesta."
   },
   "Header": {
+    "darkMode": "Tmavý režim",
     "home": "Domovská stránka Findelio",
     "navigation": "Hlavná navigácia",
     "findCompanies": "Nájsť firmy",

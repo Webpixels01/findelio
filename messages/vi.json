@@ -4,6 +4,7 @@
     "description": "Danh bạ doanh nghiệp đa ngôn ngữ tại Thụy Sĩ. Tìm doanh nghiệp theo ngôn ngữ, ngành nghề, bang và địa điểm."
   },
   "Header": {
+    "darkMode": "Chế độ tối",
     "home": "Trang chủ Findelio",
     "navigation": "Điều hướng chính",
     "findCompanies": "Tìm doanh nghiệp",

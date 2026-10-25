@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@fontsource-variable/roboto-condensed";
 import "../globals.css";
+import "../dark-mode.css";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -9,6 +10,7 @@ import SiteFooter from "@/components/site-footer";
 import CookieNotice from "@/components/cookie-notice";
 import GoogleAnalytics from "@/components/google-analytics";
 import StructuredData from "@/components/structured-data";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import {
   absoluteUrl,
   getSiteUrl,
@@ -105,8 +107,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   };
 
   return (
-    <html lang={htmlLanguageTags[locale]} data-scroll-behavior="smooth">
+    <html lang={htmlLanguageTags[locale]} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <script id="findelio-theme-init" dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <GoogleAnalytics />
       </head>
       <body suppressHydrationWarning>

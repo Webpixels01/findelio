@@ -4,6 +4,7 @@
     "description": "Wielojęzyczny katalog firm w Szwajcarii. Wyszukuj według języka, branży, kantonu i miejscowości."
   },
   "Header": {
+    "darkMode": "Tryb ciemny",
     "home": "Strona główna Findelio",
     "navigation": "Nawigacja główna",
     "findCompanies": "Znajdź firmy",

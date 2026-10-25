@@ -4,6 +4,7 @@
     "description": "Das mehrsprachige Firmenverzeichnis der Schweiz. Finde Unternehmen nach Sprache, Branche, Kanton und Ort."
   },
   "Header": {
+    "darkMode": "Dunkelmodus",
     "home": "Findelio Startseite",
     "navigation": "Hauptnavigation",
     "findCompanies": "Unternehmen finden",

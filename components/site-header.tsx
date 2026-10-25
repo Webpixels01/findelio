@@ -6,6 +6,7 @@ import { getCurrentUser } from "@/lib/auth";
 import LanguageSwitcher from "./language-switcher";
 import LogoutButton from "./logout-button";
 import ShareButton from "./share-button";
+import ThemeToggle from "./theme-toggle";
 
 function HomeIcon() {
   return (
@@ -48,7 +49,7 @@ export default async function SiteHeader() {
     <header className="site-header-design sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-xl">
       <div className="site-container flex min-h-20 items-center justify-between gap-3 sm:gap-6">
         <Link href="/" aria-label={t("home")} className="min-w-0 sm:shrink-0">
-          <span className="relative block h-12 w-[161px] max-w-full sm:h-[45px] sm:w-[150px]">
+          <span className="site-brand relative block h-12 w-[161px] max-w-full sm:h-[45px] sm:w-[150px]">
             <Image
               src="/findelio-logo-horizontal.svg"
               alt="Findelio"
@@ -92,10 +93,12 @@ export default async function SiteHeader() {
             </Link>
           )}
           <ShareButton hideOnCompanyProfile />
+          <ThemeToggle />
           <LanguageSwitcher ariaLabel={t("selectLanguage")} />
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <ThemeToggle />
           <LanguageSwitcher ariaLabel={t("selectLanguage")} />
           <details className="group relative">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-xl border border-[var(--border)] [&::-webkit-details-marker]:hidden">

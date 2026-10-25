@@ -4,6 +4,7 @@
     "description": "Svájc többnyelvű cégjegyzéke. Keresés nyelv, ágazat, kanton és település szerint."
   },
   "Header": {
+    "darkMode": "Sötét mód",
     "home": "Findelio kezdőlap",
     "navigation": "Fő navigáció",
     "findCompanies": "Cégek keresése",

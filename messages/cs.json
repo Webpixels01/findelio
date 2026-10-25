@@ -4,6 +4,7 @@
     "description": "Vícejazyčný firemní adresář ve Švýcarsku. Vyhledávejte podle jazyka, oboru, kantonu a města."
   },
   "Header": {
+    "darkMode": "Tmavý režim",
     "home": "Domovská stránka Findelio",
     "navigation": "Hlavní navigace",
     "findCompanies": "Najít firmy",

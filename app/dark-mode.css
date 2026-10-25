@@ -1,0 +1,70 @@
+/* The selection lives on <html>, so navigation, forms and dialogs share it. */
+:root { color-scheme: light; }
+.theme-toggle { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 10px; background: var(--background); color: var(--foreground); cursor: pointer; }
+.theme-toggle:hover { background: var(--surface); border-color: var(--accent); }
+.theme-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.theme-icon-sun { display: none; }
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --foreground: #edf4fc;
+  --background: #0b1422;
+  --surface: #1b2b40;
+  --border: #2a3d55;
+  --muted: #adc0d3;
+  --accent: #66b2ff;
+}
+html[data-theme="dark"] .theme-icon-sun { display: block; }
+html[data-theme="dark"] .theme-icon-moon { display: none; }
+html[data-theme="dark"] .site-brand { background: url('/findelio-logo-dark.svg') left center / contain no-repeat; }
+html[data-theme="dark"] .site-brand img { opacity: 0; }
+html[data-theme="dark"] .site-header-design { background: #0d1829; border-color: #263a52; }
+html[data-theme="dark"] .site-header-design select { background: #1b2b40; color: #edf4fc; border-color: #3a526e; }
+html[data-theme="dark"] .home-design { color: #edf4fc; }
+html[data-theme="dark"] .home-hero { background: #101f33; border-color: #263a52; }
+html[data-theme="dark"] .home-design .eyebrow { color: #a9bed3; }
+html[data-theme="dark"] :is(.home-intro, .home-how-heading > p, .home-steps p, .home-companies-heading p) { color: #adc0d3; }
+html[data-theme="dark"] .home-language-art span:nth-child(1) { background: #1a3b60; color: #8bc6ff; }
+html[data-theme="dark"] .home-language-art span:nth-child(2) { background: #24364b; color: #edf4fc; }
+html[data-theme="dark"] .home-language-art span:nth-child(3) { background: #203c38; color: #b6dfc8; }
+html[data-theme="dark"] .directory-search { background: #17273d; border-color: #344b65; box-shadow: 0 12px 30px #00000015; }
+html[data-theme="dark"] .directory-search .field-group { border-color: #344b65; }
+html[data-theme="dark"] .directory-search .field-label { color: #a9bed3; }
+html[data-theme="dark"] .directory-search .field-control { background: #17273d; color: #edf4fc; }
+html[data-theme="dark"] .field-control::placeholder { color: #a9bed3; }
+html[data-theme="dark"] .company-design-card { background: #142237; border-color: #2c405a; }
+html[data-theme="dark"] .company-design-card:hover { border-color: #4b749b; box-shadow: 0 10px 30px #00000026; }
+html[data-theme="dark"] .company-design-name { color: #edf4fc; }
+html[data-theme="dark"] :is(.company-design-description, .company-design-place) { color: #adc0d3; }
+html[data-theme="dark"] .company-design-language { background: #22364e; color: #c2d5e7; }
+html[data-theme="dark"] .company-design-link { border-color: #2c405a; }
+html[data-theme="dark"] .home-business { background: #183551; border: 1px solid #305170; }
+html[data-theme="dark"] .home-business-link { color: #102b40; background: #e4effa; }
+html[data-theme="dark"] .home-business-link:hover { background: white; }
+
+/* Existing shared surfaces, including profiles, account pages and cookie notice. */
+html[data-theme="dark"] :is([class~="bg-white"], [class~="bg-white/95"], .field-control, .secondary-button) { background-color: #142237; }
+html[data-theme="dark"] [class~="bg-white/95"][class~="text-slate-950"] { color: #edf4fc; }
+html[data-theme="dark"] :is([class~="bg-[var(--foreground)]"][class~="text-white"], .blog-content pre) { background-color: #203e60; }
+html[data-theme="dark"] :is(.primary-button, [class~="bg-[var(--accent)]"]) { background-color: #1268c4; color: white; }
+html[data-theme="dark"] .primary-button:hover { background-color: #1978df; }
+html[data-theme="dark"] .danger-button { background: #361f2c; color: #ffb9b3; border-color: #8b4b50; }
+html[data-theme="dark"] .danger-button:hover { background: #4c2732; }
+html[data-theme="dark"] :is([class~="hover:bg-white"], [class~="hover:bg-[#f5faff]"], [class~="hover:bg-[#eef7ff]"], [class~="hover:bg-[#eaf5ff]"], [class~="hover:bg-[#d7ebff]"]):hover { background-color: #203e60; color: #edf4fc; }
+html[data-theme="dark"] [class~="hover:text-[#001734]"]:hover { color: #edf4fc; }
+html[data-theme="dark"] :is([class~="bg-[#eaf4ff]"], [class~="bg-[#eaf5ff]"], [class~="bg-[#e8f3ff]"], [class~="bg-[#e9f3ff]"], [class~="bg-[#eef7ff]"], [class~="bg-[#f1f8ff]"], [class~="bg-[#f2f8ff]"], [class~="bg-[#f2f9ff]"], [class~="bg-[#f5faff]"], [class~="bg-[#f7fbff]"]) { background-color: #1b3551; }
+html[data-theme="dark"] :is([class~="bg-[#e9f8ef]"], [class~="bg-[#e8f8ed]"], [class~="bg-[#edf9f2]"], [class~="bg-[#eefaf2]"]) { background-color: #17392d; }
+html[data-theme="dark"] :is([class~="bg-[#fff4d6]"], [class~="bg-[#fff4dc]"], [class~="bg-[#fff7df]"], [class~="bg-[#fff8e6]"], [class~="bg-[#fff8eb]"], [class~="bg-[#fff9e9]"]) { background-color: #3c3020; }
+html[data-theme="dark"] :is([class~="bg-[#fff0f0]"], [class~="bg-[#fff4f4]"], [class~="bg-[#fff5f4]"], [class~="bg-red-50"]) { background-color: #3c222d; }
+html[data-theme="dark"] :is([class~="text-[#005fbd]"], [class~="text-[#0277ee]"], [class~="text-[#174f82]"]) { color: #a0d0ff; }
+html[data-theme="dark"] :is([class~="text-[#40536b]"]) { color: #adc0d3; }
+html[data-theme="dark"] :is([class~="text-[#135f30]"], [class~="text-[#137a3d]"], [class~="text-[#176b35]"], [class~="text-emerald-700"]) { color: #a2e2b9; }
+html[data-theme="dark"] :is([class~="text-[#6f5000]"], [class~="text-[#765600]"], [class~="text-[#765d1e]"], [class~="text-[#7a4b00]"], [class~="text-[#7b5700]"], [class~="text-[#875500]"]) { color: #f3d899; }
+html[data-theme="dark"] :is([class~="text-[#941b1b]"], [class~="text-[#9d1c1c]"], [class~="text-[#b42318]"], [class~="text-red-700"], [class~="text-red-800"]) { color: #ffb9b3; }
+html[data-theme="dark"] :is([class~="border-[#b7dafc]"], [class~="border-[#b8daf8]"], [class~="border-[#b8dcff]"], [class~="border-[#b9c9d9]"], [class~="border-[#b9d9f8]"], [class~="border-[#b9daf8]"], [class~="border-[#bfdcff]"], [class~="border-[#cfe3f5]"], [class~="border-[#cfe3f7]"], [class~="border-[#d5e8ff]"], [class~="border-[#d9e8f8]"]) { border-color: #365573; }
+html[data-theme="dark"] :is([class~="border-[#bfe4ca]"], [class~="border-[#b9e4cc]"]) { border-color: #3e6a51; }
+html[data-theme="dark"] :is([class~="border-[#efd58c]"], [class~="border-[#f0cf70]"], [class~="border-[#f3d6a5]"]) { border-color: #846b37; }
+html[data-theme="dark"] :is([class~="border-[#efb5b5]"], [class~="border-[#f0b4b0]"], [class~="border-red-200"]) { border-color: #8b4b50; }
+html[data-theme="dark"] :is([class~="hover:bg-[#ffefbd]"]):hover { background-color: #534020; }
+html[data-theme="dark"] :is([class~="hover:bg-[#ffe0e0]"]):hover { background-color: #4c2732; }
+/* Brand images and QR codes keep their original white backing. */
+html[data-theme="dark"] [data-brand-surface] { background-color: white; }
