@@ -22,6 +22,9 @@
     "error": "Không thể chia sẻ"
   },
   "Home": {
+    "companiesTitle": "Khám phá doanh nghiệp",
+    "companiesDescription": "Một kết nối tốt bắt đầu từ đây. Tìm doanh nghiệp nói ngôn ngữ của bạn.",
+    "companiesAll": "Xem tất cả doanh nghiệp",
     "eyebrow": "Doanh nghiệp đa ngôn ngữ tại Thụy Sĩ",
     "title": "Tìm doanh nghiệp nói ngôn ngữ của bạn.",
     "description": "Tìm theo ngôn ngữ, ngành nghề và địa điểm để tìm doanh nghiệp phù hợp gần bạn.",

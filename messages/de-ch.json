@@ -22,6 +22,9 @@
     "error": "Teilen nicht möglich"
   },
   "Home": {
+    "companiesTitle": "Unternehmen entdecken",
+    "companiesDescription": "Hier beginnt eine gute Verbindung. Finde Unternehmen, die deine Sprache sprechen.",
+    "companiesAll": "Alle Unternehmen ansehen",
     "eyebrow": "Mehrsprachige Unternehmen in der Schweiz",
     "title": "Finde Unternehmen, die deine Sprache sprechen.",
     "description": "Suche nach Sprache, Branche und Standort und finde passende Unternehmen in deiner Nähe.",

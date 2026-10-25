@@ -22,6 +22,9 @@
     "error": "Unable to share"
   },
   "Home": {
+    "companiesTitle": "Discover businesses",
+    "companiesDescription": "A good connection starts here. Find businesses that speak your language.",
+    "companiesAll": "View all businesses",
     "eyebrow": "Multilingual businesses in Switzerland",
     "title": "Find businesses that speak your language.",
     "description": "Search by language, industry and location to find suitable businesses near you.",

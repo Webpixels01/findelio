@@ -22,6 +22,9 @@
     "error": "A megosztás nem lehetséges"
   },
   "Home": {
+    "companiesTitle": "Fedezz fel vállalkozásokat",
+    "companiesDescription": "Itt kezdődik egy jó kapcsolat. Találj olyan vállalkozásokat, amelyek beszélik a nyelvedet.",
+    "companiesAll": "Összes vállalkozás megtekintése",
     "eyebrow": "Többnyelvű vállalkozások Svájcban",
     "title": "Találjon az Ön nyelvén beszélő vállalkozásokat.",
     "description": "Keressen nyelv, ágazat és hely szerint, és találja meg a megfelelő céget a közelében.",

@@ -22,6 +22,9 @@
     "error": "Sdílení není možné"
   },
   "Home": {
+    "companiesTitle": "Objevte firmy",
+    "companiesDescription": "Tady začíná dobré spojení. Najděte firmy, které mluví vaším jazykem.",
+    "companiesAll": "Zobrazit všechny firmy",
     "eyebrow": "Vícejazyčné firmy ve Švýcarsku",
     "title": "Najděte firmy, které mluví vaším jazykem.",
     "description": "Vyhledávejte podle jazyka, oboru a lokality a najděte vhodné firmy ve svém okolí.",

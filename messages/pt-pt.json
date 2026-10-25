@@ -22,6 +22,9 @@
     "error": "Não foi possível partilhar"
   },
   "Home": {
+    "companiesTitle": "Descobre empresas",
+    "companiesDescription": "Uma boa ligação começa aqui. Encontra empresas que falam a tua língua.",
+    "companiesAll": "Ver todas as empresas",
     "eyebrow": "Empresas multilingues na Suíça",
     "title": "Encontre empresas que falam a sua língua.",
     "description": "Pesquise por língua, setor e localização e encontre empresas adequadas perto de si.",

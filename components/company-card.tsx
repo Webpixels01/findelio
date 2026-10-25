@@ -26,7 +26,7 @@ export default async function CompanyCard({
   const descriptionExcerpt = htmlToPlainText(company.description);
 
   return (
-    <article className="group rounded-3xl border border-[var(--border)] bg-white p-6 transition hover:-translate-y-1 hover:border-[#0277ee]/40 hover:shadow-xl hover:shadow-[#001734]/8">
+    <article className="company-design-card group">
       <div className="flex items-start gap-4">
         <CompanyLogo
           fileId={company.logo}
@@ -35,7 +35,7 @@ export default async function CompanyCard({
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-extrabold">
+            <h2 className="company-design-name">
               {company.name}
             </h2>
 
@@ -66,22 +66,22 @@ export default async function CompanyCard({
       </div>
 
       {descriptionExcerpt && (
-        <p className="mt-5 line-clamp-3 text-[var(--muted)]">
+        <p className="company-design-description line-clamp-3">
           {descriptionExcerpt}
         </p>
       )}
 
-      <p className="mt-5 text-sm font-semibold">
+      <p className="company-design-place">
         {company.postal_code && `${company.postal_code} `}
         {company.city}, {company.canton.name}
       </p>
 
       {languages.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="company-design-languages">
           {languages.map((language) => (
             <span
               key={language.code}
-              className="rounded-full bg-[var(--surface)] px-3 py-1 text-xs font-bold text-[#40536b]"
+              className="company-design-language"
             >
               {language.name}
             </span>
@@ -92,7 +92,7 @@ export default async function CompanyCard({
       <Link
         href={`/unternehmen/${company.slug}`}
         locale={locale}
-        className="mt-6 inline-flex font-bold text-[var(--accent)] group-hover:underline"
+        className="company-design-link group-hover:underline"
       >
         {t("details")} →
       </Link>

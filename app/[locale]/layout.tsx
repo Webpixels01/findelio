@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: "Metadata" });
-  const faviconVersion = "d70b58d";
+  const faviconVersion = "20261025-original-logo";
 
   return {
     metadataBase: new URL(getSiteUrl()),

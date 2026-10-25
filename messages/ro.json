@@ -22,6 +22,9 @@
     "error": "Distribuirea nu este posibilă"
   },
   "Home": {
+    "companiesTitle": "Descoperă companii",
+    "companiesDescription": "O legătură bună începe aici. Găsește companii care vorbesc limba ta.",
+    "companiesAll": "Vezi toate companiile",
     "eyebrow": "Companii multilingve în Elveția",
     "title": "Găsește companii care vorbesc limba ta.",
     "description": "Caută după limbă, domeniu și locație și găsește companii potrivite în apropiere.",

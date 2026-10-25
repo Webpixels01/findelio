@@ -22,6 +22,9 @@
     "error": "Nie można udostępnić"
   },
   "Home": {
+    "companiesTitle": "Odkryj firmy",
+    "companiesDescription": "Tutaj zaczyna się dobry kontakt. Znajdź firmy, które mówią w Twoim języku.",
+    "companiesAll": "Zobacz wszystkie firmy",
     "eyebrow": "Wielojęzyczne firmy w Szwajcarii",
     "title": "Znajdź firmy, które mówią w Twoim języku.",
     "description": "Szukaj według języka, branży i lokalizacji, aby znaleźć odpowiednią firmę w pobliżu.",

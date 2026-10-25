@@ -45,7 +45,7 @@ export default async function SiteHeader() {
   const isAuthenticated = Boolean(currentUser);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-xl">
+    <header className="site-header-design sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-xl">
       <div className="site-container flex min-h-20 items-center justify-between gap-3 sm:gap-6">
         <Link href="/" aria-label={t("home")} className="min-w-0 sm:shrink-0">
           <span className="relative block h-12 w-[161px] max-w-full sm:h-[45px] sm:w-[150px]">
