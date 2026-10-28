@@ -1,0 +1,58 @@
+{% layout 'findelio-base' %}
+{% block content %}
+
+<h1 style="margin: 0 0 20px; color: #172940; font-size: 28px; line-height: 1.25;">
+  Eintrag wartet auf Prüfung
+</h1>
+
+<p style="margin: 0 0 18px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  {{ intro | escape }}
+</p>
+
+<p style="margin: 0 0 24px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  <strong>Firma:</strong> {{ listingName | escape }}
+</p>
+
+{% if changedFields.size > 0 %}
+<p style="margin: 0 0 10px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  <strong>Zu prüfende Felder:</strong>
+</p>
+<ul style="margin: 0 0 26px; padding-left: 22px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  {% for field in changedFields %}
+  <li>{{ field | escape }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<a
+  rel="noopener"
+  target="_blank"
+  href="{{ reviewUrl | escape }}"
+  style="
+    display: inline-block;
+    padding: 13px 24px;
+    border: 1px solid #0277EE;
+    border-radius: 8px;
+    background: #0277EE;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+  "
+>
+  Eintrag prüfen
+</a>
+
+<p style="margin: 28px 0 8px; color: #525f70; font-size: 14px; line-height: 1.5;">
+  Falls der Button nicht funktioniert, öffne diesen Link:
+</p>
+
+<p style="margin: 0; font-size: 14px; line-height: 1.5; word-break: break-all;">
+  <a href="{{ reviewUrl | escape }}" style="color: #0277EE;">{{ reviewUrl | escape }}</a>
+</p>
+
+<p style="margin: 24px 0 0; color: #6b7788; font-size: 12px; line-height: 1.5;">
+  Listing-ID: {{ listingId | escape }}
+</p>
+
+{% endblock %}

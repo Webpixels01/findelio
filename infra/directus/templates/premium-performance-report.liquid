@@ -1,0 +1,10 @@
+{% layout 'findelio-base' %}
+{% block content %}
+<h1 style="margin:0 0 20px;color:#172940;font-size:28px;line-height:1.25;">{{ heading | escape }}</h1>
+<p style="margin:0 0 18px;color:#525f70;font-size:16px;line-height:1.6;">{{ intro | escape }}</p>
+<p style="margin:0 0 24px;color:#172940;font-size:18px;"><strong>{{ listingName | escape }}</strong><br><span style="color:#525f70;font-size:14px;">{{ periodLabel | escape }}: {{ period | escape }}</span></p>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 26px;border-collapse:collapse;">
+{% for metric in metrics %}<tr><td style="padding:12px;border-bottom:1px solid #d9e8f8;color:#525f70;">{{ metric.label | escape }}</td><td align="right" style="padding:12px;border-bottom:1px solid #d9e8f8;color:#172940;font-size:20px;font-weight:700;">{{ metric.value }}</td></tr>{% endfor %}
+</table>
+<a href="{{ statisticsUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;font-size:16px;font-weight:600;text-decoration:none;">{{ buttonLabel | escape }}</a>
+{% endblock %}

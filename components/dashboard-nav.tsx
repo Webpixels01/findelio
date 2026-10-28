@@ -8,18 +8,32 @@ const navigationItems = [
   { href: "/dashboard/organisationen", label: "organizations" },
   { href: "/dashboard/firmenprofile", label: "listings" },
   { href: "/dashboard/team", label: "team" },
+  { href: "/konto/sicherheit", label: "security" },
 ] as const;
 
 export default function DashboardNav({
   canReviewListings = false,
+  canManageReferrals = false,
+  canManagePremium = false,
 }: {
   canReviewListings?: boolean;
+  canManageReferrals?: boolean;
+  canManagePremium?: boolean;
 }) {
   const t = useTranslations("Dashboard.navigation");
   const pathname = usePathname();
-  const visibleItems = canReviewListings
-    ? [...navigationItems, { href: "/dashboard/pruefung", label: "review" } as const]
+  const reviewItems = canReviewListings
+    ? [
+        ...navigationItems,
+        { href: "/dashboard/pruefung", label: "review" } as const,
+      ]
     : navigationItems;
+  const premiumItems = canManagePremium
+    ? [...reviewItems, { href: "/dashboard/premium", label: "premium" } as const]
+    : reviewItems;
+  const visibleItems = canManageReferrals
+    ? [...premiumItems, { href: "/dashboard/empfehlungen", label: "referrals" } as const]
+    : premiumItems;
 
   return (
     <nav

@@ -11,6 +11,7 @@ import pl from "../messages/pl.json";
 import ru from "../messages/ru.json";
 import ptPt from "../messages/pt-pt.json";
 import ro from "../messages/ro.json";
+import vi from "../messages/vi.json";
 
 const messages = {
   "de-ch": deCh,
@@ -22,6 +23,7 @@ const messages = {
   ru,
   "pt-pt": ptPt,
   ro,
+  vi,
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {

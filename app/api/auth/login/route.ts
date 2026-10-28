@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
 import { saveAuthTokens } from "@/lib/auth";
+import { readJsonObject, RequestBodyError, stringValue } from "@/lib/request-body";
+import { enforceRequestLimit } from "@/lib/request-security";
 import {
   DirectusAuthError,
   loginWithDirectus,
 } from "@/lib/directus-auth";
-
-type LoginBody = {
-  email?: string;
-  password?: string;
-};
 
 function isTrustedOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
@@ -40,17 +37,23 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { email, password } = (await request.json()) as LoginBody;
-    const normalizedEmail = email?.trim().toLowerCase();
+    const limited = await enforceRequestLimit(request, "login-ip");
+    if (limited) return limited;
+    const { email, password, otp } = await readJsonObject(request);
+    const normalizedEmail = stringValue(email).toLowerCase();
 
-    if (!normalizedEmail || !password) {
+    if (!normalizedEmail || normalizedEmail.length > 254 ||
+        typeof password !== "string" || !password || password.length > 1024 ||
+        (otp !== undefined && (typeof otp !== "string" || !/^\d{6}$/.test(otp)))) {
       return NextResponse.json(
         { error: "E-Mail-Adresse und Passwort sind erforderlich." },
         { status: 400 },
       );
     }
 
-    const tokens = await loginWithDirectus(normalizedEmail, password);
+    const accountLimited = await enforceRequestLimit(request, "login-account", normalizedEmail);
+    if (accountLimited) return accountLimited;
+    const tokens = await loginWithDirectus(normalizedEmail, password, otp as string | undefined);
     await saveAuthTokens(tokens);
 
     return NextResponse.json(
@@ -62,7 +65,20 @@ export async function POST(request: Request) {
       },
     );
   } catch (error) {
+    if (error instanceof RequestBodyError) {
+      return NextResponse.json({ error: "Ungültige Anfrage." }, { status: error.status });
+    }
     if (error instanceof DirectusAuthError) {
+      if (error.code === "INVALID_OTP") {
+        return NextResponse.json({ error: "otp_required" }, {
+          status: 401, headers: { "Cache-Control": "no-store" },
+        });
+      }
+      if (error.status === 429 || error.status === 503) {
+        return NextResponse.json({ error: "rate_limited" }, {
+          status: error.status, headers: { "Cache-Control": "no-store", "Retry-After": "900" },
+        });
+      }
       console.warn("Directus-Login abgelehnt:", error.code ?? error.status);
 
       return NextResponse.json(

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "plugins": []
+  },
+  "include": [
+    "lib/referral-dates.ts",
+    "lib/referral-dates.test.ts",
+    "lib/referral-registration.ts",
+    "lib/referral-registration.test.ts",
+    "lib/register-search-params.ts",
+    "lib/register-search-params.test.ts"
+  ],
+  "exclude": []
+}
