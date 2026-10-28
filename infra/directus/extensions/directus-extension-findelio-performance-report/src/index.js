@@ -25,17 +25,28 @@ const performanceReportHook = ({ schedule }, { database, env, getSchema, logger,
     if (!siteUrl) return logger.error("FINDELIO_SITE_URL is missing for performance reports");
 
     try {
-      const recipients = await database("subscriptions as subscriptions")
-        .join("listings", "subscriptions.listing", "listings.id")
+      const activeSubscriptions = database("subscriptions")
+        .select("listing")
+        .where("plan", "premium")
+        .whereIn("status", ["active", "past_due"]);
+      const activeGrants = database("premium_grants")
+        .select("listing")
+        .whereNull("revoked_at")
+        .where("starts_at", "<=", now)
+        .where((query) => query.whereNull("ends_at").orWhere("ends_at", ">", now));
+
+      // Select listings once, even when an owner has both a subscription and
+      // a grant (or multiple grants) for the same listing.
+      const recipients = await database("listings")
         .join("organization_members as members", "listings.organization", "members.organization")
         .join("directus_users as users", "members.user", "users.id")
-        .where("subscriptions.plan", "premium")
-        .whereIn("subscriptions.status", ["active", "past_due"])
+        .where((query) => query.whereIn("listings.id", activeSubscriptions)
+          .orWhereIn("listings.id", activeGrants))
         .where("members.status", "active")
         .where("members.role", "owner")
         .where("users.status", "active")
         .whereNotNull("users.email")
-        .select("listings.id as listing_id", "listings.name as listing_name", "users.email", "users.language");
+        .distinct("listings.id as listing_id", "listings.name as listing_name", "users.email", "users.language");
       const mailService = new MailService({ schema: await getSchema(), accountability: { admin: true }, knex: database });
 
       for (const recipient of recipients) {
