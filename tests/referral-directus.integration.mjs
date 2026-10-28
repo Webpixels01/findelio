@@ -93,15 +93,15 @@ try {
   await db('listings').insert({ id: listing, organization: organization.id, name: 'Before', slug: 'test-' + suffix, status: 'pending' });
   await db('listing_revisions').insert({ id: revision, listing, status: 'pending', submitted_by: user.id,
     data: JSON.stringify({ name: 'After', industry_ids: [], spoken_language_ids: [], gallery_file_ids: [], opening_hours: [] }) });
-  await request('/findelio-referrals/approve-revision', { method: 'POST', token: userToken, status: 403, body: { revision_id: revision } });
-  const approved = await request('/findelio-referrals/approve-revision', { method: 'POST', body: { revision_id: revision } });
+  await request('/findelio-referrals/approve-revision', { method: 'POST', token: userToken, status: 403, body: { revision_id: revision, review_version: 1 } });
+  const approved = await request('/findelio-referrals/approve-revision', { method: 'POST', body: { revision_id: revision, review_version: 1 } });
   assert.equal(approved.status, 'granted');
-  await request('/findelio-referrals/approve-revision', { method: 'POST', body: { revision_id: revision } });
+  await request('/findelio-referrals/approve-revision', { method: 'POST', status: 409, body: { revision_id: revision, review_version: 1 } });
   assert.equal((await db('premium_grants').where({ listing })).length, 1);
   assert.equal((await db('listings').where({ id: listing }).first()).name, 'After');
   await request('/findelio-referrals/activate', { method: 'POST', token: userToken, status: 403, body: { redemption_id: redemption.id } });
   await request('/findelio-referrals/activate', { method: 'POST', body: { redemption_id: redemption.id } });
-  ok('real ItemsService approval, grant activation, idempotent retry and permission enforcement');
+  ok('real ItemsService approval, grant activation, stale review rejection and permission enforcement');
   await request('/findelio-review-notification/decision', { method: 'POST', status: 204, body: { revision_id: revision, action: 'approve' } });
   const decision = await mailFor(email);
   assert.match(decision.HTML + decision.Text, /Premium/);
@@ -149,7 +149,7 @@ try {
   await db('listings').insert({ id: nextListing, organization: organization.id, name: 'Second', status: 'pending' });
   await db('listing_revisions').insert({ id: nextRevision, listing: nextListing, status: 'pending', submitted_by: user.id,
     data: JSON.stringify({ name: 'Second approved', industry_ids: [], spoken_language_ids: [], gallery_file_ids: [], opening_hours: [] }) });
-  await request('/findelio-referrals/approve-revision', { method: 'POST', token: reviewerToken, body: { revision_id: nextRevision } });
+  await request('/findelio-referrals/approve-revision', { method: 'POST', token: reviewerToken, body: { revision_id: nextRevision, review_version: 1 } });
   assert.equal((await db('listings').where({ id: nextListing }).first()).status, 'published');
   assert.equal((await db('premium_grants').where({ listing: nextListing })).length, 0);
   ok('real non-admin review policy approves without referral administration or second trial');

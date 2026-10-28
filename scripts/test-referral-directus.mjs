@@ -12,9 +12,10 @@ const browserFixture = process.argv.includes('--browser-fixture');
 const twoFactorBrowser = process.argv.includes('--two-factor-browser');
 const browserOnly = process.argv.includes('--browser-only');
 if (browserOnly && !twoFactorBrowser) throw new Error('--browser-only requires --two-factor-browser');
+const upgradeFrom125 = process.argv.includes('--upgrade-from-12-5');
 const upgradeFrom11 = process.argv.includes('--upgrade-from-11');
 const recoverFrom12 = process.argv.includes('--recover-from-12');
-const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11;
+const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11 || upgradeFrom125;
 if (licensedUpgrade && (recoverFrom12 || browserFixture)) throw new Error('Licensed upgrade must run separately');
 if (twoFactorBrowser && !licensedUpgrade) throw new Error('2FA browser tests require --licensed-upgrade');
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -103,8 +104,12 @@ try {
   await writeFile(join(dir, 'migrations/20261020_request_limits.sql'), await readFile(join(root, 'infra/directus/migrations/20261020_request_limits.sql')));
   await writeFile(join(dir, 'apply-migrations.sh'), await readFile(join(root, 'ops/apply-migrations.sh')));
   if (browserFixture) sql += await readFile(join(root, 'tests/fixtures/referral-browser.sql'), 'utf8');
+  else sql += "\nCREATE TABLE listing_posts (id uuid PRIMARY KEY, status text);\nINSERT INTO directus_collections (collection,accountability) VALUES ('listing_posts','all');\n";
   if (recoverFrom12 || licensedUpgrade) sql += await readFile(join(root, 'tests/fixtures/directus-permissions-recovery.sql'), 'utf8');
   if (licensedUpgrade) sql += await readFile(join(root, 'tests/fixtures/directus-ownership-upgrade.sql'), 'utf8');
+  for (const migration of ['20261024_moderation_snapshot_binding.sql', '20261024_notification_delivery.sql', '20261024_premium_grants_admin_only.sql']) {
+    await writeFile(join(dir, 'migrations', migration), await readFile(join(root, 'infra/directus/migrations', migration)));
+  }
   await run(['up', '-d']);
   await ready();
   await run(['exec', '-T', 'database', 'psql', '-U', 'postgres', '-d', 'findelio_test', '-v', 'ON_ERROR_STOP=1'], { input: sql, quiet: true });
@@ -126,11 +131,22 @@ try {
     await run(['up', '-d', '--no-deps', 'directus']);
   }
   await ready();
+  if (upgradeFrom125) {
+    console.log('BASELINE 12.5.0: license, filtered permissions and ownership');
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
+    console.log('UPGRADE: same disposable database from 12.5.0 to 12.6.0');
+    config.services.directus.image = 'directus/directus:12.6.0';
+    await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+    await run(['up', '-d', '--no-deps', 'directus']);
+    await ready();
+  }
   if (licensedUpgrade) {
     await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
-    await run(['exec', '-T', '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
+    await run(['exec', '-T', '-e', `FINDELIO_EXPECTED_DIRECTUS_VERSION=${upgradeFrom125 ? '12.6.0' : '12.5.0'}`, '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
       'directus', 'node', '/test/check-directus-upgrade.mjs']);
   }
   if (recoverFrom12) {
@@ -170,6 +186,20 @@ try {
       child.on('error', reject);
       child.on('close', code => code === 0 ? resolve() : reject(new Error('Two-factor browser test failed')));
     });
+  }
+  if (upgradeFrom125) {
+    console.log('ROLLBACK: verify 12.5.0 with the database migrated by 12.6.0');
+    config.services.directus.image = 'directus/directus:12.5.0';
+    await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
+    await run(['up', '-d', '--no-deps', 'directus']);
+    await ready();
+    await run(['exec', '-T', 'directus', 'node', 'cli.js', 'cache', 'clear']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
+    await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
+    await run(['exec', '-T', '-e', 'FINDELIO_EXPECTED_DIRECTUS_VERSION=12.5.0',
+      '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
+      'directus', 'node', '/test/check-directus-upgrade.mjs']);
   }
 } finally {
   // A throwaway DB must never strand a license activation. Remove the env key,

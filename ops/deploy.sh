@@ -49,12 +49,13 @@ trap '[[ -z "$rollback_override" ]] || rm -f -- "$rollback_override"' EXIT
 on_deploy_error() {
   local code=$1
   trap - ERR
-  if [[ "$cms_upgrade_started" -eq 1 && "$previous_directus_image" == 'directus/directus:11.17.4' ]]; then
-    echo "Upgrade-Prüfung fehlgeschlagen. Stelle Directus 11.17.4 mit derselben Datenbank wieder her ..." >&2
+  if [[ "$cms_upgrade_started" -eq 1 && "$previous_directus_image" == 'directus/directus:12.5.0' ]]; then
+    echo "Upgrade-Prüfung fehlgeschlagen. Stelle Directus 12.5.0 mit derselben Datenbank wieder her ..." >&2
     rollback_override=$(mktemp)
-    printf 'services:\n  directus:\n    image: directus/directus:11.17.4\n' > "$rollback_override"
+    printf 'services:\n  directus:\n    image: directus/directus:12.5.0\n' > "$rollback_override"
     if "${COMPOSE[@]}" -f "$rollback_override" up -d --no-deps --force-recreate --wait directus &&
        "${COMPOSE[@]}" -f "$rollback_override" exec -T directus node cli.js cache clear &&
+       "${COMPOSE[@]}" -f "$rollback_override" exec -T -e FINDELIO_EXPECTED_DIRECTUS_VERSION=12.5.0 app node --input-type=module - < "$ROOT_DIR/ops/check-directus-upgrade.mjs" &&
        "${COMPOSE[@]}" exec -T app node --input-type=module - < "$ROOT_DIR/ops/check-deployment.mjs"; then
       echo "Vorherige CMS-Version und Website wiederhergestellt; Upgrade nicht abgeschlossen." >&2
     else

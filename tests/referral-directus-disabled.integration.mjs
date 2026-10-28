@@ -26,7 +26,8 @@ try {
   await db.raw('ALTER TABLE referral_redemptions RENAME TO fixture_hidden_redemptions; ALTER TABLE referral_partners RENAME TO fixture_hidden_partners;');
   try {
     await request('/findelio-referrals/register', 'POST', {}, null, 503);
-    await request('/findelio-referrals/approve-revision', 'POST', {}, admin, 503);
+    // Moderation remains available without referrals; an empty review is invalid.
+    await request('/findelio-referrals/approve-revision', 'POST', {}, admin, 400);
     await request('/findelio-referrals/activate', 'POST', {}, admin, 503);
     await request('/findelio-referrals/admin/overview', 'GET', null, admin, 503);
     await request('/findelio-account-setup', 'POST', { name: 'Flag off fixture' }, userToken, 201);

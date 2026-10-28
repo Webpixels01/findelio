@@ -53,7 +53,7 @@ test("upgrade check reads real CMS data with the existing filtered service permi
   await checkDirectusUpgrade({ env, request: async (url, options) => {
     calls.push({ url, options });
     return Response.json({ data: url.pathname === "/server/info"
-      ? { version: "12.5.0", license: { source: "env" } } : [{ id: "fixture" }] });
+      ? { version: "12.6.0", license: { source: "env" } } : [{ id: "fixture" }] });
   } });
   assert.deepEqual(calls.map(call => call.url.pathname), ["/server/info", "/items/cantons", "/items/industries", "/items/spoken_languages"]);
   assert.ok(calls.every(call => call.url.origin === env.DIRECTUS_URL && call.options.redirect === "manual"));
@@ -61,12 +61,12 @@ test("upgrade check reads real CMS data with the existing filtered service permi
 });
 
 test("upgrade check rejects unlicensed CMS, old versions and inaccessible or empty reference data", async () => {
-  for (const info of [{ version: "11.17.4" }, { version: "12.5.0", license: { source: null } }]) {
+  for (const info of [{ version: "11.17.4" }, { version: "12.5.0", license: { source: "env" } }, { version: "12.6.0", license: { source: null } }]) {
     await assert.rejects(checkDirectusUpgrade({ env, request: async () => Response.json({ data: info }) }), /nicht aktiv/);
   }
   for (const status of [403, 500, 200]) {
     await assert.rejects(checkDirectusUpgrade({ env, request: async url => url.pathname === "/server/info"
-      ? Response.json({ data: { version: "12.5.0", license: { source: "env" } } })
+      ? Response.json({ data: { version: "12.6.0", license: { source: "env" } } })
       : Response.json({ data: [] }, { status }) }), /HTTP|keine freigegebenen Daten/);
   }
 });
@@ -78,4 +78,15 @@ test("upgrade errors never include credentials, API bodies or fetch exception de
   await assert.rejects(checkDirectusUpgrade({ env, request: async () => new Response(env.DIRECTUS_TOKEN) }), {
     message: "CMS-Upgrade-Prüfung: ungültige Antwort.",
   });
+});
+
+
+test("rollback check explicitly verifies 12.5.0 and rejects a still-running 12.6.0", async () => {
+  const rollbackEnv = { ...env, FINDELIO_EXPECTED_DIRECTUS_VERSION: "12.5.0" };
+  await checkDirectusUpgrade({ env: rollbackEnv, request: async url => Response.json({ data:
+    url.pathname === "/server/info" ? { version: "12.5.0", license: { source: "env" } } : [{ id: "fixture" }],
+  }) });
+  await assert.rejects(checkDirectusUpgrade({ env: rollbackEnv, request: async () => Response.json({ data:
+    { version: "12.6.0", license: { source: "env" } },
+  }) }), /nicht aktiv/);
 });
