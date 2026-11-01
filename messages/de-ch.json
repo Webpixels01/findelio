@@ -1310,5 +1310,14 @@
     "approve": "Freigeben",
     "reject": "Ablehnen",
     "reply": "Antwort veröffentlichen"
+  },
+  "Visitor": {
+    "register": "Besucherkonto erstellen",
+    "verification": "Bestätige nach der Registrierung deine E-Mail-Adresse. Erst danach kannst du dich anmelden und Bewertungen zur Prüfung einreichen. Du benötigst keine Firma.",
+    "account": "Mein Konto",
+    "loginDescription": "Melde dich an, um dein Konto zu nutzen.",
+    "ready": "Dein Konto ist bestätigt. Du kannst Firmen suchen und auf ihren Profilen Bewertungen zur Prüfung einreichen.",
+    "browse": "Firmen entdecken",
+    "security": "Kontosicherheit"
   }
 }

@@ -1310,5 +1310,14 @@
     "approve": "Approve",
     "reject": "Reject",
     "reply": "Publish reply"
+  },
+  "Visitor": {
+    "register": "Create a visitor account",
+    "verification": "Confirm your email address after registration. Only then can you sign in and submit reviews for approval. You do not need a business.",
+    "account": "My account",
+    "loginDescription": "Sign in to use your account.",
+    "ready": "Your account is confirmed. Find businesses and submit reviews for approval on their profiles.",
+    "browse": "Find businesses",
+    "security": "Account security"
   }
 }

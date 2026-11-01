@@ -35,6 +35,7 @@ export function ReviewSummary({ listing, slug }: { listing: string; slug?: strin
 }
 export function CustomerReviews({ listing, slug }: { listing: string; slug: string }) {
   const t = useTranslations("Reviews");
+  const tv = useTranslations("Visitor");
   const locale = useLocale();
   const [data, setData] = useState<PublicData | null>(null);
   const [page, setPage] = useState(0);
@@ -50,11 +51,11 @@ export function CustomerReviews({ listing, slug }: { listing: string; slug: stri
     {error ? <p role="alert">{t("error")} <button onClick={() => setRevision(value => value + 1)} className="underline">{t("retry")}</button></p> : !data ? <p>{t("loading")}</p> : <>
       <p className="my-4">{data.count ? <><Stars rating={data.average} /> {data.average.toFixed(1)} · {t("count", { count: data.count })}</> : t("empty")}</p>
       {data.reviews.map(review => <ReviewCard key={review.id} review={review} />)}
-      <div className="my-4 flex gap-4">
-        {page > 0 && <button className="secondary-button" onClick={() => setPage(page - 1)}>{t("previous")}</button>}
-        {(page + 1) * 20 < data.count && <button className="secondary-button" onClick={() => setPage(page + 1)}>{t("next")}</button>}
+      <div className="my-4 flex flex-wrap gap-4">
+        {page > 0 && <button className="secondary-button px-6 py-3" onClick={() => setPage(page - 1)}>{t("previous")}</button>}
+        {(page + 1) * 20 < data.count && <button className="secondary-button px-6 py-3" onClick={() => setPage(page + 1)}>{t("next")}</button>}
       </div>
-      {!data.authenticated ? <Link className="primary-button" href={`/login?next=${encodeURIComponent(`/${locale}/unternehmen/${slug}#reviews`)}`}>{t("login")}</Link> : data.canReview ? <ReviewForm key={`${data.own?.version || 0}-${revision}`} listing={listing} own={data.own} onSaved={() => setRevision(value => value + 1)} /> : <p className="text-sm text-[var(--muted)]">{t("ownCompany")}</p>}
+      {!data.authenticated ? <div className="space-y-4"><p>{tv("verification")}</p><div className="flex flex-wrap gap-3"><Link className="primary-button px-8 py-4" href={`/login?next=${encodeURIComponent(`/${locale}/unternehmen/${slug}#reviews`)}`}>{t("login")}</Link><Link className="secondary-button px-6 py-3" href="/registrieren">{tv("register")}</Link></div></div> : data.canReview ? <ReviewForm key={`${data.own?.version || 0}-${revision}`} listing={listing} own={data.own} onSaved={() => setRevision(value => value + 1)} /> : <p className="text-sm text-[var(--muted)]">{t("ownCompany")}</p>}
     </>}
   </section>;
 }
@@ -107,7 +108,7 @@ export function ReviewManager() {
     <p className="my-4">{data.admin ? t("adminIntro") : t("companyIntro")}</p>
     {!data.reviews.length && <p>{t("nothing")}</p>}
     {data.reviews.map(review => <div key={`${review.id}-${review.version}`} className="my-5 rounded-2xl border border-[var(--border)] bg-white p-6"><Link className="font-bold underline" href={`/unternehmen/${review.listing_slug}#reviews`}>{review.listing_name}</Link><ReviewCard review={review} /><ReviewAction review={review} admin={data.admin} onSaved={() => setRevision(v => v + 1)} /></div>)}
-    <div className="flex gap-4">{page > 0 && <button className="secondary-button" onClick={() => setPage(page - 1)}>{t("previous")}</button>}{data.more && <button className="secondary-button" onClick={() => setPage(page + 1)}>{t("next")}</button>}</div>
+    <div className="flex flex-wrap gap-4">{page > 0 && <button className="secondary-button px-6 py-3" onClick={() => setPage(page - 1)}>{t("previous")}</button>}{data.more && <button className="secondary-button px-6 py-3" onClick={() => setPage(page + 1)}>{t("next")}</button>}</div>
   </>}</div>;
 }
 function ReviewAction({ review, admin, onSaved }: { review: Review; admin: boolean; onSaved: () => void }) {
@@ -120,5 +121,5 @@ function ReviewAction({ review, admin, onSaved }: { review: Review; admin: boole
     catch (error) { setError(error instanceof Error ? error.message : "unavailable"); }
     finally { setBusy(false); }
   };
-  return <div>{admin ? <div className="flex gap-3"><button disabled={busy} className="primary-button" onClick={() => act("approve")}>{t("approve")}</button><button disabled={busy} className="secondary-button" onClick={() => act("reject")}>{t("reject")}</button></div> : <form className="space-y-3" onSubmit={event => { event.preventDefault(); void act("reply", String(new FormData(event.currentTarget).get("response"))); }}><label className="block">{t("response")}<textarea name="response" defaultValue={review.response || ""} required maxLength={3000} rows={4} className="field-control mt-1 w-full" /></label><button disabled={busy} className="primary-button">{t("reply")}</button></form>}{error && <p role="alert">{t(error === "conflict" ? "conflict" : "error")}</p>}</div>;
+  return <div>{admin ? <div className="flex flex-wrap gap-3"><button disabled={busy} className="primary-button px-8 py-4" onClick={() => act("approve")}>{t("approve")}</button><button disabled={busy} className="secondary-button px-6 py-3" onClick={() => act("reject")}>{t("reject")}</button></div> : <form className="space-y-3" onSubmit={event => { event.preventDefault(); void act("reply", String(new FormData(event.currentTarget).get("response"))); }}><label className="block">{t("response")}<textarea name="response" defaultValue={review.response || ""} required maxLength={3000} rows={4} className="field-control mt-1 w-full" /></label><button disabled={busy} className="primary-button px-8 py-4">{t("reply")}</button></form>}{error && <p role="alert">{t(error === "conflict" ? "conflict" : "error")}</p>}</div>;
 }

@@ -44,6 +44,8 @@ export default async function SiteHeader() {
     getHeaderCurrentUser(),
   ]);
   const isAuthenticated = Boolean(currentUser);
+  const isVisitor = currentUser?.role?.id === "5ec800ba-a34e-4bd6-a910-6833e8c61301";
+  const tv = await getTranslations("Visitor");
 
   return (
     <header className="site-header-design sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-xl">
@@ -82,8 +84,8 @@ export default async function SiteHeader() {
           </Link>
           {isAuthenticated ? (
             <>
-              <Link href="/dashboard" className="nav-link">
-                {t("dashboard")}
+              <Link href={isVisitor ? "/konto" : "/dashboard"} className="nav-link">
+                {isVisitor ? tv("account") : t("dashboard")}
               </Link>
               <LogoutButton variant="nav" />
             </>
@@ -131,8 +133,8 @@ export default async function SiteHeader() {
                 </Link>
                 {isAuthenticated ? (
                   <>
-                    <Link href="/dashboard" className="mobile-nav-link">
-                      {t("dashboard")}
+                    <Link href={isVisitor ? "/konto" : "/dashboard"} className="mobile-nav-link">
+                      {isVisitor ? tv("account") : t("dashboard")}
                     </Link>
                     <LogoutButton variant="mobile-nav" />
                   </>

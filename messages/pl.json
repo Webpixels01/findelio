@@ -1308,5 +1308,14 @@
     "approve": "Zatwierdź",
     "reject": "Odrzuć",
     "reply": "Opublikuj odpowiedź"
+  },
+  "Visitor": {
+    "register": "Utwórz konto odwiedzającego",
+    "verification": "Po rejestracji potwierdź adres e-mail. Dopiero wtedy możesz się zalogować i wysyłać opinie do zatwierdzenia. Nie musisz mieć firmy.",
+    "account": "Moje konto",
+    "loginDescription": "Zaloguj się na swoje konto.",
+    "ready": "Twoje konto jest potwierdzone. Znajdź firmy i wyślij opinie do zatwierdzenia na ich profilach.",
+    "browse": "Znajdź firmy",
+    "security": "Bezpieczeństwo konta"
   }
 }

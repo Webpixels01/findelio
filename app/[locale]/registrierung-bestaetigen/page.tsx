@@ -9,6 +9,7 @@ export const metadata = privatePageMetadata;
 type VerificationPageProps = {
   params: Promise<{ locale: AppLocale }>;
   searchParams: Promise<{
+    account?: string | string[];
     token?: string | string[];
     invitation?: string | string[];
   }>;
@@ -19,7 +20,7 @@ export default async function VerificationPage({
   searchParams,
 }: VerificationPageProps) {
   const { locale } = await params;
-  const { token, invitation } = await searchParams;
+  const { token, invitation, account } = await searchParams;
   setRequestLocale(locale);
 
   return (
@@ -33,6 +34,7 @@ export default async function VerificationPage({
               typeof invitation === "string" ? invitation : ""
             }
             locale={locale}
+            visitor={account === "visitor"}
           />
         </div>
       </main>

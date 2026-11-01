@@ -7,10 +7,12 @@ import { Link } from "@/i18n/navigation";
 type VerificationState = "loading" | "error";
 
 export default function RegistrationVerification({
+  visitor = false,
   token,
   invitationToken,
   locale,
 }: {
+  visitor?: boolean;
   token: string;
   invitationToken: string;
   locale: string;
@@ -84,7 +86,7 @@ export default function RegistrationVerification({
     <div className="rounded-3xl border border-red-200 bg-red-50 p-8 text-center text-red-800">
       <h1 className="text-3xl font-extrabold">{t("errorTitle")}</h1>
       <p className="mt-3 leading-7">{t("errorText")}</p>
-      <Link href="/firma-eintragen" className="primary-button mt-7 h-12 px-6">
+      <Link href={visitor ? "/registrieren" : "/firma-eintragen"} className="primary-button mt-7 h-12 px-6">
         {t("registerButton")}
       </Link>
     </div>

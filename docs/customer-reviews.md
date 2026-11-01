@@ -51,3 +51,25 @@ und E-Mail bestätigen, Bewertung einreichen, Adminmail öffnen, freigeben/ableh
 Sternedurchschnitt kontrollieren, als Unternehmensmitglied antworten, Bewertung
 ändern und erneut freigeben. Auch zwei gleichzeitig geöffnete Moderationsseiten
 prüfen: die zweite Aktion muss einen Versionskonflikt melden.
+
+## Besucherkonten
+
+Migration `20261102_visitor_accounts.sql` legt die Rolle „Besucher“ mit einer eigenen
+minimalen Policy an: eigenes Nutzerprofil lesen, Rollenname lesen, kein CMS-Zugang
+und keine Firmenverwaltung. `/registrieren` registriert explizit Besucher über
+`/findelio-referrals/register-visitor`. Rollen-ID und Status sind serverseitig fest:
+immer `unverified`, unabhängig von der Einstellung für Firmenregistrierungen.
+Der bestehende signierte Directus-Bestätigungslink aktiviert das Konto. Vorher ist
+keine Anmeldung möglich; auch die Bewertungsendpunkte prüfen `status = active`.
+
+Bestehende Konten werden weder umgestuft noch überschrieben. Unbestätigte Besucher
+können durch erneutes Absenden eine Bestätigungsmail anfordern (bestehendes Limit:
+maximal drei Versuche pro Tag und mindestens 60 Sekunden Abstand). Zusätzlich ist
+die Besucherregistrierung nach IP limitiert. Hinter dem Frontend-Proxy teilen sich
+Registrierungen dessen vom CMS erkannte IP und damit das Limit von 30 pro Stunde.
+
+Besucher gelangen auf `/konto`; der Header zeigt „Mein Konto“. Firmen-Dashboards
+leiten Besucher zur Kontoseite weiter. Favoriten sind noch nicht implementiert.
+`tests/visitor-registration.test.mjs` prüft Rollen-/Statusmanipulation, vorhandene
+Konten, Bestätigungsmail und Eingabevalidierung. Ein Test mit realem Directus,
+Datenbankmigration und Bestätigungslink ist vor dem Release weiterhin erforderlich.

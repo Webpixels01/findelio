@@ -19,20 +19,23 @@ function isValidPassword(password: string): boolean {
 }
 
 export default function RegisterForm({
+  visitor = false,
   initialEmail = "",
   invitationToken = "",
   referralRegistrationEnabled = false,
   initialReferralCode = "",
 }: {
+  visitor?: boolean;
   initialEmail?: string;
   invitationToken?: string;
   referralRegistrationEnabled?: boolean;
   initialReferralCode?: string;
 }) {
   const t = useTranslations("Register");
+  const tv = useTranslations("Visitor");
   const locale = useLocale();
   const showReferralField =
-    referralRegistrationEnabled && !invitationToken;
+    referralRegistrationEnabled && !invitationToken && !visitor;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState(initialEmail);
@@ -68,6 +71,7 @@ export default function RegisterForm({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          accountType: visitor ? "visitor" : "company",
           firstName,
           lastName,
           email,
@@ -234,7 +238,7 @@ export default function RegisterForm({
       >
         {isLoading
           ? t("loading")
-          : t(invitationToken ? "invitationSubmit" : "submit")}
+          : visitor ? tv("register") : t(invitationToken ? "invitationSubmit" : "submit")}
       </button>
 
       {error && (

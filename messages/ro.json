@@ -1308,5 +1308,14 @@
     "approve": "Aprobă",
     "reject": "Respinge",
     "reply": "Publică răspunsul"
+  },
+  "Visitor": {
+    "register": "Creează un cont de vizitator",
+    "verification": "Confirmă adresa de e-mail după înregistrare. Abia apoi te poți autentifica și trimite recenzii spre aprobare. Nu ai nevoie de o firmă.",
+    "account": "Contul meu",
+    "loginDescription": "Autentifică-te în cont.",
+    "ready": "Contul tău este confirmat. Găsește firme și trimite recenzii spre aprobare pe profilurile lor.",
+    "browse": "Găsește firme",
+    "security": "Securitatea contului"
   }
 }

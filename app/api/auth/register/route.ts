@@ -64,12 +64,13 @@ export async function POST(request: Request) {
 
   try {
     const body = await readJsonObject(request);
+    const visitor = body.accountType === "visitor";
     const firstName = stringValue(body.firstName);
     const lastName = stringValue(body.lastName);
     const email = stringValue(body.email).toLowerCase();
     const password = typeof body.password === "string" ? body.password : "";
-    const invitationToken = stringValue(body.invitationToken);
-    const referralCode = normalizeReferralCode(stringValue(body.referralCode));
+    const invitationToken = visitor ? "" : stringValue(body.invitationToken);
+    const referralCode = visitor ? "" : normalizeReferralCode(stringValue(body.referralCode));
     const locale = isAppLocale(body.locale)
       ? body.locale
       : routing.defaultLocale;
@@ -141,6 +142,7 @@ export async function POST(request: Request) {
       `/${locale}/registrierung-bestaetigen`,
       siteUrl,
     );
+    if (visitor) verificationUrl.searchParams.set("account", "visitor");
     if (invitationToken) {
       verificationUrl.searchParams.set("invitation", invitationToken);
     }
@@ -157,6 +159,7 @@ export async function POST(request: Request) {
         });
       } else {
         await registerDirectusUser({
+          visitor,
           firstName,
           lastName,
           email,
@@ -171,6 +174,7 @@ export async function POST(request: Request) {
       ) {
         try {
           await registerDirectusUser({
+            visitor,
             firstName,
             lastName,
             email,

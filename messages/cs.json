@@ -1308,5 +1308,14 @@
     "approve": "Schválit",
     "reject": "Zamítnout",
     "reply": "Zveřejnit odpověď"
+  },
+  "Visitor": {
+    "register": "Vytvořit návštěvnický účet",
+    "verification": "Po registraci potvrďte e-mailovou adresu. Teprve potom se můžete přihlásit a odeslat hodnocení ke schválení. Firmu nepotřebujete.",
+    "account": "Můj účet",
+    "loginDescription": "Přihlaste se ke svému účtu.",
+    "ready": "Váš účet je potvrzený. Vyhledejte firmy a odešlete hodnocení ke schválení na jejich profilech.",
+    "browse": "Vyhledat firmy",
+    "security": "Zabezpečení účtu"
   }
 }

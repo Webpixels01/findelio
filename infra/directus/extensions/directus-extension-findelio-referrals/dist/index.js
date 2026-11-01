@@ -1,3 +1,4 @@
+import { registerVisitorRoute } from "./visitor-registration.js";
 import { consumeVerificationBudget } from "./verification-budget.js";
 import { randomUUID } from "node:crypto";
 import { performance } from "node:perf_hooks";
@@ -46,6 +47,7 @@ async function sendVerificationMail({
   secret,
   tokenTtl,
   logger,
+  visitor = false,
 }) {
   const mailService = new MailService({
     schema,
@@ -67,7 +69,7 @@ async function sendVerificationMail({
       to: email,
       subject: "Verify your email address",
       template: {
-        name: "user-registration",
+        name: visitor ? "visitor-registration" : "user-registration",
         data: {
           url: url.toString(),
           email,
@@ -85,6 +87,7 @@ const findelioReferralsEndpoint = {
   id: "findelio-referrals",
   handler: (router, { database, env, getSchema, logger, services, emitter }) => {
     const { MailService, UsersService } = services;
+    registerVisitorRoute(router, { database, env, getSchema, services, logger }, { sendVerificationMail, validatePayload });
     registerApprovalRoutes(router, { database, env, getSchema, logger, services, emitter });
     registerAdminRoutes(router, { database, env, getSchema, logger, services });
 

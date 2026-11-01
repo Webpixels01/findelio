@@ -87,14 +87,16 @@ export async function registerDirectusUser({
   email,
   password,
   verificationUrl,
+  visitor = false,
 }: {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   verificationUrl: string;
+  visitor?: boolean;
 }): Promise<void> {
-  const response = await fetch(new URL("/users/register", getDirectusUrl()), {
+  const response = await fetch(new URL(visitor ? "/findelio-referrals/register-visitor" : "/users/register", getDirectusUrl()), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

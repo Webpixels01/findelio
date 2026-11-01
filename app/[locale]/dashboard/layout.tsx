@@ -36,6 +36,8 @@ export default async function DashboardLayout({
     nextPath: `/${locale}/dashboard`,
   });
 
+  if (user.role?.id === "5ec800ba-a34e-4bd6-a910-6833e8c61301") redirect(`/${locale}/konto`);
+
   const accessToken = await getAccessToken();
   let canReviewListings = false;
   let referralAdmin = false;

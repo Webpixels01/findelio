@@ -1310,5 +1310,14 @@
     "approve": "Duyệt",
     "reject": "Từ chối",
     "reply": "Đăng phản hồi"
+  },
+  "Visitor": {
+    "register": "Tạo tài khoản khách truy cập",
+    "verification": "Xác nhận địa chỉ email sau khi đăng ký. Sau đó bạn mới có thể đăng nhập và gửi đánh giá để duyệt. Bạn không cần có doanh nghiệp.",
+    "account": "Tài khoản của tôi",
+    "loginDescription": "Đăng nhập vào tài khoản của bạn.",
+    "ready": "Tài khoản của bạn đã được xác nhận. Tìm doanh nghiệp và gửi đánh giá để duyệt trên hồ sơ của họ.",
+    "browse": "Tìm doanh nghiệp",
+    "security": "Bảo mật tài khoản"
   }
 }

@@ -1308,5 +1308,14 @@
     "approve": "Jóváhagyás",
     "reject": "Elutasítás",
     "reply": "Válasz közzététele"
+  },
+  "Visitor": {
+    "register": "Látogatói fiók létrehozása",
+    "verification": "Regisztráció után erősítse meg az e-mail-címét. Csak ezután jelentkezhet be és küldhet be értékelést jóváhagyásra. Vállalkozás nem szükséges.",
+    "account": "Fiókom",
+    "loginDescription": "Jelentkezzen be fiókjába.",
+    "ready": "Fiókja megerősítve. Keressen vállalkozásokat, és küldjön be értékelést a profiljukon.",
+    "browse": "Vállalkozások keresése",
+    "security": "Fiókbiztonság"
   }
 }

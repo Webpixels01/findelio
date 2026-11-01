@@ -1308,5 +1308,14 @@
     "approve": "Aprovar",
     "reject": "Rejeitar",
     "reply": "Publicar resposta"
+  },
+  "Visitor": {
+    "register": "Criar conta de visitante",
+    "verification": "Confirme o seu endereço de e-mail após o registo. Só depois poderá iniciar sessão e enviar avaliações para aprovação. Não precisa de ter uma empresa.",
+    "account": "A minha conta",
+    "loginDescription": "Inicie sessão na sua conta.",
+    "ready": "A sua conta está confirmada. Encontre empresas e envie avaliações para aprovação nos seus perfis.",
+    "browse": "Encontrar empresas",
+    "security": "Segurança da conta"
   }
 }
