@@ -30,7 +30,7 @@ export async function loadListingPage(
       id: company.id,
       card: <>
         {await CompanyCard({ company, locale })}
-        {company.premium_features_enabled && <ListingMetricsTracker listingIds={[company.id]} event="search_impressions" />}
+        <ListingMetricsTracker listingIds={[company.id]} event="search_impressions" />
       </>,
     }))),
   };

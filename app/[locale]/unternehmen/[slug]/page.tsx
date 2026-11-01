@@ -349,9 +349,7 @@ export default async function CompanyPage({
       <SiteHeader />
 
       <main className="page-shell bg-[var(--surface)] py-12 lg:py-16">
-        {company.premium_features_enabled && (
-          <ListingMetricsTracker listingIds={[company.id]} event="profile_views" />
-        )}
+        <ListingMetricsTracker listingIds={[company.id]} event="profile_views" />
         {company.premium_features_enabled && posts.length > 0 && (
           <ListingMetricsTracker listingIds={[company.id]} event="post_views" />
         )}
