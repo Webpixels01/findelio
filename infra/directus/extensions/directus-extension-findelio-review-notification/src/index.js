@@ -1,3 +1,4 @@
+import { getMetricListings } from "./metric-listings.js";
 import { registerCustomerReviews } from "./customer-reviews.js";
 import { sendReviewOnce } from "./review-delivery.js";
 import { referralMailContent } from "./referral-mail.js";
@@ -230,16 +231,7 @@ const findelioReviewNotificationEndpoint = {
       }
 
       try {
-        const activeRows = await database("listings")
-          .join("subscriptions", "subscriptions.listing", "listings.id")
-          .whereIn("listings.id", listingIds)
-          .where("listings.status", "published")
-          .where("subscriptions.plan", "premium")
-          .whereIn("subscriptions.status", ["active", "past_due"])
-          .where((query) => query
-            .whereNull("subscriptions.current_period_end")
-            .orWhere("subscriptions.current_period_end", ">", database.fn.now()))
-          .distinct("listings.id");
+        const activeRows = await getMetricListings(database, listingIds);
         const today = new Date().toISOString().slice(0, 10);
 
         for (const row of activeRows) {
