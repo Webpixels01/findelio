@@ -1,0 +1,44 @@
+{% layout 'findelio-base' %}
+{% block content %}
+
+<h1 style="margin: 0 0 20px; color: #172940; font-size: 28px; line-height: 1.25;">
+  Neue Kontaktanfrage
+</h1>
+
+<p style="margin: 0 0 24px; color: #525f70; font-size: 16px; line-height: 1.6;">
+  Über das Kontaktformular auf Findelio ist eine neue Nachricht eingegangen.
+</p>
+
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0 0 24px; border-collapse: collapse;">
+  <tr>
+    <td style="padding: 8px 12px 8px 0; color: #525f70; font-size: 15px; font-weight: bold;">Name</td>
+    <td style="padding: 8px 0; color: #172940; font-size: 15px;">{{ name | escape }}</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 12px 8px 0; color: #525f70; font-size: 15px; font-weight: bold;">E-Mail</td>
+    <td style="padding: 8px 0; font-size: 15px;">
+      <a href="mailto:{{ email | escape }}" style="color: #0277EE;">{{ email | escape }}</a>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 12px 8px 0; color: #525f70; font-size: 15px; font-weight: bold;">Telefon</td>
+    <td style="padding: 8px 0; color: #172940; font-size: 15px;">
+      {% if phone %}{{ phone | escape }}{% else %}Nicht angegeben{% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 12px 8px 0; color: #525f70; font-size: 15px; font-weight: bold;">Sprache</td>
+    <td style="padding: 8px 0; color: #172940; font-size: 15px;">{{ locale | escape }}</td>
+  </tr>
+  <tr>
+    <td style="padding: 8px 12px 8px 0; color: #525f70; font-size: 15px; font-weight: bold;">Thema</td>
+    <td style="padding: 8px 0; color: #172940; font-size: 15px;">{{ subject | escape }}</td>
+  </tr>
+</table>
+
+<div style="padding: 18px; border: 1px solid #d9e8f8; border-radius: 10px; background: #f3f7fb;">
+  <p style="margin: 0 0 8px; color: #172940; font-size: 15px; font-weight: bold;">Nachricht</p>
+  <p style="margin: 0; color: #525f70; font-size: 15px; line-height: 1.6; white-space: pre-line;">{{ message | escape }}</p>
+</div>
+
+{% endblock %}

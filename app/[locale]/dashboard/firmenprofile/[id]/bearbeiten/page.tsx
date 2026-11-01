@@ -6,6 +6,7 @@ import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { getEditableAccountListingEditorData } from "@/lib/directus-account";
 import { getCantons, getIndustries, getSpokenLanguages } from "@/lib/directus";
+import { getDirectusAssetUrl } from "@/lib/directus-assets";
 import { htmlToPlainText } from "@/lib/text";
 
 export default async function EditListingPage({
@@ -44,7 +45,21 @@ export default async function EditListingPage({
     return notFound();
   }
 
-  const { listing, industryIds, spokenLanguageIds } = editorData;
+  const {
+    listing,
+    industryIds,
+    spokenLanguageIds,
+    openingHours,
+    premiumEnabled,
+  } = editorData;
+  const supportedSocialPlatforms = new Set([
+    "instagram",
+    "facebook",
+    "linkedin",
+    "tiktok",
+    "youtube",
+    "x",
+  ]);
 
   return (
     <>
@@ -70,7 +85,9 @@ export default async function EditListingPage({
           className="mt-8 rounded-2xl border border-[#bfe4ca] bg-[#eefaf2] p-4 font-bold text-[#135f30]"
           role="status"
         >
-          {t("createdNotice")}
+          {listing.requested_billing_interval
+            ? t("createdPremiumNotice")
+            : t("createdNotice")}
         </div>
       )}
 
@@ -79,8 +96,15 @@ export default async function EditListingPage({
           id: listing.id,
           name: listing.name,
           status: listing.status,
-          shortDescription: listing.short_description ?? "",
           description: htmlToPlainText(listing.description),
+          descriptionTranslations: Object.fromEntries(
+            Object.entries(listing.description_translations ?? {}).map(
+              ([translationLocale, value]) => [
+                translationLocale,
+                htmlToPlainText(value),
+              ],
+            ),
+          ),
           street: listing.street ?? "",
           postalCode: listing.postal_code ?? "",
           city: listing.city ?? "",
@@ -95,6 +119,35 @@ export default async function EditListingPage({
         cantons={cantons}
         industries={industries}
         spokenLanguages={spokenLanguages}
+        premium={{
+          enabled: premiumEnabled,
+          logo: listing.logo
+            ? {
+                id: listing.logo,
+                assetUrl: getDirectusAssetUrl(listing.logo),
+              }
+            : null,
+          gallery: (listing.gallery ?? []).map((item) => ({
+            id: item.directus_files_id,
+            assetUrl: getDirectusAssetUrl(item.directus_files_id),
+          })),
+          socialLinks: (listing.social_links ?? []).filter(
+            (
+              item,
+            ): item is typeof item & {
+              platform:
+                | "instagram"
+                | "facebook"
+                | "linkedin"
+                | "tiktok"
+                | "youtube"
+                | "x";
+            } => supportedSocialPlatforms.has(item.platform),
+          ),
+          openingHours,
+          customCtaLabel: listing.custom_cta_label ?? "",
+          customCtaValue: listing.custom_cta_value ?? "",
+        }}
       />
     </>
   );

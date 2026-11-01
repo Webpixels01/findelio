@@ -3,6 +3,8 @@ import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAccessToken, requireCurrentUser } from "@/lib/auth";
 import { getAccountOrganizationOverview } from "@/lib/directus-account";
+import { getAccountDeletionRequests } from "@/lib/directus-deletion";
+import DeletionRequestAction from "@/components/deletion-request-action";
 
 function translateValue(
   value: string | null | undefined,
@@ -30,9 +32,12 @@ export default async function OrganizationsPage({
   ]);
 
   const accessToken = await getAccessToken();
-  const organizations = accessToken
-    ? await getAccountOrganizationOverview(accessToken)
-    : [];
+  const [organizations, deletionRequests] = accessToken
+    ? await Promise.all([
+        getAccountOrganizationOverview(accessToken),
+        getAccountDeletionRequests(accessToken),
+      ])
+    : [[], []];
 
   const roleTranslations: Record<string, string> = {
     owner: t("roleValues.owner"),
@@ -129,6 +134,31 @@ export default async function OrganizationsPage({
                 >
                   {t("organizationListingsLink")} →
                 </Link>
+
+                <DeletionRequestAction
+                  entityType="organization"
+                  targetId={membership.organization.id}
+                  targetName={membership.organization.name}
+                  request={
+                    deletionRequests.find(
+                      (request) =>
+                        request.entity_type === "organization" &&
+                        request.organization_id === membership.organization.id,
+                    ) ?? null
+                  }
+                  canRequest={membership.role === "owner"}
+                  premiumMustBeCancelled={membership.listings.some(
+                    (listing) =>
+                      Boolean(
+                        listing.subscription &&
+                          ["active", "past_due"].includes(
+                            listing.subscription.status,
+                          ) &&
+                          !listing.subscription.cancel_at_period_end,
+                      ),
+                  )}
+                  subscriptionHref="/dashboard/firmenprofile"
+                />
               </article>
             );
           })}

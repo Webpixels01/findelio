@@ -1,0 +1,26 @@
+.git
+.github
+.next
+node_modules
+backups
+coverage
+out
+
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+infra/directus/uploads
+*.log
+*.tsbuildinfo
+Thumbs.db
+.DS_Store
+
+# Local project documentation; do not version or send to Docker builds.
+/CLAUDE.md
+/DEPLOYMENT.md
+/PROJECT_STATUS.md
+/README.md
+/SKILLS.md
+/AGENTS.md

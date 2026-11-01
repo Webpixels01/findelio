@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -20,6 +21,7 @@ function getSafeDestination(value: string | null, locale: string): string {
 
 export default function LoginForm() {
   const t = useTranslations("Login");
+  const tp = useTranslations("PasswordReset");
   const locale = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -28,6 +30,8 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [otpRequired, setOtpRequired] = useState(false);
+  const [otp, setOtp] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,16 +45,23 @@ export default function LoginForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, ...(otpRequired ? { otp } : {}) }),
       });
 
       const result = (await response.json()) as {
         success?: boolean;
+        error?: string;
       };
 
       if (!response.ok || !result.success) {
+        if (result.error === "otp_required") {
+          setOtpRequired(true);
+          setOtp("");
+          setError(otpRequired ? t("otpInvalid") : "");
+          return;
+        }
         setError(
-          response.status >= 500 ? t("serverError") : t("errorFallback"),
+          response.status === 429 ? t("rateLimited") : response.status >= 500 ? t("serverError") : t("errorFallback"),
         );
         return;
       }
@@ -79,7 +90,7 @@ export default function LoginForm() {
           required
           className="field-control"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) => { setEmail(event.target.value); setOtpRequired(false); setOtp(""); }}
           disabled={isLoading}
         />
       </label>
@@ -97,6 +108,19 @@ export default function LoginForm() {
           disabled={isLoading}
         />
       </label>
+
+      <Link href="/passwort-vergessen" className="mt-4 inline-block text-sm underline">{tp("title")}</Link>
+
+      {otpRequired && (
+        <label className="field-group mt-5">
+          <span className="field-label">{t("otpLabel")}</span>
+          <input name="otp" inputMode="numeric" autoComplete="one-time-code"
+            pattern="[0-9]{6}" maxLength={6} required autoFocus className="field-control"
+            value={otp} onChange={(event) => setOtp(event.target.value.replace(/\D/g, ""))}
+            disabled={isLoading} aria-describedby="otp-help" />
+          <span id="otp-help" className="mt-2 text-sm text-[var(--muted)]">{t("otpHelp")}</span>
+        </label>
+      )}
 
       <button
         type="submit"

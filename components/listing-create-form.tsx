@@ -17,6 +17,7 @@ type CantonOption = {
 type CreateResult = {
   success?: boolean;
   error?: string;
+  premium_requested?: boolean;
   listing?: {
     id?: string;
   };
@@ -33,6 +34,10 @@ export default function ListingCreateForm({
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [plan, setPlan] = useState<"free" | "premium">("free");
+  const [billingInterval, setBillingInterval] = useState<
+    "monthly" | "yearly"
+  >("monthly");
 
   function getErrorMessage(code?: string): string {
     const knownCodes = new Set([
@@ -56,7 +61,6 @@ export default function ListingCreateForm({
     const payload = {
       organization_id: formData.get("organization_id"),
       name: formData.get("name"),
-      short_description: formData.get("short_description"),
       description: formData.get("description"),
       public_email: formData.get("public_email"),
       phone: formData.get("phone"),
@@ -66,6 +70,8 @@ export default function ListingCreateForm({
       city: formData.get("city"),
       canton: formData.get("canton"),
       address_visibility: formData.get("address_visibility"),
+      plan,
+      billing_interval: billingInterval,
     };
 
     try {
@@ -130,16 +136,6 @@ export default function ListingCreateForm({
               name="name"
               maxLength={180}
               required
-              disabled={isSaving}
-            />
-          </label>
-
-          <label className="field-group">
-            <span className="field-label">{t("fields.shortDescription")}</span>
-            <textarea
-              className="field-control field-textarea min-h-28"
-              name="short_description"
-              maxLength={500}
               disabled={isSaving}
             />
           </label>
@@ -273,6 +269,77 @@ export default function ListingCreateForm({
             </select>
           </label>
         </div>
+      </section>
+
+      <section className="rounded-3xl border border-[#bfdcff] bg-[#f7fbff] p-6 shadow-lg shadow-[#001734]/5 sm:p-8">
+        <p className="eyebrow">{t("plan.eyebrow")}</p>
+        <h2 className="mt-3 text-2xl font-extrabold">{t("plan.title")}</h2>
+        <p className="mt-3 max-w-3xl text-[var(--muted)]">
+          {t("plan.description")}
+        </p>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {(["free", "premium"] as const).map((option) => (
+            <label
+              key={option}
+              className={`cursor-pointer rounded-2xl border-2 bg-white p-5 transition ${
+                plan === option
+                  ? "border-[var(--accent)] shadow-md shadow-[#087ff5]/10"
+                  : "border-[var(--border)]"
+              }`}
+            >
+              <span className="flex items-start gap-3">
+                <input
+                  className="mt-1 h-4 w-4 accent-[var(--accent)]"
+                  type="radio"
+                  name="plan"
+                  value={option}
+                  checked={plan === option}
+                  onChange={() => setPlan(option)}
+                  disabled={isSaving}
+                />
+                <span>
+                  <span className="block text-xl font-extrabold">
+                    {t(`plan.${option}.title`)}
+                  </span>
+                  <span className="mt-1 block font-bold text-[var(--accent)]">
+                    {t(`plan.${option}.price`)}
+                  </span>
+                  <span className="mt-2 block text-sm text-[var(--muted)]">
+                    {t(`plan.${option}.description`)}
+                  </span>
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+
+        {plan === "premium" && (
+          <fieldset className="mt-6">
+            <legend className="font-extrabold">{t("plan.intervalTitle")}</legend>
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+              {(["monthly", "yearly"] as const).map((interval) => (
+                <label
+                  key={interval}
+                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-[#cfe3f7] bg-white px-4 py-3 font-bold"
+                >
+                  <input
+                    type="radio"
+                    name="billing_interval"
+                    value={interval}
+                    checked={billingInterval === interval}
+                    onChange={() => setBillingInterval(interval)}
+                    disabled={isSaving}
+                  />
+                  {t(`plan.intervals.${interval}`)}
+                </label>
+              ))}
+            </div>
+            <p className="mt-3 text-sm text-[var(--muted)]">
+              {t("plan.cancellationHint")}
+            </p>
+          </fieldset>
+        )}
       </section>
 
       <div className="flex flex-col-reverse gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 sm:flex-row sm:items-center sm:justify-between">

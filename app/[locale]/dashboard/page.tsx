@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
@@ -32,6 +33,7 @@ export default async function DashboardPage({
     }),
   ]);
 
+  if (user.role?.id === "5ec800ba-a34e-4bd6-a910-6833e8c61301") redirect(`/${locale}/konto`);
   const accessToken = await getAccessToken();
   const organizations = accessToken
     ? await getAccountOrganizationOverview(accessToken)
