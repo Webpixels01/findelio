@@ -218,7 +218,8 @@
       "review": "Revisão",
       "premium": "Premium",
       "referrals": "Recomendações",
-      "security": "Segurança da conta"
+      "security": "Segurança da conta",
+      "reviews": "Avaliações"
     },
     "summary": {
       "organizations": "Organizações",
@@ -1276,5 +1277,36 @@
     "failed": "A alteração falhou. Tenta novamente.",
     "recovery": "Perdeste o telemóvel? Restaura o autenticador com a chave guardada. Sem ela, o apoio terá de verificar a tua identidade.",
     "externalProvider": "Gere a 2FA desta conta externa no Directus ou junto do fornecedor de início de sessão."
+  },
+  "Reviews": {
+    "title": "Avaliações",
+    "empty": "Ainda sem avaliações",
+    "count": "{count} avaliações",
+    "loading": "A carregar …",
+    "retry": "Tentar novamente",
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "login": "Iniciar sessão para avaliar",
+    "ownCompany": "Não pode avaliar a sua própria empresa.",
+    "response": "Resposta da empresa",
+    "edit": "Editar avaliação",
+    "write": "Escrever avaliação",
+    "moderation": "O seu primeiro nome será público. Avaliações novas e editadas precisam de aprovação. A edição remove a avaliação anterior e a resposta até nova aprovação.",
+    "approved": "A sua avaliação foi publicada.",
+    "rejected": "A sua avaliação foi rejeitada. Pode revê-la.",
+    "pending": "A sua avaliação aguarda aprovação.",
+    "rating": "Estrelas",
+    "text": "A sua experiência (10–3000 caracteres)",
+    "saving": "A guardar …",
+    "submit": "Enviar para aprovação",
+    "error": "A ação falhou. Tente novamente.",
+    "conflict": "A avaliação foi alterada. Atualize a página.",
+    "rateLimited": "Demasiadas tentativas. Tente mais tarde.",
+    "adminIntro": "Verifique as avaliações e aprove ou rejeite.",
+    "companyIntro": "Responda aqui às avaliações aprovadas das suas empresas.",
+    "nothing": "Sem avaliações.",
+    "approve": "Aprovar",
+    "reject": "Rejeitar",
+    "reply": "Publicar resposta"
   }
 }

@@ -26,6 +26,7 @@ const registerFindelioRegistrationEmail = ({ filter }) => {
     const usesFindelioTemplate = [
       "user-registration",
       "listing-review-notification",
+      "customer-review-notification",
       "listing-decision-notification",
       "listing-post-review-notification",
       "listing-post-decision-notification",

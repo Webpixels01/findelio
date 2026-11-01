@@ -218,7 +218,8 @@
       "review": "Kontrola",
       "premium": "Premium",
       "referrals": "Odporúčania",
-      "security": "Zabezpečenie účtu"
+      "security": "Zabezpečenie účtu",
+      "reviews": "Hodnotenia"
     },
     "summary": {
       "organizations": "Organizácie",
@@ -1276,5 +1277,36 @@
     "failed": "Zmena zlyhala. Skúste to znova.",
     "recovery": "Stratili ste telefón? Obnovte autentifikátor pomocou uloženého kľúča. Bez neho musí podpora overiť vašu totožnosť.",
     "externalProvider": "2FA tohto externého účtu spravujete v Directus alebo u poskytovateľa prihlásenia."
+  },
+  "Reviews": {
+    "title": "Hodnotenia",
+    "empty": "Zatiaľ žiadne hodnotenia",
+    "count": "{count} hodnotení",
+    "loading": "Načítava sa …",
+    "retry": "Skúsiť znova",
+    "previous": "Späť",
+    "next": "Ďalej",
+    "login": "Prihlásiť sa a hodnotiť",
+    "ownCompany": "Nemôžete hodnotiť vlastnú firmu.",
+    "response": "Odpoveď firmy",
+    "edit": "Upraviť hodnotenie",
+    "write": "Napísať hodnotenie",
+    "moderation": "Vaše krstné meno bude verejné. Nové a upravené hodnotenia vyžadujú schválenie. Úprava odstráni predchádzajúce hodnotenie aj odpoveď až do nového schválenia.",
+    "approved": "Vaše hodnotenie je zverejnené.",
+    "rejected": "Vaše hodnotenie bolo zamietnuté. Môžete ho upraviť.",
+    "pending": "Vaše hodnotenie čaká na schválenie.",
+    "rating": "Hviezdičky",
+    "text": "Vaša skúsenosť (10–3000 znakov)",
+    "saving": "Ukladá sa …",
+    "submit": "Odoslať na schválenie",
+    "error": "Akcia zlyhala. Skúste to znova.",
+    "conflict": "Hodnotenie sa zmenilo. Obnovte stránku.",
+    "rateLimited": "Príliš veľa pokusov. Skúste to neskôr.",
+    "adminIntro": "Skontrolujte hodnotenia a schváľte alebo zamietnite ich.",
+    "companyIntro": "Tu môžete odpovedať na schválené hodnotenia vašich firiem.",
+    "nothing": "Žiadne hodnotenia.",
+    "approve": "Schváliť",
+    "reject": "Zamietnuť",
+    "reply": "Zverejniť odpoveď"
   }
 }

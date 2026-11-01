@@ -1,3 +1,4 @@
+import { ReviewSummary } from "@/components/customer-reviews";
 import type { AppLocale } from "@/i18n/routing";
 import type { Listing } from "@/lib/directus";
 import { Link } from "@/i18n/navigation";
@@ -50,6 +51,8 @@ export default async function CompanyCard({
               </span>
             )}
           </div>
+
+          <ReviewSummary listing={company.id} slug={company.slug} />
 
           {primaryIndustry && (
             <Link

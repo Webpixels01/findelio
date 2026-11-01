@@ -1,3 +1,4 @@
+import { CustomerReviews, ReviewSummary } from "@/components/customer-reviews";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -387,6 +388,8 @@ export default async function CompanyPage({
                     )}
                   </div>
 
+                  <ReviewSummary listing={company.id} />
+
                   {primaryIndustry && (
                     <Link
                       href={`/unternehmen?branche=${encodeURIComponent(
@@ -640,6 +643,7 @@ export default async function CompanyPage({
             </div>
           </div>
         </div>
+        <div className="site-container"><CustomerReviews listing={company.id} slug={company.slug} /></div>
       </main>
     </>
   );

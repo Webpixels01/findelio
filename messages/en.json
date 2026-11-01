@@ -218,7 +218,8 @@
       "review": "Review",
       "premium": "Premium",
       "referrals": "Referrals",
-      "security": "Account security"
+      "security": "Account security",
+      "reviews": "Reviews"
     },
     "summary": {
       "organizations": "Organizations",
@@ -1278,5 +1279,36 @@
     "failed": "The change failed. Please try again.",
     "recovery": "Lost your phone? Restore your authenticator using your saved setup key. Without it, support will need to verify your identity.",
     "externalProvider": "Manage 2FA for this external account in Directus or with your sign-in provider."
+  },
+  "Reviews": {
+    "title": "Reviews",
+    "empty": "No reviews yet",
+    "count": "{count} reviews",
+    "loading": "Loading …",
+    "retry": "Try again",
+    "previous": "Previous",
+    "next": "Next",
+    "login": "Sign in to review",
+    "ownCompany": "You cannot review your own business.",
+    "response": "Business response",
+    "edit": "Edit your review",
+    "write": "Write a review",
+    "moderation": "Your first name will be public. New and edited reviews require approval. Editing removes the previous review and its reply until approval again.",
+    "approved": "Your review is published.",
+    "rejected": "Your review was rejected. You can revise it.",
+    "pending": "Your review is awaiting approval.",
+    "rating": "Stars",
+    "text": "Your experience (10–3000 characters)",
+    "saving": "Saving …",
+    "submit": "Submit for approval",
+    "error": "The action failed. Please try again.",
+    "conflict": "This review has changed. Please reload the page.",
+    "rateLimited": "Too many attempts. Please try again later.",
+    "adminIntro": "Check the following reviews and approve or reject them.",
+    "companyIntro": "Reply to approved reviews of your businesses here.",
+    "nothing": "No reviews available.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "reply": "Publish reply"
   }
 }

@@ -8,6 +8,7 @@
   --background: #ffffff;
   --foreground: #001734;
   --accent: #0277ee;
+  --review-star-color: #f5b301;
   --surface: #f4f8fc;
   --border: #dce6f0;
   --muted: #52657b;
@@ -375,3 +376,21 @@ summary { user-select: none; }
   .home-companies-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
 }
 #home-companies-title { scroll-margin-top: 100px; }
+
+.review-rating-stars { display: inline-flex; gap: 2px; vertical-align: -2px; }
+.review-star-icon { width: 16px; height: 16px; fill: transparent; stroke: var(--review-star-color); stroke-width: 1.5; pointer-events: none; }
+.review-star-icon[data-filled="true"] { fill: var(--review-star-color); }
+
+/* Native radio controls keep star selection keyboard- and form-accessible. */
+.review-stars { display: flex; gap: 0.25rem; margin-top: 0.35rem; width: fit-content; }
+.review-star { position: relative; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 0.5rem; }
+.review-star input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.review-star svg { width: 32px; height: 32px; transition: fill 120ms ease; }
+.review-star:has(input:checked) svg,
+.review-star:has(~ .review-star input:checked) svg { fill: var(--review-star-color); }
+.review-star:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (hover: hover) {
+  .review-stars:where(:not(:has(input:focus-visible))):hover .review-star svg { fill: transparent; }
+  .review-stars:where(:not(:has(input:focus-visible))) .review-star:hover svg,
+  .review-stars:where(:not(:has(input:focus-visible))) .review-star:has(~ .review-star:hover) svg { fill: var(--review-star-color); }
+}

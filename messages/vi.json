@@ -218,7 +218,8 @@
       "review": "Xét duyệt",
       "premium": "Premium",
       "referrals": "Giới thiệu",
-      "security": "Bảo mật tài khoản"
+      "security": "Bảo mật tài khoản",
+      "reviews": "Đánh giá"
     },
     "summary": {
       "organizations": "Tổ chức",
@@ -1278,5 +1279,36 @@
     "failed": "Thay đổi không thành công. Vui lòng thử lại.",
     "recovery": "Mất điện thoại? Khôi phục ứng dụng xác thực bằng khóa đã lưu. Nếu không có khóa, bộ phận hỗ trợ phải xác minh danh tính của bạn.",
     "externalProvider": "Quản lý 2FA cho tài khoản bên ngoài này trong Directus hoặc tại nhà cung cấp đăng nhập."
+  },
+  "Reviews": {
+    "title": "Đánh giá",
+    "empty": "Chưa có đánh giá",
+    "count": "{count} đánh giá",
+    "loading": "Đang tải …",
+    "retry": "Thử lại",
+    "previous": "Trước",
+    "next": "Tiếp",
+    "login": "Đăng nhập để đánh giá",
+    "ownCompany": "Bạn không thể đánh giá doanh nghiệp của mình.",
+    "response": "Phản hồi của doanh nghiệp",
+    "edit": "Sửa đánh giá",
+    "write": "Viết đánh giá",
+    "moderation": "Tên của bạn sẽ được công khai. Đánh giá mới và đã sửa cần được duyệt. Khi sửa, đánh giá cũ và phản hồi sẽ bị xóa cho đến khi được duyệt lại.",
+    "approved": "Đánh giá của bạn đã được đăng.",
+    "rejected": "Đánh giá của bạn bị từ chối. Bạn có thể sửa lại.",
+    "pending": "Đánh giá của bạn đang chờ duyệt.",
+    "rating": "Số sao",
+    "text": "Trải nghiệm của bạn (10–3000 ký tự)",
+    "saving": "Đang lưu …",
+    "submit": "Gửi để duyệt",
+    "error": "Thao tác thất bại. Vui lòng thử lại.",
+    "conflict": "Đánh giá đã thay đổi. Vui lòng tải lại trang.",
+    "rateLimited": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+    "adminIntro": "Kiểm tra và duyệt hoặc từ chối các đánh giá.",
+    "companyIntro": "Trả lời các đánh giá đã được duyệt về doanh nghiệp của bạn tại đây.",
+    "nothing": "Không có đánh giá.",
+    "approve": "Duyệt",
+    "reject": "Từ chối",
+    "reply": "Đăng phản hồi"
   }
 }

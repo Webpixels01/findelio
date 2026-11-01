@@ -264,7 +264,7 @@ test("Directus contact, metrics and limit endpoints reject public, normal and ad
     select() { return this; }, where() { return this; }, async first() { return { name: "Firmenkonto" }; },
   });
   database.raw = async () => { effects++; throw new Error("No counter writes allowed"); };
-  endpoint.handler({ post: (path, handler) => routes.set(path, handler) }, {
+  endpoint.handler({ get() {}, patch() {}, post: (path, handler) => routes.set(path, handler) }, {
     database, env: {}, services: {}, logger: { error() {} },
   });
   for (const path of ["/contact", "/metrics", "/rate-limit"]) {
@@ -279,7 +279,7 @@ test("Directus contact, metrics and limit endpoints reject public, normal and ad
 
 test("Directus deployment copies match the tested source", async () => {
   for (const [extension, files] of [
-    ["review-notification", ["index.js", "request-security.js", "referral-mail.js"]],
+    ["review-notification", ["index.js", "request-security.js", "referral-mail.js", "customer-reviews.js"]],
     ["request-security", ["index.js", "two-factor.js"]],
   ]) {
     for (const file of files) {

@@ -218,7 +218,8 @@
       "review": "Weryfikacja",
       "premium": "Premium",
       "referrals": "Polecenia",
-      "security": "Bezpieczeństwo konta"
+      "security": "Bezpieczeństwo konta",
+      "reviews": "Opinie"
     },
     "summary": {
       "organizations": "Organizacje",
@@ -1276,5 +1277,36 @@
     "failed": "Zmiana nie powiodła się. Spróbuj ponownie.",
     "recovery": "Zgubiony telefon? Odtwórz aplikację za pomocą zapisanego klucza. Bez niego pomoc techniczna musi zweryfikować Twoją tożsamość.",
     "externalProvider": "Zarządzaj 2FA tego zewnętrznego konta w Directus lub u dostawcy logowania."
+  },
+  "Reviews": {
+    "title": "Opinie",
+    "empty": "Brak opinii",
+    "count": "{count} opinii",
+    "loading": "Ładowanie …",
+    "retry": "Spróbuj ponownie",
+    "previous": "Wstecz",
+    "next": "Dalej",
+    "login": "Zaloguj się, aby dodać opinię",
+    "ownCompany": "Nie możesz oceniać własnej firmy.",
+    "response": "Odpowiedź firmy",
+    "edit": "Edytuj opinię",
+    "write": "Napisz opinię",
+    "moderation": "Twoje imię będzie publiczne. Nowe i zmienione opinie wymagają zatwierdzenia. Edycja usuwa poprzednią opinię wraz z odpowiedzią do ponownego zatwierdzenia.",
+    "approved": "Twoja opinia została opublikowana.",
+    "rejected": "Twoja opinia została odrzucona. Możesz ją poprawić.",
+    "pending": "Twoja opinia czeka na zatwierdzenie.",
+    "rating": "Gwiazdki",
+    "text": "Twoje doświadczenie (10–3000 znaków)",
+    "saving": "Zapisywanie …",
+    "submit": "Wyślij do zatwierdzenia",
+    "error": "Operacja nie powiodła się. Spróbuj ponownie.",
+    "conflict": "Opinia została zmieniona. Odśwież stronę.",
+    "rateLimited": "Zbyt wiele prób. Spróbuj później.",
+    "adminIntro": "Sprawdź opinie i zatwierdź je lub odrzuć.",
+    "companyIntro": "Tutaj możesz odpowiadać na zatwierdzone opinie o swoich firmach.",
+    "nothing": "Brak opinii.",
+    "approve": "Zatwierdź",
+    "reject": "Odrzuć",
+    "reply": "Opublikuj odpowiedź"
   }
 }

@@ -218,7 +218,8 @@
       "review": "Ellenőrzés",
       "premium": "Premium",
       "referrals": "Ajánlások",
-      "security": "Fiókbiztonság"
+      "security": "Fiókbiztonság",
+      "reviews": "Értékelések"
     },
     "summary": {
       "organizations": "Szervezetek",
@@ -1276,5 +1277,36 @@
     "failed": "A módosítás sikertelen. Próbáld újra.",
     "recovery": "Elvesztetted a telefonod? Állítsd vissza a hitelesítőt az elmentett kulccsal. Enélkül az ügyfélszolgálatnak ellenőriznie kell a személyazonosságodat.",
     "externalProvider": "A külső fiók 2FA-beállításait a Directusban vagy a bejelentkezési szolgáltatónál kezelheted."
+  },
+  "Reviews": {
+    "title": "Értékelések",
+    "empty": "Még nincs értékelés",
+    "count": "{count} értékelés",
+    "loading": "Betöltés …",
+    "retry": "Újra",
+    "previous": "Előző",
+    "next": "Következő",
+    "login": "Bejelentkezés az értékeléshez",
+    "ownCompany": "Saját vállalkozását nem értékelheti.",
+    "response": "A vállalkozás válasza",
+    "edit": "Értékelés szerkesztése",
+    "write": "Értékelés írása",
+    "moderation": "Keresztneve nyilvános lesz. Az új és módosított értékelések jóváhagyást igényelnek. A módosítás eltávolítja a korábbi értékelést és választ az új jóváhagyásig.",
+    "approved": "Értékelése megjelent.",
+    "rejected": "Értékelését elutasították. Módosíthatja.",
+    "pending": "Értékelése jóváhagyásra vár.",
+    "rating": "Csillagok",
+    "text": "Tapasztalata (10–3000 karakter)",
+    "saving": "Mentés …",
+    "submit": "Beküldés jóváhagyásra",
+    "error": "A művelet sikertelen. Próbálja újra.",
+    "conflict": "Az értékelés megváltozott. Töltse újra az oldalt.",
+    "rateLimited": "Túl sok próbálkozás. Próbálja később.",
+    "adminIntro": "Ellenőrizze, majd hagyja jóvá vagy utasítsa el az értékeléseket.",
+    "companyIntro": "Itt válaszolhat vállalkozásai jóváhagyott értékeléseire.",
+    "nothing": "Nincs értékelés.",
+    "approve": "Jóváhagyás",
+    "reject": "Elutasítás",
+    "reply": "Válasz közzététele"
   }
 }

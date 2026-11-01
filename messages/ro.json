@@ -218,7 +218,8 @@
       "review": "Verificare",
       "premium": "Premium",
       "referrals": "Recomandări",
-      "security": "Securitatea contului"
+      "security": "Securitatea contului",
+      "reviews": "Recenzii"
     },
     "summary": {
       "organizations": "Organizații",
@@ -1276,5 +1277,36 @@
     "failed": "Modificarea a eșuat. Încearcă din nou.",
     "recovery": "Ai pierdut telefonul? Restabilește autentificatorul cu cheia salvată. Fără ea, serviciul de asistență trebuie să îți verifice identitatea.",
     "externalProvider": "Gestionează 2FA pentru acest cont extern în Directus sau la furnizorul de autentificare."
+  },
+  "Reviews": {
+    "title": "Recenzii",
+    "empty": "Încă nu există recenzii",
+    "count": "{count} recenzii",
+    "loading": "Se încarcă …",
+    "retry": "Încearcă din nou",
+    "previous": "Înapoi",
+    "next": "Înainte",
+    "login": "Autentifică-te pentru a scrie o recenzie",
+    "ownCompany": "Nu îți poți evalua propria firmă.",
+    "response": "Răspunsul firmei",
+    "edit": "Editează recenzia",
+    "write": "Scrie o recenzie",
+    "moderation": "Prenumele tău va fi public. Recenziile noi și modificate necesită aprobare. Editarea elimină recenzia anterioară și răspunsul până la o nouă aprobare.",
+    "approved": "Recenzia ta este publicată.",
+    "rejected": "Recenzia ta a fost respinsă. O poți modifica.",
+    "pending": "Recenzia ta așteaptă aprobarea.",
+    "rating": "Stele",
+    "text": "Experiența ta (10–3000 de caractere)",
+    "saving": "Se salvează …",
+    "submit": "Trimite spre aprobare",
+    "error": "Acțiunea a eșuat. Încearcă din nou.",
+    "conflict": "Recenzia s-a schimbat. Reîncarcă pagina.",
+    "rateLimited": "Prea multe încercări. Încearcă mai târziu.",
+    "adminIntro": "Verifică recenziile și aprobă-le sau respinge-le.",
+    "companyIntro": "Aici poți răspunde la recenziile aprobate ale firmelor tale.",
+    "nothing": "Nu există recenzii.",
+    "approve": "Aprobă",
+    "reject": "Respinge",
+    "reply": "Publică răspunsul"
   }
 }

@@ -218,7 +218,8 @@
       "review": "Kontrola",
       "premium": "Premium",
       "referrals": "Doporučení",
-      "security": "Zabezpečení účtu"
+      "security": "Zabezpečení účtu",
+      "reviews": "Hodnocení"
     },
     "summary": {
       "organizations": "Organizace",
@@ -1276,5 +1277,36 @@
     "failed": "Změna se nezdařila. Zkuste to znovu.",
     "recovery": "Ztratili jste telefon? Obnovte ověřovací aplikaci uloženým klíčem. Bez něj musí podpora ověřit vaši totožnost.",
     "externalProvider": "2FA tohoto externího účtu spravujete v Directus nebo u poskytovatele přihlášení."
+  },
+  "Reviews": {
+    "title": "Hodnocení",
+    "empty": "Zatím žádná hodnocení",
+    "count": "{count} hodnocení",
+    "loading": "Načítání …",
+    "retry": "Zkusit znovu",
+    "previous": "Zpět",
+    "next": "Další",
+    "login": "Přihlásit se a hodnotit",
+    "ownCompany": "Nemůžete hodnotit vlastní firmu.",
+    "response": "Odpověď firmy",
+    "edit": "Upravit hodnocení",
+    "write": "Napsat hodnocení",
+    "moderation": "Vaše křestní jméno bude veřejné. Nová a upravená hodnocení vyžadují schválení. Úprava odstraní předchozí hodnocení i odpověď až do nového schválení.",
+    "approved": "Vaše hodnocení je zveřejněné.",
+    "rejected": "Vaše hodnocení bylo zamítnuto. Můžete je upravit.",
+    "pending": "Vaše hodnocení čeká na schválení.",
+    "rating": "Hvězdičky",
+    "text": "Vaše zkušenost (10–3000 znaků)",
+    "saving": "Ukládání …",
+    "submit": "Odeslat ke schválení",
+    "error": "Akce se nezdařila. Zkuste to znovu.",
+    "conflict": "Hodnocení se změnilo. Obnovte stránku.",
+    "rateLimited": "Příliš mnoho pokusů. Zkuste to později.",
+    "adminIntro": "Zkontrolujte hodnocení a schvalte nebo zamítněte je.",
+    "companyIntro": "Zde můžete odpovídat na schválená hodnocení vašich firem.",
+    "nothing": "Žádná hodnocení.",
+    "approve": "Schválit",
+    "reject": "Zamítnout",
+    "reply": "Zveřejnit odpověď"
   }
 }

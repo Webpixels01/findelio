@@ -218,7 +218,8 @@
       "review": "Prüfbereich",
       "premium": "Premium",
       "referrals": "Empfehlungen",
-      "security": "Kontosicherheit"
+      "security": "Kontosicherheit",
+      "reviews": "Bewertungen"
     },
     "summary": {
       "organizations": "Organisationen",
@@ -1278,5 +1279,36 @@
     "failed": "Die Änderung ist fehlgeschlagen. Bitte versuche es erneut.",
     "recovery": "Handy verloren? Stelle den Authenticator mit deinem gesicherten Einrichtungsschlüssel wieder her. Ohne diesen Schlüssel ist eine Identitätsprüfung durch den Support nötig.",
     "externalProvider": "Die 2FA dieses externen Kontos verwaltest du in Directus oder bei deinem Anmeldedienst."
+  },
+  "Reviews": {
+    "title": "Bewertungen",
+    "empty": "Noch keine Bewertungen",
+    "count": "{count} Bewertungen",
+    "loading": "Wird geladen …",
+    "retry": "Erneut versuchen",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "login": "Anmelden und bewerten",
+    "ownCompany": "Du kannst dein eigenes Unternehmen nicht bewerten.",
+    "response": "Antwort des Unternehmens",
+    "edit": "Deine Bewertung bearbeiten",
+    "write": "Bewertung schreiben",
+    "moderation": "Dein Vorname wird öffentlich angezeigt. Neue und geänderte Bewertungen werden erst nach Prüfung freigeschaltet. Bei Änderungen wird die bisherige Bewertung samt Antwort bis zur erneuten Freigabe entfernt.",
+    "approved": "Deine Bewertung ist veröffentlicht.",
+    "rejected": "Deine Bewertung wurde abgelehnt. Du kannst sie überarbeiten.",
+    "pending": "Deine Bewertung wartet auf Freigabe.",
+    "rating": "Sterne",
+    "text": "Deine Erfahrung (10–3000 Zeichen)",
+    "saving": "Wird gespeichert …",
+    "submit": "Zur Prüfung einreichen",
+    "error": "Die Aktion ist fehlgeschlagen. Bitte versuche es erneut.",
+    "conflict": "Diese Bewertung wurde inzwischen geändert. Bitte lade die Seite neu.",
+    "rateLimited": "Zu viele Versuche. Bitte versuche es später erneut.",
+    "adminIntro": "Prüfe die folgenden Bewertungen und gib sie frei oder lehne sie ab.",
+    "companyIntro": "Hier kannst du auf freigegebene Bewertungen deiner Unternehmen antworten.",
+    "nothing": "Keine Bewertungen vorhanden.",
+    "approve": "Freigeben",
+    "reject": "Ablehnen",
+    "reply": "Antwort veröffentlichen"
   }
 }

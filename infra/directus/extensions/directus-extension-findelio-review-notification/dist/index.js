@@ -1,3 +1,4 @@
+import { registerCustomerReviews } from "./customer-reviews.js";
 import { sendReviewOnce } from "./review-delivery.js";
 import { referralMailContent } from "./referral-mail.js";
 import { createRequestLimiter, isServerAccount, requestLimits, validClientKey } from "./request-security.js";
@@ -47,6 +48,7 @@ const findelioReviewNotificationEndpoint = {
   handler: (router, { database, env, getSchema, logger, services }) => {
     const { MailService } = services;
     const consumeLimit = createRequestLimiter(database);
+    registerCustomerReviews(router, { database, env, services, getSchema, logger }, consumeLimit);
     const serverOnly = (handler, scope) => async (req, res) => {
       if (!req.accountability?.user) return res.status(401).json({ error: "unauthorized" });
       try {
