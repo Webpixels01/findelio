@@ -13,6 +13,7 @@ export default async function LoginPage({ params }: { params: Promise<{ locale: 
   setRequestLocale(locale);
   const t = await getTranslations("Login");
   const tv = await getTranslations("Visitor");
+  const tn = await getTranslations("Header");
 
   return (
     <>
@@ -32,7 +33,10 @@ export default async function LoginPage({ params }: { params: Promise<{ locale: 
             >
               <LoginForm />
             </Suspense>
-            <Link href="/registrieren" className="secondary-button mt-5 px-6 py-3">{tv("register")}</Link>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link href="/firma-eintragen" className="secondary-button px-6 py-3">{tn("registerCompany")}</Link>
+              <Link href="/registrieren" className="secondary-button px-6 py-3">{tv("register")}</Link>
+            </div>
           </div>
         </div>
       </main>
