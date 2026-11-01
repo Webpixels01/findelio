@@ -1316,6 +1316,31 @@
     "loginDescription": "Autentifică-te în cont.",
     "ready": "Contul tău este confirmat. Găsește firme și trimite recenzii spre aprobare pe profilurile lor.",
     "browse": "Găsește firme",
-    "security": "Securitatea contului"
+    "security": "Securitatea contului",
+    "reviewsTitle": "Recenziile mele",
+    "reviewsIntro": "Aici vezi recenziile trimise și răspunsurile companiilor. Această pagină este doar pentru vizualizare.",
+    "reviewsEmpty": "Nu ai trimis încă nicio recenzie.",
+    "reviewApproved": "Publicată",
+    "reviewRejected": "Neaprobată",
+    "reviewPending": "În curs de verificare"
+  },
+  "PasswordReset": {
+    "title": "Ai uitat parola?",
+    "description": "Introdu adresa de e-mail. Îți vom trimite un link pentru resetarea parolei.",
+    "resetTitle": "Setează o parolă nouă",
+    "resetDescription": "Alege o parolă nouă pentru contul Findelio.",
+    "email": "E-mail",
+    "newPassword": "Parolă nouă",
+    "confirmPassword": "Repetă parola",
+    "send": "Solicită linkul",
+    "save": "Salvează parola",
+    "busy": "Te rugăm să aștepți …",
+    "sent": "Dacă există un cont activ pentru această adresă, vei primi un e-mail pentru resetarea parolei. Verifică și folderul spam.",
+    "done": "Parola a fost schimbată. Te poți autentifica folosind parola nouă.",
+    "invalidToken": "Acest link este invalid sau a expirat. Solicită unul nou.",
+    "error": "A apărut o eroare. Încearcă din nou mai târziu.",
+    "rateLimited": "Prea multe încercări. Încearcă din nou mai târziu.",
+    "requestNew": "Solicită un link nou",
+    "back": "Înapoi la autentificare"
   }
 }

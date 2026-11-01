@@ -16,14 +16,21 @@ function fixture() {
   };
   const db = name => {
     const conditions = [], fields = [];
+    let source = rows[name];
+    if (name === 'findelio_customer_reviews as r') source = rows.findelio_customer_reviews.map(row => Object.fromEntries(Object.entries(row).map(([key, value]) => ['r.' + key, value])));
     let limit = Infinity, offset = 0, aggregate = false;
     const q = {
+      join(table, left, right) {
+        assert.equal(table, 'listings as l');
+        source = source.flatMap(row => rows.listings.filter(listing => listing[left.slice(2)] === row[right]).map(listing => ({ ...row, ...Object.fromEntries(Object.entries(listing).map(([key, value]) => ['l.' + key, value])) })));
+        return q;
+      },
       where(key, value) { conditions.push(typeof key === 'object' ? key : { [key]: value }); return q; },
       select(...names) { fields.push(...names); return q; },
       forUpdate() { return q; }, forShare() { return q; },
       orderBy() { return q; }, limit(value) { limit = value; return q; }, offset(value) { offset = value; return q; },
       count() { aggregate = true; return q; }, avg() { aggregate = true; return q; },
-      values() { return rows[name].filter(row => conditions.every(condition => Object.entries(condition).every(([key, value]) => row[key] === value))); },
+      values() { return source.filter(row => conditions.every(condition => Object.entries(condition).every(([key, value]) => row[key] === value))); },
       async first() { return (await q)[0]; },
       async insert(value) { rows[name].push({ version: 1, created_at: '2026-11-01T10:00:00Z', ...value }); },
       async update(value) { q.values().forEach(row => Object.assign(row, value)); },
@@ -31,7 +38,7 @@ function fixture() {
         try {
           let result = q.values();
           if (aggregate) result = [{ count: result.length, average: result.length ? result.reduce((sum, row) => sum + row.rating, 0) / result.length : null }];
-          else result = result.slice(offset, offset + limit).map(row => fields.length ? Object.fromEntries(fields.map(key => [key, row[key]])) : { ...row });
+          else result = result.slice(offset, offset + limit).map(row => fields.length ? Object.fromEntries(fields.map(field => { const [key, alias] = field.split(" as "); return [alias || key.split(".").at(-1), row[key]]; })) : { ...row });
           return Promise.resolve(result).then(resolve, reject);
         } catch (error) { return Promise.reject(error).then(resolve, reject); }
       },
@@ -111,4 +118,25 @@ test('review translations are complete in every supported language', () => {
     assert.ok(messages.Dashboard.navigation.reviews);
     assert.match(messages.Reviews.count, /\{count\}/);
   }
+});
+
+test('own review overview is authenticated, author-scoped, paginated and includes all moderation states', async () => {
+  const f = fixture();
+  assert.equal((await f.call('get', '/mine', null)).statusCode, 401);
+  for (let i = 0; i < 22; i++) f.rows().findelio_customer_reviews.push({ id: String(i), listing: f.listing, author: f.author, author_name: 'Anna', rating: 4, body: 'Own review', status: ['pending', 'approved', 'rejected'][i % 3], response: 'Company reply', created_at: '2026-11-01T10:00:00Z', reviewed_by: f.admin });
+  f.rows().findelio_customer_reviews.push({ id: 'private', listing: f.listing, author: f.outsider, body: 'Other person', status: 'pending' });
+  const first = await f.call('get', '/mine', f.author, {}, undefined, { author: f.outsider });
+  assert.equal(first.statusCode, 200);
+  assert.equal(first.body.data.reviews.length, 20);
+  assert.equal(first.body.data.more, true);
+  assert.deepEqual(new Set(first.body.data.reviews.map(r => r.status)), new Set(['pending', 'approved', 'rejected']));
+  for (const row of first.body.data.reviews) {
+    assert.equal(row.body, 'Own review'); assert.equal(row.response, 'Company reply');
+    assert.equal(row.listing_name, 'Example'); assert.equal(row.author, undefined); assert.equal(row.reviewed_by, undefined);
+  }
+  const second = await f.call('get', '/mine', f.author, {}, undefined, { page: '1' });
+  assert.equal(second.body.data.reviews.length, 2); assert.equal(second.body.data.more, false);
+  assert.equal((await f.call('get', '/mine', f.owner)).body.data.reviews.length, 0);
+  f.rows().directus_users.find(u => u.id === f.author).status = 'unverified';
+  assert.equal((await f.call('get', '/mine', f.author)).statusCode, 403);
 });

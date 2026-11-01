@@ -1318,6 +1318,31 @@
     "loginDescription": "Đăng nhập vào tài khoản của bạn.",
     "ready": "Tài khoản của bạn đã được xác nhận. Tìm doanh nghiệp và gửi đánh giá để duyệt trên hồ sơ của họ.",
     "browse": "Tìm doanh nghiệp",
-    "security": "Bảo mật tài khoản"
+    "security": "Bảo mật tài khoản",
+    "reviewsTitle": "Đánh giá của tôi",
+    "reviewsIntro": "Xem các đánh giá đã gửi và phản hồi của doanh nghiệp tại đây. Mục này chỉ để xem.",
+    "reviewsEmpty": "Bạn chưa gửi đánh giá nào.",
+    "reviewApproved": "Đã đăng",
+    "reviewRejected": "Không được duyệt",
+    "reviewPending": "Đang xét duyệt"
+  },
+  "PasswordReset": {
+    "title": "Quên mật khẩu?",
+    "description": "Nhập địa chỉ email. Chúng tôi sẽ gửi liên kết để đặt lại mật khẩu.",
+    "resetTitle": "Đặt mật khẩu mới",
+    "resetDescription": "Chọn mật khẩu mới cho tài khoản Findelio.",
+    "email": "Email",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Nhập lại mật khẩu",
+    "send": "Yêu cầu liên kết",
+    "save": "Lưu mật khẩu",
+    "busy": "Vui lòng chờ …",
+    "sent": "Nếu có tài khoản đang hoạt động với địa chỉ này, bạn sẽ nhận được email đặt lại mật khẩu. Vui lòng kiểm tra cả thư rác.",
+    "done": "Mật khẩu đã được thay đổi. Bạn có thể đăng nhập bằng mật khẩu mới.",
+    "invalidToken": "Liên kết không hợp lệ hoặc đã hết hạn. Vui lòng yêu cầu liên kết mới.",
+    "error": "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+    "rateLimited": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+    "requestNew": "Yêu cầu liên kết mới",
+    "back": "Quay lại đăng nhập"
   }
 }

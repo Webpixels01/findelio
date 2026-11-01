@@ -1316,6 +1316,31 @@
     "loginDescription": "Zaloguj się na swoje konto.",
     "ready": "Twoje konto jest potwierdzone. Znajdź firmy i wyślij opinie do zatwierdzenia na ich profilach.",
     "browse": "Znajdź firmy",
-    "security": "Bezpieczeństwo konta"
+    "security": "Bezpieczeństwo konta",
+    "reviewsTitle": "Moje opinie",
+    "reviewsIntro": "Tutaj znajdziesz przesłane opinie i odpowiedzi firm. Ten widok służy tylko do odczytu.",
+    "reviewsEmpty": "Nie masz jeszcze przesłanych opinii.",
+    "reviewApproved": "Opublikowana",
+    "reviewRejected": "Niezatwierdzona",
+    "reviewPending": "W trakcie weryfikacji"
+  },
+  "PasswordReset": {
+    "title": "Nie pamiętasz hasła?",
+    "description": "Podaj adres e-mail. Wyślemy link do zresetowania hasła.",
+    "resetTitle": "Ustaw nowe hasło",
+    "resetDescription": "Wybierz nowe hasło do konta Findelio.",
+    "email": "E-mail",
+    "newPassword": "Nowe hasło",
+    "confirmPassword": "Powtórz hasło",
+    "send": "Wyślij link",
+    "save": "Zapisz hasło",
+    "busy": "Proszę czekać …",
+    "sent": "Jeśli dla tego adresu istnieje aktywne konto, otrzymasz wiadomość do zresetowania hasła. Sprawdź też folder spam.",
+    "done": "Hasło zostało zmienione. Możesz zalogować się nowym hasłem.",
+    "invalidToken": "Ten link jest nieprawidłowy lub wygasł. Poproś o nowy.",
+    "error": "Coś poszło nie tak. Spróbuj ponownie później.",
+    "rateLimited": "Zbyt wiele prób. Spróbuj ponownie później.",
+    "requestNew": "Poproś o nowy link",
+    "back": "Powrót do logowania"
   }
 }

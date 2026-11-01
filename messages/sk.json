@@ -1316,6 +1316,31 @@
     "loginDescription": "Prihláste sa do svojho účtu.",
     "ready": "Váš účet je potvrdený. Vyhľadajte firmy a odošlite hodnotenia na schválenie na ich profiloch.",
     "browse": "Vyhľadať firmy",
-    "security": "Zabezpečenie účtu"
+    "security": "Zabezpečenie účtu",
+    "reviewsTitle": "Moje recenzie",
+    "reviewsIntro": "Tu nájdete svoje odoslané recenzie a odpovede firiem. Tento prehľad je iba na prezeranie.",
+    "reviewsEmpty": "Zatiaľ ste neodoslali žiadnu recenziu.",
+    "reviewApproved": "Zverejnené",
+    "reviewRejected": "Neschválené",
+    "reviewPending": "Čaká na kontrolu"
+  },
+  "PasswordReset": {
+    "title": "Zabudli ste heslo?",
+    "description": "Zadajte svoju e-mailovú adresu. Pošleme vám odkaz na obnovenie hesla.",
+    "resetTitle": "Nastaviť nové heslo",
+    "resetDescription": "Vyberte si nové heslo pre svoj účet Findelio.",
+    "email": "E-mail",
+    "newPassword": "Nové heslo",
+    "confirmPassword": "Zopakovať heslo",
+    "send": "Vyžiadať odkaz",
+    "save": "Uložiť heslo",
+    "busy": "Čakajte, prosím …",
+    "sent": "Ak pre túto adresu existuje aktívny účet, dostanete e-mail na obnovenie hesla. Skontrolujte aj priečinok so spamom.",
+    "done": "Vaše heslo bolo zmenené. Teraz sa môžete prihlásiť novým heslom.",
+    "invalidToken": "Tento odkaz je neplatný alebo jeho platnosť vypršala. Vyžiadajte si nový.",
+    "error": "Niečo sa nepodarilo. Skúste to neskôr.",
+    "rateLimited": "Príliš veľa pokusov. Skúste to neskôr.",
+    "requestNew": "Vyžiadať nový odkaz",
+    "back": "Späť na prihlásenie"
   }
 }

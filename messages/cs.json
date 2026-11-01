@@ -1316,6 +1316,31 @@
     "loginDescription": "Přihlaste se ke svému účtu.",
     "ready": "Váš účet je potvrzený. Vyhledejte firmy a odešlete hodnocení ke schválení na jejich profilech.",
     "browse": "Vyhledat firmy",
-    "security": "Zabezpečení účtu"
+    "security": "Zabezpečení účtu",
+    "reviewsTitle": "Moje recenze",
+    "reviewsIntro": "Zde najdete své odeslané recenze a odpovědi firem. Tento přehled je pouze pro čtení.",
+    "reviewsEmpty": "Zatím jste neodeslali žádnou recenzi.",
+    "reviewApproved": "Zveřejněno",
+    "reviewRejected": "Neschváleno",
+    "reviewPending": "Čeká na kontrolu"
+  },
+  "PasswordReset": {
+    "title": "Zapomněli jste heslo?",
+    "description": "Zadejte svou e-mailovou adresu. Pošleme vám odkaz pro obnovení hesla.",
+    "resetTitle": "Nastavit nové heslo",
+    "resetDescription": "Vyberte si nové heslo pro svůj účet Findelio.",
+    "email": "E-mail",
+    "newPassword": "Nové heslo",
+    "confirmPassword": "Zopakovat heslo",
+    "send": "Vyžádat odkaz",
+    "save": "Uložit heslo",
+    "busy": "Čekejte prosím …",
+    "sent": "Pokud pro tuto adresu existuje aktivní účet, obdržíte e-mail pro obnovení hesla. Zkontrolujte také spam.",
+    "done": "Vaše heslo bylo změněno. Nyní se můžete přihlásit novým heslem.",
+    "invalidToken": "Tento odkaz je neplatný nebo vypršel. Vyžádejte si nový.",
+    "error": "Něco se nepodařilo. Zkuste to později.",
+    "rateLimited": "Příliš mnoho pokusů. Zkuste to později.",
+    "requestNew": "Vyžádat nový odkaz",
+    "back": "Zpět na přihlášení"
   }
 }

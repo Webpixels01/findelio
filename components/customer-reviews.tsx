@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-type Review = { id: string; author_name: string; rating: number; body: string; response: string | null; created_at: string; status: string; version: number; listing_name?: string; listing_slug?: string };
+type Review = { id: string; author_name: string; rating: number; body: string; response: string | null; created_at: string; status: string; version: number; listing_name?: string; listing_slug?: string; listing_status?: string };
 type PublicData = { reviews: Review[]; count: number; average: number; own: Review | null; canReview: boolean; authenticated: boolean };
 async function api(path: string, method = "GET", body?: object) {
   const response = await fetch(`/api/customer-reviews${path}`, { method, headers: { "Content-Type": "application/json" }, ...(body ? { body: JSON.stringify(body) } : {}), cache: "no-store" });
@@ -122,4 +122,31 @@ function ReviewAction({ review, admin, onSaved }: { review: Review; admin: boole
     finally { setBusy(false); }
   };
   return <div>{admin ? <div className="flex flex-wrap gap-3"><button disabled={busy} className="primary-button px-8 py-4" onClick={() => act("approve")}>{t("approve")}</button><button disabled={busy} className="secondary-button px-6 py-3" onClick={() => act("reject")}>{t("reject")}</button></div> : <form className="space-y-3" onSubmit={event => { event.preventDefault(); void act("reply", String(new FormData(event.currentTarget).get("response"))); }}><label className="block">{t("response")}<textarea name="response" defaultValue={review.response || ""} required maxLength={3000} rows={4} className="field-control mt-1 w-full" /></label><button disabled={busy} className="primary-button px-8 py-4">{t("reply")}</button></form>}{error && <p role="alert">{t(error === "conflict" ? "conflict" : "error")}</p>}</div>;
+}
+
+export function MyReviews() {
+  const t = useTranslations("Reviews");
+  const tv = useTranslations("Visitor");
+  const [data, setData] = useState<{ reviews: Review[]; more: boolean } | null>(null);
+  const [page, setPage] = useState(0);
+  const [revision, setRevision] = useState(0);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    let active = true;
+    api(`/mine?page=${page}`).then(value => { if (active) { setData(value); setError(false); } }).catch(() => { if (active) setError(true); });
+    return () => { active = false; };
+  }, [page, revision]);
+  return <section className="mt-10" aria-labelledby="my-reviews-title">
+    <h2 id="my-reviews-title" className="text-2xl font-extrabold">{tv("reviewsTitle")}</h2>
+    <p className="my-4 text-[var(--muted)]">{tv("reviewsIntro")}</p>
+    {error ? <p role="alert">{t("error")} <button className="underline" onClick={() => { setError(false); setData(null); setRevision(v => v + 1); }}>{t("retry")}</button></p> : !data ? <p role="status">{t("loading")}</p> : <>
+      {!data.reviews.length && <p>{tv("reviewsEmpty")}</p>}
+      {data.reviews.map(review => <div key={review.id} className="my-5 rounded-2xl border border-[var(--border)] bg-white p-6">
+        {review.listing_status === "published" && review.listing_slug ? <Link className="font-bold underline" href={`/unternehmen/${review.listing_slug}#reviews`}>{review.listing_name}</Link> : <p className="font-bold">{review.listing_name}</p>}
+        <p className="my-3 text-sm text-[var(--muted)]">{tv(review.status === "approved" ? "reviewApproved" : review.status === "rejected" ? "reviewRejected" : "reviewPending")}</p>
+        <ReviewCard review={review} />
+      </div>)}
+      <div className="flex flex-wrap gap-4">{page > 0 && <button className="secondary-button px-6 py-3" onClick={() => { setData(null); setPage(page - 1); }}>{t("previous")}</button>}{data.more && <button className="secondary-button px-6 py-3" onClick={() => { setData(null); setPage(page + 1); }}>{t("next")}</button>}</div>
+    </>}
+  </section>;
 }

@@ -1,6 +1,9 @@
 export const requestLimits = {
   "login-ip": [30, 900],
   "login-account": [10, 900],
+  "password-email-ip": [20, 3600],
+  "password-email-account": [5, 3600],
+  "password-reset": [30, 900],
   upload: [10, 3600],
   contact: [5, 900],
   metrics: [120, 60],

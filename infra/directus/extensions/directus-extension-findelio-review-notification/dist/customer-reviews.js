@@ -45,6 +45,15 @@ export function registerCustomerReviews(router, { database, env, services, getSc
     }
     res.json({ data: { reviews, count: Number(summary.count), average: Number(summary.average || 0), own, canReview, authenticated: Boolean(req.accountability?.user) } });
   }));
+  router.get('/customer-reviews/mine', wrap(async (req, res) => {
+    const user = await actor(req);
+    const page = Math.max(0, Math.min(100000, Number.parseInt(req.query.page, 10) || 0));
+    const reviews = await database(`${table} as r`).join('listings as l', 'l.id', 'r.listing')
+      .where('r.author', user.id)
+      .select('r.id', 'r.author_name', 'r.rating', 'r.body', 'r.status', 'r.response', 'r.created_at', 'l.name as listing_name', 'l.slug as listing_slug', 'l.status as listing_status')
+      .orderBy('r.created_at', 'desc').orderBy('r.id').limit(21).offset(page * 20);
+    res.json({ data: { reviews: reviews.slice(0, 20), more: reviews.length > 20 } });
+  }));
   router.get('/customer-reviews/manage', wrap(async (req, res) => {
     const user = await actor(req);
     const admin = req.accountability.admin === true;

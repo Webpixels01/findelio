@@ -4,7 +4,7 @@ import { refreshDirectusSession } from "@/lib/directus-auth";
 async function handle(request: Request, { params }: { params: Promise<{ path?: string[] }> }) {
   const { path = [] } = await params;
   const suffix = path[0] || "";
-  if (path.length > 1 || (suffix && suffix !== "manage" && !/^[0-9a-f-]{36}$/i.test(suffix))) {
+  if (path.length > 1 || (suffix && suffix !== "manage" && suffix !== "mine" && !/^[0-9a-f-]{36}$/i.test(suffix))) {
     return Response.json({ error: "not_found" }, { status: 404 });
   }
   if (request.method !== "GET") {

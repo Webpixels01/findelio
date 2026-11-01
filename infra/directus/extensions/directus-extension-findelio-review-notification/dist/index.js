@@ -75,7 +75,7 @@ const findelioReviewNotificationEndpoint = {
 
     router.post("/rate-limit", serverOnly(async (req, res) => {
       const scope = req.body?.scope;
-      if (!["login-ip", "login-account", "upload"].includes(scope)) {
+      if (!["login-ip", "login-account", "upload", "password-email-ip", "password-email-account", "password-reset"].includes(scope)) {
         return res.status(400).json({ error: "invalid_data" });
       }
       const [maximum, seconds] = requestLimits[scope];

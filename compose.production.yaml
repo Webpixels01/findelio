@@ -145,6 +145,17 @@ services:
       ADMIN_NOTIFICATION_EMAIL: ${ADMIN_NOTIFICATION_EMAIL:?ADMIN_NOTIFICATION_EMAIL fehlt}
       FINDELIO_SITE_URL: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
       FINDELIO_REFERRAL_REGISTRATION_ENABLED: ${FINDELIO_REFERRAL_REGISTRATION_ENABLED:-false}
+      PASSWORD_RESET_URL_ALLOW_LIST: >-
+        https://${SITE_DOMAIN}/de-ch/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/en/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/sk/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/cs/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/hu/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/pl/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/ru/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/pt-pt/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/ro/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/vi/passwort-zuruecksetzen
       USER_REGISTER_URL_ALLOW_LIST: >-
         https://${SITE_DOMAIN}/de-ch/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/en/registrierung-bestaetigen,

@@ -1318,6 +1318,31 @@
     "loginDescription": "Melde dich an, um dein Konto zu nutzen.",
     "ready": "Dein Konto ist bestätigt. Du kannst Firmen suchen und auf ihren Profilen Bewertungen zur Prüfung einreichen.",
     "browse": "Firmen entdecken",
-    "security": "Kontosicherheit"
+    "security": "Kontosicherheit",
+    "reviewsTitle": "Meine Rezensionen",
+    "reviewsIntro": "Hier siehst du deine eingereichten Rezensionen und die Antworten der Unternehmen. Diese Übersicht ist nur zum Ansehen.",
+    "reviewsEmpty": "Du hast noch keine Rezension eingereicht.",
+    "reviewApproved": "Veröffentlicht",
+    "reviewRejected": "Nicht freigegeben",
+    "reviewPending": "Wird geprüft"
+  },
+  "PasswordReset": {
+    "title": "Passwort vergessen?",
+    "description": "Gib deine E-Mail-Adresse ein. Wir senden dir einen Link zum Zurücksetzen deines Passworts.",
+    "resetTitle": "Neues Passwort festlegen",
+    "resetDescription": "Wähle ein neues Passwort für dein Findelio-Konto.",
+    "email": "E-Mail",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Passwort wiederholen",
+    "send": "Link anfordern",
+    "save": "Passwort speichern",
+    "busy": "Bitte warten …",
+    "sent": "Falls zu dieser E-Mail-Adresse ein aktives Konto besteht, erhältst du eine E-Mail zum Zurücksetzen. Bitte prüfe auch deinen Spamordner.",
+    "done": "Dein Passwort wurde geändert. Du kannst dich jetzt mit deinem neuen Passwort anmelden.",
+    "invalidToken": "Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen Link an.",
+    "error": "Das hat leider nicht geklappt. Bitte versuche es später erneut.",
+    "rateLimited": "Zu viele Versuche. Bitte versuche es später erneut.",
+    "requestNew": "Neuen Link anfordern",
+    "back": "Zurück zum Login"
   }
 }

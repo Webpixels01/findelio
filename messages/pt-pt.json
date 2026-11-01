@@ -1316,6 +1316,31 @@
     "loginDescription": "Inicie sessão na sua conta.",
     "ready": "A sua conta está confirmada. Encontre empresas e envie avaliações para aprovação nos seus perfis.",
     "browse": "Encontrar empresas",
-    "security": "Segurança da conta"
+    "security": "Segurança da conta",
+    "reviewsTitle": "As minhas avaliações",
+    "reviewsIntro": "Aqui podes ver as avaliações enviadas e as respostas das empresas. Esta vista é apenas de leitura.",
+    "reviewsEmpty": "Ainda não enviaste nenhuma avaliação.",
+    "reviewApproved": "Publicada",
+    "reviewRejected": "Não aprovada",
+    "reviewPending": "Em análise"
+  },
+  "PasswordReset": {
+    "title": "Esqueceste-te da palavra-passe?",
+    "description": "Introduz o teu e-mail. Enviaremos uma ligação para repor a palavra-passe.",
+    "resetTitle": "Definir nova palavra-passe",
+    "resetDescription": "Escolhe uma nova palavra-passe para a tua conta Findelio.",
+    "email": "E-mail",
+    "newPassword": "Nova palavra-passe",
+    "confirmPassword": "Repetir palavra-passe",
+    "send": "Pedir ligação",
+    "save": "Guardar palavra-passe",
+    "busy": "Aguarda …",
+    "sent": "Se existir uma conta ativa com este e-mail, receberás uma mensagem para repor a palavra-passe. Verifica também o spam.",
+    "done": "A palavra-passe foi alterada. Já podes iniciar sessão com a nova palavra-passe.",
+    "invalidToken": "Esta ligação é inválida ou expirou. Pede uma nova.",
+    "error": "Ocorreu um erro. Tenta novamente mais tarde.",
+    "rateLimited": "Demasiadas tentativas. Tenta novamente mais tarde.",
+    "requestNew": "Pedir nova ligação",
+    "back": "Voltar ao início de sessão"
   }
 }

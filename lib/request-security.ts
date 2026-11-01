@@ -3,7 +3,7 @@ import { createHmac } from "node:crypto";
 import { isIP } from "node:net";
 
 export type RequestLimitScope =
-  | "login-ip" | "login-account" | "upload";
+  | "login-ip" | "login-account" | "upload" | "password-email-ip" | "password-email-account" | "password-reset";
 
 export function requestIdentity(request: Request, identity?: string): string {
   // Both supported ingress proxies append/overwrite the last XFF entry.

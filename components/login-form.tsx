@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/navigation";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -20,6 +21,7 @@ function getSafeDestination(value: string | null, locale: string): string {
 
 export default function LoginForm() {
   const t = useTranslations("Login");
+  const tp = useTranslations("PasswordReset");
   const locale = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -106,6 +108,8 @@ export default function LoginForm() {
           disabled={isLoading}
         />
       </label>
+
+      <Link href="/passwort-vergessen" className="mt-4 inline-block text-sm underline">{tp("title")}</Link>
 
       {otpRequired && (
         <label className="field-group mt-5">

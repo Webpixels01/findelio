@@ -1318,6 +1318,31 @@
     "loginDescription": "Sign in to use your account.",
     "ready": "Your account is confirmed. Find businesses and submit reviews for approval on their profiles.",
     "browse": "Find businesses",
-    "security": "Account security"
+    "security": "Account security",
+    "reviewsTitle": "My reviews",
+    "reviewsIntro": "View your submitted reviews and company replies here. This overview is read-only.",
+    "reviewsEmpty": "You have not submitted any reviews yet.",
+    "reviewApproved": "Published",
+    "reviewRejected": "Not approved",
+    "reviewPending": "Under review"
+  },
+  "PasswordReset": {
+    "title": "Forgot password?",
+    "description": "Enter your email address. We will send you a link to reset your password.",
+    "resetTitle": "Set a new password",
+    "resetDescription": "Choose a new password for your Findelio account.",
+    "email": "Email",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat password",
+    "send": "Request link",
+    "save": "Save password",
+    "busy": "Please wait …",
+    "sent": "If an active account exists for this email address, you will receive a password reset email. Please also check your spam folder.",
+    "done": "Your password has been changed. You can now sign in with your new password.",
+    "invalidToken": "This link is invalid or has expired. Please request a new link.",
+    "error": "Something went wrong. Please try again later.",
+    "rateLimited": "Too many attempts. Please try again later.",
+    "requestNew": "Request a new link",
+    "back": "Back to login"
   }
 }

@@ -89,6 +89,17 @@ services:
       FINDELIO_SITE_URL: http://localhost:3000
       # Default off until migration is applied and the feature is intentionally enabled.
       FINDELIO_REFERRAL_REGISTRATION_ENABLED: ${FINDELIO_REFERRAL_REGISTRATION_ENABLED:-false}
+      PASSWORD_RESET_URL_ALLOW_LIST: >-
+        http://localhost:3000/de-ch/passwort-zuruecksetzen,
+        http://localhost:3000/en/passwort-zuruecksetzen,
+        http://localhost:3000/sk/passwort-zuruecksetzen,
+        http://localhost:3000/cs/passwort-zuruecksetzen,
+        http://localhost:3000/hu/passwort-zuruecksetzen,
+        http://localhost:3000/pl/passwort-zuruecksetzen,
+        http://localhost:3000/ru/passwort-zuruecksetzen,
+        http://localhost:3000/pt-pt/passwort-zuruecksetzen,
+        http://localhost:3000/ro/passwort-zuruecksetzen,
+        http://localhost:3000/vi/passwort-zuruecksetzen
       USER_REGISTER_URL_ALLOW_LIST: >-
         http://localhost:3000/de-ch/registrierung-bestaetigen,
         http://localhost:3000/vi/registrierung-bestaetigen

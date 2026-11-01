@@ -1316,6 +1316,31 @@
     "loginDescription": "Jelentkezzen be fiókjába.",
     "ready": "Fiókja megerősítve. Keressen vállalkozásokat, és küldjön be értékelést a profiljukon.",
     "browse": "Vállalkozások keresése",
-    "security": "Fiókbiztonság"
+    "security": "Fiókbiztonság",
+    "reviewsTitle": "Értékeléseim",
+    "reviewsIntro": "Itt láthatod a beküldött értékeléseidet és a cégek válaszait. Ez az áttekintés csak olvasható.",
+    "reviewsEmpty": "Még nem küldtél be értékelést.",
+    "reviewApproved": "Közzétéve",
+    "reviewRejected": "Nem jóváhagyott",
+    "reviewPending": "Ellenőrzés alatt"
+  },
+  "PasswordReset": {
+    "title": "Elfelejtetted a jelszavad?",
+    "description": "Add meg az e-mail-címed. Küldünk egy hivatkozást a jelszó visszaállításához.",
+    "resetTitle": "Új jelszó beállítása",
+    "resetDescription": "Válassz új jelszót a Findelio-fiókodhoz.",
+    "email": "E-mail",
+    "newPassword": "Új jelszó",
+    "confirmPassword": "Jelszó megismétlése",
+    "send": "Hivatkozás kérése",
+    "save": "Jelszó mentése",
+    "busy": "Kérjük, várj …",
+    "sent": "Ha ehhez az e-mail-címhez aktív fiók tartozik, e-mailt kapsz a jelszó visszaállításához. Ellenőrizd a levélszemét mappát is.",
+    "done": "A jelszavad megváltozott. Most már bejelentkezhetsz az új jelszóval.",
+    "invalidToken": "Ez a hivatkozás érvénytelen vagy lejárt. Kérj újat.",
+    "error": "Hiba történt. Próbáld újra később.",
+    "rateLimited": "Túl sok próbálkozás. Próbáld újra később.",
+    "requestNew": "Új hivatkozás kérése",
+    "back": "Vissza a bejelentkezéshez"
   }
 }
