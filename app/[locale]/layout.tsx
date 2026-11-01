@@ -11,6 +11,7 @@ import CookieNotice from "@/components/cookie-notice";
 import GoogleAnalytics from "@/components/google-analytics";
 import StructuredData from "@/components/structured-data";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
+import ThemeSync from "@/components/theme-sync";
 import {
   absoluteUrl,
   getSiteUrl,
@@ -113,6 +114,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <GoogleAnalytics />
       </head>
       <body suppressHydrationWarning>
+        <ThemeSync locale={locale} />
         <StructuredData data={organizationData} />
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">

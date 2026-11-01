@@ -88,3 +88,17 @@ test('both header toggles observe the same selection', () => {
   assert.equal(mobile, true);
   offDesktop(); offMobile();
 });
+
+test('locale navigation restores the selection after html attributes are replaced', () => {
+  for (const blocked of [false, true]) {
+    const b = browser({ blocked });
+    for (const expected of ['dark', 'light']) {
+      b.theme.toggleTheme();
+      delete b.dataset.theme;
+      delete b.dataset.themePreference;
+      b.theme.restoreTheme();
+      assert.equal(b.dataset.theme, expected);
+      assert.equal(b.dataset.themePreference, expected);
+    }
+  }
+});

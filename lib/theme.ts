@@ -1,6 +1,7 @@
 export const THEME_STORAGE_KEY = "findelio-theme";
 export const THEME_EVENT = "findelio-theme-change";
 export type ThemePreference = "light" | "dark" | "system";
+let currentPreference: ThemePreference | undefined;
 
 export function normalizeTheme(value: string | null): ThemePreference {
   return value === "light" || value === "dark" ? value : "system";
@@ -19,11 +20,22 @@ export const THEME_INIT_SCRIPT = `(() => {
 })();`;
 
 export function applyTheme(preference: ThemePreference) {
+  currentPreference = preference;
   const dark = preference === "dark" ||
     (preference === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.dataset.themePreference = preference;
   document.documentElement.dataset.theme = dark ? "dark" : "light";
   window.dispatchEvent(new Event(THEME_EVENT));
+}
+
+export function restoreTheme() {
+  let preference = currentPreference ?? normalizeTheme(document.documentElement.dataset.themePreference ?? null);
+  try {
+    preference = normalizeTheme(window.localStorage.getItem(THEME_STORAGE_KEY));
+  } catch {
+    // Preserve the in-memory selection when storage is unavailable.
+  }
+  applyTheme(preference);
 }
 
 export function toggleTheme() {
