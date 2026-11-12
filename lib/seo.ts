@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { routing, type AppLocale } from "@/i18n/routing";
 
 export const SITE_NAME = "Findelio";
+export const DEFAULT_SHARE_IMAGE = "/images/findelio-share-20261112.jpg";
 
 export const htmlLanguageTags: Record<AppLocale, string> = {
   "de-ch": "de-CH",
@@ -100,7 +101,7 @@ export function buildPageMetadata({
     ? image.startsWith("http://") || image.startsWith("https://")
       ? image
       : absoluteUrl(image)
-    : localizedUrl(locale, "/share-image");
+    : absoluteUrl(DEFAULT_SHARE_IMAGE);
 
   return {
     title,

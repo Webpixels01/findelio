@@ -14,9 +14,9 @@ import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import ThemeSync from "@/components/theme-sync";
 import {
   absoluteUrl,
+  DEFAULT_SHARE_IMAGE,
   getSiteUrl,
   htmlLanguageTags,
-  localizedUrl,
 } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: "website",
       images: [
         {
-          url: localizedUrl(locale, "/share-image"),
+          url: absoluteUrl(DEFAULT_SHARE_IMAGE),
           width: 1200,
           height: 630,
           alt: t("title"),
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: [localizedUrl(locale, "/share-image")],
+      images: [absoluteUrl(DEFAULT_SHARE_IMAGE)],
     },
   };
 }
