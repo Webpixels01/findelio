@@ -1732,7 +1732,6 @@ export async function uploadAccountListingImages(
   for (const file of files) {
     const formData = new FormData();
     formData.append("folder", folderId);
-    formData.append("uploaded_by", currentUserId);
     formData.append(
       "title",
       `${listing.name} – ${file.name}`.slice(0, 240),
@@ -1750,6 +1749,22 @@ export async function uploadAccountListingImages(
     });
     const uploadedFile =
       await readDirectusItemResponse<DirectusFileMetadata>(response);
+
+    // Directus derives uploaded_by from the service token during upload and
+    // ignores a multipart override. Reassign this newly created file explicitly.
+    // The service policy permits only this field on its own Public uploads.
+    const ownerUrl = new URL(`/files/${encodeURIComponent(uploadedFile.id)}`, getDirectusUrl());
+    ownerUrl.searchParams.set("fields", "id,uploaded_by,folder");
+    const ownerResponse = await fetch(ownerUrl, {
+      method: "PATCH",
+      headers: { ...directusServerHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ uploaded_by: currentUserId }),
+      cache: "no-store",
+    });
+    const ownedFile = await readDirectusItemResponse<DirectusFileMetadata>(ownerResponse);
+    if (ownedFile.id !== uploadedFile.id || ownedFile.uploaded_by !== currentUserId || ownedFile.folder !== folderId) {
+      throw new DirectusAccountError("Die Bilddatei konnte dem Konto nicht zugeordnet werden.", 500, "UPLOAD_OWNER_MISMATCH");
+    }
 
     uploadedImages.push({
       id: uploadedFile.id,
