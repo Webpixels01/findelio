@@ -1,5 +1,7 @@
 "use client";
 
+import UploadRequirements from "@/components/upload-requirements";
+
 import Image from "next/image";
 import PremiumBadge from "@/components/premium-badge";
 import {
@@ -358,6 +360,7 @@ const ListingPremiumFields = forwardRef<
           {t("features.logo")}
         </legend>
         <p className="mt-1 text-sm text-[var(--muted)]">{t("logoHint")}</p>
+        <UploadRequirements />
         <div className="mt-4 flex flex-wrap items-center gap-4">
           {logo && !logoFile ? (
             <Image
@@ -406,6 +409,7 @@ const ListingPremiumFields = forwardRef<
           {t("features.gallery")}
         </legend>
         <p className="mt-1 text-sm text-[var(--muted)]">{t("galleryHint")}</p>
+        <UploadRequirements />
         {(gallery.length > 0 || galleryFiles.length > 0) && (
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {gallery.map((image) => (

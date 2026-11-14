@@ -805,7 +805,7 @@
         "socialLinks": "Liên kết mạng xã hội",
         "translations": "Mô tả đa ngôn ngữ"
       },
-      "logoHint": "Tải lên logo doanh nghiệp hình vuông hoặc nằm ngang.",
+      "logoHint": "Khuyến nghị: ít nhất 512 × 512 pixel cho logo vuông; cũng hỗ trợ logo ngang.",
       "logoPreview": "Xem trước logo doanh nghiệp",
       "noLogo": "Chưa có logo",
       "chooseLogo": "Chọn logo",
@@ -890,7 +890,7 @@
       "not_found": "Không tìm thấy hồ sơ doanh nghiệp.",
       "invalid_selection": "Ngành nghề hoặc ngôn ngữ đã chọn không hợp lệ. Hãy tải lại trang và thử lại.",
       "invalid_image": "Ít nhất một ảnh không hợp lệ hoặc không thuộc hồ sơ doanh nghiệp này.",
-      "file_too_large": "Ít nhất một ảnh lớn hơn 8 MB.",
+      "file_too_large": "Ít nhất một ảnh lớn hơn 8 MiB.",
       "too_many_files": "Bạn đã chọn quá nhiều ảnh.",
       "upload_failed": "Không thể tải ảnh lên.",
       "premium_required": "Các tính năng này yêu cầu gói Premium đang hoạt động.",
@@ -1344,5 +1344,10 @@
     "rateLimited": "Quá nhiều lần thử. Vui lòng thử lại sau.",
     "requestNew": "Yêu cầu liên kết mới",
     "back": "Quay lại đăng nhập"
+  },
+  "UploadRequirements": {
+    "formats": "Cho phép: JPG/JPEG, PNG và WebP (không hỗ trợ ảnh động).",
+    "size": "Tối đa 8 MiB mỗi tệp.",
+    "dimensions": "Độ phân giải: tối đa 8000 pixel mỗi chiều và tổng cộng 20 megapixel (chiều rộng × chiều cao)."
   }
 }

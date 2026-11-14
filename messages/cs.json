@@ -805,7 +805,7 @@
         "socialLinks": "Odkazy na sociální sítě",
         "translations": "Vícejazyčný popis"
       },
-      "logoHint": "Nahrajte čtvercové nebo horizontální firemní logo.",
+      "logoHint": "Doporučeno: alespoň 512 × 512 pixelů pro čtvercová loga; možná jsou i vodorovná loga.",
       "logoPreview": "Náhled firemního loga",
       "noLogo": "Zatím bez loga",
       "chooseLogo": "Vybrat logo",
@@ -869,7 +869,7 @@
       "not_found": "Firemní záznam nebyl nalezen.",
       "invalid_selection": "Jedna z vybraných kategorií nebo jazyků je neplatná. Obnovte stránku a zkuste to znovu.",
       "invalid_image": "Alespoň jeden obrázek je neplatný nebo nepatří k tomuto firemnímu záznamu.",
-      "file_too_large": "Alespoň jeden obrázek je větší než 8 MB.",
+      "file_too_large": "Alespoň jeden obrázek je větší než 8 MiB.",
       "too_many_files": "Bylo vybráno příliš mnoho obrázků.",
       "upload_failed": "Obrázky se nepodařilo nahrát.",
       "premium_required": "Pro tyto funkce je nutné aktivní prémiové předplatné.",
@@ -1342,5 +1342,10 @@
     "rateLimited": "Příliš mnoho pokusů. Zkuste to později.",
     "requestNew": "Vyžádat nový odkaz",
     "back": "Zpět na přihlášení"
+  },
+  "UploadRequirements": {
+    "formats": "Povoleno: JPG/JPEG, PNG a WebP (bez animovaných obrázků).",
+    "size": "Maximálně 8 MiB na soubor.",
+    "dimensions": "Rozlišení: nejvýše 8000 pixelů na stranu a celkem 20 megapixelů (šířka × výška)."
   }
 }

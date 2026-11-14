@@ -805,7 +805,7 @@
         "socialLinks": "Linkuri către rețele sociale",
         "translations": "Descriere multilingvă"
       },
-      "logoHint": "Încarcă un logo pătrat sau orizontal al firmei.",
+      "logoHint": "Recomandat: cel puțin 512 × 512 pixeli pentru sigle pătrate; sunt acceptate și sigle orizontale.",
       "logoPreview": "Previzualizarea logo-ului firmei",
       "noLogo": "Niciun logo încă",
       "chooseLogo": "Alege logo-ul",
@@ -890,7 +890,7 @@
       "not_found": "Listarea firmei nu a fost găsită.",
       "invalid_selection": "Un domeniu sau o limbă selectată nu este validă. Reîncarcă pagina și încearcă din nou.",
       "invalid_image": "Cel puțin o imagine este invalidă sau nu aparține acestei listări de firmă.",
-      "file_too_large": "Cel puțin o imagine este mai mare de 8 MB.",
+      "file_too_large": "Cel puțin o imagine este mai mare de 8 MiB.",
       "too_many_files": "Au fost selectate prea multe imagini.",
       "upload_failed": "Imaginile nu au putut fi încărcate.",
       "premium_required": "Aceste funcții necesită un abonament Premium activ.",
@@ -1342,5 +1342,10 @@
     "rateLimited": "Prea multe încercări. Încearcă din nou mai târziu.",
     "requestNew": "Solicită un link nou",
     "back": "Înapoi la autentificare"
+  },
+  "UploadRequirements": {
+    "formats": "Formate permise: JPG/JPEG, PNG și WebP (fără imagini animate).",
+    "size": "Maximum 8 MiB per fișier.",
+    "dimensions": "Rezoluție: maximum 8000 de pixeli pe fiecare latură și 20 de megapixeli în total (lățime × înălțime)."
   }
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import UploadRequirements from "@/components/upload-requirements";
+
 import { FormEvent, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
@@ -161,6 +163,7 @@ export default function ListingPostManager({ listingId, posts }: { listingId: st
               </span>
             </div>
           </div>
+          <UploadRequirements />
           <div className="grid gap-4 sm:grid-cols-2"><label className="field-group"><span className="field-label">{t("startsAt")}</span><input name="starts_at" type="datetime-local" className="field-control" defaultValue={toDateTimeLocal(editingPost?.starts_at ?? null)} /></label><label className="field-group"><span className="field-label">{t("endsAt")}</span><input name="ends_at" type="datetime-local" className="field-control" defaultValue={toDateTimeLocal(editingPost?.ends_at ?? null)} /></label></div>
           <div className="grid gap-4 sm:grid-cols-2"><label className="field-group"><span className="field-label">{t("buttonLabel")}</span><input name="cta_label" className="field-control" maxLength={80} defaultValue={editingPost?.cta_label ?? ""} /></label><label className="field-group"><span className="field-label">{t("buttonUrl")}</span><input name="cta_url" className="field-control" placeholder="https://" maxLength={500} defaultValue={editingPost?.cta_url ?? ""} /></label></div>
           <label className="field-group"><span className="field-label">{t("status")}</span><select name="status" className="field-control" defaultValue={editingPost?.status === "draft" || editingPost?.status === "archived" ? "draft" : editingPost ? "pending" : "draft"}><option value="draft">{t("statuses.draft")}</option><option value="pending">{t("statuses.pending")}</option></select></label>

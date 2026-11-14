@@ -805,7 +805,7 @@
         "socialLinks": "Ligações para redes sociais",
         "translations": "Descrição multilingue"
       },
-      "logoHint": "Carrega um logótipo quadrado ou horizontal da empresa.",
+      "logoHint": "Recomendado: pelo menos 512 × 512 píxeis para logótipos quadrados; também são aceites logótipos horizontais.",
       "logoPreview": "Pré-visualização do logótipo",
       "noLogo": "Ainda sem logótipo",
       "chooseLogo": "Escolher logótipo",
@@ -890,7 +890,7 @@
       "not_found": "O registo empresarial não foi encontrado.",
       "invalid_selection": "Um setor ou idioma selecionado é inválido. Atualiza a página e tenta novamente.",
       "invalid_image": "Pelo menos uma imagem é inválida ou não pertence a este registo empresarial.",
-      "file_too_large": "Pelo menos uma imagem tem mais de 8 MB.",
+      "file_too_large": "Pelo menos uma imagem tem mais de 8 MiB.",
       "too_many_files": "Foram selecionadas demasiadas imagens.",
       "upload_failed": "Não foi possível carregar as imagens.",
       "premium_required": "Estas funcionalidades requerem uma subscrição Premium ativa.",
@@ -1342,5 +1342,10 @@
     "rateLimited": "Demasiadas tentativas. Tenta novamente mais tarde.",
     "requestNew": "Pedir nova ligação",
     "back": "Voltar ao início de sessão"
+  },
+  "UploadRequirements": {
+    "formats": "Formatos permitidos: JPG/JPEG, PNG e WebP (sem imagens animadas).",
+    "size": "Máximo de 8 MiB por ficheiro.",
+    "dimensions": "Resolução: até 8000 píxeis por lado e 20 megapíxeis no total (largura × altura)."
   }
 }

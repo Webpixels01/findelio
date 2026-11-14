@@ -805,7 +805,7 @@
         "socialLinks": "Social media links",
         "translations": "Multilingual description"
       },
-      "logoHint": "Upload a square or horizontal company logo.",
+      "logoHint": "Recommended: at least 512 × 512 pixels for square logos; horizontal logos are also supported.",
       "logoPreview": "Company logo preview",
       "noLogo": "No logo yet",
       "chooseLogo": "Choose logo",
@@ -890,7 +890,7 @@
       "not_found": "The business listing was not found.",
       "invalid_selection": "A selected industry or language is invalid. Reload the page and try again.",
       "invalid_image": "At least one image is invalid or does not belong to this business listing.",
-      "file_too_large": "At least one image is larger than 8 MB.",
+      "file_too_large": "At least one image is larger than 8 MiB.",
       "too_many_files": "Too many images were selected.",
       "upload_failed": "The images could not be uploaded.",
       "premium_required": "An active Premium subscription is required for these features.",
@@ -1344,5 +1344,10 @@
     "rateLimited": "Too many attempts. Please try again later.",
     "requestNew": "Request a new link",
     "back": "Back to login"
+  },
+  "UploadRequirements": {
+    "formats": "Allowed: JPG/JPEG, PNG and WebP (no animated images).",
+    "size": "Maximum 8 MiB per file.",
+    "dimensions": "Resolution: up to 8000 pixels per side and 20 megapixels in total (width × height)."
   }
 }

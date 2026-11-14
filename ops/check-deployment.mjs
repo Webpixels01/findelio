@@ -14,6 +14,9 @@ export async function checkDeployment({ env = process.env, request = fetch } = {
     ["Website-Status", new URL("/api/health", app), 200],
     ["Startseite", new URL("/de-ch", app), 200],
     ["CMS-Status", new URL("/server/ping", env.DIRECTUS_URL), 200],
+    ["Upload-Ordnerzugriff", new URL('/folders?fields=id,name&limit=1&filter[name][_eq]=Public', env.DIRECTUS_URL), 200, {
+      headers: { Authorization: `Bearer ${env.DIRECTUS_TOKEN}` },
+    }],
     ["Kontakt-Zugriffsschutz", new URL("contact", endpoint), 401, {
       method: "POST", headers: { "Content-Type": "application/json" }, body: "{}",
     }],
@@ -33,7 +36,14 @@ export async function checkDeployment({ env = process.env, request = fetch } = {
     } catch {
       throw new Error(`${label}: Dienst nicht erreichbar.`);
     }
-    await response.body?.cancel();
+    if (label === "Upload-Ordnerzugriff" && response.status === expected) {
+      const result = await response.json();
+      if (!result?.data?.[0]?.id || result.data[0].name !== "Public") {
+        throw new Error("Upload-Ordnerzugriff: Öffentlicher Dateiordner fehlt.");
+      }
+    } else {
+      await response.body?.cancel();
+    }
     if (response.status !== expected) {
       throw new Error(`${label}: HTTP ${response.status}, erwartet ${expected}.`);
     }

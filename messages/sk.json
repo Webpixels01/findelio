@@ -805,7 +805,7 @@
         "socialLinks": "Odkazy na sociálne siete",
         "translations": "Viacjazyčný popis"
       },
-      "logoHint": "Nahrajte štvorcové alebo horizontálne firemné logo.",
+      "logoHint": "Odporúčané: aspoň 512 × 512 pixelov pre štvorcové logá; možné sú aj vodorovné logá.",
       "logoPreview": "Náhľad firemného loga",
       "noLogo": "Zatiaľ bez loga",
       "chooseLogo": "Vybrať logo",
@@ -869,7 +869,7 @@
       "not_found": "Firemný záznam sa nenašiel.",
       "invalid_selection": "Jedno z vybraných odvetví alebo jazykov je neplatné. Obnovte stránku a skúste to znova.",
       "invalid_image": "Aspoň jeden obrázok je neplatný alebo nepatrí k tomuto firemnému záznamu.",
-      "file_too_large": "Aspoň jeden obrázok je väčší ako 8 MB.",
+      "file_too_large": "Aspoň jeden obrázok je väčší ako 8 MiB.",
       "too_many_files": "Bolo vybraných príliš veľa obrázkov.",
       "upload_failed": "Obrázky sa nepodarilo nahrať.",
       "premium_required": "Pre tieto funkcie je potrebné aktívne prémiové predplatné.",
@@ -1342,5 +1342,10 @@
     "rateLimited": "Príliš veľa pokusov. Skúste to neskôr.",
     "requestNew": "Vyžiadať nový odkaz",
     "back": "Späť na prihlásenie"
+  },
+  "UploadRequirements": {
+    "formats": "Povolené: JPG/JPEG, PNG a WebP (bez animovaných obrázkov).",
+    "size": "Maximálne 8 MiB na súbor.",
+    "dimensions": "Rozlíšenie: najviac 8000 pixelov na stranu a celkovo 20 megapixelov (šírka × výška)."
   }
 }

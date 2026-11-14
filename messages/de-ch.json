@@ -805,7 +805,7 @@
         "socialLinks": "Social-Media-Links",
         "translations": "Mehrsprachige Beschreibung"
       },
-      "logoHint": "Lade ein quadratisches oder horizontales Firmenlogo hoch.",
+      "logoHint": "Empfohlen: mindestens 512 × 512 Pixel für quadratische Logos; horizontale Logos sind ebenfalls möglich.",
       "logoPreview": "Vorschau des Firmenlogos",
       "noLogo": "Noch kein Logo",
       "chooseLogo": "Logo auswählen",
@@ -869,7 +869,7 @@
       "not_found": "Der Firmeneintrag wurde nicht gefunden.",
       "invalid_selection": "Eine ausgewählte Branche oder Sprache ist ungültig. Lade die Seite neu und versuche es erneut.",
       "invalid_image": "Mindestens eine Bilddatei ist ungültig oder gehört nicht zu diesem Firmeneintrag.",
-      "file_too_large": "Mindestens ein Bild ist grösser als 8 MB.",
+      "file_too_large": "Mindestens ein Bild ist grösser als 8 MiB.",
       "too_many_files": "Es wurden zu viele Bilder ausgewählt.",
       "upload_failed": "Die Bilder konnten nicht hochgeladen werden.",
       "premium_required": "Für diese Funktionen ist ein aktives Premium-Abo erforderlich.",
@@ -1344,5 +1344,10 @@
     "rateLimited": "Zu viele Versuche. Bitte versuche es später erneut.",
     "requestNew": "Neuen Link anfordern",
     "back": "Zurück zum Login"
+  },
+  "UploadRequirements": {
+    "formats": "Erlaubt: JPG/JPEG, PNG und WebP (keine animierten Bilder).",
+    "size": "Maximal 8 MiB pro Datei.",
+    "dimensions": "Auflösung: maximal 8000 Pixel je Seite und insgesamt 20 Megapixel (Breite × Höhe)."
   }
 }

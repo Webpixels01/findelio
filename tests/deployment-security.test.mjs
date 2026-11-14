@@ -15,25 +15,28 @@ test("deployment check verifies the running endpoints without sending mail or up
   const calls = [];
   const request = async (url, options) => {
     calls.push({ url, ...options });
-    return new Response(null, { status: expectedResponse(url) });
+    return url.pathname === "/folders" ? Response.json({ data: [{ id: "public-folder", name: "Public" }] }) : new Response(null, { status: expectedResponse(url) });
   };
   await checkDeployment({ env, request });
-  assert.equal(calls.length, 6);
-  const authenticated = calls.filter(call => call.headers?.Authorization);
+  assert.equal(calls.length, 7);
+  const authenticated = calls.filter(call => call.headers?.Authorization && call.method === "POST");
   assert.equal(authenticated.length, 1);
   assert.equal(authenticated[0].url.origin, env.DIRECTUS_URL);
   assert.equal(authenticated[0].url.pathname, "/findelio-review-notification/rate-limit");
   const payload = JSON.parse(authenticated[0].body);
   assert.equal(payload.scope, "login-ip");
   assert.match(payload.client_key, /^[a-f0-9]{64}$/);
+  const folderRead = calls.find(call => call.url.pathname === "/folders");
+  assert.equal(folderRead.headers.Authorization, `Bearer ${env.DIRECTUS_TOKEN}`);
+  assert.equal(folderRead.url.searchParams.get("filter[name][_eq]"), "Public");
   assert.equal(calls.find(call => call.url.pathname.endsWith("/contact")).body, "{}");
   assert.equal(calls.find(call => call.url.pathname.endsWith("/media")).body, undefined);
   assert.ok(calls.every(call => call.redirect === "manual"));
 });
 
 test("deployment check fails for an old backend, wrong token, missing table or missing access guard", async () => {
-  for (const [path, status] of [["rate-limit", 404], ["rate-limit", 403], ["rate-limit", 503], ["contact", 200], ["media", 200]]) {
-    await assert.rejects(checkDeployment({ env, request: async url => new Response(null, {
+  for (const [path, status] of [["folders", 403], ["rate-limit", 404], ["rate-limit", 403], ["rate-limit", 503], ["contact", 200], ["media", 200]]) {
+    await assert.rejects(checkDeployment({ env, request: async url => url.pathname === "/folders" && path !== "folders" ? Response.json({ data: [{ id: "public-folder", name: "Public" }] }) : new Response(null, {
       status: url.pathname.endsWith("/" + path) ? status : expectedResponse(url),
     }) }), new RegExp(`HTTP ${status}, erwartet`));
   }
@@ -89,4 +92,11 @@ test("rollback check explicitly verifies 12.5.0 and rejects a still-running 12.6
   await assert.rejects(checkDirectusUpgrade({ env: rollbackEnv, request: async () => Response.json({ data:
     { version: "12.6.0", license: { source: "env" } },
   }) }), /nicht aktiv/);
+});
+
+test("deployment rejects an inaccessible or missing upload folder before reporting success", async () => {
+  for (const data of [[], [{ id: "other", name: "Private" }]]) {
+    await assert.rejects(checkDeployment({ env, request: async url => url.pathname === "/folders"
+      ? Response.json({ data }) : new Response(null, { status: expectedResponse(url) }) }), /Öffentlicher Dateiordner fehlt/);
+  }
 });

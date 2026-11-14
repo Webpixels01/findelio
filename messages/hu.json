@@ -805,7 +805,7 @@
         "socialLinks": "Közösségimédia-hivatkozások",
         "translations": "Többnyelvű leírás"
       },
-      "logoHint": "Tölts fel négyzetes vagy vízszintes céglogót.",
+      "logoHint": "Ajánlott: legalább 512 × 512 képpont négyzetes logókhoz; vízszintes logók is használhatók.",
       "logoPreview": "Céglogó előnézete",
       "noLogo": "Még nincs logó",
       "chooseLogo": "Logó kiválasztása",
@@ -890,7 +890,7 @@
       "not_found": "A cégbejegyzés nem található.",
       "invalid_selection": "Egy kiválasztott ágazat vagy nyelv érvénytelen. Töltsd újra az oldalt, majd próbáld újra.",
       "invalid_image": "Legalább egy kép érvénytelen, vagy nem ehhez a cégbejegyzéshez tartozik.",
-      "file_too_large": "Legalább egy kép nagyobb 8 MB-nál.",
+      "file_too_large": "Legalább egy kép nagyobb 8 MiB-nál.",
       "too_many_files": "Túl sok kép lett kiválasztva.",
       "upload_failed": "A képeket nem sikerült feltölteni.",
       "premium_required": "Ezekhez a funkciókhoz aktív prémium előfizetés szükséges.",
@@ -1342,5 +1342,10 @@
     "rateLimited": "Túl sok próbálkozás. Próbáld újra később.",
     "requestNew": "Új hivatkozás kérése",
     "back": "Vissza a bejelentkezéshez"
+  },
+  "UploadRequirements": {
+    "formats": "Engedélyezett: JPG/JPEG, PNG és WebP (animált képek nélkül).",
+    "size": "Legfeljebb 8 MiB fájlonként.",
+    "dimensions": "Felbontás: oldalanként legfeljebb 8000 képpont, összesen 20 megapixel (szélesség × magasság)."
   }
 }

@@ -143,7 +143,11 @@ export async function POST(
     if (error instanceof RequestBodyError) {
       return NextResponse.json({ error: error.status === 413 ? "file_too_large" : "invalid_data" }, { status: error.status });
     }
-    if (error instanceof DirectusAccountError) return errorResponse(error);
+    if (error instanceof DirectusAccountError) {
+      // Log the upstream cause without tokens or uploaded file contents.
+      console.error("Bild-Upload abgelehnt:", error.code, error.status, error.message);
+      return errorResponse(error);
+    }
     if (error instanceof DirectusAuthError) {
       await clearAuthCookies();
       return NextResponse.json({ error: "unauthorized" }, { status: 401 });
