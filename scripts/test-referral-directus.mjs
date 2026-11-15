@@ -12,10 +12,15 @@ const browserFixture = process.argv.includes('--browser-fixture');
 const twoFactorBrowser = process.argv.includes('--two-factor-browser');
 const browserOnly = process.argv.includes('--browser-only');
 if (browserOnly && !twoFactorBrowser) throw new Error('--browser-only requires --two-factor-browser');
+const upgradeFrom126 = process.argv.includes('--upgrade-from-12-6');
 const upgradeFrom125 = process.argv.includes('--upgrade-from-12-5');
 const upgradeFrom11 = process.argv.includes('--upgrade-from-11');
 const recoverFrom12 = process.argv.includes('--recover-from-12');
-const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11 || upgradeFrom125;
+if (upgradeFrom126 && (upgradeFrom125 || upgradeFrom11 || recoverFrom12)) throw new Error('Select only one upgrade path');
+const patchUpgrade = upgradeFrom125 || upgradeFrom126;
+const baselineVersion = upgradeFrom126 ? '12.6.0' : '12.5.0';
+const targetVersion = upgradeFrom126 ? '12.6.1' : '12.6.0';
+const licensedUpgrade = process.argv.includes('--licensed-upgrade') || upgradeFrom11 || patchUpgrade;
 if (licensedUpgrade && (recoverFrom12 || browserFixture)) throw new Error('Licensed upgrade must run separately');
 if (twoFactorBrowser && !licensedUpgrade) throw new Error('2FA browser tests require --licensed-upgrade');
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -122,7 +127,7 @@ try {
   if (recoverFrom12 || licensedUpgrade) await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
   if (licensedUpgrade) await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
   if (upgradeFrom11 || recoverFrom12 || licensedUpgrade) {
-    config.services.directus.image = 'directus/directus:12.5.0';
+    config.services.directus.image = `directus/directus:${baselineVersion}`;
     if (licensedUpgrade) {
       config.services.directus.environment.LICENSE_KEY = licenseKey;
       licenseAttempted = true;
@@ -131,13 +136,13 @@ try {
     await run(['up', '-d', '--no-deps', 'directus']);
   }
   await ready();
-  if (upgradeFrom125) {
-    console.log('BASELINE 12.5.0: license, filtered permissions and ownership');
+  if (patchUpgrade) {
+    console.log(`BASELINE ${baselineVersion}: license, filtered permissions and ownership`);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
-    console.log('UPGRADE: same disposable database from 12.5.0 to 12.6.0');
-    config.services.directus.image = 'directus/directus:12.6.0';
+    console.log(`UPGRADE: same disposable database from ${baselineVersion} to ${targetVersion}`);
+    config.services.directus.image = `directus/directus:${targetVersion}`;
     await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
     await run(['up', '-d', '--no-deps', 'directus']);
     await ready();
@@ -146,7 +151,7 @@ try {
     await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
-    await run(['exec', '-T', '-e', `FINDELIO_EXPECTED_DIRECTUS_VERSION=${upgradeFrom125 ? '12.6.0' : '12.5.0'}`, '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
+    await run(['exec', '-T', '-e', `FINDELIO_EXPECTED_DIRECTUS_VERSION=${patchUpgrade ? targetVersion : baselineVersion}`, '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
       'directus', 'node', '/test/check-directus-upgrade.mjs']);
   }
   if (recoverFrom12) {
@@ -187,9 +192,9 @@ try {
       child.on('close', code => code === 0 ? resolve() : reject(new Error('Two-factor browser test failed')));
     });
   }
-  if (upgradeFrom125) {
-    console.log('ROLLBACK: verify 12.5.0 with the database migrated by 12.6.0');
-    config.services.directus.image = 'directus/directus:12.5.0';
+  if (patchUpgrade) {
+    console.log(`ROLLBACK: verify ${baselineVersion} with the database migrated by ${targetVersion}`);
+    config.services.directus.image = `directus/directus:${baselineVersion}`;
     await writeFile(configPath, JSON.stringify(config), { mode: 0o600 });
     await run(['up', '-d', '--no-deps', 'directus']);
     await ready();
@@ -197,7 +202,7 @@ try {
     await run(['exec', '-T', 'directus', 'node', '/test/directus-license.integration.mjs', 'check']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-permissions-recovery.mjs', '200']);
     await run(['exec', '-T', 'directus', 'node', '/test/directus-ownership-upgrade.mjs']);
-    await run(['exec', '-T', '-e', 'FINDELIO_EXPECTED_DIRECTUS_VERSION=12.5.0',
+    await run(['exec', '-T', '-e', `FINDELIO_EXPECTED_DIRECTUS_VERSION=${baselineVersion}`,
       '-e', 'DIRECTUS_URL=http://127.0.0.1:8055', '-e', 'DIRECTUS_TOKEN=isolated-recovery-fixture-token',
       'directus', 'node', '/test/check-directus-upgrade.mjs']);
   }

@@ -17,20 +17,20 @@ async function fakeDocker() {
   else if (args.includes('build') && failure === 'build') process.exit(72);
   else if (args.includes('up') && args.at(-1) === 'directus') {
     const paths = args.flatMap((a, i) => a === '-f' ? [args[i + 1]] : []);
-    const rollback = paths.some(p => fs.readFileSync(p, 'utf8').includes('image: directus/directus:12.5.0'));
-    fs.writeFileSync(root + '/state', rollback ? '12.5.0' : '12.6.0');
+    const rollback = paths.some(p => fs.readFileSync(p, 'utf8').includes('image: directus/directus:12.6.0'));
+    fs.writeFileSync(root + '/state', rollback ? '12.6.0' : '12.6.1');
     if (!rollback && failure === 'start') process.exit(73);
   } else if (args.includes('exec') && args.includes('app')) {
     const script = fs.readFileSync(0, 'utf8');
     const upgrade = script.includes('export async function checkDirectusUpgrade');
     fs.appendFileSync(root + '/checks', (upgrade ? 'upgrade' : 'website') + ':' + state() + '\n');
-    if (upgrade && failure === 'permissions' && state() === '12.6.0') process.exit(74);
+    if (upgrade && failure === 'permissions' && state() === '12.6.1') process.exit(74);
   }
 }
 
 // Real shell scripts with a fake Docker executable. Each case owns all of its
 // temporary files, backup outputs and simulated container states.
-async function deployment({ key = 'synthetic-license', failure = '', previous = '12.5.0', script = 'deploy.sh' } = {}) {
+async function deployment({ key = 'synthetic-license', failure = '', previous = '12.6.0', script = 'deploy.sh' } = {}) {
   const dir = await mkdtemp(join(tmpdir(), 'findelio-deploy-test-'));
   try {
     await mkdir(join(dir, 'ops'));
@@ -67,7 +67,7 @@ test('missing or empty quoted license stops before changing the running services
     const result = await deployment({ key });
     assert.equal(result.status, 1);
     assert.match(result.output, /LICENSE_KEY fehlt/);
-    assert.equal(result.version, '12.5.0');
+    assert.equal(result.version, '12.6.0');
     assert.ok(result.calls.every(args => !args.includes('up') && !args.includes('build')));
   }
 });
@@ -75,18 +75,18 @@ test('missing or empty quoted license stops before changing the running services
 test('successful upgrade checks actual permissions before and after updating the frontend', async () => {
   const result = await deployment();
   assert.equal(result.status, 0, result.output);
-  assert.equal(result.version, '12.6.0');
-  assert.equal(result.checks, 'upgrade:12.6.0\nupgrade:12.6.0\nwebsite:12.6.0\n');
+  assert.equal(result.version, '12.6.1');
+  assert.equal(result.checks, 'upgrade:12.6.1\nupgrade:12.6.1\nwebsite:12.6.1\n');
   assert.match(result.output, /Deployment abgeschlossen/);
 });
 
-test('failed CMS startup or filtered reads restores 12.5.0 and verifies the website', async () => {
+test('failed CMS startup or filtered reads restores 12.6.0 and verifies the website', async () => {
   for (const [failure, status] of [['start', 73], ['permissions', 74]]) {
     const result = await deployment({ failure });
     assert.equal(result.status, status, result.output);
-    assert.equal(result.version, '12.5.0');
-    assert.match(result.checks, /upgrade:12\.5\.0\nwebsite:12\.5\.0/);
-    assert.ok(result.calls.some(args => args.includes('FINDELIO_EXPECTED_DIRECTUS_VERSION=12.5.0')));
+    assert.equal(result.version, '12.6.0');
+    assert.match(result.checks, /upgrade:12\.6\.0\nwebsite:12\.6\.0/);
+    assert.ok(result.calls.some(args => args.includes('FINDELIO_EXPECTED_DIRECTUS_VERSION=12.6.0')));
     assert.match(result.output, /Vorherige CMS-Version und Website wiederhergestellt/);
     assert.ok(!result.calls.some(args => args.includes('up') && args.at(-1) === 'app'));
   }
@@ -95,21 +95,21 @@ test('failed CMS startup or filtered reads restores 12.5.0 and verifies the webs
 test('build failures leave CMS intact; an existing v12 does not trigger an untested downgrade', async () => {
   const build = await deployment({ failure: 'build' });
   assert.equal(build.status, 72);
-  assert.equal(build.version, '12.5.0');
+  assert.equal(build.version, '12.6.0');
   assert.ok(!build.calls.some(args => args.includes('up')));
-  const existing = await deployment({ previous: '12.6.0', failure: 'permissions' });
+  const existing = await deployment({ previous: '12.6.1', failure: 'permissions' });
   assert.equal(existing.status, 74);
-  assert.equal(existing.version, '12.6.0');
-  assert.doesNotMatch(existing.output, /Stelle Directus 12\.5/);
+  assert.equal(existing.version, '12.6.1');
+  assert.doesNotMatch(existing.output, /Stelle Directus 12\.6\.0/);
 });
 
 
-test('manual recovery returns 12.6.0 to 12.5.0 and checks version, permissions and website', async () => {
-  const result = await deployment({ previous: '12.6.0', script: 'recover-directus.sh' });
+test('manual recovery returns 12.6.1 to 12.6.0 and checks version, permissions and website', async () => {
+  const result = await deployment({ previous: '12.6.1', script: 'recover-directus.sh' });
   assert.equal(result.status, 0, result.output);
-  assert.equal(result.version, '12.5.0');
-  assert.equal(result.checks, 'upgrade:12.5.0\nwebsite:12.5.0\n');
-  assert.ok(result.calls.some(args => args.includes('FINDELIO_EXPECTED_DIRECTUS_VERSION=12.5.0')));
+  assert.equal(result.version, '12.6.0');
+  assert.equal(result.checks, 'upgrade:12.6.0\nwebsite:12.6.0\n');
+  assert.ok(result.calls.some(args => args.includes('FINDELIO_EXPECTED_DIRECTUS_VERSION=12.6.0')));
 });
 
 test('manual recovery rejects an unexpected CMS version before stopping containers', async () => {

@@ -2,8 +2,8 @@ import { pathToFileURL } from "node:url";
 
 // Run in the app container. Use its service token; never print API bodies.
 export async function checkDirectusUpgrade({ env = process.env, request = fetch } = {}) {
-  const expectedVersion = env.FINDELIO_EXPECTED_DIRECTUS_VERSION ?? "12.6.0";
-  if (!["12.5.0", "12.6.0"].includes(expectedVersion)) throw new Error("Nicht unterstützte CMS-Prüfversion.");
+  const expectedVersion = env.FINDELIO_EXPECTED_DIRECTUS_VERSION ?? "12.6.1";
+  if (!["12.5.0", "12.6.0", "12.6.1"].includes(expectedVersion)) throw new Error("Nicht unterstützte CMS-Prüfversion.");
   if (!env.DIRECTUS_URL || !env.DIRECTUS_TOKEN) throw new Error("Directus-Konfiguration fehlt.");
   async function read(path) {
     let response;
@@ -37,7 +37,7 @@ export async function checkDirectusUpgrade({ env = process.env, request = fetch 
 if (process.argv[1] === "-" || (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)) {
   try {
     await checkDirectusUpgrade();
-    console.log(`Directus ${process.env.FINDELIO_EXPECTED_DIRECTUS_VERSION ?? "12.6.0"}, Lizenzkonfiguration und bestehende Lesezugriffe erfolgreich geprüft.`);
+    console.log(`Directus ${process.env.FINDELIO_EXPECTED_DIRECTUS_VERSION ?? "12.6.1"}, Lizenzkonfiguration und bestehende Lesezugriffe erfolgreich geprüft.`);
   } catch (error) {
     console.error(error.message);
     process.exitCode = 1;
