@@ -53,6 +53,7 @@
     "submit": "Znajdź firmy"
   },
   "Results": {
+    "metaTitle": "Znajdź firmy w Szwajcarii według języka",
     "loadMore": "Wczytaj więcej firm",
     "loadingMore": "Wczytywanie kolejnych firm …",
     "loadError": "Nie udało się wczytać kolejnych firm. Spróbuj ponownie.",

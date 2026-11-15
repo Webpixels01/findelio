@@ -53,6 +53,7 @@
     "submit": "Găsește companii"
   },
   "Results": {
+    "metaTitle": "Găsește firme în Elveția după limba vorbită",
     "loadMore": "Încarcă mai multe firme",
     "loadingMore": "Se încarcă mai multe firme …",
     "loadError": "Nu s-au putut încărca mai multe firme. Încearcă din nou.",

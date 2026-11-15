@@ -1,4 +1,5 @@
 import { CustomerReviews, ReviewSummary } from "@/components/customer-reviews";
+import { getPublicReviews } from "@/lib/public-reviews";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -163,7 +164,8 @@ export async function generateMetadata({
       ? `${plainDescription.slice(0, 157).trimEnd()}...`
       : plainDescription
     : t("metaDescription", { company: company.name, city: company.city });
-  const title = `${company.name} | Findelio`;
+  const details = [company.industries[0]?.industries_id.name, company.city].filter(Boolean).join(" · ");
+  const title = `${company.name}${details ? ` – ${details}` : ""} | Findelio`;
   const logoId =
     typeof company.logo === "string" ? company.logo : company.logo?.id;
   const logoUrl = logoId ? getDirectusAssetUrl(logoId) : null;
@@ -191,7 +193,7 @@ export default async function CompanyPage({
     notFound();
   }
 
-  const [t, tg, th, openingHours, posts] = await Promise.all([
+  const [t, tg, th, openingHours, posts, publicReviews] = await Promise.all([
     getTranslations("Company"),
     getTranslations("Growth"),
     getTranslations("Header"),
@@ -201,6 +203,7 @@ export default async function CompanyPage({
     company.premium_features_enabled
       ? getPublicListingPosts(company.id)
       : Promise.resolve([]),
+    getPublicReviews(company.id),
   ]);
 
   const primaryIndustry = company.industries[0]?.industries_id;
@@ -285,6 +288,22 @@ export default async function CompanyPage({
     "@type": "LocalBusiness",
     "@id": `${listingUrl}#business`,
     name: company.name,
+    ...(publicReviews && publicReviews.count > 0 ? {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: Number(publicReviews.average.toFixed(1)),
+        reviewCount: publicReviews.count,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      review: publicReviews.reviews.map((review) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: review.author_name },
+        datePublished: review.created_at,
+        reviewBody: review.body,
+        reviewRating: { "@type": "Rating", ratingValue: review.rating, bestRating: 5, worstRating: 1 },
+      })),
+    } : {}),
     url: listingUrl,
     ...(description ? { description } : {}),
     ...(logoUrl ? { logo: logoUrl, image: logoUrl } : {}),
@@ -386,7 +405,7 @@ export default async function CompanyPage({
                     )}
                   </div>
 
-                  <ReviewSummary listing={company.id} />
+                  <ReviewSummary listing={company.id} initialData={publicReviews} />
 
                   {primaryIndustry && (
                     <Link
@@ -641,7 +660,7 @@ export default async function CompanyPage({
             </div>
           </div>
         </div>
-        <div className="site-container"><CustomerReviews listing={company.id} slug={company.slug} /></div>
+        <div className="site-container"><CustomerReviews listing={company.id} slug={company.slug} initialData={publicReviews} /></div>
       </main>
     </>
   );

@@ -53,6 +53,7 @@
     "submit": "Cégek keresése"
   },
   "Results": {
+    "metaTitle": "Keress cégeket Svájcban nyelv szerint",
     "loadMore": "További cégek betöltése",
     "loadingMore": "További cégek betöltése …",
     "loadError": "A további cégeket nem sikerült betölteni. Kérjük, próbálja újra.",

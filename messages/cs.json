@@ -53,6 +53,7 @@
     "submit": "Najít firmy"
   },
   "Results": {
+    "metaTitle": "Najděte firmy ve Švýcarsku podle jazyka",
     "loadMore": "Načíst další firmy",
     "loadingMore": "Načítají se další firmy …",
     "loadError": "Další firmy se nepodařilo načíst. Zkuste to znovu.",

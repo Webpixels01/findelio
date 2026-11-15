@@ -53,6 +53,7 @@
     "submit": "Encontrar empresas"
   },
   "Results": {
+    "metaTitle": "Encontra empresas na Suíça por idioma",
     "loadMore": "Carregar mais empresas",
     "loadingMore": "A carregar mais empresas …",
     "loadError": "Não foi possível carregar mais empresas. Tente novamente.",

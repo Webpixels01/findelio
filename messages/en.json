@@ -53,6 +53,7 @@
     "submit": "Find businesses"
   },
   "Results": {
+    "metaTitle": "Find businesses in Switzerland by language",
     "loadMore": "Load more companies",
     "loadingMore": "Loading more companies …",
     "loadError": "More companies could not be loaded. Please try again.",

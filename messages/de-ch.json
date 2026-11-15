@@ -53,6 +53,7 @@
     "submit": "Unternehmen finden"
   },
   "Results": {
+    "metaTitle": "Unternehmen in der Schweiz nach Sprache finden",
     "loadMore": "Weitere Unternehmen laden",
     "loadingMore": "Weitere Unternehmen werden geladen …",
     "loadError": "Die weiteren Unternehmen konnten nicht geladen werden. Bitte versuche es erneut.",

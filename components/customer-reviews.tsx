@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 type Review = { id: string; author_name: string; rating: number; body: string; response: string | null; created_at: string; status: string; version: number; listing_name?: string; listing_slug?: string; listing_status?: string };
-type PublicData = { reviews: Review[]; count: number; average: number; own: Review | null; canReview: boolean; authenticated: boolean };
+export type PublicData = { reviews: Review[]; count: number; average: number; own: Review | null; canReview: boolean; authenticated: boolean };
 async function api(path: string, method = "GET", body?: object) {
   const response = await fetch(`/api/customer-reviews${path}`, { method, headers: { "Content-Type": "application/json" }, ...(body ? { body: JSON.stringify(body) } : {}), cache: "no-store" });
   const result = await response.json();
@@ -18,10 +18,10 @@ function StarIcon({ filled = false }: { filled?: boolean }) {
 function Stars({ rating }: { rating: number }) {
   return <span className="review-rating-stars" role="img" aria-label={`${rating.toFixed(1)} / 5`}>{[1, 2, 3, 4, 5].map(value => <StarIcon key={value} filled={value <= Math.round(rating)} />)}</span>;
 }
-export function ReviewSummary({ listing, slug }: { listing: string; slug?: string }) {
+export function ReviewSummary({ listing, slug, initialData = null }: { listing: string; slug?: string; initialData?: PublicData | null }) {
   const t = useTranslations("Reviews");
   const locale = useLocale();
-  const [data, setData] = useState<PublicData | null>(null);
+  const [data, setData] = useState<PublicData | null>(initialData);
   useEffect(() => {
     let active = true;
     const load = () => { void api(`?listing=${listing}&summary=1`).then(value => { if (active) setData(value); }).catch(() => {}); };
@@ -33,11 +33,11 @@ export function ReviewSummary({ listing, slug }: { listing: string; slug?: strin
   const content = data.count ? <><Stars rating={data.average} /> {new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(data.average)} · {t("count", { count: data.count })}</> : t("empty");
   return slug ? <Link href={`/unternehmen/${slug}#reviews`} className="mt-2 block text-sm hover:underline">{content}</Link> : <a href="#reviews" className="mt-2 block text-sm hover:underline">{content}</a>;
 }
-export function CustomerReviews({ listing, slug }: { listing: string; slug: string }) {
+export function CustomerReviews({ listing, slug, initialData = null }: { listing: string; slug: string; initialData?: PublicData | null }) {
   const t = useTranslations("Reviews");
   const tv = useTranslations("Visitor");
   const locale = useLocale();
-  const [data, setData] = useState<PublicData | null>(null);
+  const [data, setData] = useState<PublicData | null>(initialData);
   const [page, setPage] = useState(0);
   const [revision, setRevision] = useState(0);
   const [error, setError] = useState(false);

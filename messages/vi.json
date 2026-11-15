@@ -53,6 +53,7 @@
     "submit": "Tìm doanh nghiệp"
   },
   "Results": {
+    "metaTitle": "Tìm doanh nghiệp tại Thụy Sĩ theo ngôn ngữ",
     "loadMore": "Tải thêm doanh nghiệp",
     "loadingMore": "Đang tải thêm doanh nghiệp …",
     "loadError": "Không thể tải thêm doanh nghiệp. Vui lòng thử lại.",

@@ -36,7 +36,7 @@ export async function generateMetadata({
   return buildPageMetadata({
     locale,
     path: page > 1 ? `/unternehmen?page=${page}` : "/unternehmen",
-    title: `${t("title")}${page > 1 ? ` – ${t("pageTitle", { page })}` : ""} | Findelio`,
+    title: `${t("metaTitle")}${page > 1 ? ` – ${t("pageTitle", { page })}` : ""} | Findelio`,
     description: metadata("description"),
     noIndex: hasFilters,
   });

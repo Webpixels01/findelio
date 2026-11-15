@@ -12,9 +12,11 @@ let compiled = ts.transpileModule(source, { compilerOptions: {
   target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022, jsx: ts.JsxEmit.ReactJSX,
 } }).outputText;
 compiled = compiled.replace('import { Link } from "@/i18n/navigation";', 'const Link = "a";')
+  .replaceAll('useState(initialData)', 'useState(globalThis.__customerReviewFixture)')
   .replaceAll('useState(null)', 'useState(globalThis.__customerReviewFixture)')
   .replace(/from "(react\/jsx-runtime|react|next-intl)"/g, (_, name) => `from ${JSON.stringify(import.meta.resolve(name))}`);
 const components = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const initialDataComponents = await import(`data:text/javascript;base64,${Buffer.from(compiled.replaceAll('useState(globalThis.__customerReviewFixture)', 'useState(initialData)')).toString('base64')}`);
 const review = { id: 'review', author_name: 'Anna', rating: 4, body: '<script>alert(1)</script> Great service!', response: 'Thanks <img src=x onerror=alert(1)>', created_at: '2026-11-01T10:00:00Z', status: 'approved', version: 2, listing_name: 'Test company', listing_slug: 'test-company' };
 function render(Component, data, locale, props = {}) {
   globalThis.__customerReviewFixture = data;
@@ -25,6 +27,17 @@ function render(Component, data, locale, props = {}) {
   delete globalThis.__customerReviewFixture;
   return html;
 }
+test('public reviews and summary render from server data before browser effects run', () => {
+  const initialData = { reviews: [review], count: 1, average: 4, own: null, canReview: false, authenticated: false };
+  const html = render(initialDataComponents.CustomerReviews, null, 'de-ch', { listing: 'listing', slug: 'test-company', initialData });
+  assert.match(html, /Anna/);
+  assert.match(html, /Great service!/);
+  assert.match(html, /&lt;script&gt;/);
+  assert.ok(!html.includes('<form'));
+  const summary = render(initialDataComponents.ReviewSummary, null, 'de-ch', { listing: 'listing', initialData });
+  assert.match(summary, /4\.0 \/ 5/);
+  assert.match(summary, /href="#reviews"/);
+});
 test('profile, star links, review form and both dashboard modes render in every language', () => {
   for (const locale of ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi']) {
     const data = { reviews: [review], count: 1, average: 4, own: { ...review, status: 'pending' }, canReview: true, authenticated: true };
