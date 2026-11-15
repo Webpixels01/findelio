@@ -35,6 +35,7 @@ export default function PremiumGrantManager({
   const t = useTranslations("PremiumGrants");
   const router = useRouter();
   const [listingId, setListingId] = useState("");
+  const [search, setSearch] = useState("");
   const [reason, setReason] = useState("");
   const [endsAt, setEndsAt] = useState("");
   const [unlimited, setUnlimited] = useState(true);
@@ -45,6 +46,13 @@ export default function PremiumGrantManager({
     () => listings.filter((listing) => listing.status !== "archived" && !listing.grants.some(isActive)),
     [listings],
   );
+  const matchingListings = useMemo(() => {
+    const normalize = (value: string) => value.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+    const query = normalize(search.trim());
+    return availableListings.filter((listing) =>
+      normalize(`${listing.name} ${listing.organization?.name ?? ""}`).includes(query),
+    );
+  }, [availableListings, search]);
 
   const formatDate = (value: string | null) =>
     value
@@ -72,6 +80,7 @@ export default function PremiumGrantManager({
         return;
       }
       setListingId("");
+      setSearch("");
       setReason("");
       setEndsAt("");
       setUnlimited(true);
@@ -109,16 +118,30 @@ export default function PremiumGrantManager({
         <p className="mt-3 text-[var(--muted)]">{t("grantDescription")}</p>
         <form className="mt-6 grid gap-4" onSubmit={grantPremium}>
           <label className="field-group">
+            <span className="field-label">{t("searchLabel")}</span>
+            <input
+              className="field-control"
+              type="search"
+              value={search}
+              placeholder={t("searchPlaceholder")}
+              onChange={(event) => {
+                setSearch(event.target.value);
+                setListingId("");
+              }}
+            />
+          </label>
+          <label className="field-group">
             <span className="field-label">{t("listingLabel")}</span>
             <select className="field-control" value={listingId} onChange={(event) => setListingId(event.target.value)} required>
               <option value="">{t("listingPlaceholder")}</option>
-              {availableListings.map((listing) => (
+              {matchingListings.map((listing) => (
                 <option key={listing.id} value={listing.id}>
                   {listing.organization?.name ?? t("unknownOrganization")} · {listing.name}
                 </option>
               ))}
             </select>
           </label>
+          {matchingListings.length === 0 && <p role="status" className="text-sm text-[var(--muted)]">{t("noSearchResults")}</p>}
 
           <label className="field-group">
             <span className="field-label">{t("reasonLabel")}</span>
@@ -138,7 +161,7 @@ export default function PremiumGrantManager({
           )}
 
           {error && <p className="font-bold text-[#b42318]">{t.has(error) ? t(error) : t("save_failed")}</p>}
-          <button type="submit" className="primary-button h-12 px-5" disabled={busy || availableListings.length === 0}>
+          <button type="submit" className="primary-button h-12 px-5" disabled={busy || !listingId}>
             {busy ? t("saving") : t("grantButton")}
           </button>
         </form>
