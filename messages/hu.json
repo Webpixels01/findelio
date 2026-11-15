@@ -658,11 +658,12 @@
       "premium": "Premium"
     },
     "customCta": {
-      "title": "Custom action button",
-      "hint": "Set the label and destination. Website, email and telephone links are supported.",
-      "label": "Button label",
-      "placeholder": "e.g. Book an appointment",
-      "value": "Destination or action"
+      "title": "Egyéni műveletgomb",
+      "hint": "Add meg a gomb feliratát és a hivatkozás célját. Weboldalra, e-mail-címre és telefonszámra mutató hivatkozások használhatók.",
+      "label": "Gombfelirat",
+      "placeholder": "pl. Időpontfoglalás",
+      "value": "Cél vagy művelet",
+      "valuePlaceholder": "https://, mailto: vagy tel:"
     },
     "publicPosts": {
       "title": "News, offers and events"

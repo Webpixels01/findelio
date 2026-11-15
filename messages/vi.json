@@ -662,7 +662,8 @@
       "hint": "Đặt nhãn và đích đến. Hỗ trợ liên kết trang web, email và điện thoại.",
       "label": "Nhãn nút",
       "placeholder": "Ví dụ: Đặt lịch hẹn",
-      "value": "Đích đến hoặc hành động"
+      "value": "Đích đến hoặc hành động",
+      "valuePlaceholder": "https://, mailto: hoặc tel:"
     },
     "publicPosts": {
       "title": "Tin tức, ưu đãi và sự kiện"

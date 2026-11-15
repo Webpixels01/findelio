@@ -662,7 +662,8 @@
       "hint": "Lege Beschriftung und Ziel fest. Erlaubt sind Webseiten-, E-Mail- und Telefonlinks.",
       "label": "Button-Beschriftung",
       "placeholder": "z. B. Termin vereinbaren",
-      "value": "Ziel oder Aktion"
+      "value": "Ziel oder Aktion",
+      "valuePlaceholder": "https://, mailto: oder tel:"
     },
     "publicPosts": {
       "title": "Aktuelles, Aktionen und Veranstaltungen"

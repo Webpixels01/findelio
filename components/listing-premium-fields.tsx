@@ -696,7 +696,7 @@ const ListingPremiumFields = forwardRef<
               value={customCtaValue}
               onChange={(event) => setCustomCtaValue(event.target.value)}
               maxLength={500}
-              placeholder="https://, mailto: oder tel:"
+              placeholder={tg("customCta.valuePlaceholder")}
             />
           </label>
         </div>

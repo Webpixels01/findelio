@@ -662,7 +662,8 @@
       "hint": "Set the label and destination. Website, email and telephone links are supported.",
       "label": "Button label",
       "placeholder": "e.g. Book an appointment",
-      "value": "Destination or action"
+      "value": "Destination or action",
+      "valuePlaceholder": "https://, mailto: or tel:"
     },
     "publicPosts": {
       "title": "News, offers and events"

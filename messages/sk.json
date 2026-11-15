@@ -658,11 +658,12 @@
       "premium": "Premium"
     },
     "customCta": {
-      "title": "Custom action button",
-      "hint": "Set the label and destination. Website, email and telephone links are supported.",
-      "label": "Button label",
-      "placeholder": "e.g. Book an appointment",
-      "value": "Destination or action"
+      "title": "Vlastné akčné tlačidlo",
+      "hint": "Nastavte text tlačidla a cieľ odkazu. Podporované sú odkazy na webové stránky, e-mail a telefón.",
+      "label": "Text tlačidla",
+      "placeholder": "napr. Rezervovať termín",
+      "value": "Cieľ alebo akcia",
+      "valuePlaceholder": "https://, mailto: alebo tel:"
     },
     "publicPosts": {
       "title": "News, offers and events"

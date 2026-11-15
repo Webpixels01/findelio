@@ -658,11 +658,12 @@
       "premium": "Premium"
     },
     "customCta": {
-      "title": "Custom action button",
-      "hint": "Set the label and destination. Website, email and telephone links are supported.",
-      "label": "Button label",
-      "placeholder": "e.g. Book an appointment",
-      "value": "Destination or action"
+      "title": "Настраиваемая кнопка действия",
+      "hint": "Укажите текст кнопки и адрес ссылки. Поддерживаются ссылки на сайты, электронную почту и номера телефонов.",
+      "label": "Текст кнопки",
+      "placeholder": "например, Записаться на приём",
+      "value": "Адрес или действие",
+      "valuePlaceholder": "https://, mailto: или tel:"
     },
     "publicPosts": {
       "title": "News, offers and events"
