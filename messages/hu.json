@@ -42,6 +42,10 @@
     "ctaButton": "Cég hozzáadása"
   },
   "Search": {
+    "keyword": "Cégnév vagy kulcsszó",
+    "keywordPlaceholder": "pl. Müller, könyvelés vagy autójavítás",
+    "keywordHelp": "Nem kötelező. Keresés cégnév, ágazat vagy leírás alapján.",
+    "suggestions": "Találatok",
     "language": "Nyelv",
     "allLanguages": "Minden nyelv",
     "industry": "Ágazat",
@@ -53,6 +57,7 @@
     "submit": "Cégek keresése"
   },
   "Results": {
+    "relaxFilters": "Keresés további szűrők nélkül",
     "metaTitle": "Keress cégeket Svájcban nyelv szerint",
     "loadMore": "További cégek betöltése",
     "loadingMore": "További cégek betöltése …",

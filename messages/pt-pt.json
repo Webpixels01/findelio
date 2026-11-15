@@ -42,6 +42,10 @@
     "ctaButton": "Registar empresa"
   },
   "Search": {
+    "keyword": "Nome da empresa ou palavra-chave",
+    "keywordPlaceholder": "p. ex. Müller, contabilidade ou reparação automóvel",
+    "keywordHelp": "Opcional. Pesquisa por nome da empresa, setor ou descrição.",
+    "suggestions": "Empresas correspondentes",
     "language": "Língua",
     "allLanguages": "Todas as línguas",
     "industry": "Setor",
@@ -53,6 +57,7 @@
     "submit": "Encontrar empresas"
   },
   "Results": {
+    "relaxFilters": "Pesquisar sem outros filtros",
     "metaTitle": "Encontra empresas na Suíça por idioma",
     "loadMore": "Carregar mais empresas",
     "loadingMore": "A carregar mais empresas …",

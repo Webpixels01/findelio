@@ -42,6 +42,10 @@
     "ctaButton": "Přidat firmu"
   },
   "Search": {
+    "keyword": "Název firmy nebo klíčové slovo",
+    "keywordPlaceholder": "např. Müller, účetnictví nebo autoservis",
+    "keywordHelp": "Nepovinné. Hledejte podle názvu firmy, oboru nebo popisu.",
+    "suggestions": "Odpovídající firmy",
     "language": "Jazyk",
     "allLanguages": "Všechny jazyky",
     "industry": "Obor",
@@ -53,6 +57,7 @@
     "submit": "Najít firmy"
   },
   "Results": {
+    "relaxFilters": "Hledat bez dalších filtrů",
     "metaTitle": "Najděte firmy ve Švýcarsku podle jazyka",
     "loadMore": "Načíst další firmy",
     "loadingMore": "Načítají se další firmy …",

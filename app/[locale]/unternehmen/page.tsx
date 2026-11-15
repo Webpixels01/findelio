@@ -28,7 +28,7 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: "Results" }),
     getTranslations({ locale, namespace: "Metadata" }),
   ]);
-  const hasFilters = ["sprache", "branche", "kanton", "ort"].some((key) =>
+  const hasFilters = ["sprache", "branche", "kanton", "ort", "q"].some((key) =>
     Boolean(value(query[key])?.trim()),
   );
 
@@ -52,6 +52,7 @@ export default async function CompaniesPage({
   setRequestLocale(locale);
 
   const filters: SearchValues = {
+    q: value(query.q),
     sprache: value(query.sprache),
     branche: value(query.branche),
     kanton: value(query.kanton),

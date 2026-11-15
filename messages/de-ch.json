@@ -42,6 +42,10 @@
     "ctaButton": "Firma eintragen"
   },
   "Search": {
+    "keyword": "Firmenname oder Stichwort",
+    "keywordPlaceholder": "z. B. Müller, Treuhand oder Autoreparatur",
+    "keywordHelp": "Optional. Suche nach Firmenname, Branche oder Beschreibung.",
+    "suggestions": "Passende Unternehmen",
     "language": "Sprache",
     "allLanguages": "Alle Sprachen",
     "industry": "Branche",
@@ -53,6 +57,7 @@
     "submit": "Unternehmen finden"
   },
   "Results": {
+    "relaxFilters": "Ohne weitere Filter suchen",
     "metaTitle": "Unternehmen in der Schweiz nach Sprache finden",
     "loadMore": "Weitere Unternehmen laden",
     "loadingMore": "Weitere Unternehmen werden geladen …",

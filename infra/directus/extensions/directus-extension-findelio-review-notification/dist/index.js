@@ -1,3 +1,4 @@
+import { registerDirectorySearch } from "./directory-search.js";
 import { getMetricListings } from "./metric-listings.js";
 import { registerCustomerReviews } from "./customer-reviews.js";
 import { sendReviewOnce } from "./review-delivery.js";
@@ -48,6 +49,7 @@ const findelioReviewNotificationEndpoint = {
   id: "findelio-review-notification",
   handler: (router, { database, env, getSchema, logger, services }) => {
     const { MailService } = services;
+    registerDirectorySearch(router, { database, logger });
     const consumeLimit = createRequestLimiter(database);
     registerCustomerReviews(router, { database, env, services, getSchema, logger }, consumeLimit);
     const serverOnly = (handler, scope) => async (req, res) => {

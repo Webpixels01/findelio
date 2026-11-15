@@ -22,7 +22,7 @@ export async function loadListingPage(
   };
   if (orderDate !== undefined && (typeof orderDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(orderDate))) throw new Error("Invalid date");
   const result = await getListingsPage(locale, {
-    language: clean("sprache"), industry: clean("branche"), canton: clean("kanton"), location: clean("ort"),
+    query: clean("q"), language: clean("sprache"), industry: clean("branche"), canton: clean("kanton"), location: clean("ort"),
   }, page, orderDate);
   return {
     total: result.total, page: result.page, orderDate: result.orderDate,

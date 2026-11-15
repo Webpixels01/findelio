@@ -42,6 +42,10 @@
     "ctaButton": "Đăng ký doanh nghiệp"
   },
   "Search": {
+    "keyword": "Tên doanh nghiệp hoặc từ khóa",
+    "keywordPlaceholder": "ví dụ: Müller, kế toán hoặc sửa chữa ô tô",
+    "keywordHelp": "Không bắt buộc. Tìm theo tên doanh nghiệp, ngành nghề hoặc mô tả.",
+    "suggestions": "Doanh nghiệp phù hợp",
     "language": "Ngôn ngữ",
     "allLanguages": "Tất cả ngôn ngữ",
     "industry": "Ngành nghề",
@@ -53,6 +57,7 @@
     "submit": "Tìm doanh nghiệp"
   },
   "Results": {
+    "relaxFilters": "Tìm không áp dụng bộ lọc khác",
     "metaTitle": "Tìm doanh nghiệp tại Thụy Sĩ theo ngôn ngữ",
     "loadMore": "Tải thêm doanh nghiệp",
     "loadingMore": "Đang tải thêm doanh nghiệp …",

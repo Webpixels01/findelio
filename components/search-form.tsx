@@ -1,3 +1,4 @@
+import DirectoryKeywordSearch from "@/components/directory-keyword-search";
 import type { AppLocale } from "@/i18n/routing";
 import {
   getCantons,
@@ -7,6 +8,7 @@ import {
 import { getTranslations } from "next-intl/server";
 
 export type SearchValues = {
+  q?: string;
   sprache?: string;
   branche?: string;
   kanton?: string;
@@ -106,9 +108,12 @@ export default async function SearchForm({
         />
       </label>
 
-      <button type="submit" className="primary-button search-submit mt-auto px-5">
-        {t("submit")}
-      </button>
+      <div className="directory-keyword-row">
+        <DirectoryKeywordSearch key={values.q ?? ""} locale={locale} defaultValue={values.q} />
+        <button type="submit" className="primary-button search-submit mt-auto px-5">
+          {t("submit")}
+        </button>
+      </div>
     </form>
   );
 }

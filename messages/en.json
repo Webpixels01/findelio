@@ -42,6 +42,10 @@
     "ctaButton": "List a business"
   },
   "Search": {
+    "keyword": "Company name or keyword",
+    "keywordPlaceholder": "e.g. Müller, accounting or car repairs",
+    "keywordHelp": "Optional. Search company names, industries or descriptions.",
+    "suggestions": "Matching businesses",
     "language": "Language",
     "allLanguages": "All languages",
     "industry": "Industry",
@@ -53,6 +57,7 @@
     "submit": "Find businesses"
   },
   "Results": {
+    "relaxFilters": "Search without other filters",
     "metaTitle": "Find businesses in Switzerland by language",
     "loadMore": "Load more companies",
     "loadingMore": "Loading more companies …",

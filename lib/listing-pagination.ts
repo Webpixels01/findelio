@@ -13,7 +13,7 @@ export function dailyListingRank(id: string, date: string): number {
 
 export function listingPageHref(filters: Record<string, string | undefined>, page: number): string {
   const query = new URLSearchParams();
-  for (const key of ["sprache", "branche", "kanton", "ort"]) {
+  for (const key of ["sprache", "branche", "kanton", "ort", "q"]) {
     if (filters[key]) query.set(key, filters[key]);
   }
   if (page > 1) query.set("page", String(page));

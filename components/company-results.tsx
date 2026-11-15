@@ -73,6 +73,8 @@ export default function CompanyResults({ initial, locale, filters, children }: {
       {items.map((item) => <Fragment key={item.id}>{item.card}</Fragment>)}
     </div> : <div className="mt-10 rounded-3xl border border-dashed border-[#b9c9d9] bg-white p-10 text-center">
       <p className="text-xl font-bold">{t("noResults")}</p>
+      {filters.q && [filters.sprache, filters.branche, filters.kanton, filters.ort].some(Boolean) &&
+        <Link href={listingPageHref({ q: filters.q }, 1)} locale={locale} className="secondary-button mt-6 mr-3 h-11 px-5">{t("relaxFilters")}</Link>}
       <Link href="/unternehmen" locale={locale} className="primary-button mt-6 h-11 px-5">{t("clearFilters")}</Link>
     </div>}
     <div ref={sentinel} className="mt-8 text-center">

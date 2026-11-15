@@ -42,6 +42,10 @@
     "ctaButton": "Dodaj firmę"
   },
   "Search": {
+    "keyword": "Nazwa firmy lub słowo kluczowe",
+    "keywordPlaceholder": "np. Müller, księgowość lub naprawa samochodów",
+    "keywordHelp": "Opcjonalnie. Szukaj według nazwy firmy, branży lub opisu.",
+    "suggestions": "Pasujące firmy",
     "language": "Język",
     "allLanguages": "Wszystkie języki",
     "industry": "Branża",
@@ -53,6 +57,7 @@
     "submit": "Znajdź firmy"
   },
   "Results": {
+    "relaxFilters": "Szukaj bez dodatkowych filtrów",
     "metaTitle": "Znajdź firmy w Szwajcarii według języka",
     "loadMore": "Wczytaj więcej firm",
     "loadingMore": "Wczytywanie kolejnych firm …",

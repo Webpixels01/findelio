@@ -42,6 +42,10 @@
     "ctaButton": "Adaugă compania"
   },
   "Search": {
+    "keyword": "Numele firmei sau cuvânt-cheie",
+    "keywordPlaceholder": "de ex. Müller, contabilitate sau service auto",
+    "keywordHelp": "Opțional. Caută după numele firmei, domeniu sau descriere.",
+    "suggestions": "Firme corespunzătoare",
     "language": "Limbă",
     "allLanguages": "Toate limbile",
     "industry": "Domeniu",
@@ -53,6 +57,7 @@
     "submit": "Găsește companii"
   },
   "Results": {
+    "relaxFilters": "Caută fără alte filtre",
     "metaTitle": "Găsește firme în Elveția după limba vorbită",
     "loadMore": "Încarcă mai multe firme",
     "loadingMore": "Se încarcă mai multe firme …",

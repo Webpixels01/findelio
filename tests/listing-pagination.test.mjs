@@ -75,3 +75,26 @@ test('page inputs and fallback URLs remain bounded and preserve filters', () => 
   assert.equal(listingPageHref({ sprache:'sk', ort:'Zürich & Bern', page:'99' },2),'/unternehmen?sprache=sk&ort=Z%C3%BCrich+%26+Bern&page=2');
   assert.equal(listingPageHref({},1),'/unternehmen');
 });
+
+
+test('keyword result pages preserve relevance, filters and premium display rules', async () => usingFixture(async data => {
+  const original = global.fetch;
+  const selected = [data.listings[0].id, data.premium[0]];
+  global.fetch = async url => {
+    if (url.pathname.endsWith('/directory-search')) {
+      assert.equal(url.searchParams.get('q'), 'Müller');
+      assert.equal(url.searchParams.get('kanton'), 'ZH');
+      assert.equal(url.searchParams.get('page'), '2');
+      return Response.json({ data: { total: 25, items: selected.map(id => ({ id })) } });
+    }
+    return original(url);
+  };
+  // Both fixtures must satisfy the additional filters at the detail-read boundary.
+  for (const id of selected) data.listings.find(item => item.id === id).canton.code = 'ZH';
+  const result = await getListingsPage('sk', { query: 'Müller', canton: 'ZH' }, 2);
+  assert.equal(result.total, 25);
+  assert.deepEqual(result.listings.map(item => item.id), selected);
+  assert.equal(result.listings[0].premium_features_enabled, false);
+  assert.equal(result.listings[1].premium_features_enabled, true);
+  assert.equal(listingPageHref({ q: 'Müller & Co', kanton: 'ZH' }, 2), '/unternehmen?kanton=ZH&q=M%C3%BCller+%26+Co&page=2');
+}));

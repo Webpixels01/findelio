@@ -1,4 +1,5 @@
 import "server-only";
+import { searchDirectory } from "@/lib/directory-search";
 import { LISTINGS_PAGE_SIZE, normalizeListingPage, dailyListingRank } from "@/lib/listing-pagination";
 import type { AppLocale } from "@/i18n/routing";
 import { getActivePremiumGrantListingIds } from "@/lib/directus-premium";
@@ -119,6 +120,7 @@ export type DirectoryOption = {
 };
 
 export type ListingFilters = {
+  query?: string;
   language?: string;
   industry?: string;
   canton?: string;
@@ -498,6 +500,33 @@ export async function getListingsPage(
     const response = await fetch(url, { headers: getDirectusHeaders(), cache: "no-store" });
     if (!response.ok) throw new Error(`Directus listings request failed: ${response.status}`);
     return ((await response.json()) as DirectusResponse<T>).data;
+  }
+
+  if (filters.query?.trim()) {
+    const [search, industryNames, spokenLanguageNames, subscriptions, grants] = await Promise.all([
+      searchDirectory(locale, { q: filters.query, sprache: language, branche: industry, kanton: canton, ort: location }, page),
+      getDirectoryTranslationMap("industries", locale),
+      getDirectoryTranslationMap("spoken_languages", locale),
+      getActivePremiumListingIds(),
+      getActivePremiumGrantListingIds(),
+    ]);
+    const ids = search.items.map((item) => item.id);
+    const listings = ids.length ? await readListings<Listing[]>({ fields, limit: String(ids.length) }, { id: { _in: ids } }) : [];
+    const byId = new Map(listings.map((listing) => [listing.id, listing]));
+    return {
+      total: search.total, page, orderDate,
+      listings: ids.flatMap((id) => {
+        const listing = byId.get(id);
+        if (!listing) return [];
+        const premiumEnabled = subscriptions.has(id) || grants.has(id);
+        return [localizeListing({
+          ...listing,
+          description: localizedListingDescription(listing, locale, premiumEnabled),
+          logo: premiumEnabled ? listing.logo : null,
+          premium_features_enabled: premiumEnabled,
+        }, industryNames, spokenLanguageNames)];
+      }),
+    };
   }
 
   // Count all matching public listings, independently of the ten displayed cards.
