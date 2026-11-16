@@ -6,16 +6,22 @@ import { routing, type AppLocale } from "@/i18n/routing";
 import { buildPreservedLocaleSearch } from "@/lib/register-search-params";
 
 const labels: Record<AppLocale, string> = {
-  "de-ch": "DE",
-  en: "EN",
-  sk: "SK",
-  cs: "CS",
-  hu: "HU",
-  pl: "PL",
-  ru: "RU",
-  "pt-pt": "PT",
-  ro: "RO",
-  vi: "VI",
+  "de-ch": "Deutsch",
+  en: "English",
+  sk: "Slovenčina",
+  cs: "Čeština",
+  hu: "Magyar",
+  pl: "Polski",
+  ru: "Русский",
+  "pt-pt": "Português",
+  ro: "Română",
+  vi: "Tiếng Việt",
+  it: "Italiano",
+  fr: "Français",
+  uk: "Українська",
+  bs: "Bosanski",
+  sr: "Srpski",
+  sl: "Slovenščina",
 };
 
 export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {

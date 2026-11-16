@@ -27,6 +27,12 @@ const descriptionTranslationLabels: Record<string, string> = {
   "pt-pt": "Português",
   ro: "Română",
   vi: "Tiếng Việt",
+  it: "Italiano",
+  fr: "Français",
+  uk: "Українська",
+  bs: "Bosanski",
+  sr: "Srpski",
+  sl: "Slovenščina",
 };
 
 function submitterName(

@@ -57,7 +57,7 @@ test("disabled activation and non-admin retry never touch schema or database", a
 });
 
 test("mail does not promise a pending, expired or revoked trial and localizes all supported languages", () => {
-  for (const locale of ["de-ch", "en", "sk", "cs", "hu", "pl", "ru", "pt-pt", "ro", "vi"]) {
+  for (const locale of ["de-ch", "en", "sk", "cs", "hu", "pl", "ru", "pt-pt", "ro", "vi", "it", "fr", "uk", "bs", "sr", "sl"]) {
     const grant = { status: "granted", premium_grant: "g", grant_starts_at: at.toISOString(), grant_ends_at: reservation.trial_ends_at };
     const active = referralMailContent(grant, locale, at);
     assert.ok(active.text.includes("2026"));

@@ -155,7 +155,13 @@ services:
         https://${SITE_DOMAIN}/ru/passwort-zuruecksetzen,
         https://${SITE_DOMAIN}/pt-pt/passwort-zuruecksetzen,
         https://${SITE_DOMAIN}/ro/passwort-zuruecksetzen,
-        https://${SITE_DOMAIN}/vi/passwort-zuruecksetzen
+        https://${SITE_DOMAIN}/vi/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/it/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/fr/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/uk/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/bs/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/sr/passwort-zuruecksetzen,
+        https://${SITE_DOMAIN}/sl/passwort-zuruecksetzen
       USER_REGISTER_URL_ALLOW_LIST: >-
         https://${SITE_DOMAIN}/de-ch/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/en/registrierung-bestaetigen,
@@ -166,7 +172,13 @@ services:
         https://${SITE_DOMAIN}/ru/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/pt-pt/registrierung-bestaetigen,
         https://${SITE_DOMAIN}/ro/registrierung-bestaetigen,
-        https://${SITE_DOMAIN}/vi/registrierung-bestaetigen
+        https://${SITE_DOMAIN}/vi/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/it/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/fr/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/uk/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/bs/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/sr/registrierung-bestaetigen,
+        https://${SITE_DOMAIN}/sl/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: https://${SITE_DOMAIN:?SITE_DOMAIN fehlt}
       CORS_CREDENTIALS: "true"

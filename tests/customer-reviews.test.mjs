@@ -112,7 +112,7 @@ test('mail failures roll back submissions; rate limits and inactive accounts fai
 });
 test('review translations are complete in every supported language', () => {
   const base = JSON.parse(readFileSync(new URL('../messages/de-ch.json', import.meta.url))).Reviews;
-  for (const locale of ['en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi']) {
+  for (const locale of ['en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi', 'it', 'fr', 'uk', 'bs', 'sr', 'sl']) {
     const messages = JSON.parse(readFileSync(new URL(`../messages/${locale}.json`, import.meta.url)));
     assert.deepEqual(Object.keys(messages.Reviews), Object.keys(base));
     assert.ok(messages.Dashboard.navigation.reviews);

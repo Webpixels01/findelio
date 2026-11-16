@@ -99,10 +99,22 @@ services:
         http://localhost:3000/ru/passwort-zuruecksetzen,
         http://localhost:3000/pt-pt/passwort-zuruecksetzen,
         http://localhost:3000/ro/passwort-zuruecksetzen,
-        http://localhost:3000/vi/passwort-zuruecksetzen
+        http://localhost:3000/vi/passwort-zuruecksetzen,
+        http://localhost:3000/it/passwort-zuruecksetzen,
+        http://localhost:3000/fr/passwort-zuruecksetzen,
+        http://localhost:3000/uk/passwort-zuruecksetzen,
+        http://localhost:3000/bs/passwort-zuruecksetzen,
+        http://localhost:3000/sr/passwort-zuruecksetzen,
+        http://localhost:3000/sl/passwort-zuruecksetzen
       USER_REGISTER_URL_ALLOW_LIST: >-
         http://localhost:3000/de-ch/registrierung-bestaetigen,
-        http://localhost:3000/vi/registrierung-bestaetigen
+        http://localhost:3000/vi/registrierung-bestaetigen,
+        http://localhost:3000/it/registrierung-bestaetigen,
+        http://localhost:3000/fr/registrierung-bestaetigen,
+        http://localhost:3000/uk/registrierung-bestaetigen,
+        http://localhost:3000/bs/registrierung-bestaetigen,
+        http://localhost:3000/sr/registrierung-bestaetigen,
+        http://localhost:3000/sl/registrierung-bestaetigen
       CORS_ENABLED: "true"
       CORS_ORIGIN: http://localhost:3000
 

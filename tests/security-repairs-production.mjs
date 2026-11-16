@@ -28,7 +28,7 @@ try{
  let ready=false;for(let i=0;i<60;i++){try{const r=await fetch('http://127.0.0.1:3000/api/health');if(r.ok){ready=true;break;}}catch{}await setTimeout(250);}
  assert.ok(ready,logs);
  await check('/api/health');
- for(const locale of ['de-ch','en','sk','cs','hu','pl','ru','pt-pt','ro','vi']){
+ for(const locale of ['de-ch','en','sk','cs','hu','pl','ru','pt-pt','ro','vi','it','fr','uk','bs','sr','sl']){
   const response=await check('/'+locale+'/login');const html=await response.text();
   const note=JSON.parse(await readFile('messages/'+locale+'.json','utf8')).Login.note;
   assert.ok(html.includes(note),locale+' login translation');assert.ok(!note.includes('Directus'));

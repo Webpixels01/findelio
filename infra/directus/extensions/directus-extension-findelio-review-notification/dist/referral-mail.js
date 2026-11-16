@@ -71,6 +71,48 @@ const messages = {
     expired: "Perioada de probă Premium planificată a expirat. Nu a fost activată o nouă perioadă de probă.",
     inactive: "Perioada de probă Premium acordată prin codul tău de recomandare nu mai este activă.",
   },
+  it: {
+    granted: "La tua prova Premium di tre mesi è attiva e termina il {date}. Non viene creato alcun abbonamento a pagamento.",
+    pending: "Il profilo della tua azienda è stato approvato. L’attivazione della prova Premium è ancora in sospeso.",
+    skipped: "Non è stata attivata un’ulteriore prova Premium perché al momento del controllo l’accesso Premium era già presente. Abbonamenti e diritti esistenti restano invariati.",
+    expired: "Il periodo previsto per la prova Premium è scaduto. Non è stata attivata una nuova prova.",
+    inactive: "La prova Premium concessa con il tuo codice referral non è più attiva.",
+  },
+  fr: {
+    granted: "Ton essai Premium de trois mois est actif et se termine le {date}. Aucun abonnement payant n’est créé.",
+    pending: "Le profil de ton entreprise est approuvé. L’activation de l’essai Premium est encore en attente.",
+    skipped: "Aucun essai Premium supplémentaire n’a été activé, car l’accès Premium existait déjà lors de la vérification. Les abonnements et droits existants restent inchangés.",
+    expired: "La période prévue pour l’essai Premium a expiré. Aucun nouvel essai n’a été activé.",
+    inactive: "L’essai Premium accordé via ton code de parrainage n’est plus actif.",
+  },
+  uk: {
+    granted: "Ваш тримісячний пробний період Premium активний і закінчується {date}. Платна підписка не створюється.",
+    pending: "Профіль вашої компанії схвалено. Активація пробного періоду Premium ще очікується.",
+    skipped: "Додатковий пробний період Premium не активовано, бо на момент перевірки доступ Premium уже був. Існуючі підписки та права залишаються без змін.",
+    expired: "Запланований пробний період Premium закінчився. Новий пробний період не активовано.",
+    inactive: "Пробний період Premium, наданий за вашим реферальним кодом, більше не активний.",
+  },
+  bs: {
+    granted: "Tvoja tromjesečna Premium probna verzija je aktivna i završava {date}. Ne nastaje plaćena pretplata.",
+    pending: "Profil tvoje firme je odobren. Aktivacija Premium probne verzije još čeka.",
+    skipped: "Nije aktivirana dodatna Premium probna verzija jer je Premium pristup već postojao pri provjeri. Postojeće pretplate i prava ostaju nepromijenjeni.",
+    expired: "Predviđeno razdoblje Premium probne verzije je isteklo. Nova probna verzija nije aktivirana.",
+    inactive: "Premium probna verzija dodijeljena putem tvog preporučnog koda više nije aktivna.",
+  },
+  sr: {
+    granted: "Tvoja tromesečna Premium probna verzija je aktivna i završava se {date}. Ne nastaje plaćena pretplata.",
+    pending: "Profil tvoje firme je odobren. Aktivacija Premium probne verzije još čeka.",
+    skipped: "Nije aktivirana dodatna Premium probna verzija jer je Premium pristup već postojao pri proveri. Postojeće pretplate i prava ostaju nepromenjeni.",
+    expired: "Predviđeni period Premium probne verzije je istekao. Nova probna verzija nije aktivirana.",
+    inactive: "Premium probna verzija dodeljena putem tvog preporučnog koda više nije aktivna.",
+  },
+  sl: {
+    granted: "Tvoje trimesečno preizkusno obdobje Premium je aktivno in se konča {date}. Plačljiva naročnina ne nastane.",
+    pending: "Profil tvojega podjetja je odobren. Aktivacija preizkusnega obdobja Premium še čaka.",
+    skipped: "Dodatno preizkusno obdobje Premium ni bilo aktivirano, ker je bil Premium dostop ob preverjanju že na voljo. Obstoječe naročnine in pravice ostanejo nespremenjene.",
+    expired: "Predvideno obdobje preizkusa Premium je poteklo. Novo preizkusno obdobje ni bilo aktivirano.",
+    inactive: "Preizkusno obdobje Premium, dodeljeno s tvojo kodo priporočila, ni več aktivno.",
+  },
 };
 
 export function referralMailContent(redemption, locale, now = new Date()) {

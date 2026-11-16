@@ -90,7 +90,7 @@ test("security mutations require origin, bounded JSON, login, valid OTP and reco
 
 test("all ten locales contain the security settings and OTP login messages", async () => {
   const baseline = JSON.parse(await readFile(new URL("../messages/de-ch.json", import.meta.url)));
-  for (const locale of ["de-ch", "en", "sk", "cs", "hu", "pl", "ru", "pt-pt", "ro", "vi"]) {
+  for (const locale of ["de-ch", "en", "sk", "cs", "hu", "pl", "ru", "pt-pt", "ro", "vi", "it", "fr", "uk", "bs", "sr", "sl"]) {
     const messages = JSON.parse(await readFile(new URL(`../messages/${locale}.json`, import.meta.url)));
     assert.deepEqual(Object.keys(messages.TwoFactor), Object.keys(baseline.TwoFactor));
     for (const value of Object.values(messages.TwoFactor)) assert.ok(value.length > 0);

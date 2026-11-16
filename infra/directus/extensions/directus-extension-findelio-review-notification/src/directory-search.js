@@ -1,6 +1,23 @@
 import { isServerAccount } from './request-security.js';
 
-const languages = { 'de-ch': 'de-CH', en: 'en-US', sk: 'sk-SK', cs: 'cs-CZ', hu: 'hu-HU', pl: 'pl-PL', ru: 'ru-RU', 'pt-pt': 'pt-PT', ro: 'ro-RO', vi: 'vi-VN' };
+const languages = {
+  'de-ch': 'de-CH',
+  en: 'en-US',
+  sk: 'sk-SK',
+  cs: 'cs-CZ',
+  hu: 'hu-HU',
+  pl: 'pl-PL',
+  ru: 'ru-RU',
+  'pt-pt': 'pt-PT',
+  ro: 'ro-RO',
+  vi: 'vi-VN',
+  it: 'it-IT',
+  fr: 'fr-FR',
+  uk: 'uk-UA',
+  bs: 'bs-BA',
+  sr: 'sr-Latn',
+  sl: 'sl-SI',
+};
 export function searchParameters(input) {
   const text = key => {
     if (input[key] !== undefined && (typeof input[key] !== 'string' || input[key].length > 200)) throw new Error('invalid_data');

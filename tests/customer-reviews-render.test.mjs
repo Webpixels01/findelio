@@ -39,7 +39,7 @@ test('public reviews and summary render from server data before browser effects 
   assert.match(summary, /href="#reviews"/);
 });
 test('profile, star links, review form and both dashboard modes render in every language', () => {
-  for (const locale of ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi']) {
+  for (const locale of ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi', 'it', 'fr', 'uk', 'bs', 'sr', 'sl']) {
     const data = { reviews: [review], count: 1, average: 4, own: { ...review, status: 'pending' }, canReview: true, authenticated: true };
     const html = render(components.CustomerReviews, data, locale, { listing: 'listing', slug: 'test-company' });
     assert.match(html, /id="reviews"/); assert.match(html, /name="rating"/); assert.match(html, /name="body"/);

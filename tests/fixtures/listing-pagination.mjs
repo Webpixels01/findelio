@@ -1,5 +1,5 @@
 // Synthetic directory data for pagination tests. Never connects to production.
-export const locales = ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi'];
+export const locales = ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi', 'it', 'fr', 'uk', 'bs', 'sr', 'sl'];
 export function fixture(count = 137) {
   const directory = (code, name) => ({ id: code, code, name,
     translations: locales.map(l => ({ languages_code: l === 'de-ch' ? 'de-CH' : l === 'pt-pt' ? 'pt-PT' : l, name })) });

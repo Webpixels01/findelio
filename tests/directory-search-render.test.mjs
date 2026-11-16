@@ -13,8 +13,8 @@ const formSource = compile('components/search-form.tsx')
   .replace(/import \{[^}]+\} from "@\/lib\/directus";/,'const getCantons = async()=>[]; const getIndustries = async()=>[]; const getSpokenLanguages = async()=>[];')
   .replace('import { getTranslations } from "next-intl/server";','const getTranslations = async()=>key=>globalThis.__searchMessages.Search[key];');
 const {default:SearchForm} = await import('data:text/javascript;base64,'+Buffer.from(formSource).toString('base64'));
-test('search form renders all five filters, translated labels and one submit button in ten languages',async()=>{
-  for(const locale of ['de-ch','en','sk','cs','hu','pl','ru','pt-pt','ro','vi']){
+test('search form renders all five filters, translated labels and one submit button in all supported languages',async()=>{
+  for(const locale of ['de-ch','en','sk','cs','hu','pl','ru','pt-pt','ro','vi','it','fr','uk','bs','sr','sl']){
     const messages=JSON.parse(readFileSync(new URL('../messages/'+locale+'.json',import.meta.url),'utf8'));globalThis.__searchMessages=messages;
     const errors=[];
     const form=await SearchForm({locale,values:{q:'Müller & Co'}});

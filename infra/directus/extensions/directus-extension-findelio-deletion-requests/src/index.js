@@ -13,6 +13,12 @@ const supportedLocales = new Set([
   "pt-pt",
   "ro",
   "vi",
+  "it",
+  "fr",
+  "uk",
+  "bs",
+  "sr",
+  "sl",
 ]);
 
 function fail(message, status) {

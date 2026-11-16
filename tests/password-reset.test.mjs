@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { loadServerModule } from './helpers/load-server-module.mjs';
-const locales = ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi'];
+const locales = ['de-ch', 'en', 'sk', 'cs', 'hu', 'pl', 'ru', 'pt-pt', 'ro', 'vi', 'it', 'fr', 'uk', 'bs', 'sr', 'sl'];
 function setup(t) {
   const original = { NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL, DIRECTUS_URL: process.env.DIRECTUS_URL };
   process.env.NEXT_PUBLIC_SITE_URL = 'https://findelio.test'; process.env.DIRECTUS_URL = 'https://cms.test';
