@@ -673,7 +673,7 @@
       "eyebrow": "Premium content",
       "pageTitle": "Posts for {name}",
       "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
-      "manage": "Manage posts",
+      "manage": "Spravovať príspevky",
       "createTitle": "Create a new post",
       "type": "Post type",
       "types": {
@@ -731,7 +731,7 @@
       "eyebrow": "Premium statistics",
       "pageTitle": "Performance of {name}",
       "description": "See how visitors find your business listing and which contact options they use.",
-      "link": "View statistics",
+      "link": "Zobraziť štatistiky",
       "days": "{count} days",
       "metrics": {
         "search_impressions": "Search impressions",
