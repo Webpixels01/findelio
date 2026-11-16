@@ -24,6 +24,10 @@ const labels: Record<AppLocale, string> = {
   sl: "Slovenščina",
 };
 
+const sortedLocales = [...routing.locales].sort((a, b) =>
+  labels[a].localeCompare(labels[b], "de", { sensitivity: "base" }),
+);
+
 export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -46,7 +50,7 @@ export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
         className="h-11 cursor-pointer rounded-xl border border-[var(--border)] bg-white px-3 pr-1 text-sm font-bold text-[var(--foreground)] outline-none transition hover:border-[var(--accent)] focus:border-[var(--accent)]"
         aria-label={ariaLabel}
       >
-        {routing.locales.map((item) => (
+        {sortedLocales.map((item) => (
           <option key={item} value={item}>
             {labels[item]}
           </option>
