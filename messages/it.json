@@ -349,7 +349,7 @@
     "registerCompany": "Registra un’azienda",
     "legal": "Note legali",
     "contact": "Contatto",
-    "imprint": "Impressum",
+    "imprint": "Note legali",
     "privacy": "Privacy",
     "cookies": "Informazioni sui cookie",
     "howItWorks": "Come funziona Findelio per le aziende",
@@ -603,9 +603,9 @@
   },
   "Legal": {
     "legalEyebrow": "Note legali",
-    "imprintMetaTitle": "Impressum | Findelio",
+    "imprintMetaTitle": "Note legali | Findelio",
     "imprintMetaDescription": "Dati del gestore e di contatto di Findelio.",
-    "imprintTitle": "Impressum",
+    "imprintTitle": "Note legali",
     "imprintIntro": "Findelio è un servizio di Webpixels. Questa pagina contiene i dati del gestore e di contatto rilevanti dal punto di vista legale.",
     "operatorTitle": "Gestore del sito web",
     "owner": "Titolare",
@@ -853,27 +853,6 @@
       "city": "Mostra solo città e cantone",
       "hidden": "Nascondi l’indirizzo"
     },
-    "plan": {
-      "eyebrow": "Piano per questa scheda",
-      "title": "Scegli Free o Premium",
-      "description": "Il piano selezionato si applica solo a questa scheda aziendale. Le altre schede possono avere un proprio piano.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Tutti i dati di base e la pubblicazione nella directory di Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "da CHF 8.25 al mese",
-        "description": "Include anche logo, galleria di immagini, orari di apertura e link ai social media."
-      },
-      "intervalTitle": "Periodo di fatturazione",
-      "intervals": {
-        "monthly": "Mensile – CHF 9.90",
-        "yearly": "Annuale – CHF 99.00"
-      },
-      "cancellationHint": "Nessun periodo di prova. L’abbonamento può essere disdetto alla fine del periodo di fatturazione in corso."
-    },
     "statusValues": {
       "draft": "Bozza",
       "review": "Invia per la revisione",
@@ -949,6 +928,27 @@
       "forbidden": "Non puoi creare una scheda aziendale per questa organizzazione.",
       "create_failed": "Non è stato possibile creare la scheda aziendale.",
       "network": "La connessione al server non è riuscita."
+    },
+    "plan": {
+      "eyebrow": "Piano per questa scheda",
+      "title": "Scegli Free o Premium",
+      "description": "Il piano selezionato si applica solo a questa scheda aziendale. Le altre schede possono avere un proprio piano.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Tutti i dati di base e la pubblicazione nella directory di Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "da CHF 8.25 al mese",
+        "description": "Include anche logo, galleria di immagini, orari di apertura e link ai social media."
+      },
+      "intervalTitle": "Periodo di fatturazione",
+      "intervals": {
+        "monthly": "Mensile – CHF 9.90",
+        "yearly": "Annuale – CHF 99.00"
+      },
+      "cancellationHint": "Nessun periodo di prova. L’abbonamento può essere disdetto alla fine del periodo di fatturazione in corso."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Consentiti: JPG/JPEG, PNG e WebP (nessuna immagine animata).",
     "size": "Massimo 8 MiB per file.",
     "dimensions": "Risoluzione: fino a 8000 pixel per lato e 20 megapixel in totale (larghezza × altezza)."
+  },
+  "NotFound": {
+    "title": "Pagina non trovata",
+    "home": "Torna alla pagina iniziale"
   }
 }

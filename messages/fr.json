@@ -853,27 +853,6 @@
       "city": "Afficher uniquement la ville et le canton",
       "hidden": "Masquer l’adresse"
     },
-    "plan": {
-      "eyebrow": "Offre pour cette fiche",
-      "title": "Choisis Free ou Premium",
-      "description": "L’offre sélectionnée s’applique uniquement à cette fiche d’entreprise. Les autres fiches peuvent avoir leur propre offre.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Toutes les informations de base et la publication dans l’annuaire Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "dès CHF 8.25 par mois",
-        "description": "Comprend aussi un logo, une galerie d’images, des horaires d’ouverture et des liens vers les réseaux sociaux."
-      },
-      "intervalTitle": "Période de facturation",
-      "intervals": {
-        "monthly": "Mensuel – CHF 9.90",
-        "yearly": "Annuel – CHF 99.00"
-      },
-      "cancellationHint": "Pas de période d’essai. L’abonnement peut être résilié à la fin de la période de facturation en cours."
-    },
     "statusValues": {
       "draft": "Brouillon",
       "review": "Envoyer pour vérification",
@@ -949,6 +928,27 @@
       "forbidden": "Tu ne peux pas créer de fiche d’entreprise pour cette organisation.",
       "create_failed": "La fiche d’entreprise n’a pas pu être créée.",
       "network": "La connexion au serveur a échoué."
+    },
+    "plan": {
+      "eyebrow": "Offre pour cette fiche",
+      "title": "Choisis Free ou Premium",
+      "description": "L’offre sélectionnée s’applique uniquement à cette fiche d’entreprise. Les autres fiches peuvent avoir leur propre offre.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Toutes les informations de base et la publication dans l’annuaire Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "dès CHF 8.25 par mois",
+        "description": "Comprend aussi un logo, une galerie d’images, des horaires d’ouverture et des liens vers les réseaux sociaux."
+      },
+      "intervalTitle": "Période de facturation",
+      "intervals": {
+        "monthly": "Mensuel – CHF 9.90",
+        "yearly": "Annuel – CHF 99.00"
+      },
+      "cancellationHint": "Pas de période d’essai. L’abonnement peut être résilié à la fin de la période de facturation en cours."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Autorisés : JPG/JPEG, PNG et WebP (pas d’images animées).",
     "size": "Maximum 8 Mio par fichier.",
     "dimensions": "Résolution : jusqu’à 8000 pixels par côté et 20 mégapixels au total (largeur × hauteur)."
+  },
+  "NotFound": {
+    "title": "Page introuvable",
+    "home": "Retour à l’accueil"
   }
 }

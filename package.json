@@ -9,7 +9,7 @@
     "check:email-logo": "node scripts/check-email-logo.mjs",
     "start": "next start",
     "lint": "eslint",
-    "test:i18n": "node --test tests/vietnamese-locale.test.mjs tests/additional-locales.test.mjs",
+    "test:i18n": "node --test tests/vietnamese-locale.test.mjs tests/additional-locales.test.mjs tests/localized-pages-render.test.mjs",
     "test:listing-pagination": "node --test tests/listing-pagination.test.mjs",
     "test:referral-dates": "node --experimental-strip-types --test lib/referral-dates.test.ts",
     "test:referral-registration": "node --experimental-strip-types --test lib/referral-registration.test.ts lib/register-search-params.test.ts && node --test infra/directus/extensions/directus-extension-findelio-referrals/src/referral-utils.test.mjs",

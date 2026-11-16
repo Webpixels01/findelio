@@ -666,24 +666,24 @@
       "valuePlaceholder": "https://, mailto: vagy tel:"
     },
     "publicPosts": {
-      "title": "News, offers and events"
+      "title": "Hírek, ajánlatok és események"
     },
     "posts": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium content",
-      "pageTitle": "Posts for {name}",
-      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
-      "manage": "Manage posts",
-      "createTitle": "Create a new post",
-      "type": "Post type",
+      "back": "Vissza a cégadatlapokhoz",
+      "eyebrow": "Prémium tartalom",
+      "pageTitle": "{name} bejegyzései",
+      "description": "Tegyen közzé híreket, ajánlatokat és eseményeket. A beküldött bejegyzéseket közzététel előtt ellenőrizzük.",
+      "manage": "Bejegyzések kezelése",
+      "createTitle": "Új bejegyzés létrehozása",
+      "type": "Bejegyzés típusa",
       "types": {
-        "update": "News",
-        "offer": "Offer",
-        "event": "Event"
+        "update": "Hír",
+        "offer": "Ajánlat",
+        "event": "Esemény"
       },
-      "title": "Title",
-      "body": "Description",
-      "image": "Image",
+      "title": "Cím",
+      "body": "Leírás",
+      "image": "Kép",
       "imageSelect": "Kép kiválasztása",
       "imageEmpty": "Nincs kiválasztott kép",
       "imageHint": "Ajánlott: 1200 × 675 px (16:9 képarány).",
@@ -691,26 +691,26 @@
       "editTitle": "Bejegyzés szerkesztése",
       "editPublishedHint": "A jelenlegi bejegyzés látható marad. A módosításokat közzététel előtt újra ellenőrizzük.",
       "editArchivedHint": "Ez a bejegyzés nem látható nyilvánosan. Elmentheti piszkozatként, vagy újra beküldheti ellenőrzésre.",
-      "startsAt": "Starts",
-      "endsAt": "Ends",
-      "buttonLabel": "Button label",
-      "buttonUrl": "Button destination",
-      "status": "Save status",
+      "startsAt": "Kezdés",
+      "endsAt": "Befejezés",
+      "buttonLabel": "Gomb felirata",
+      "buttonUrl": "Gomb célja",
+      "status": "Mentéskori állapot",
       "statuses": {
-        "draft": "Draft",
-        "pending": "For review",
-        "published": "Published",
-        "rejected": "Rejected",
-        "archived": "Archived"
+        "draft": "Piszkozat",
+        "pending": "Ellenőrzésre vár",
+        "published": "Közzétéve",
+        "rejected": "Elutasítva",
+        "archived": "Archiválva"
       },
-      "save": "Save post",
-      "saving": "Saving …",
-      "saved": "The post was saved.",
+      "save": "Bejegyzés mentése",
+      "saving": "Mentés …",
+      "saved": "A bejegyzést elmentettük.",
       "updated": "A módosításokat elmentettük.",
       "update": "Módosítások mentése",
       "cancel": "Mégse",
-      "existingTitle": "Existing posts",
-      "empty": "No posts yet.",
+      "existingTitle": "Meglévő bejegyzések",
+      "empty": "Még nincsenek bejegyzések.",
       "archive": "Archiválás",
       "edit": "Szerkesztés",
       "archivedNotice": "A bejegyzést archiváltuk. Már nem látható nyilvánosan, és továbbra is megmarad az irányítópulton.",
@@ -721,40 +721,40 @@
       "archiveKeep": "Bejegyzés megtartása",
       "archiving": "Archiválás …",
       "errors": {
-        "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved.",
+        "upload": "A képet nem sikerült feltölteni.",
+        "save": "A bejegyzést nem sikerült menteni.",
         "archive": "A bejegyzést nem sikerült archiválni."
       }
     },
     "statistics": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium statistics",
-      "pageTitle": "Performance of {name}",
-      "description": "See how visitors find your business listing and which contact options they use.",
-      "link": "View statistics",
-      "days": "{count} days",
+      "back": "Vissza a cégadatlapokhoz",
+      "eyebrow": "Prémium statisztikák",
+      "pageTitle": "{name} eredményei",
+      "description": "Tekintse meg, hogyan találnak rá a látogatók a cégadatlapjára, és mely kapcsolatfelvételi lehetőségeket használják.",
+      "link": "Statisztikák megtekintése",
+      "days": "{count} nap",
       "metrics": {
-        "search_impressions": "Search impressions",
-        "profile_views": "Profile views",
-        "website_clicks": "Website clicks",
-        "phone_clicks": "Phone clicks",
-        "email_clicks": "Email clicks",
-        "social_clicks": "Social media clicks",
-        "custom_cta_clicks": "Custom button clicks",
-        "post_views": "Post views",
-        "post_cta_clicks": "Post button clicks"
+        "search_impressions": "Megjelenések a keresésben",
+        "profile_views": "Profilmegtekintések",
+        "website_clicks": "Weboldalra kattintások",
+        "phone_clicks": "Telefonszámra kattintások",
+        "email_clicks": "E-mail-címre kattintások",
+        "social_clicks": "Közösségi oldalakra kattintások",
+        "custom_cta_clicks": "Egyéni gombra kattintások",
+        "post_views": "Bejegyzésmegtekintések",
+        "post_cta_clicks": "Bejegyzések gombjaira kattintások"
       },
-      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
-      "privacyTitle": "Performance measurement for Premium listings",
-      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+      "privacyHint": "A statisztikák csak összesített napi értékeket tartalmaznak, a látogatók személyes adatait nem.",
+      "privacyTitle": "Prémium adatlapok eredményeinek mérése",
+      "privacyText": "Az aktív Prémium adatlapoknál számoljuk a keresési megjelenéseket, a profilmegtekintéseket, valamint a kapcsolatfelvételi lehetőségekre, műveletgombokra és bejegyzésekre történő kattintásokat. Csak összesített napi értékeket tárolunk. Nem hozunk létre tartós IP-cím-adatbázist, látogatói profilokat vagy nyomkövető sütiket. A szervezetek tulajdonosai havonta e-mailben kaphatnak jelentést az eredményekről."
     },
     "review": {
-      "eyebrow": "Premium content",
-      "title": "Posts awaiting review",
+      "eyebrow": "Prémium tartalom",
+      "title": "Ellenőrzésre váró bejegyzések",
       "reason": "Üzenet az ügyfélnek (elutasításkor kötelező)",
       "error": "A művelet nem hajtható végre. A bejegyzés elutasításához indoklás szükséges.",
-      "approve": "Approve post",
-      "reject": "Reject post"
+      "approve": "Bejegyzés jóváhagyása",
+      "reject": "Bejegyzés elutasítása"
     }
   },
   "ListingEditor": {
@@ -853,27 +853,6 @@
       "city": "Csak a település és a kanton megjelenítése",
       "hidden": "Cím elrejtése"
     },
-    "plan": {
-      "eyebrow": "Csomag ehhez a bejegyzéshez",
-      "title": "Válassz Free vagy Premium csomagot",
-      "description": "A kiválasztott csomag csak erre a cégbejegyzésre vonatkozik. A további bejegyzések saját csomagot kaphatnak.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Minden alapadat és megjelenés a Findelio címtárában."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "havi CHF 8.25-től",
-        "description": "Emellett logó, képgaléria, nyitvatartás és közösségimédia-linkek."
-      },
-      "intervalTitle": "Számlázási időszak",
-      "intervals": {
-        "monthly": "Havonta – CHF 9.90",
-        "yearly": "Évente – CHF 99.00"
-      },
-      "cancellationHint": "Nincs próbaidőszak. Az előfizetés az aktuális számlázási időszak végére mondható le."
-    },
     "statusValues": {
       "draft": "Piszkozat",
       "review": "Ellenőrzésre",
@@ -949,6 +928,27 @@
       "forbidden": "Ehhez a szervezethez nem hozhatsz létre cégbejegyzést.",
       "create_failed": "A cégbejegyzést nem sikerült létrehozni.",
       "network": "Nem sikerült kapcsolódni a szerverhez."
+    },
+    "plan": {
+      "eyebrow": "Csomag ehhez a bejegyzéshez",
+      "title": "Válassz Free vagy Premium csomagot",
+      "description": "A kiválasztott csomag csak erre a cégbejegyzésre vonatkozik. A további bejegyzések saját csomagot kaphatnak.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Minden alapadat és megjelenés a Findelio címtárában."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "havi CHF 8.25-től",
+        "description": "Emellett logó, képgaléria, nyitvatartás és közösségimédia-linkek."
+      },
+      "intervalTitle": "Számlázási időszak",
+      "intervals": {
+        "monthly": "Havonta – CHF 9.90",
+        "yearly": "Évente – CHF 99.00"
+      },
+      "cancellationHint": "Nincs próbaidőszak. Az előfizetés az aktuális számlázási időszak végére mondható le."
     }
   },
   "Billing": {
@@ -1088,7 +1088,9 @@
         "logo_id": "Céglogó",
         "gallery_file_ids": "Képgaléria",
         "social_links": "Közösségimédia-hivatkozások",
-        "opening_hours": "Nyitvatartás"
+        "opening_hours": "Nyitvatartás",
+        "custom_cta_label": "Egyéni gomb felirata",
+        "custom_cta_value": "Egyéni gomb célja"
       }
     }
   },
@@ -1357,5 +1359,9 @@
     "formats": "Engedélyezett: JPG/JPEG, PNG és WebP (animált képek nélkül).",
     "size": "Legfeljebb 8 MiB fájlonként.",
     "dimensions": "Felbontás: oldalanként legfeljebb 8000 képpont, összesen 20 megapixel (szélesség × magasság)."
+  },
+  "NotFound": {
+    "title": "Az oldal nem található",
+    "home": "Vissza a kezdőlapra"
   }
 }

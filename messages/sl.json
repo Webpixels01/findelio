@@ -853,27 +853,6 @@
       "city": "Prikaži samo kraj in kanton",
       "hidden": "Skrij naslov"
     },
-    "plan": {
-      "eyebrow": "Paket za ta oglas",
-      "title": "Izberite Brezplačno ali Premium",
-      "description": "Izbrani paket velja samo za ta oglas podjetja. Dodatni oglasi imajo lahko svoj paket.",
-      "free": {
-        "title": "Brezplačno",
-        "price": "CHF 0",
-        "description": "Vsi osnovni podatki in objava v imeniku Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "od CHF 8.25 na mesec",
-        "description": "Vključuje tudi logotip, galerijo slik, delovni čas in povezave do družbenih omrežij."
-      },
-      "intervalTitle": "Obračunsko obdobje",
-      "intervals": {
-        "monthly": "Mesečno – CHF 9.90",
-        "yearly": "Letno – CHF 99.00"
-      },
-      "cancellationHint": "Brez preizkusnega obdobja. Naročnino je mogoče preklicati ob koncu tekočega obračunskega obdobja."
-    },
     "statusValues": {
       "draft": "Osnutek",
       "review": "Pošlji v pregled",
@@ -949,6 +928,27 @@
       "forbidden": "Za to organizacijo ne morete ustvariti oglasa podjetja.",
       "create_failed": "Oglasa podjetja ni bilo mogoče ustvariti.",
       "network": "Povezava s strežnikom ni uspela."
+    },
+    "plan": {
+      "eyebrow": "Paket za ta oglas",
+      "title": "Izberite Brezplačno ali Premium",
+      "description": "Izbrani paket velja samo za ta oglas podjetja. Dodatni oglasi imajo lahko svoj paket.",
+      "free": {
+        "title": "Brezplačno",
+        "price": "CHF 0",
+        "description": "Vsi osnovni podatki in objava v imeniku Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 na mesec",
+        "description": "Vključuje tudi logotip, galerijo slik, delovni čas in povezave do družbenih omrežij."
+      },
+      "intervalTitle": "Obračunsko obdobje",
+      "intervals": {
+        "monthly": "Mesečno – CHF 9.90",
+        "yearly": "Letno – CHF 99.00"
+      },
+      "cancellationHint": "Brez preizkusnega obdobja. Naročnino je mogoče preklicati ob koncu tekočega obračunskega obdobja."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Dovoljeno: JPG/JPEG, PNG in WebP (brez animiranih slik).",
     "size": "Največ 8 MiB na datoteko.",
     "dimensions": "Ločljivost: do 8000 pikslov na stranico in skupno 20 megapikslov (širina × višina)."
+  },
+  "NotFound": {
+    "title": "Strani ni mogoče najti",
+    "home": "Na začetno stran"
   }
 }

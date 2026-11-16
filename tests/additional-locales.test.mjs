@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { test } from 'node:test';
 import { parse, TYPE } from '@formatjs/icu-messageformat-parser';
 import { IntlMessageFormat } from 'intl-messageformat';
@@ -11,6 +11,8 @@ const read = path => readFile(new URL('../' + path, import.meta.url), 'utf8');
 const english = JSON.parse(await read('messages/en.json'));
 const routingSource = await read('i18n/routing.ts');
 const newLocales = ['it', 'fr', 'uk', 'bs', 'sr', 'sl'];
+const allLocales = (await readdir(new URL('../messages/', import.meta.url)))
+  .filter(file => file.endsWith('.json')).map(file => file.slice(0, -5));
 const intlLocales = {
   it: 'it',
   fr: 'fr',
@@ -46,7 +48,7 @@ function argumentsOf(nodes, result = {}) {
 
 const sourceMessages = flatten(english);
 
-for (const locale of newLocales) {
+for (const locale of allLocales) {
   test(`${locale} covers every message and preserves ICU variables and rich-text tags`, async () => {
     const translations = flatten(JSON.parse(await read(`messages/${locale}.json`)));
     assert.deepEqual(Object.keys(translations).sort(), Object.keys(sourceMessages).sort());
@@ -54,7 +56,15 @@ for (const locale of newLocales) {
       const text = translations[key];
       assert.ok(text.trim(), key);
       assert.equal(text, text.normalize('NFC'), `${key}: NFC`);
-      assert.deepEqual(argumentsOf(parse(text)), argumentsOf(parse(source)), key);
+      const sourceArguments = argumentsOf(parse(source));
+      const translatedArguments = argumentsOf(parse(text));
+      // Some languages use a count label or the same noun form for every number.
+      for (const [name, type] of Object.entries(sourceArguments)) {
+        if (type === TYPE.plural && translatedArguments[name] === TYPE.argument) {
+          translatedArguments[name] = TYPE.plural;
+        }
+      }
+      assert.deepEqual(translatedArguments, sourceArguments, key);
     }
   });
 
@@ -68,10 +78,25 @@ for (const locale of newLocales) {
           type === TYPE.tag ? chunks => chunks.join('')
             : [TYPE.plural, TYPE.number].includes(type) ? count
               : [TYPE.date, TYPE.time].includes(type) ? new Date('2026-11-16T12:00:00Z') : 'Example']));
-        assert.equal(typeof new IntlMessageFormat(ast, intlLocales[locale]).format(values), 'string', key);
+        assert.equal(typeof new IntlMessageFormat(ast, intlLocales[locale] ?? locale).format(values), 'string', key);
       }
     }
-    assert.equal(typeof new IntlMessageFormat(messages.Results.count, intlLocales[locale]).format({ count: 2 }), 'string');
+    assert.equal(typeof new IntlMessageFormat(messages.Results.count, intlLocales[locale] ?? locale).format({ count: 2 }), 'string');
+  });
+
+  test(`${locale} exposes plan translations where the creation form reads them and localizes Growth`, async () => {
+    const messages = JSON.parse(await read(`messages/${locale}.json`));
+    assert.ok(messages.ListingCreator.plan.title);
+    assert.ok(messages.ListingCreator.plan.intervals.monthly);
+    assert.ok(messages.ListingReview.detail.fields.custom_cta_label);
+    assert.ok(messages.ListingReview.detail.fields.custom_cta_value);
+    if (locale === 'en') return;
+    const growth = flatten(messages.Growth);
+    const sourceGrowth = flatten(english.Growth);
+    const sharedWords = new Set(['common.premium', ...(locale === 'fr' ? ['posts.body', 'posts.image'] : [])]);
+    for (const [key, text] of Object.entries(growth)) {
+      if (!sharedWords.has(key)) assert.notEqual(text, sourceGrowth[key], `${locale}: Growth.${key} is still English`);
+    }
   });
 }
 

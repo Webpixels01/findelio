@@ -853,27 +853,6 @@
       "city": "Prikaži samo mesto i kanton",
       "hidden": "Sakrij adresu"
     },
-    "plan": {
-      "eyebrow": "Paket za ovaj oglas",
-      "title": "Izaberite Besplatno ili Premium",
-      "description": "Izabrani paket važi samo za ovaj oglas preduzeća. Dodatni oglasi mogu imati sopstveni paket.",
-      "free": {
-        "title": "Besplatno",
-        "price": "CHF 0",
-        "description": "Svi osnovni podaci i objava u Findelio imeniku."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "od CHF 8.25 mesečno",
-        "description": "Uključuje i logotip, galeriju slika, radno vreme i linkove ka društvenim mrežama."
-      },
-      "intervalTitle": "Period naplate",
-      "intervals": {
-        "monthly": "Mesečno – CHF 9.90",
-        "yearly": "Godišnje – CHF 99.00"
-      },
-      "cancellationHint": "Bez probnog perioda. Pretplata se može otkazati na kraju tekućeg perioda naplate."
-    },
     "statusValues": {
       "draft": "Nacrt",
       "review": "Pošalji na proveru",
@@ -949,6 +928,27 @@
       "forbidden": "Ne možete kreirati oglas preduzeća za ovu organizaciju.",
       "create_failed": "Oglas preduzeća nije mogao biti kreiran.",
       "network": "Veza sa serverom nije uspela."
+    },
+    "plan": {
+      "eyebrow": "Paket za ovaj oglas",
+      "title": "Izaberite Besplatno ili Premium",
+      "description": "Izabrani paket važi samo za ovaj oglas preduzeća. Dodatni oglasi mogu imati sopstveni paket.",
+      "free": {
+        "title": "Besplatno",
+        "price": "CHF 0",
+        "description": "Svi osnovni podaci i objava u Findelio imeniku."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 mesečno",
+        "description": "Uključuje i logotip, galeriju slika, radno vreme i linkove ka društvenim mrežama."
+      },
+      "intervalTitle": "Period naplate",
+      "intervals": {
+        "monthly": "Mesečno – CHF 9.90",
+        "yearly": "Godišnje – CHF 99.00"
+      },
+      "cancellationHint": "Bez probnog perioda. Pretplata se može otkazati na kraju tekućeg perioda naplate."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Dozvoljeno: JPG/JPEG, PNG i WebP (bez animiranih slika).",
     "size": "Najviše 8 MiB po datoteci.",
     "dimensions": "Rezolucija: do 8000 piksela po strani i ukupno 20 megapiksela (širina × visina)."
+  },
+  "NotFound": {
+    "title": "Stranica nije pronađena",
+    "home": "Na početnu stranicu"
   }
 }

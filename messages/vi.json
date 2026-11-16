@@ -853,27 +853,6 @@
       "city": "Chỉ hiển thị địa phương và bang",
       "hidden": "Ẩn địa chỉ"
     },
-    "plan": {
-      "eyebrow": "Gói cho hồ sơ này",
-      "title": "Chọn Free hoặc Premium",
-      "description": "Gói được chọn chỉ áp dụng cho hồ sơ doanh nghiệp này. Các hồ sơ khác có thể có gói riêng.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Tất cả thông tin cơ bản và công bố trong danh bạ Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "từ CHF 8.25 mỗi tháng",
-        "description": "Bao gồm thêm logo, thư viện ảnh, giờ mở cửa và liên kết mạng xã hội."
-      },
-      "intervalTitle": "Chu kỳ thanh toán",
-      "intervals": {
-        "monthly": "Hằng tháng – CHF 9.90",
-        "yearly": "Hằng năm – CHF 99.00"
-      },
-      "cancellationHint": "Không có dùng thử. Có thể hủy gói vào cuối kỳ thanh toán hiện tại."
-    },
     "statusValues": {
       "draft": "Bản nháp",
       "review": "Gửi xét duyệt",
@@ -949,6 +928,27 @@
       "forbidden": "Bạn không thể tạo hồ sơ doanh nghiệp cho tổ chức này.",
       "create_failed": "Không thể tạo hồ sơ doanh nghiệp.",
       "network": "Không thể kết nối với máy chủ."
+    },
+    "plan": {
+      "eyebrow": "Gói cho hồ sơ này",
+      "title": "Chọn Free hoặc Premium",
+      "description": "Gói được chọn chỉ áp dụng cho hồ sơ doanh nghiệp này. Các hồ sơ khác có thể có gói riêng.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Tất cả thông tin cơ bản và công bố trong danh bạ Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "từ CHF 8.25 mỗi tháng",
+        "description": "Bao gồm thêm logo, thư viện ảnh, giờ mở cửa và liên kết mạng xã hội."
+      },
+      "intervalTitle": "Chu kỳ thanh toán",
+      "intervals": {
+        "monthly": "Hằng tháng – CHF 9.90",
+        "yearly": "Hằng năm – CHF 99.00"
+      },
+      "cancellationHint": "Không có dùng thử. Có thể hủy gói vào cuối kỳ thanh toán hiện tại."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Cho phép: JPG/JPEG, PNG và WebP (không hỗ trợ ảnh động).",
     "size": "Tối đa 8 MiB mỗi tệp.",
     "dimensions": "Độ phân giải: tối đa 8000 pixel mỗi chiều và tổng cộng 20 megapixel (chiều rộng × chiều cao)."
+  },
+  "NotFound": {
+    "title": "Không tìm thấy trang",
+    "home": "Về trang chủ"
   }
 }

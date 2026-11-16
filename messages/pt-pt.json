@@ -666,24 +666,24 @@
       "valuePlaceholder": "https://, mailto: ou tel:"
     },
     "publicPosts": {
-      "title": "News, offers and events"
+      "title": "Novidades, ofertas e eventos"
     },
     "posts": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium content",
-      "pageTitle": "Posts for {name}",
-      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
-      "manage": "Manage posts",
-      "createTitle": "Create a new post",
-      "type": "Post type",
+      "back": "Voltar às fichas de empresas",
+      "eyebrow": "Conteúdo Premium",
+      "pageTitle": "Publicações de {name}",
+      "description": "Publique novidades, ofertas e eventos. As publicações enviadas são revistas antes de serem publicadas.",
+      "manage": "Gerir publicações",
+      "createTitle": "Criar uma nova publicação",
+      "type": "Tipo de publicação",
       "types": {
-        "update": "News",
-        "offer": "Offer",
-        "event": "Event"
+        "update": "Novidade",
+        "offer": "Oferta",
+        "event": "Evento"
       },
-      "title": "Title",
-      "body": "Description",
-      "image": "Image",
+      "title": "Título",
+      "body": "Descrição",
+      "image": "Imagem",
       "imageSelect": "Selecionar imagem",
       "imageEmpty": "Nenhuma imagem selecionada",
       "imageHint": "Recomendado: 1200 × 675 px (proporção 16:9).",
@@ -691,26 +691,26 @@
       "editTitle": "Editar publicação",
       "editPublishedHint": "A publicação atual continuará visível. As alterações serão novamente revistas antes da publicação.",
       "editArchivedHint": "Esta publicação não está visível publicamente. Pode guardá-la como rascunho ou voltar a enviá-la para revisão.",
-      "startsAt": "Starts",
-      "endsAt": "Ends",
-      "buttonLabel": "Button label",
-      "buttonUrl": "Button destination",
-      "status": "Save status",
+      "startsAt": "Início",
+      "endsAt": "Fim",
+      "buttonLabel": "Texto do botão",
+      "buttonUrl": "Destino do botão",
+      "status": "Estado ao guardar",
       "statuses": {
-        "draft": "Draft",
-        "pending": "For review",
-        "published": "Published",
-        "rejected": "Rejected",
-        "archived": "Archived"
+        "draft": "Rascunho",
+        "pending": "Para revisão",
+        "published": "Publicada",
+        "rejected": "Rejeitada",
+        "archived": "Arquivada"
       },
-      "save": "Save post",
-      "saving": "Saving …",
-      "saved": "The post was saved.",
+      "save": "Guardar publicação",
+      "saving": "A guardar …",
+      "saved": "A publicação foi guardada.",
       "updated": "As alterações foram guardadas.",
       "update": "Guardar alterações",
       "cancel": "Cancelar",
-      "existingTitle": "Existing posts",
-      "empty": "No posts yet.",
+      "existingTitle": "Publicações existentes",
+      "empty": "Ainda não existem publicações.",
       "archive": "Arquivar",
       "edit": "Editar",
       "archivedNotice": "A publicação foi arquivada. Já não está visível publicamente e continua guardada no painel.",
@@ -721,40 +721,40 @@
       "archiveKeep": "Manter publicação",
       "archiving": "A arquivar …",
       "errors": {
-        "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved.",
+        "upload": "Não foi possível carregar a imagem.",
+        "save": "Não foi possível guardar a publicação.",
         "archive": "Não foi possível arquivar a publicação."
       }
     },
     "statistics": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium statistics",
-      "pageTitle": "Performance of {name}",
-      "description": "See how visitors find your business listing and which contact options they use.",
-      "link": "View statistics",
-      "days": "{count} days",
+      "back": "Voltar às fichas de empresas",
+      "eyebrow": "Estatísticas Premium",
+      "pageTitle": "Resultados de {name}",
+      "description": "Veja como os visitantes encontram a ficha da sua empresa e que opções de contacto utilizam.",
+      "link": "Ver estatísticas",
+      "days": "{count} dias",
       "metrics": {
-        "search_impressions": "Search impressions",
-        "profile_views": "Profile views",
-        "website_clicks": "Website clicks",
-        "phone_clicks": "Phone clicks",
-        "email_clicks": "Email clicks",
-        "social_clicks": "Social media clicks",
-        "custom_cta_clicks": "Custom button clicks",
-        "post_views": "Post views",
-        "post_cta_clicks": "Post button clicks"
+        "search_impressions": "Impressões na pesquisa",
+        "profile_views": "Visualizações do perfil",
+        "website_clicks": "Cliques no website",
+        "phone_clicks": "Cliques no telefone",
+        "email_clicks": "Cliques no e-mail",
+        "social_clicks": "Cliques nas redes sociais",
+        "custom_cta_clicks": "Cliques no botão personalizado",
+        "post_views": "Visualizações de publicações",
+        "post_cta_clicks": "Cliques nos botões das publicações"
       },
-      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
-      "privacyTitle": "Performance measurement for Premium listings",
-      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+      "privacyHint": "As estatísticas contêm apenas valores diários agregados, sem dados pessoais dos visitantes.",
+      "privacyTitle": "Medição dos resultados das fichas Premium",
+      "privacyText": "Nas fichas Premium ativas, contamos as impressões na pesquisa, as visualizações do perfil e os cliques nas opções de contacto, nos botões de ação e nas publicações. Apenas são guardados valores diários agregados. Não são criados registos permanentes de endereços IP, perfis de visitantes nem cookies de rastreamento. Os proprietários das organizações podem receber um relatório mensal de resultados por e-mail."
     },
     "review": {
-      "eyebrow": "Premium content",
-      "title": "Posts awaiting review",
+      "eyebrow": "Conteúdo Premium",
+      "title": "Publicações a aguardar revisão",
       "reason": "Mensagem ao cliente (obrigatória em caso de rejeição)",
       "error": "Não foi possível concluir a ação. Ao rejeitar uma publicação, é necessário indicar um motivo.",
-      "approve": "Approve post",
-      "reject": "Reject post"
+      "approve": "Aprovar publicação",
+      "reject": "Rejeitar publicação"
     }
   },
   "ListingEditor": {
@@ -853,27 +853,6 @@
       "city": "Mostrar apenas localidade e cantão",
       "hidden": "Ocultar morada"
     },
-    "plan": {
-      "eyebrow": "Plano para este registo",
-      "title": "Escolher Free ou Premium",
-      "description": "O plano selecionado aplica-se apenas a este registo empresarial. Outros registos podem ter um plano próprio.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Todos os dados básicos e publicação no diretório Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "desde CHF 8.25 por mês",
-        "description": "Inclui também logótipo, galeria de imagens, horário de funcionamento e ligações às redes sociais."
-      },
-      "intervalTitle": "Período de faturação",
-      "intervals": {
-        "monthly": "Mensal – CHF 9.90",
-        "yearly": "Anual – CHF 99.00"
-      },
-      "cancellationHint": "Sem período experimental. A subscrição pode ser cancelada no final do período de faturação atual."
-    },
     "statusValues": {
       "draft": "Rascunho",
       "review": "Para revisão",
@@ -949,6 +928,27 @@
       "forbidden": "Não podes criar um registo empresarial para esta organização.",
       "create_failed": "Não foi possível criar o registo empresarial.",
       "network": "A ligação ao servidor falhou."
+    },
+    "plan": {
+      "eyebrow": "Plano para este registo",
+      "title": "Escolher Free ou Premium",
+      "description": "O plano selecionado aplica-se apenas a este registo empresarial. Outros registos podem ter um plano próprio.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Todos os dados básicos e publicação no diretório Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "desde CHF 8.25 por mês",
+        "description": "Inclui também logótipo, galeria de imagens, horário de funcionamento e ligações às redes sociais."
+      },
+      "intervalTitle": "Período de faturação",
+      "intervals": {
+        "monthly": "Mensal – CHF 9.90",
+        "yearly": "Anual – CHF 99.00"
+      },
+      "cancellationHint": "Sem período experimental. A subscrição pode ser cancelada no final do período de faturação atual."
     }
   },
   "Billing": {
@@ -1088,7 +1088,9 @@
         "logo_id": "Logótipo da empresa",
         "gallery_file_ids": "Galeria de imagens",
         "social_links": "Ligações para redes sociais",
-        "opening_hours": "Horário de funcionamento"
+        "opening_hours": "Horário de funcionamento",
+        "custom_cta_label": "Texto do botão personalizado",
+        "custom_cta_value": "Destino do botão personalizado"
       }
     }
   },
@@ -1357,5 +1359,9 @@
     "formats": "Formatos permitidos: JPG/JPEG, PNG e WebP (sem imagens animadas).",
     "size": "Máximo de 8 MiB por ficheiro.",
     "dimensions": "Resolução: até 8000 píxeis por lado e 20 megapíxeis no total (largura × altura)."
+  },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "home": "Voltar à página inicial"
   }
 }

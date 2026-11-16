@@ -853,27 +853,6 @@
       "city": "Show city and canton only",
       "hidden": "Hide address"
     },
-    "plan": {
-      "eyebrow": "Plan for this listing",
-      "title": "Choose Free or Premium",
-      "description": "The selected plan applies only to this business listing. Additional listings can have their own plan.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "All basic details and publication in the Findelio directory."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "from CHF 8.25 per month",
-        "description": "Also includes a logo, image gallery, opening hours and social media links."
-      },
-      "intervalTitle": "Billing period",
-      "intervals": {
-        "monthly": "Monthly – CHF 9.90",
-        "yearly": "Yearly – CHF 99.00"
-      },
-      "cancellationHint": "No trial. The subscription can be cancelled at the end of the current billing period."
-    },
     "statusValues": {
       "draft": "Draft",
       "review": "Submit for review",
@@ -949,6 +928,27 @@
       "forbidden": "You cannot create a business listing for this organization.",
       "create_failed": "The business listing could not be created.",
       "network": "The connection to the server failed."
+    },
+    "plan": {
+      "eyebrow": "Plan for this listing",
+      "title": "Choose Free or Premium",
+      "description": "The selected plan applies only to this business listing. Additional listings can have their own plan.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "All basic details and publication in the Findelio directory."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "from CHF 8.25 per month",
+        "description": "Also includes a logo, image gallery, opening hours and social media links."
+      },
+      "intervalTitle": "Billing period",
+      "intervals": {
+        "monthly": "Monthly – CHF 9.90",
+        "yearly": "Yearly – CHF 99.00"
+      },
+      "cancellationHint": "No trial. The subscription can be cancelled at the end of the current billing period."
     }
   },
   "Billing": {
@@ -1359,5 +1359,9 @@
     "formats": "Allowed: JPG/JPEG, PNG and WebP (no animated images).",
     "size": "Maximum 8 MiB per file.",
     "dimensions": "Resolution: up to 8000 pixels per side and 20 megapixels in total (width × height)."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "home": "Back to home"
   }
 }

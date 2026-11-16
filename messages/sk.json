@@ -13,7 +13,7 @@
     "login": "Prihlásenie",
     "selectLanguage": "Vybrať jazyk",
     "menu": "Otvoriť menu",
-    "dashboard": "Dashboard"
+    "dashboard": "Nástenka"
   },
   "Share": {
     "page": "Zdieľať stránku",
@@ -175,7 +175,7 @@
   },
   "Dashboard": {
     "eyebrow": "Firemná zóna",
-    "title": "Dashboard",
+    "title": "Nástenka",
     "welcome": "Vitajte, {name}.",
     "description": "Tu môžete spravovať svoje firmy, záznamy a členov tímu.",
     "accountTitle": "Váš účet",
@@ -666,24 +666,24 @@
       "valuePlaceholder": "https://, mailto: alebo tel:"
     },
     "publicPosts": {
-      "title": "News, offers and events"
+      "title": "Novinky, ponuky a podujatia"
     },
     "posts": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium content",
-      "pageTitle": "Posts for {name}",
-      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
+      "back": "Späť na firemné záznamy",
+      "eyebrow": "Prémiový obsah",
+      "pageTitle": "Príspevky pre {name}",
+      "description": "Zverejňujte novinky, ponuky a podujatia. Odoslané príspevky sa pred zverejnením kontrolujú.",
       "manage": "Spravovať príspevky",
-      "createTitle": "Create a new post",
-      "type": "Post type",
+      "createTitle": "Vytvoriť nový príspevok",
+      "type": "Typ príspevku",
       "types": {
-        "update": "News",
-        "offer": "Offer",
-        "event": "Event"
+        "update": "Novinka",
+        "offer": "Ponuka",
+        "event": "Podujatie"
       },
-      "title": "Title",
-      "body": "Description",
-      "image": "Image",
+      "title": "Názov",
+      "body": "Popis",
+      "image": "Obrázok",
       "imageSelect": "Vybrať obrázok",
       "imageEmpty": "Nie je vybratý žiadny obrázok",
       "imageHint": "Odporúčané: 1200 × 675 px (pomer strán 16:9).",
@@ -691,26 +691,26 @@
       "editTitle": "Upraviť príspevok",
       "editPublishedHint": "Doterajší príspevok zostane viditeľný. Zmeny budú pred zverejnením znova skontrolované.",
       "editArchivedHint": "Tento príspevok nie je verejne viditeľný. Môžete ho uložiť ako koncept alebo ho znova odoslať na kontrolu.",
-      "startsAt": "Starts",
-      "endsAt": "Ends",
-      "buttonLabel": "Button label",
-      "buttonUrl": "Button destination",
-      "status": "Save status",
+      "startsAt": "Začiatok",
+      "endsAt": "Koniec",
+      "buttonLabel": "Text tlačidla",
+      "buttonUrl": "Cieľ tlačidla",
+      "status": "Stav pri uložení",
       "statuses": {
-        "draft": "Draft",
-        "pending": "For review",
-        "published": "Published",
-        "rejected": "Rejected",
-        "archived": "Archived"
+        "draft": "Koncept",
+        "pending": "Na kontrolu",
+        "published": "Zverejnený",
+        "rejected": "Zamietnutý",
+        "archived": "Archivovaný"
       },
-      "save": "Save post",
-      "saving": "Saving …",
-      "saved": "The post was saved.",
+      "save": "Uložiť príspevok",
+      "saving": "Ukladá sa …",
+      "saved": "Príspevok bol uložený.",
       "updated": "Zmeny boli uložené.",
       "update": "Uložiť zmeny",
       "cancel": "Zrušiť",
-      "existingTitle": "Existing posts",
-      "empty": "No posts yet.",
+      "existingTitle": "Existujúce príspevky",
+      "empty": "Zatiaľ žiadne príspevky.",
       "archive": "Archivovať",
       "edit": "Upraviť",
       "archivedNotice": "Príspevok bol archivovaný. Už nie je verejne viditeľný a zostáva uložený na nástenke.",
@@ -721,40 +721,40 @@
       "archiveKeep": "Ponechať príspevok",
       "archiving": "Archivuje sa …",
       "errors": {
-        "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved.",
+        "upload": "Obrázok sa nepodarilo nahrať.",
+        "save": "Príspevok sa nepodarilo uložiť.",
         "archive": "Príspevok sa nepodarilo archivovať."
       }
     },
     "statistics": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium statistics",
-      "pageTitle": "Performance of {name}",
-      "description": "See how visitors find your business listing and which contact options they use.",
+      "back": "Späť na firemné záznamy",
+      "eyebrow": "Prémiové štatistiky",
+      "pageTitle": "Výsledky firmy {name}",
+      "description": "Zistite, ako návštevníci nachádzajú váš firemný záznam a ktoré možnosti kontaktu využívajú.",
       "link": "Zobraziť štatistiky",
-      "days": "{count} days",
+      "days": "{count} dní",
       "metrics": {
-        "search_impressions": "Search impressions",
-        "profile_views": "Profile views",
-        "website_clicks": "Website clicks",
-        "phone_clicks": "Phone clicks",
-        "email_clicks": "Email clicks",
-        "social_clicks": "Social media clicks",
-        "custom_cta_clicks": "Custom button clicks",
-        "post_views": "Post views",
-        "post_cta_clicks": "Post button clicks"
+        "search_impressions": "Zobrazenia vo vyhľadávaní",
+        "profile_views": "Zobrazenia profilu",
+        "website_clicks": "Kliknutia na webovú stránku",
+        "phone_clicks": "Kliknutia na telefón",
+        "email_clicks": "Kliknutia na e-mail",
+        "social_clicks": "Kliknutia na sociálne siete",
+        "custom_cta_clicks": "Kliknutia na vlastné tlačidlo",
+        "post_views": "Zobrazenia príspevkov",
+        "post_cta_clicks": "Kliknutia na tlačidlá príspevkov"
       },
-      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
-      "privacyTitle": "Performance measurement for Premium listings",
-      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+      "privacyHint": "Štatistiky obsahujú iba súhrnné denné hodnoty, nie osobné údaje návštevníkov.",
+      "privacyTitle": "Meranie výsledkov prémiových záznamov",
+      "privacyText": "Pri aktívnych prémiových záznamoch počítame zobrazenia vo vyhľadávaní, zobrazenia profilu a kliknutia na možnosti kontaktu, akčné tlačidlá a príspevky. Ukladajú sa iba súhrnné denné hodnoty. Nevytvárajú sa trvalé záznamy IP adries, profily návštevníkov ani sledovacie cookies. Vlastníci organizácií môžu dostávať mesačný prehľad výsledkov e-mailom."
     },
     "review": {
-      "eyebrow": "Premium content",
-      "title": "Posts awaiting review",
+      "eyebrow": "Prémiový obsah",
+      "title": "Príspevky čakajúce na kontrolu",
       "reason": "Správa pre zákazníka (povinná pri zamietnutí)",
       "error": "Akciu sa nepodarilo vykonať. Pri zamietnutí príspevku je potrebné uviesť dôvod.",
-      "approve": "Approve post",
-      "reject": "Reject post"
+      "approve": "Schváliť príspevok",
+      "reject": "Zamietnuť príspevok"
     }
   },
   "ListingEditor": {
@@ -1088,7 +1088,9 @@
         "logo_id": "Firemné logo",
         "gallery_file_ids": "Galéria obrázkov",
         "social_links": "Odkazy na sociálne siete",
-        "opening_hours": "Otváracie hodiny"
+        "opening_hours": "Otváracie hodiny",
+        "custom_cta_label": "Text vlastného tlačidla",
+        "custom_cta_value": "Cieľ vlastného tlačidla"
       }
     }
   },
@@ -1357,5 +1359,9 @@
     "formats": "Povolené: JPG/JPEG, PNG a WebP (bez animovaných obrázkov).",
     "size": "Maximálne 8 MiB na súbor.",
     "dimensions": "Rozlíšenie: najviac 8000 pixelov na stranu a celkovo 20 megapixelov (šírka × výška)."
+  },
+  "NotFound": {
+    "title": "Stránka sa nenašla",
+    "home": "Späť na úvodnú stránku"
   }
 }

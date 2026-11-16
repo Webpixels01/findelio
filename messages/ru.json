@@ -666,24 +666,24 @@
       "valuePlaceholder": "https://, mailto: или tel:"
     },
     "publicPosts": {
-      "title": "News, offers and events"
+      "title": "Новости, предложения и мероприятия"
     },
     "posts": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium content",
-      "pageTitle": "Posts for {name}",
-      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
-      "manage": "Manage posts",
-      "createTitle": "Create a new post",
-      "type": "Post type",
+      "back": "Назад к записям компаний",
+      "eyebrow": "Контент Premium",
+      "pageTitle": "Публикации компании {name}",
+      "description": "Публикуйте новости, предложения и мероприятия. Отправленные публикации проходят проверку перед размещением.",
+      "manage": "Управлять публикациями",
+      "createTitle": "Создать новую публикацию",
+      "type": "Тип публикации",
       "types": {
-        "update": "News",
-        "offer": "Offer",
-        "event": "Event"
+        "update": "Новость",
+        "offer": "Предложение",
+        "event": "Мероприятие"
       },
-      "title": "Title",
-      "body": "Description",
-      "image": "Image",
+      "title": "Заголовок",
+      "body": "Описание",
+      "image": "Изображение",
       "imageSelect": "Выбрать изображение",
       "imageEmpty": "Изображение не выбрано",
       "imageHint": "Рекомендуется: 1200 × 675 пикс. (соотношение 16:9).",
@@ -691,26 +691,26 @@
       "editTitle": "Редактировать публикацию",
       "editPublishedHint": "Текущая публикация останется видимой. Изменения будут повторно проверены перед публикацией.",
       "editArchivedHint": "Эта публикация не видна публично. Её можно сохранить как черновик или снова отправить на проверку.",
-      "startsAt": "Starts",
-      "endsAt": "Ends",
-      "buttonLabel": "Button label",
-      "buttonUrl": "Button destination",
-      "status": "Save status",
+      "startsAt": "Начало",
+      "endsAt": "Окончание",
+      "buttonLabel": "Текст кнопки",
+      "buttonUrl": "Адрес кнопки",
+      "status": "Статус при сохранении",
       "statuses": {
-        "draft": "Draft",
-        "pending": "For review",
-        "published": "Published",
-        "rejected": "Rejected",
-        "archived": "Archived"
+        "draft": "Черновик",
+        "pending": "На проверке",
+        "published": "Опубликовано",
+        "rejected": "Отклонено",
+        "archived": "В архиве"
       },
-      "save": "Save post",
-      "saving": "Saving …",
-      "saved": "The post was saved.",
+      "save": "Сохранить публикацию",
+      "saving": "Сохранение …",
+      "saved": "Публикация сохранена.",
       "updated": "Изменения сохранены.",
       "update": "Сохранить изменения",
       "cancel": "Отмена",
-      "existingTitle": "Existing posts",
-      "empty": "No posts yet.",
+      "existingTitle": "Существующие публикации",
+      "empty": "Публикаций пока нет.",
       "archive": "Архивировать",
       "edit": "Редактировать",
       "archivedNotice": "Публикация архивирована. Она больше не видна публично и остаётся сохранённой в панели управления.",
@@ -721,40 +721,40 @@
       "archiveKeep": "Оставить публикацию",
       "archiving": "Архивирование …",
       "errors": {
-        "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved.",
+        "upload": "Не удалось загрузить изображение.",
+        "save": "Не удалось сохранить публикацию.",
         "archive": "Не удалось архивировать публикацию."
       }
     },
     "statistics": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium statistics",
-      "pageTitle": "Performance of {name}",
-      "description": "See how visitors find your business listing and which contact options they use.",
-      "link": "View statistics",
-      "days": "{count} days",
+      "back": "Назад к записям компаний",
+      "eyebrow": "Статистика Premium",
+      "pageTitle": "Результаты компании {name}",
+      "description": "Узнайте, как посетители находят вашу компанию и какие способы связи используют.",
+      "link": "Посмотреть статистику",
+      "days": "{count} дней",
       "metrics": {
-        "search_impressions": "Search impressions",
-        "profile_views": "Profile views",
-        "website_clicks": "Website clicks",
-        "phone_clicks": "Phone clicks",
-        "email_clicks": "Email clicks",
-        "social_clicks": "Social media clicks",
-        "custom_cta_clicks": "Custom button clicks",
-        "post_views": "Post views",
-        "post_cta_clicks": "Post button clicks"
+        "search_impressions": "Показы в поиске",
+        "profile_views": "Просмотры профиля",
+        "website_clicks": "Переходы на сайт",
+        "phone_clicks": "Нажатия на номер телефона",
+        "email_clicks": "Нажатия на адрес электронной почты",
+        "social_clicks": "Переходы в социальные сети",
+        "custom_cta_clicks": "Нажатия на пользовательскую кнопку",
+        "post_views": "Просмотры публикаций",
+        "post_cta_clicks": "Нажатия на кнопки публикаций"
       },
-      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
-      "privacyTitle": "Performance measurement for Premium listings",
-      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+      "privacyHint": "Статистика содержит только суммарные показатели за день, без персональных данных посетителей.",
+      "privacyTitle": "Оценка результатов записей Premium",
+      "privacyText": "Для активных записей Premium мы подсчитываем показы в поиске, просмотры профиля и нажатия на способы связи, кнопки действий и публикации. Сохраняются только суммарные показатели за день. Постоянные записи IP-адресов, профили посетителей и отслеживающие файлы cookie не создаются. Владельцы организаций могут получать ежемесячный отчёт о результатах по электронной почте."
     },
     "review": {
-      "eyebrow": "Premium content",
-      "title": "Posts awaiting review",
+      "eyebrow": "Контент Premium",
+      "title": "Публикации, ожидающие проверки",
       "reason": "Сообщение клиенту (обязательно при отклонении)",
       "error": "Не удалось выполнить действие. При отклонении публикации необходимо указать причину.",
-      "approve": "Approve post",
-      "reject": "Reject post"
+      "approve": "Одобрить публикацию",
+      "reject": "Отклонить публикацию"
     }
   },
   "ListingEditor": {
@@ -853,27 +853,6 @@
       "city": "Показывать только город и кантон",
       "hidden": "Скрыть адрес"
     },
-    "plan": {
-      "eyebrow": "Тариф для этой карточки",
-      "title": "Выберите Free или Premium",
-      "description": "Выбранный тариф действует только для этой карточки компании. Для других карточек можно выбрать отдельный тариф.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Все основные данные и публикация в каталоге Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "от CHF 8.25 в месяц",
-        "description": "Дополнительно: логотип, галерея изображений, часы работы и ссылки на социальные сети."
-      },
-      "intervalTitle": "Расчётный период",
-      "intervals": {
-        "monthly": "Ежемесячно – CHF 9.90",
-        "yearly": "Ежегодно – CHF 99.00"
-      },
-      "cancellationHint": "Без пробного периода. Подписку можно отменить в конце текущего расчётного периода."
-    },
     "statusValues": {
       "draft": "Черновик",
       "review": "На проверку",
@@ -949,6 +928,27 @@
       "forbidden": "Ты не можешь создать карточку компании для этой организации.",
       "create_failed": "Не удалось создать карточку компании.",
       "network": "Не удалось подключиться к серверу."
+    },
+    "plan": {
+      "eyebrow": "Тариф для этой карточки",
+      "title": "Выберите Free или Premium",
+      "description": "Выбранный тариф действует только для этой карточки компании. Для других карточек можно выбрать отдельный тариф.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Все основные данные и публикация в каталоге Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "от CHF 8.25 в месяц",
+        "description": "Дополнительно: логотип, галерея изображений, часы работы и ссылки на социальные сети."
+      },
+      "intervalTitle": "Расчётный период",
+      "intervals": {
+        "monthly": "Ежемесячно – CHF 9.90",
+        "yearly": "Ежегодно – CHF 99.00"
+      },
+      "cancellationHint": "Без пробного периода. Подписку можно отменить в конце текущего расчётного периода."
     }
   },
   "Billing": {
@@ -1088,7 +1088,9 @@
         "logo_id": "Логотип компании",
         "gallery_file_ids": "Галерея изображений",
         "social_links": "Ссылки на социальные сети",
-        "opening_hours": "Часы работы"
+        "opening_hours": "Часы работы",
+        "custom_cta_label": "Текст пользовательской кнопки",
+        "custom_cta_value": "Адрес пользовательской кнопки"
       }
     }
   },
@@ -1357,5 +1359,9 @@
     "formats": "Допустимые форматы: JPG/JPEG, PNG и WebP (без анимации).",
     "size": "Не более 8 МиБ на файл.",
     "dimensions": "Разрешение: не более 8000 пикселей по каждой стороне и 20 мегапикселей всего (ширина × высота)."
+  },
+  "NotFound": {
+    "title": "Страница не найдена",
+    "home": "На главную"
   }
 }

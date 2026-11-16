@@ -666,24 +666,24 @@
       "valuePlaceholder": "https://, mailto: lub tel:"
     },
     "publicPosts": {
-      "title": "News, offers and events"
+      "title": "Aktualności, oferty i wydarzenia"
     },
     "posts": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium content",
-      "pageTitle": "Posts for {name}",
-      "description": "Publish news, offers and events. Submitted posts are reviewed before publication.",
-      "manage": "Manage posts",
-      "createTitle": "Create a new post",
-      "type": "Post type",
+      "back": "Powrót do wpisów firmowych",
+      "eyebrow": "Treści Premium",
+      "pageTitle": "Posty firmy {name}",
+      "description": "Publikuj aktualności, oferty i wydarzenia. Przesłane posty są sprawdzane przed publikacją.",
+      "manage": "Zarządzaj postami",
+      "createTitle": "Utwórz nowy post",
+      "type": "Rodzaj postu",
       "types": {
-        "update": "News",
-        "offer": "Offer",
-        "event": "Event"
+        "update": "Aktualność",
+        "offer": "Oferta",
+        "event": "Wydarzenie"
       },
-      "title": "Title",
-      "body": "Description",
-      "image": "Image",
+      "title": "Tytuł",
+      "body": "Opis",
+      "image": "Obraz",
       "imageSelect": "Wybierz obraz",
       "imageEmpty": "Nie wybrano obrazu",
       "imageHint": "Zalecane: 1200 × 675 px (proporcje 16:9).",
@@ -691,26 +691,26 @@
       "editTitle": "Edytuj wpis",
       "editPublishedHint": "Dotychczasowy wpis pozostanie widoczny. Zmiany zostaną ponownie sprawdzone przed publikacją.",
       "editArchivedHint": "Ten wpis nie jest widoczny publicznie. Możesz zapisać go jako wersję roboczą lub ponownie przesłać do sprawdzenia.",
-      "startsAt": "Starts",
-      "endsAt": "Ends",
-      "buttonLabel": "Button label",
-      "buttonUrl": "Button destination",
-      "status": "Save status",
+      "startsAt": "Początek",
+      "endsAt": "Koniec",
+      "buttonLabel": "Tekst przycisku",
+      "buttonUrl": "Cel przycisku",
+      "status": "Status przy zapisie",
       "statuses": {
-        "draft": "Draft",
-        "pending": "For review",
-        "published": "Published",
-        "rejected": "Rejected",
-        "archived": "Archived"
+        "draft": "Wersja robocza",
+        "pending": "Do weryfikacji",
+        "published": "Opublikowany",
+        "rejected": "Odrzucony",
+        "archived": "Zarchiwizowany"
       },
-      "save": "Save post",
-      "saving": "Saving …",
-      "saved": "The post was saved.",
+      "save": "Zapisz post",
+      "saving": "Zapisywanie …",
+      "saved": "Post został zapisany.",
       "updated": "Zmiany zostały zapisane.",
       "update": "Zapisz zmiany",
       "cancel": "Anuluj",
-      "existingTitle": "Existing posts",
-      "empty": "No posts yet.",
+      "existingTitle": "Istniejące posty",
+      "empty": "Brak postów.",
       "archive": "Archiwizuj",
       "edit": "Edytuj",
       "archivedNotice": "Wpis został zarchiwizowany. Nie jest już widoczny publicznie i pozostaje zapisany w panelu.",
@@ -721,40 +721,40 @@
       "archiveKeep": "Zachowaj wpis",
       "archiving": "Archiwizowanie …",
       "errors": {
-        "upload": "The image could not be uploaded.",
-        "save": "The post could not be saved.",
+        "upload": "Nie udało się przesłać obrazu.",
+        "save": "Nie udało się zapisać postu.",
         "archive": "Nie udało się zarchiwizować wpisu."
       }
     },
     "statistics": {
-      "back": "Back to business listings",
-      "eyebrow": "Premium statistics",
-      "pageTitle": "Performance of {name}",
-      "description": "See how visitors find your business listing and which contact options they use.",
-      "link": "View statistics",
-      "days": "{count} days",
+      "back": "Powrót do wpisów firmowych",
+      "eyebrow": "Statystyki Premium",
+      "pageTitle": "Wyniki firmy {name}",
+      "description": "Sprawdź, jak odwiedzający znajdują Twój wpis firmowy i z jakich możliwości kontaktu korzystają.",
+      "link": "Zobacz statystyki",
+      "days": "{count} dni",
       "metrics": {
-        "search_impressions": "Search impressions",
-        "profile_views": "Profile views",
-        "website_clicks": "Website clicks",
-        "phone_clicks": "Phone clicks",
-        "email_clicks": "Email clicks",
-        "social_clicks": "Social media clicks",
-        "custom_cta_clicks": "Custom button clicks",
-        "post_views": "Post views",
-        "post_cta_clicks": "Post button clicks"
+        "search_impressions": "Wyświetlenia w wyszukiwarce",
+        "profile_views": "Wyświetlenia profilu",
+        "website_clicks": "Kliknięcia strony internetowej",
+        "phone_clicks": "Kliknięcia numeru telefonu",
+        "email_clicks": "Kliknięcia adresu e-mail",
+        "social_clicks": "Kliknięcia mediów społecznościowych",
+        "custom_cta_clicks": "Kliknięcia własnego przycisku",
+        "post_views": "Wyświetlenia postów",
+        "post_cta_clicks": "Kliknięcia przycisków postów"
       },
-      "privacyHint": "Statistics contain aggregated daily values only and no personal visitor data.",
-      "privacyTitle": "Performance measurement for Premium listings",
-      "privacyText": "For active Premium listings, we count search impressions, profile views and clicks on contact options, action buttons and posts. Only aggregated daily values are stored. No permanent IP addresses, visitor profiles or tracking cookies are created. Organisation owners may receive a monthly performance report by email."
+      "privacyHint": "Statystyki zawierają wyłącznie zbiorcze wartości dzienne, bez danych osobowych odwiedzających.",
+      "privacyTitle": "Pomiar wyników wpisów Premium",
+      "privacyText": "Dla aktywnych wpisów Premium zliczamy wyświetlenia w wyszukiwarce, wyświetlenia profilu oraz kliknięcia opcji kontaktu, przycisków działań i postów. Przechowujemy wyłącznie zbiorcze wartości dzienne. Nie tworzymy trwałych zapisów adresów IP, profili odwiedzających ani śledzących plików cookie. Właściciele organizacji mogą otrzymywać miesięczny raport wyników e-mailem."
     },
     "review": {
-      "eyebrow": "Premium content",
-      "title": "Posts awaiting review",
+      "eyebrow": "Treści Premium",
+      "title": "Posty oczekujące na weryfikację",
       "reason": "Wiadomość dla klienta (wymagana przy odrzuceniu)",
       "error": "Nie udało się wykonać działania. Przy odrzuceniu wpisu wymagane jest uzasadnienie.",
-      "approve": "Approve post",
-      "reject": "Reject post"
+      "approve": "Zatwierdź post",
+      "reject": "Odrzuć post"
     }
   },
   "ListingEditor": {
@@ -853,27 +853,6 @@
       "city": "Pokaż tylko miejscowość i kanton",
       "hidden": "Ukryj adres"
     },
-    "plan": {
-      "eyebrow": "Pakiet dla tego wpisu",
-      "title": "Wybierz Free lub Premium",
-      "description": "Wybrany pakiet dotyczy tylko tego wpisu firmy. Kolejne wpisy mogą mieć własny pakiet.",
-      "free": {
-        "title": "Free",
-        "price": "CHF 0",
-        "description": "Wszystkie podstawowe dane i publikacja w katalogu Findelio."
-      },
-      "premium": {
-        "title": "Premium",
-        "price": "od CHF 8.25 miesięcznie",
-        "description": "Dodatkowo logo, galeria zdjęć, godziny otwarcia i linki do mediów społecznościowych."
-      },
-      "intervalTitle": "Okres rozliczeniowy",
-      "intervals": {
-        "monthly": "Miesięcznie – CHF 9.90",
-        "yearly": "Rocznie – CHF 99.00"
-      },
-      "cancellationHint": "Bez okresu próbnego. Subskrypcję można anulować ze skutkiem na koniec bieżącego okresu rozliczeniowego."
-    },
     "statusValues": {
       "draft": "Wersja robocza",
       "review": "Do weryfikacji",
@@ -949,6 +928,27 @@
       "forbidden": "Nie możesz utworzyć wpisu firmy dla tej organizacji.",
       "create_failed": "Nie udało się utworzyć wpisu firmy.",
       "network": "Połączenie z serwerem nie powiodło się."
+    },
+    "plan": {
+      "eyebrow": "Pakiet dla tego wpisu",
+      "title": "Wybierz Free lub Premium",
+      "description": "Wybrany pakiet dotyczy tylko tego wpisu firmy. Kolejne wpisy mogą mieć własny pakiet.",
+      "free": {
+        "title": "Free",
+        "price": "CHF 0",
+        "description": "Wszystkie podstawowe dane i publikacja w katalogu Findelio."
+      },
+      "premium": {
+        "title": "Premium",
+        "price": "od CHF 8.25 miesięcznie",
+        "description": "Dodatkowo logo, galeria zdjęć, godziny otwarcia i linki do mediów społecznościowych."
+      },
+      "intervalTitle": "Okres rozliczeniowy",
+      "intervals": {
+        "monthly": "Miesięcznie – CHF 9.90",
+        "yearly": "Rocznie – CHF 99.00"
+      },
+      "cancellationHint": "Bez okresu próbnego. Subskrypcję można anulować ze skutkiem na koniec bieżącego okresu rozliczeniowego."
     }
   },
   "Billing": {
@@ -1088,7 +1088,9 @@
         "logo_id": "Logo firmy",
         "gallery_file_ids": "Galeria zdjęć",
         "social_links": "Linki do mediów społecznościowych",
-        "opening_hours": "Godziny otwarcia"
+        "opening_hours": "Godziny otwarcia",
+        "custom_cta_label": "Tekst własnego przycisku",
+        "custom_cta_value": "Cel własnego przycisku"
       }
     }
   },
@@ -1357,5 +1359,9 @@
     "formats": "Dozwolone: JPG/JPEG, PNG i WebP (bez animowanych obrazów).",
     "size": "Maksymalnie 8 MiB na plik.",
     "dimensions": "Rozdzielczość: maksymalnie 8000 pikseli na bok i łącznie 20 megapikseli (szerokość × wysokość)."
+  },
+  "NotFound": {
+    "title": "Nie znaleziono strony",
+    "home": "Powrót do strony głównej"
   }
 }

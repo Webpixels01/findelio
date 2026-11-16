@@ -1359,5 +1359,9 @@
     "formats": "Erlaubt: JPG/JPEG, PNG und WebP (keine animierten Bilder).",
     "size": "Maximal 8 MiB pro Datei.",
     "dimensions": "Auflösung: maximal 8000 Pixel je Seite und insgesamt 20 Megapixel (Breite × Höhe)."
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "home": "Zur Startseite"
   }
 }
