@@ -812,6 +812,15 @@
         "socialLinks": "Odkazy na sociální sítě",
         "translations": "Vícejazyčný popis"
       },
+      "upload": {
+        "ready": "Připraveno k nahrání – uložte záznam",
+        "uploading": "Nahrává se …",
+        "uploaded": "Nahráno",
+        "failed": "Nahrávání selhalo",
+        "retry": "Zkusit znovu",
+        "saveHint": "Uložte záznam, aby se fotografie použila.",
+        "previewFailed": "Náhled se nepodařilo načíst."
+      },
       "logoHint": "Doporučeno: alespoň 512 × 512 pixelů pro čtvercová loga; možná jsou i vodorovná loga.",
       "logoPreview": "Náhled firemního loga",
       "noLogo": "Zatím bez loga",

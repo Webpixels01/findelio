@@ -228,6 +228,7 @@ export default function ListingEditForm({
         return;
       }
 
+      premiumFieldsRef.current?.markUploadsSaved();
       setNotice({ type: "success", text: t("saved") });
       router.refresh();
     } catch {

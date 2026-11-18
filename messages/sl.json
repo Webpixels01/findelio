@@ -812,6 +812,15 @@
         "socialLinks": "Povezave do družbenih omrežij",
         "translations": "Večjezični opis"
       },
+      "upload": {
+        "ready": "Pripravljeno za nalaganje – shranite vnos",
+        "uploading": "Nalaganje …",
+        "uploaded": "Naloženo",
+        "failed": "Nalaganje ni uspelo",
+        "retry": "Poskusi znova",
+        "saveHint": "Shranite vnos, da uporabite fotografijo.",
+        "previewFailed": "Predogleda ni bilo mogoče naložiti."
+      },
       "logoHint": "Priporočeno: vsaj 512 × 512 pikslov za kvadratne logotipe; podprti so tudi vodoravni logotipi.",
       "logoPreview": "Predogled logotipa podjetja",
       "noLogo": "Še ni logotipa",

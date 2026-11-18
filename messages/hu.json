@@ -812,6 +812,15 @@
         "socialLinks": "Közösségimédia-hivatkozások",
         "translations": "Többnyelvű leírás"
       },
+      "upload": {
+        "ready": "Feltöltésre kész – mentse az adatlapot",
+        "uploading": "Feltöltés…",
+        "uploaded": "Feltöltve",
+        "failed": "Sikertelen feltöltés",
+        "retry": "Újrapróbálkozás",
+        "saveHint": "Mentse az adatlapot a fénykép alkalmazásához.",
+        "previewFailed": "Az előnézet nem tölthető be."
+      },
       "logoHint": "Ajánlott: legalább 512 × 512 képpont négyzetes logókhoz; vízszintes logók is használhatók.",
       "logoPreview": "Céglogó előnézete",
       "noLogo": "Még nincs logó",

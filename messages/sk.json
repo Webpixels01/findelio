@@ -812,6 +812,15 @@
         "socialLinks": "Odkazy na sociálne siete",
         "translations": "Viacjazyčný popis"
       },
+      "upload": {
+        "ready": "Pripravené na nahratie – uložte záznam",
+        "uploading": "Nahráva sa …",
+        "uploaded": "Nahraté",
+        "failed": "Nahrávanie zlyhalo",
+        "retry": "Skúsiť znova",
+        "saveHint": "Uložte záznam, aby sa fotografia použila.",
+        "previewFailed": "Náhľad sa nepodarilo načítať."
+      },
       "logoHint": "Odporúčané: aspoň 512 × 512 pixelov pre štvorcové logá; možné sú aj vodorovné logá.",
       "logoPreview": "Náhľad firemného loga",
       "noLogo": "Zatiaľ bez loga",

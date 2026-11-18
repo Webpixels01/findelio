@@ -2,14 +2,15 @@
 
 import UploadRequirements from "@/components/upload-requirements";
 
-import Image from "next/image";
+import ListingUploadPreview from "@/components/listing-upload-preview";
+import { createListingImageUploader, type ImageUploadState } from "@/lib/listing-image-upload";
 import PremiumBadge from "@/components/premium-badge";
 import {
   forwardRef,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
@@ -40,8 +41,6 @@ type ExistingImage = {
   assetUrl: string;
 };
 
-type UploadedImage = ExistingImage;
-
 export type PremiumListingPayload = {
   logo_id: string | null;
   gallery_file_ids: string[];
@@ -57,12 +56,7 @@ export type PremiumListingPayload = {
 
 export type PremiumListingFieldsHandle = {
   preparePayload: () => Promise<PremiumListingPayload>;
-};
-
-type UploadResult = {
-  success?: boolean;
-  images?: UploadedImage[];
-  error?: string;
+  markUploadsSaved: () => void;
 };
 
 type PendingImageRemoval =
@@ -160,54 +154,55 @@ const ListingPremiumFields = forwardRef<
     [tCompany],
   );
 
-  const uploadImages = useCallback(
-    async (files: File[]): Promise<UploadedImage[]> => {
-      const formData = new FormData();
-
-      for (const file of files) {
-        formData.append("files", file);
-      }
-
-      const response = await fetch(
-        `/api/account/listings/${listingId}/media`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
-      const result = (await response.json().catch(() => null)) as
-        | UploadResult
-        | null;
-
-      if (!response.ok || !result?.success || !result.images) {
-        throw new Error(result?.error ?? "upload_failed");
-      }
-
-      return result.images;
-    },
+  const preparedMedia = useRef<{ logo: ExistingImage | null; gallery: ExistingImage[] } | null>(null);
+  const [uploadStates, setUploadStates] = useState<Map<File, ImageUploadState>>(new Map());
+  const uploadImage = useMemo(
+    () => createListingImageUploader(listingId, (file, state) => {
+      setUploadStates((current) => new Map(current).set(file, state));
+    }),
     [listingId],
   );
+
+  function retryUpload(file: File) {
+    // The per-image status displays the error; keep the file available for retry.
+    void uploadImage([file]).catch(() => {});
+  }
 
   useImperativeHandle(
     ref,
     () => ({
+      markUploadsSaved() {
+        if (!preparedMedia.current) return;
+        setLogo(preparedMedia.current.logo);
+        setGallery(preparedMedia.current.gallery);
+        setLogoFile(null);
+        setGalleryFiles([]);
+        setUploadStates(new Map());
+        preparedMedia.current = null;
+      },
       async preparePayload() {
+        preparedMedia.current = null;
         let preparedLogo = logo;
         let preparedGallery = gallery;
 
+        let uploadError: unknown;
         if (logoFile) {
-          const [uploadedLogo] = await uploadImages([logoFile]);
-          preparedLogo = uploadedLogo;
-          setLogo(uploadedLogo);
-          setLogoFile(null);
+          try {
+            [preparedLogo] = await uploadImage([logoFile]);
+          } catch (error) {
+            uploadError = error;
+          }
         }
 
         if (galleryFiles.length > 0) {
-          const uploadedGallery = await uploadImages(galleryFiles);
-          preparedGallery = [...gallery, ...uploadedGallery];
-          setGallery(preparedGallery);
-          setGalleryFiles([]);
+          try {
+            preparedGallery = [...gallery, ...await uploadImage(galleryFiles)];
+          } catch (error) {
+            uploadError ??= error;
+          }
         }
+        if (uploadError) throw uploadError;
+        preparedMedia.current = { logo: preparedLogo, gallery: preparedGallery };
 
         return {
           logo_id: preparedLogo?.id ?? null,
@@ -237,7 +232,7 @@ const ListingPremiumFields = forwardRef<
       logoFile,
       openingHours,
       socialLinks,
-      uploadImages,
+      uploadImage,
       customCtaLabel,
       customCtaValue,
     ],
@@ -362,17 +357,19 @@ const ListingPremiumFields = forwardRef<
         <p className="mt-1 text-sm text-[var(--muted)]">{t("logoHint")}</p>
         <UploadRequirements />
         <div className="mt-4 flex flex-wrap items-center gap-4">
-          {logo && !logoFile ? (
-            <Image
-              src={logo.assetUrl}
+          {logoFile || logo ? (
+            <ListingUploadPreview
+              key={logoFile ? `${logoFile.name}-${logoFile.lastModified}` : logo?.id}
+              file={logoFile ?? undefined}
+              src={logo?.assetUrl}
               alt={t("logoPreview")}
-              width={96}
-              height={96}
-              className="size-24 rounded-2xl border border-[var(--border)] bg-white object-contain p-2"
+              compact
+              state={logoFile ? uploadStates.get(logoFile) : undefined}
+              onRetry={logoFile ? () => retryUpload(logoFile) : undefined}
             />
           ) : (
             <div className="flex size-24 items-center justify-center rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] text-center text-xs font-bold text-[var(--muted)]">
-              {logoFile?.name ?? t("noLogo")}
+              {t("noLogo")}
             </div>
           )}
           <div className="flex flex-wrap gap-3">
@@ -385,6 +382,7 @@ const ListingPremiumFields = forwardRef<
                 onChange={(event) => {
                   setLogoFile(event.target.files?.[0] ?? null);
                   setLocalError(null);
+                  event.target.value = "";
                 }}
               />
             </label>
@@ -415,15 +413,9 @@ const ListingPremiumFields = forwardRef<
             {gallery.map((image) => (
               <div
                 key={image.id}
-                className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--border)]"
+                className="rounded-2xl border border-[var(--border)] p-3"
               >
-                <Image
-                  src={image.assetUrl}
-                  alt={t("galleryPreview")}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover"
-                />
+                <ListingUploadPreview src={image.assetUrl} alt={t("galleryPreview")} />
                 <button
                   type="button"
                   onClick={() =>
@@ -432,7 +424,7 @@ const ListingPremiumFields = forwardRef<
                       imageId: image.id,
                     })
                   }
-                  className="danger-button absolute right-2 top-2 min-h-10 bg-white/95 px-3 text-xs shadow"
+                  className="danger-button mt-3 min-h-10 px-3 text-sm"
                 >
                   {t("remove")}
                 </button>
@@ -441,9 +433,14 @@ const ListingPremiumFields = forwardRef<
             {galleryFiles.map((file, index) => (
               <div
                 key={`${file.name}-${file.lastModified}-${index}`}
-                className="flex aspect-[4/3] flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-4 text-center"
+                className="rounded-2xl border border-dashed border-[var(--border)] p-3"
               >
-                <p className="break-all text-sm font-bold">{file.name}</p>
+                <ListingUploadPreview
+                  file={file}
+                  alt={t("galleryPreview")}
+                  state={uploadStates.get(file)}
+                  onRetry={() => retryUpload(file)}
+                />
                 <button
                   type="button"
                   onClick={() =>

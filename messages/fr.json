@@ -812,6 +812,15 @@
         "socialLinks": "Liens vers les réseaux sociaux",
         "translations": "Description multilingue"
       },
+      "upload": {
+        "ready": "Prêt à être téléversé – enregistrez la fiche",
+        "uploading": "Téléversement en cours…",
+        "uploaded": "Téléversé",
+        "failed": "Échec du téléversement",
+        "retry": "Réessayer",
+        "saveHint": "Enregistrez la fiche pour appliquer la photo.",
+        "previewFailed": "Impossible de charger l’aperçu."
+      },
       "logoHint": "Recommandé : au moins 512 × 512 pixels pour les logos carrés ; les logos horizontaux sont également pris en charge.",
       "logoPreview": "Aperçu du logo de l’entreprise",
       "noLogo": "Pas encore de logo",

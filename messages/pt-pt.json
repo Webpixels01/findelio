@@ -812,6 +812,15 @@
         "socialLinks": "Ligações para redes sociais",
         "translations": "Descrição multilingue"
       },
+      "upload": {
+        "ready": "Pronto para carregar – guarde a ficha",
+        "uploading": "A carregar…",
+        "uploaded": "Carregado",
+        "failed": "Falha no carregamento",
+        "retry": "Tentar novamente",
+        "saveHint": "Guarde a ficha para aplicar a fotografia.",
+        "previewFailed": "Não foi possível carregar a pré-visualização."
+      },
       "logoHint": "Recomendado: pelo menos 512 × 512 píxeis para logótipos quadrados; também são aceites logótipos horizontais.",
       "logoPreview": "Pré-visualização do logótipo",
       "noLogo": "Ainda sem logótipo",

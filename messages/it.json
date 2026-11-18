@@ -812,6 +812,15 @@
         "socialLinks": "Link ai social media",
         "translations": "Descrizione multilingue"
       },
+      "upload": {
+        "ready": "Pronto per il caricamento – salva la scheda",
+        "uploading": "Caricamento in corso…",
+        "uploaded": "Caricato",
+        "failed": "Caricamento non riuscito",
+        "retry": "Riprova",
+        "saveHint": "Salva la scheda per applicare la foto.",
+        "previewFailed": "Impossibile caricare l’anteprima."
+      },
       "logoHint": "Consigliato: almeno 512 × 512 pixel per i loghi quadrati; sono supportati anche i loghi orizzontali.",
       "logoPreview": "Anteprima del logo aziendale",
       "noLogo": "Ancora nessun logo",

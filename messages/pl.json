@@ -812,6 +812,15 @@
         "socialLinks": "Linki do mediów społecznościowych",
         "translations": "Opis wielojęzyczny"
       },
+      "upload": {
+        "ready": "Gotowe do przesłania – zapisz wpis",
+        "uploading": "Przesyłanie…",
+        "uploaded": "Przesłano",
+        "failed": "Przesyłanie nie powiodło się",
+        "retry": "Spróbuj ponownie",
+        "saveHint": "Zapisz wpis, aby zastosować zdjęcie.",
+        "previewFailed": "Nie udało się załadować podglądu."
+      },
       "logoHint": "Zalecane: co najmniej 512 × 512 pikseli dla kwadratowych logo; poziome logo również są obsługiwane.",
       "logoPreview": "Podgląd logo firmy",
       "noLogo": "Brak logo",

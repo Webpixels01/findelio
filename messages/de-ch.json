@@ -812,6 +812,15 @@
         "socialLinks": "Social-Media-Links",
         "translations": "Mehrsprachige Beschreibung"
       },
+      "upload": {
+        "ready": "Zum Hochladen bereit – bitte Eintrag speichern",
+        "uploading": "Wird hochgeladen …",
+        "uploaded": "Hochgeladen",
+        "failed": "Upload fehlgeschlagen",
+        "retry": "Erneut versuchen",
+        "saveHint": "Bitte Eintrag speichern, um das Foto zu übernehmen.",
+        "previewFailed": "Die Vorschau konnte nicht geladen werden."
+      },
       "logoHint": "Empfohlen: mindestens 512 × 512 Pixel für quadratische Logos; horizontale Logos sind ebenfalls möglich.",
       "logoPreview": "Vorschau des Firmenlogos",
       "noLogo": "Noch kein Logo",

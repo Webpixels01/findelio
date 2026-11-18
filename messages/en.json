@@ -812,6 +812,15 @@
         "socialLinks": "Social media links",
         "translations": "Multilingual description"
       },
+      "upload": {
+        "ready": "Ready to upload – please save the listing",
+        "uploading": "Uploading …",
+        "uploaded": "Uploaded",
+        "failed": "Upload failed",
+        "retry": "Try again",
+        "saveHint": "Please save the listing to apply the photo.",
+        "previewFailed": "The preview could not be loaded."
+      },
       "logoHint": "Recommended: at least 512 × 512 pixels for square logos; horizontal logos are also supported.",
       "logoPreview": "Company logo preview",
       "noLogo": "No logo yet",

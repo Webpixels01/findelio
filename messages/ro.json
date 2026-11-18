@@ -812,6 +812,15 @@
         "socialLinks": "Linkuri către rețele sociale",
         "translations": "Descriere multilingvă"
       },
+      "upload": {
+        "ready": "Pregătit pentru încărcare – salvează înregistrarea",
+        "uploading": "Se încarcă…",
+        "uploaded": "Încărcat",
+        "failed": "Încărcarea a eșuat",
+        "retry": "Încearcă din nou",
+        "saveHint": "Salvează înregistrarea pentru a aplica fotografia.",
+        "previewFailed": "Previzualizarea nu a putut fi încărcată."
+      },
       "logoHint": "Recomandat: cel puțin 512 × 512 pixeli pentru sigle pătrate; sunt acceptate și sigle orizontale.",
       "logoPreview": "Previzualizarea logo-ului firmei",
       "noLogo": "Niciun logo încă",

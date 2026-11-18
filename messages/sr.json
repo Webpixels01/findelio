@@ -812,6 +812,15 @@
         "socialLinks": "Linkovi ka društvenim mrežama",
         "translations": "Višejezični opis"
       },
+      "upload": {
+        "ready": "Spremno za otpremanje – sačuvajte unos",
+        "uploading": "Otpremanje…",
+        "uploaded": "Otpremljeno",
+        "failed": "Otpremanje nije uspelo",
+        "retry": "Pokušaj ponovo",
+        "saveHint": "Sačuvajte unos da biste primenili fotografiju.",
+        "previewFailed": "Pregled nije mogao da se učita."
+      },
       "logoHint": "Preporučeno: najmanje 512 × 512 piksela za kvadratne logotipe; podržani su i horizontalni logotipi.",
       "logoPreview": "Pregled logotipa firme",
       "noLogo": "Još nema logotipa",

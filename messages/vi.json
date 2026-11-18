@@ -812,6 +812,15 @@
         "socialLinks": "Liên kết mạng xã hội",
         "translations": "Mô tả đa ngôn ngữ"
       },
+      "upload": {
+        "ready": "Sẵn sàng tải lên – vui lòng lưu hồ sơ",
+        "uploading": "Đang tải lên…",
+        "uploaded": "Đã tải lên",
+        "failed": "Tải lên thất bại",
+        "retry": "Thử lại",
+        "saveHint": "Vui lòng lưu hồ sơ để áp dụng ảnh.",
+        "previewFailed": "Không thể tải bản xem trước."
+      },
       "logoHint": "Khuyến nghị: ít nhất 512 × 512 pixel cho logo vuông; cũng hỗ trợ logo ngang.",
       "logoPreview": "Xem trước logo doanh nghiệp",
       "noLogo": "Chưa có logo",
