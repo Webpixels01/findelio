@@ -3,18 +3,41 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
+const directusPublicUrl = process.env.DIRECTUS_PUBLIC_URL?.trim();
+const directusRemotePattern = (() => {
+  if (!directusPublicUrl) return null;
+
+  try {
+    const url = new URL(directusPublicUrl);
+    if (!['http:', 'https:'].includes(url.protocol)) return null;
+
+    return {
+      protocol: url.protocol.slice(0, -1) as "http" | "https",
+      hostname: url.hostname,
+      port: url.port,
+      pathname: "/assets/**",
+    };
+  } catch {
+    return null;
+  }
+})();
+
 const nextConfig: NextConfig = {
+  output: "standalone",
   poweredByHeader: false,
 
   images: {
-    dangerouslyAllowLocalIP: true,
+    dangerouslyAllowLocalIP: process.env.NODE_ENV !== "production",
+    maximumRedirects: 0,
+    maximumResponseBody: 8 * 1024 * 1024,
     remotePatterns: [
-      {
-        protocol: "http",
+      ...(process.env.NODE_ENV !== "production" ? [{
+        protocol: "http" as const,
         hostname: "localhost",
         port: "8055",
         pathname: "/assets/**",
-      },
+      }] : []),
+      ...(directusRemotePattern ? [directusRemotePattern] : []),
     ],
   },
 };

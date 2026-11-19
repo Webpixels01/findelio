@@ -54,6 +54,10 @@ async function refreshSession() {
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
+  const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const redirectBase = configuredSiteUrl
+    ? new URL(configuredSiteUrl)
+    : requestUrl;
   const locale = getSafeLocale(requestUrl.searchParams.get("locale"));
   const nextPath = getSafeNextPath(
     requestUrl.searchParams.get("next"),
@@ -62,10 +66,10 @@ export async function GET(request: Request) {
   const refreshed = await refreshSession();
 
   if (refreshed) {
-    return NextResponse.redirect(new URL(nextPath, request.url));
+    return NextResponse.redirect(new URL(nextPath, redirectBase));
   }
 
-  const loginUrl = new URL(`/${locale}/login`, request.url);
+  const loginUrl = new URL(`/${locale}/login`, redirectBase);
   loginUrl.searchParams.set("next", nextPath);
   return NextResponse.redirect(loginUrl);
 }
