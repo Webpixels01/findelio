@@ -3,18 +3,30 @@
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { buildPreservedLocaleSearch } from "@/lib/register-search-params";
 
 const labels: Record<AppLocale, string> = {
-  "de-ch": "DE",
-  en: "EN",
-  sk: "SK",
-  cs: "CS",
-  hu: "HU",
-  pl: "PL",
-  ru: "RU",
-  "pt-pt": "PT",
-  ro: "RO",
+  "de-ch": "Deutsch",
+  en: "English",
+  sk: "Slovenčina",
+  cs: "Čeština",
+  hu: "Magyar",
+  pl: "Polski",
+  ru: "Русский",
+  "pt-pt": "Português",
+  ro: "Română",
+  vi: "Tiếng Việt",
+  it: "Italiano",
+  fr: "Français",
+  uk: "Українська",
+  bs: "Bosanski",
+  sr: "Srpski",
+  sl: "Slovenščina",
 };
+
+const sortedLocales = [...routing.locales].sort((a, b) =>
+  labels[a].localeCompare(labels[b], "de", { sensitivity: "base" }),
+);
 
 export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
   const locale = useLocale() as AppLocale;
@@ -27,14 +39,18 @@ export default function LanguageSwitcher({ ariaLabel }: { ariaLabel: string }) {
       <select
         value={locale}
         onChange={(event) => {
-          router.replace(pathname, {
+          const preserved =
+            typeof window !== "undefined"
+              ? buildPreservedLocaleSearch(pathname, window.location.search)
+              : "";
+          router.replace(preserved ? `${pathname}?${preserved}` : pathname, {
             locale: event.target.value as AppLocale,
           });
         }}
-        className="h-11 cursor-pointer rounded-xl border border-[var(--border)] bg-white px-3 pr-8 text-sm font-bold text-[var(--foreground)] outline-none transition hover:border-[var(--accent)] focus:border-[var(--accent)]"
+        className="h-11 cursor-pointer rounded-xl border border-[var(--border)] bg-white px-3 pr-1 text-sm font-bold text-[var(--foreground)] outline-none transition hover:border-[var(--accent)] focus:border-[var(--accent)]"
         aria-label={ariaLabel}
       >
-        {routing.locales.map((item) => (
+        {sortedLocales.map((item) => (
           <option key={item} value={item}>
             {labels[item]}
           </option>

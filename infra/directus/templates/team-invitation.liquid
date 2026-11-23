@@ -1,0 +1,8 @@
+{% layout 'findelio-base' %}
+{% block content %}
+<h1 style="margin:0 0 20px;color:#172940;font-size:28px;line-height:1.25;">{{ heading | escape }}</h1>
+<p style="margin:0 0 18px;color:#525f70;font-size:16px;line-height:1.6;">{{ intro | escape }}</p>
+<p style="margin:0 0 24px;color:#172940;font-size:20px;line-height:1.5;"><strong>{{ organizationName | escape }}</strong><br><span style="color:#525f70;font-size:14px;">{{ roleLabel | escape }}: {{ role | escape }}<br>{{ expiresLabel | escape }}: {{ expires | escape }}</span></p>
+<a href="{{ invitationUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;font-size:16px;font-weight:600;text-decoration:none;">{{ buttonLabel | escape }}</a>
+<p style="margin:24px 0 0;color:#6b7788;font-size:14px;line-height:1.6;">{{ hint | escape }}</p>
+{% endblock %}

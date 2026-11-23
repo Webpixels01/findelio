@@ -1,9 +1,20 @@
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
+import { getSiteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const baseUrl = getSiteUrl();
+  const privatePaths = routing.locales.flatMap((locale) => [
+    `/${locale}/dashboard`,
+  ]);
+
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: ["/api/", ...privatePaths],
+    },
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }

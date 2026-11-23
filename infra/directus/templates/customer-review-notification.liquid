@@ -1,0 +1,9 @@
+{% layout 'findelio-base' %}
+{% block content %}
+<h1 style="color:#172940;font-size:28px;">Bewertung wartet auf Freigabe</h1>
+<p>Eine neue oder überarbeitete Bewertung wurde eingereicht.</p>
+<p><strong>Firma:</strong> {{ listingName | escape }}</p>
+<p><strong>Sterne:</strong> {{ rating | escape }} / 5</p>
+<p style="white-space:pre-wrap;">{{ reviewBody | escape }}</p>
+<a rel="noopener" target="_blank" href="{{ reviewUrl | escape }}" style="display:inline-block;padding:13px 24px;border-radius:8px;background:#0277EE;color:#fff;text-decoration:none;">Bewertung prüfen</a>
+{% endblock %}

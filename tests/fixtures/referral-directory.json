@@ -1,0 +1,2846 @@
+{
+  "source": "https://cms.findelio.ch",
+  "capturedAt": "2026-09-16T16:28:26.897Z",
+  "collections": {
+    "cantons": [
+      {
+        "code": "AG",
+        "name": "Aargau"
+      },
+      {
+        "code": "AI",
+        "name": "Appenzell Innerrhoden"
+      },
+      {
+        "code": "AR",
+        "name": "Appenzell Ausserrhoden"
+      },
+      {
+        "code": "BE",
+        "name": "Bern"
+      },
+      {
+        "code": "BL",
+        "name": "Basel-Landschaft"
+      },
+      {
+        "code": "BS",
+        "name": "Basel-Stadt"
+      },
+      {
+        "code": "FR",
+        "name": "Freiburg"
+      },
+      {
+        "code": "GE",
+        "name": "Genf"
+      },
+      {
+        "code": "GL",
+        "name": "Glarus"
+      },
+      {
+        "code": "GR",
+        "name": "Graubünden"
+      },
+      {
+        "code": "JU",
+        "name": "Jura"
+      },
+      {
+        "code": "LU",
+        "name": "Luzern"
+      },
+      {
+        "code": "NE",
+        "name": "Neuenburg"
+      },
+      {
+        "code": "NW",
+        "name": "Nidwalden"
+      },
+      {
+        "code": "OW",
+        "name": "Obwalden"
+      },
+      {
+        "code": "SG",
+        "name": "St. Gallen"
+      },
+      {
+        "code": "SH",
+        "name": "Schaffhausen"
+      },
+      {
+        "code": "SO",
+        "name": "Solothurn"
+      },
+      {
+        "code": "SZ",
+        "name": "Schwyz"
+      },
+      {
+        "code": "TG",
+        "name": "Thurgau"
+      },
+      {
+        "code": "TI",
+        "name": "Tessin"
+      },
+      {
+        "code": "UR",
+        "name": "Uri"
+      },
+      {
+        "code": "VD",
+        "name": "Waadt"
+      },
+      {
+        "code": "VS",
+        "name": "Wallis"
+      },
+      {
+        "code": "ZG",
+        "name": "Zug"
+      },
+      {
+        "code": "ZH",
+        "name": "Zürich"
+      }
+    ],
+    "industries": [
+      {
+        "code": "auto-mobilitaet",
+        "name": "Auto & Mobilität",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Auto & Mobilität"
+          },
+          {
+            "language": "en-US",
+            "name": "Automotive & Mobility"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Autá a mobilita"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Auta a mobilita"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Autó és mobilitás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Motoryzacja i mobilność"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Автомобили и мобильность"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Automóveis e mobilidade"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Auto și mobilitate"
+          }
+        ]
+      },
+      {
+        "code": "bau-handwerk",
+        "name": "Bau & Handwerk",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Bau & Handwerk"
+          },
+          {
+            "language": "en-US",
+            "name": "Construction & Trades"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Stavebníctvo a remeslá"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Stavebnictví a řemesla"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Építőipar és szakipar"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Budownictwo i rzemiosło"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Строительство и ремёсла"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Construção e ofícios"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Construcții și meserii"
+          }
+        ]
+      },
+      {
+        "code": "beauty-wellness",
+        "name": "Beauty & Wellness",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Beauty & Wellness"
+          },
+          {
+            "language": "en-US",
+            "name": "Beauty & Wellness"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Krása a wellness"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Krása a wellness"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szépségápolás és wellness"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Uroda i wellness"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Красота и велнес"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Beleza e bem-estar"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Frumusețe și wellness"
+          }
+        ]
+      },
+      {
+        "code": "beratung-coaching",
+        "name": "Beratung & Coaching",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Beratung & Coaching"
+          },
+          {
+            "language": "en-US",
+            "name": "Consulting & Coaching"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Poradenstvo a koučing"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Poradenství a koučink"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Tanácsadás és coaching"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Doradztwo i coaching"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Консалтинг и коучинг"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Consultoria e coaching"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Consultanță și coaching"
+          }
+        ]
+      },
+      {
+        "code": "bildung-nachhilfe",
+        "name": "Bildung & Nachhilfe",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Bildung & Nachhilfe"
+          },
+          {
+            "language": "en-US",
+            "name": "Education & Tutoring"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Vzdelávanie a doučovanie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Vzdělávání a doučování"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Oktatás és korrepetálás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Edukacja i korepetycje"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Образование и репетиторство"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Educação e explicações"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Educație și meditații"
+          }
+        ]
+      },
+      {
+        "code": "computer-it",
+        "name": "Computer & IT",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Computer & IT"
+          },
+          {
+            "language": "en-US",
+            "name": "Computers & IT"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Počítače a IT"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Počítače a IT"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Számítástechnika és IT"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Komputery i IT"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Компьютеры и ИТ"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Computadores e TI"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Calculatoare și IT"
+          }
+        ]
+      },
+      {
+        "code": "detailhandel",
+        "name": "Detailhandel",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Detailhandel"
+          },
+          {
+            "language": "en-US",
+            "name": "Retail"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Maloobchod"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Maloobchod"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Kiskereskedelem"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Handel detaliczny"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Розничная торговля"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Comércio a retalho"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Comerț cu amănuntul"
+          }
+        ]
+      },
+      {
+        "code": "druck-design-werbung",
+        "name": "Druck, Design & Werbung",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Druck, Design & Werbung"
+          },
+          {
+            "language": "en-US",
+            "name": "Printing, Design & Advertising"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Tlač, dizajn a reklama"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Tisk, design a reklama"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Nyomtatás, dizájn és reklám"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Druk, projektowanie i reklama"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Печать, дизайн и реклама"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Impressão, design e publicidade"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Tipar, design și publicitate"
+          }
+        ]
+      },
+      {
+        "code": "energie-umwelt",
+        "name": "Energie & Umwelt",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Energie & Umwelt"
+          },
+          {
+            "language": "en-US",
+            "name": "Energy & Environment"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Energetika a životné prostredie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Energetika a životní prostředí"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Energia és környezet"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Energia i środowisko"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Энергетика и экология"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Energia e ambiente"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Energie și mediu"
+          }
+        ]
+      },
+      {
+        "code": "finanzen-versicherungen",
+        "name": "Finanzen & Versicherungen",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Finanzen & Versicherungen"
+          },
+          {
+            "language": "en-US",
+            "name": "Finance & Insurance"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Financie a poistenie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Finance a pojištění"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Pénzügy és biztosítás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Finanse i ubezpieczenia"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Финансы и страхование"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Finanças e seguros"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Finanțe și asigurări"
+          }
+        ]
+      },
+      {
+        "code": "fotografie-video",
+        "name": "Fotografie & Video",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Fotografie & Video"
+          },
+          {
+            "language": "en-US",
+            "name": "Photography & Video"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Fotografia a video"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Fotografie a video"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Fotó és videó"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Fotografia i wideo"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Фотография и видео"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Fotografia e vídeo"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Fotografie și video"
+          }
+        ]
+      },
+      {
+        "code": "freizeit-kultur",
+        "name": "Freizeit & Kultur",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Freizeit & Kultur"
+          },
+          {
+            "language": "en-US",
+            "name": "Leisure & Culture"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Voľný čas a kultúra"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Volný čas a kultura"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szabadidő és kultúra"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Czas wolny i kultura"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Досуг и культура"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Lazer e cultura"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Timp liber și cultură"
+          }
+        ]
+      },
+      {
+        "code": "gastronomie",
+        "name": "Gastronomie",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Gastronomie"
+          },
+          {
+            "language": "en-US",
+            "name": "Food Service & Catering"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Gastronómia"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Gastronomie"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Vendéglátás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Gastronomia"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Гастрономия"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Restauração"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Gastronomie"
+          }
+        ]
+      },
+      {
+        "code": "gesundheit-medizin",
+        "name": "Gesundheit & Medizin",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Gesundheit & Medizin"
+          },
+          {
+            "language": "en-US",
+            "name": "Health & Medicine"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Zdravie a medicína"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Zdraví a medicína"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Egészségügy és orvoslás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Zdrowie i medycyna"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Здоровье и медицина"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Saúde e medicina"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Sănătate și medicină"
+          }
+        ]
+      },
+      {
+        "code": "haustiere",
+        "name": "Haustiere",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Haustiere"
+          },
+          {
+            "language": "en-US",
+            "name": "Pets"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Domáce zvieratá"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Domácí zvířata"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Háziállatok"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Zwierzęta domowe"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Домашние животные"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Animais de estimação"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Animale de companie"
+          }
+        ]
+      },
+      {
+        "code": "hotel-unterkunft",
+        "name": "Hotel & Unterkunft",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Hotel & Unterkunft"
+          },
+          {
+            "language": "en-US",
+            "name": "Hotels & Accommodation"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Hotely a ubytovanie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Hotely a ubytování"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szállodák és szálláshelyek"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Hotele i zakwaterowanie"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Гостиницы и размещение"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Hotéis e alojamento"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Hoteluri și cazare"
+          }
+        ]
+      },
+      {
+        "code": "immobilien",
+        "name": "Immobilien",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Immobilien"
+          },
+          {
+            "language": "en-US",
+            "name": "Real Estate"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Nehnuteľnosti"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Nemovitosti"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Ingatlan"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Nieruchomości"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Недвижимость"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Imobiliário"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Imobiliare"
+          }
+        ]
+      },
+      {
+        "code": "industrie-produktion",
+        "name": "Industrie & Produktion",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Industrie & Produktion"
+          },
+          {
+            "language": "en-US",
+            "name": "Industry & Manufacturing"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Priemysel a výroba"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Průmysl a výroba"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Ipar és gyártás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Przemysł i produkcja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Промышленность и производство"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Indústria e produção"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Industrie și producție"
+          }
+        ]
+      },
+      {
+        "code": "kinder-familie",
+        "name": "Kinder & Familie",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Kinder & Familie"
+          },
+          {
+            "language": "en-US",
+            "name": "Children & Family"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Deti a rodina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Děti a rodina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Gyermekek és család"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Dzieci i rodzina"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Дети и семья"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Crianças e família"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Copii și familie"
+          }
+        ]
+      },
+      {
+        "code": "landwirtschaft",
+        "name": "Landwirtschaft",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Landwirtschaft"
+          },
+          {
+            "language": "en-US",
+            "name": "Agriculture"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Poľnohospodárstvo"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Zemědělství"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Mezőgazdaság"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Rolnictwo"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Сельское хозяйство"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Agricultura"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Agricultură"
+          }
+        ]
+      },
+      {
+        "code": "lebensmittel",
+        "name": "Lebensmittel",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Lebensmittel"
+          },
+          {
+            "language": "en-US",
+            "name": "Food & Groceries"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Potraviny"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Potraviny"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Élelmiszerek"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Żywność"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Продукты питания"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Alimentação"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Produse alimentare"
+          }
+        ]
+      },
+      {
+        "code": "logistik-transport",
+        "name": "Logistik & Transport",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Logistik & Transport"
+          },
+          {
+            "language": "en-US",
+            "name": "Logistics & Transport"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Logistika a doprava"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Logistika a doprava"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Logisztika és szállítás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Logistyka i transport"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Логистика и транспорт"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Logística e transportes"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Logistică și transport"
+          }
+        ]
+      },
+      {
+        "code": "marketing-kommunikation",
+        "name": "Marketing & Kommunikation",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Marketing & Kommunikation"
+          },
+          {
+            "language": "en-US",
+            "name": "Marketing & Communications"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Marketing a komunikácia"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Marketing a komunikace"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Marketing és kommunikáció"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Marketing i komunikacja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Маркетинг и коммуникации"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Marketing e comunicação"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Marketing și comunicare"
+          }
+        ]
+      },
+      {
+        "code": "mode-textilien",
+        "name": "Mode & Textilien",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Mode & Textilien"
+          },
+          {
+            "language": "en-US",
+            "name": "Fashion & Textiles"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Móda a textil"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Móda a textil"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Divat és textilipar"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Moda i tekstylia"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Мода и текстиль"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Moda e têxteis"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Modă și textile"
+          }
+        ]
+      },
+      {
+        "code": "musik-veranstaltungen",
+        "name": "Musik & Veranstaltungen",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Musik & Veranstaltungen"
+          },
+          {
+            "language": "en-US",
+            "name": "Music & Events"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Hudba a podujatia"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Hudba a akce"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Zene és rendezvények"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Muzyka i wydarzenia"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Музыка и мероприятия"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Música e eventos"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Muzică și evenimente"
+          }
+        ]
+      },
+      {
+        "code": "personal-recruiting",
+        "name": "Personal & Recruiting",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Personal & Recruiting"
+          },
+          {
+            "language": "en-US",
+            "name": "HR & Recruitment"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Ľudské zdroje a nábor"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Lidské zdroje a nábor"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Humánerőforrás és toborzás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Kadry i rekrutacja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Кадры и подбор персонала"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Recursos humanos e recrutamento"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Resurse umane și recrutare"
+          }
+        ]
+      },
+      {
+        "code": "pflege-betreuung",
+        "name": "Pflege & Betreuung",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Pflege & Betreuung"
+          },
+          {
+            "language": "en-US",
+            "name": "Care & Support"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Starostlivosť a opatera"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Péče a opatrování"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Ápolás és gondozás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Opieka i pielęgnacja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Уход и социальная поддержка"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Cuidados e assistência"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Îngrijire și asistență"
+          }
+        ]
+      },
+      {
+        "code": "recht-steuern",
+        "name": "Recht & Steuern",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Recht & Steuern"
+          },
+          {
+            "language": "en-US",
+            "name": "Law & Tax"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Právo a dane"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Právo a daně"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Jog és adózás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Prawo i podatki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Право и налоги"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Direito e fiscalidade"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Drept și taxe"
+          }
+        ]
+      },
+      {
+        "code": "reinigung-gebaeudeservice",
+        "name": "Reinigung & Gebäudeservice",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Reinigung & Gebäudeservice"
+          },
+          {
+            "language": "en-US",
+            "name": "Cleaning & Facility Services"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Upratovanie a správa budov"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Úklid a správa budov"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Takarítás és épületüzemeltetés"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Sprzątanie i obsługa budynków"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Уборка и обслуживание зданий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Limpeza e manutenção de edifícios"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Curățenie și întreținerea clădirilor"
+          }
+        ]
+      },
+      {
+        "code": "reisen-tourismus",
+        "name": "Reisen & Tourismus",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Reisen & Tourismus"
+          },
+          {
+            "language": "en-US",
+            "name": "Travel & Tourism"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Cestovanie a cestovný ruch"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Cestování a cestovní ruch"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Utazás és turizmus"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Podróże i turystyka"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Путешествия и туризм"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Viagens e turismo"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Călătorii și turism"
+          }
+        ]
+      },
+      {
+        "code": "sicherheit",
+        "name": "Sicherheit",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Sicherheit"
+          },
+          {
+            "language": "en-US",
+            "name": "Security"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Bezpečnosť"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Bezpečnost"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Biztonság"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Bezpieczeństwo"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Безопасность"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Segurança"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Securitate"
+          }
+        ]
+      },
+      {
+        "code": "sonstige-dienstleistungen",
+        "name": "Sonstige Dienstleistungen",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Sonstige Dienstleistungen"
+          },
+          {
+            "language": "en-US",
+            "name": "Other Services"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Ostatné služby"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Ostatní služby"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Egyéb szolgáltatások"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Pozostałe usługi"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Прочие услуги"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Outros serviços"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Alte servicii"
+          }
+        ]
+      },
+      {
+        "code": "sport-fitness",
+        "name": "Sport & Fitness",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Sport & Fitness"
+          },
+          {
+            "language": "en-US",
+            "name": "Sports & Fitness"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Šport a fitness"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Sport a fitness"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Sport és fitnesz"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Sport i fitness"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Спорт и фитнес"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Desporto e fitness"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Sport și fitness"
+          }
+        ]
+      },
+      {
+        "code": "telekommunikation",
+        "name": "Telekommunikation",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Telekommunikation"
+          },
+          {
+            "language": "en-US",
+            "name": "Telecommunications"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Telekomunikácie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Telekomunikace"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Távközlés"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Telekomunikacja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Телекоммуникации"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Telecomunicações"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Telecomunicații"
+          }
+        ]
+      },
+      {
+        "code": "uebersetzung-dolmetschen",
+        "name": "Übersetzung & Dolmetschen",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Übersetzung & Dolmetschen"
+          },
+          {
+            "language": "en-US",
+            "name": "Translation & Interpreting"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Preklady a tlmočenie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Překlady a tlumočení"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Fordítás és tolmácsolás"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Tłumaczenia pisemne i ustne"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Письменный и устный перевод"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Tradução e interpretação"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Traducere și interpretare"
+          }
+        ]
+      },
+      {
+        "code": "umzug-entsorgung",
+        "name": "Umzug & Entsorgung",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Umzug & Entsorgung"
+          },
+          {
+            "language": "en-US",
+            "name": "Moving & Disposal"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Sťahovanie a likvidácia odpadu"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Stěhování a likvidace odpadu"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Költöztetés és hulladékkezelés"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Przeprowadzki i utylizacja"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Переезды и утилизация"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Mudanças e gestão de resíduos"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Mutări și gestionarea deșeurilor"
+          }
+        ]
+      },
+      {
+        "code": "vereine-organisationen",
+        "name": "Vereine & Organisationen",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Vereine & Organisationen"
+          },
+          {
+            "language": "en-US",
+            "name": "Associations & Organisations"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Združenia a organizácie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Spolky a organizace"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Egyesületek és szervezetek"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Stowarzyszenia i organizacje"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Объединения и организации"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Associações e organizações"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Asociații și organizații"
+          }
+        ]
+      },
+      {
+        "code": "verwaltung-behoerden",
+        "name": "Verwaltung & Behörden",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Verwaltung & Behörden"
+          },
+          {
+            "language": "en-US",
+            "name": "Public Administration & Authorities"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Verejná správa a úrady"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Veřejná správa a úřady"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Közigazgatás és hatóságok"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Administracja publiczna i urzędy"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Государственное управление и органы власти"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Administração pública e autoridades"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Administrație publică și autorități"
+          }
+        ]
+      },
+      {
+        "code": "wohnen-einrichtung",
+        "name": "Wohnen & Einrichtung",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Wohnen & Einrichtung"
+          },
+          {
+            "language": "en-US",
+            "name": "Home & Furnishings"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Bývanie a zariadenie"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Bydlení a vybavení"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Otthon és lakberendezés"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Dom i wyposażenie"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Дом и интерьер"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Casa e decoração"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Locuință și amenajări interioare"
+          }
+        ]
+      }
+    ],
+    "spoken_languages": [
+      {
+        "code": "ar",
+        "name": "Arabisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Arabisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Arabic"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Arabčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Arabština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Arab"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Arabski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Арабский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Árabe"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Arabă"
+          }
+        ]
+      },
+      {
+        "code": "bg",
+        "name": "Bulgarisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Bulgarisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Bulgarian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Bulharčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Bulharština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Bolgár"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Bułgarski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Болгарский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Búlgaro"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Bulgară"
+          }
+        ]
+      },
+      {
+        "code": "bs",
+        "name": "Bosnisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Bosnisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Bosnian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Bosniančina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Bosenština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Bosnyák"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Bośniacki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Боснийский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Bósnio"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Bosniacă"
+          }
+        ]
+      },
+      {
+        "code": "cs",
+        "name": "Tschechisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Tschechisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Czech"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Čeština"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Čeština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Cseh"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Czeski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Чешский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Checo"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Cehă"
+          }
+        ]
+      },
+      {
+        "code": "de",
+        "name": "Deutsch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Deutsch"
+          },
+          {
+            "language": "en-US",
+            "name": "German"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Nemčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Němčina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Német"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Niemiecki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Немецкий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Alemão"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Germană"
+          }
+        ]
+      },
+      {
+        "code": "el",
+        "name": "Griechisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Griechisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Greek"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Gréčtina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Řečtina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Görög"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Grecki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Греческий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Grego"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Greacă"
+          }
+        ]
+      },
+      {
+        "code": "en",
+        "name": "Englisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Englisch"
+          },
+          {
+            "language": "en-US",
+            "name": "English"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Angličtina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Angličtina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Angol"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Angielski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Английский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Inglês"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Engleză"
+          }
+        ]
+      },
+      {
+        "code": "es",
+        "name": "Spanisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Spanisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Spanish"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Španielčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Španělština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Spanyol"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Hiszpański"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Испанский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Espanhol"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Spaniolă"
+          }
+        ]
+      },
+      {
+        "code": "fr",
+        "name": "Französisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Französisch"
+          },
+          {
+            "language": "en-US",
+            "name": "French"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Francúzština"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Francouzština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Francia"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Francuski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Французский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Francês"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Franceză"
+          }
+        ]
+      },
+      {
+        "code": "gsw",
+        "name": "Schweizerdeutsch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Schweizerdeutsch"
+          },
+          {
+            "language": "en-US",
+            "name": "Swiss German"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Švajčiarska nemčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Švýcarská němčina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Svájci német"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Szwajcarski niemiecki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Швейцарский немецкий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Alemão suíço"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Germană elvețiană"
+          }
+        ]
+      },
+      {
+        "code": "hr",
+        "name": "Kroatisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Kroatisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Croatian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Chorvátčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Chorvatština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Horvát"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Chorwacki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Хорватский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Croata"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Croată"
+          }
+        ]
+      },
+      {
+        "code": "hu",
+        "name": "Ungarisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Ungarisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Hungarian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Maďarčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Maďarština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Magyar"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Węgierski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Венгерский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Húngaro"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Maghiară"
+          }
+        ]
+      },
+      {
+        "code": "it",
+        "name": "Italienisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Italienisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Italian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Taliančina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Italština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Olasz"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Włoski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Итальянский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Italiano"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Italiană"
+          }
+        ]
+      },
+      {
+        "code": "mk",
+        "name": "Mazedonisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Mazedonisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Macedonian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Macedónčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Makedonština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Macedón"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Macedoński"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Македонский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Macedónio"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Macedoneană"
+          }
+        ]
+      },
+      {
+        "code": "nl",
+        "name": "Niederländisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Niederländisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Dutch"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Nizozemčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Nizozemština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Holland"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Niderlandzki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Нидерландский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Neerlandês"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Neerlandeză"
+          }
+        ]
+      },
+      {
+        "code": "pl",
+        "name": "Polnisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Polnisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Polish"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Poľština"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Polština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Lengyel"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Polski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Польский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Polaco"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Poloneză"
+          }
+        ]
+      },
+      {
+        "code": "pt",
+        "name": "Portugiesisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Portugiesisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Portuguese"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Portugalčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Portugalština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Portugál"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Portugalski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Португальский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Português"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Portugheză"
+          }
+        ]
+      },
+      {
+        "code": "rm",
+        "name": "Rätoromanisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Rätoromanisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Romansh"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Rétorománčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Rétorománština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Rétoromán"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Retoromański"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Романшский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Romanche"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Retoromană"
+          }
+        ]
+      },
+      {
+        "code": "ro",
+        "name": "Rumänisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Rumänisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Romanian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Rumunčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Rumunština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Román"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Rumuński"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Румынский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Romeno"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Română"
+          }
+        ]
+      },
+      {
+        "code": "ru",
+        "name": "Russisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Russisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Russian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Ruština"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Ruština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Orosz"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Rosyjski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Русский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Russo"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Rusă"
+          }
+        ]
+      },
+      {
+        "code": "sk",
+        "name": "Slowakisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Slowakisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Slovak"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Slovenčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Slovenština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szlovák"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Słowacki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Словацкий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Eslovaco"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Slovacă"
+          }
+        ]
+      },
+      {
+        "code": "sl",
+        "name": "Slowenisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Slowenisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Slovenian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Slovinčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Slovinština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szlovén"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Słoweński"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Словенский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Esloveno"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Slovenă"
+          }
+        ]
+      },
+      {
+        "code": "sq",
+        "name": "Albanisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Albanisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Albanian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Albánčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Albánština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Albán"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Albański"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Албанский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Albanês"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Albaneză"
+          }
+        ]
+      },
+      {
+        "code": "sr",
+        "name": "Serbisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Serbisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Serbian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Srbčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Srbština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Szerb"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Serbski"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Сербский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Sérvio"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Sârbă"
+          }
+        ]
+      },
+      {
+        "code": "tr",
+        "name": "Türkisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Türkisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Turkish"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Turečtina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Turečtina"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Török"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Turecki"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Турецкий"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Turco"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Turcă"
+          }
+        ]
+      },
+      {
+        "code": "uk",
+        "name": "Ukrainisch",
+        "translations": [
+          {
+            "language": "de-CH",
+            "name": "Ukrainisch"
+          },
+          {
+            "language": "en-US",
+            "name": "Ukrainian"
+          },
+          {
+            "language": "sk-SK",
+            "name": "Ukrajinčina"
+          },
+          {
+            "language": "cs-CZ",
+            "name": "Ukrajinština"
+          },
+          {
+            "language": "hu-HU",
+            "name": "Ukrán"
+          },
+          {
+            "language": "pl-PL",
+            "name": "Ukraiński"
+          },
+          {
+            "language": "ru-RU",
+            "name": "Украинский"
+          },
+          {
+            "language": "pt-PT",
+            "name": "Ucraniano"
+          },
+          {
+            "language": "ro-RO",
+            "name": "Ucraineană"
+          }
+        ]
+      }
+    ]
+  }
+}

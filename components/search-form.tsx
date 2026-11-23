@@ -1,3 +1,4 @@
+import DirectoryKeywordSearch from "@/components/directory-keyword-search";
 import type { AppLocale } from "@/i18n/routing";
 import {
   getCantons,
@@ -7,6 +8,7 @@ import {
 import { getTranslations } from "next-intl/server";
 
 export type SearchValues = {
+  q?: string;
   sprache?: string;
   branche?: string;
   kanton?: string;
@@ -34,16 +36,13 @@ export default async function SearchForm({
     <form
       action={`/${locale}/unternehmen`}
       method="get"
-      className={
-        compact
-          ? "grid gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-lg shadow-[#001734]/5 md:grid-cols-2 xl:grid-cols-5"
-          : "mx-auto mt-12 grid max-w-6xl gap-4 rounded-3xl border border-[var(--border)] bg-white p-5 shadow-2xl shadow-[#001734]/8 md:grid-cols-2 xl:grid-cols-5"
-      }
+      className={compact ? "directory-search directory-search-compact" : "directory-search"}
     >
       <label className="field-group">
         <span className="field-label">{t("language")}</span>
 
         <select
+          key={`sprache-${values.sprache ?? ""}`}
           name="sprache"
           defaultValue={values.sprache ?? ""}
           className="field-control"
@@ -62,6 +61,7 @@ export default async function SearchForm({
         <span className="field-label">{t("industry")}</span>
 
         <select
+          key={`branche-${values.branche ?? ""}`}
           name="branche"
           defaultValue={values.branche ?? ""}
           className="field-control"
@@ -80,6 +80,7 @@ export default async function SearchForm({
         <span className="field-label">{t("canton")}</span>
 
         <select
+          key={`kanton-${values.kanton ?? ""}`}
           name="kanton"
           defaultValue={values.kanton ?? ""}
           className="field-control"
@@ -98,6 +99,7 @@ export default async function SearchForm({
         <span className="field-label">{t("location")}</span>
 
         <input
+          key={`ort-${values.ort ?? ""}`}
           type="search"
           name="ort"
           defaultValue={values.ort ?? ""}
@@ -106,9 +108,12 @@ export default async function SearchForm({
         />
       </label>
 
-      <button type="submit" className="primary-button mt-auto h-12 px-5">
-        {t("submit")}
-      </button>
+      <div className="directory-keyword-row">
+        <DirectoryKeywordSearch key={values.q ?? ""} locale={locale} defaultValue={values.q} />
+        <button type="submit" className="primary-button search-submit mt-auto px-5">
+          {t("submit")}
+        </button>
+      </div>
     </form>
   );
 }
