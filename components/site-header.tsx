@@ -1,4 +1,5 @@
 import Image from "next/image";
+import findelioLogo from "@/public/findelio-logo-horizontal.svg";
 import { unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -53,10 +54,10 @@ export default async function SiteHeader() {
         <Link href="/" aria-label={t("home")} className="min-w-0 sm:shrink-0">
           <span className="site-brand relative block h-12 w-[161px] max-w-full sm:h-[45px] sm:w-[150px]">
             <Image
-              src="/findelio-logo-horizontal.svg"
+              src={findelioLogo}
               alt="Findelio"
               fill
-              priority
+              preload
               unoptimized
               sizes="(min-width: 640px) 150px, 130px"
               className="object-contain object-left"
